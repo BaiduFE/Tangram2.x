@@ -2,7 +2,7 @@
  * @author linlingyu
  */
 ///import baidu.dom;
-baidu.dom._support = baidu.dom._support || function(){
+baidu.support = baidu.support || function(){
     var div = document.createElement('div'),
         baseSupport, a, input, select, opt;
     div.setAttribute('className', 't');
@@ -22,9 +22,9 @@ baidu.dom._support = baidu.dom._support || function(){
             opt: opt,
             input: input
         }
-//        radioValue: only import by baidu._util.attr
-//        hrefNormalized: only import by baidu._util.attr
-//        style: only import by baidu._util.attr
+//        radioValue: only import by baidu.dom._attr
+//        hrefNormalized: only import by baidu.dom._attr
+//        style: only import by baidu.dom._attr
 //        optDisabled: only import by baidu.query.val
 //        checkOn: only import by baidu.query.val
 //        noCloneEvent: only import by baidu.query.clone
