@@ -5,7 +5,7 @@
 ///import baidu.query.contains;
 ///import baidu.each;
 ///import baidu.event;
-///import baidu.event.eventBase._core;
+///import baidu.event._core;
 
 void function( special ){
     if( special.mousewheel )return ;

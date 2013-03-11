@@ -4,8 +4,7 @@
 
 ///import baidu.query;
 ///import baidu.event;
-///import baidu.event.eventBase;
-///import baidu.event.eventBase._queue;
+///import baidu.event._queue;
 
 void function( base, be ){
     if( base._core )return ;
@@ -64,4 +63,4 @@ void function( base, be ){
         _queue.remove( target, type, fn, selector );
     };
 
-}( baidu.event.eventBase, baidu.event );
+}( baidu.event, baidu.event );

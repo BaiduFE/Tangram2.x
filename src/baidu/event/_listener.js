@@ -2,7 +2,7 @@
  * @author dron
  */
 
-///import baidu.event.eventBase
+///import baidu.event
 
 void function( base, _listener ){
     if( base._listener )return ;
@@ -17,4 +17,4 @@ void function( base, _listener ){
         _listener.add = function( target, name, fn ){
             target.attachEvent( "on" + name, fn );
         };
-}( baidu.event.eventBase );
+}( baidu.event );

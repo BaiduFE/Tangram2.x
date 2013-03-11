@@ -4,10 +4,8 @@
 
 ///import baidu.query.map;
 ///import baidu.id;
-/*------------------*/
-///import baidu.event.eventBase._core;
-/*------------------*/
-///import baidu.event.eventBase._queue;
+///import baidu.event._core;
+///import baidu.event._queue;
 ///import baidu.dom._isXML;
 ///import baidu.support;
 /**
@@ -64,8 +62,8 @@
 baidu.query.extend({
     clone: function(){
         var util = baidu.dom,
-            eventCore = baidu.event.eventBase._core,
-            eventQueue = baidu.event.eventBase._queue,
+            eventCore = baidu.event._core,
+            eventQueue = baidu.event._queue,
             div = baidu.support.dom.div,
             noCloneChecked = baidu.support.dom.input.cloneNode(true).checked,//用于判断ie是否支持clone属性
             noCloneEvent = true;

@@ -5,8 +5,7 @@
 ///import baidu.query;
 ///import baidu.query.each;
 ///import baidu.event;
-///import baidu.event.eventBase;
-///import baidu.event.eventBase._queue;
+///import baidu.event._queue;
 ///import baidu.event.simulate;
 ///import baidu.query.triggerHandler;
 
@@ -110,4 +109,4 @@ void function( base, be ){
             return this;
         }
     });
-}( baidu.event.eventBase, baidu.event );
+}( baidu.event, baidu.event );

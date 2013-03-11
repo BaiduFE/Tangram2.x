@@ -6,7 +6,7 @@
 ///import baidu.event;
 ///import baidu.query.each;
 ///import baidu.forEach;
-///import baidu.event.eventBase._core;
+///import baidu.event._core;
 
 /**
  * @description 对当前 TangramDom 集合添加事件监听
@@ -52,7 +52,7 @@
 
 baidu.query.extend({
     on: function( events, selector, data, fn, _one ){
-        var eb = baidu.event.eventBase._core;
+        var eb = baidu.event._core;
         // var specials = { mouseenter: 1, mouseleave: 1, focusin: 1, focusout: 1 };
 
         if( typeof selector == "object" && selector )
@@ -88,7 +88,7 @@ baidu.query.extend({
     }
 
     // _on: function( name, data, fn ){
-    //     var eb = baidu.event.eventBase;
+    //     var eb = baidu.event;
     //     this.each(function(){
     //         eb.add( this, name, fn, undefined, data );
     //     });

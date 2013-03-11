@@ -2,7 +2,7 @@
  * @author dron
  */
 
-///import baidu.event.eventBase._queue;
+///import baidu.event._queue;
 
 /**
  * @description 对指定的 TangramDom 集合派发指定的事件函数，不触发事件默认行为
@@ -29,4 +29,4 @@ void function( base ){
         }
     });
 
-}( baidu.event.eventBase );
+}( baidu.event );

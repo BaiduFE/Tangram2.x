@@ -2,7 +2,7 @@
  * @fileOverview 对当前 TangramDom 集合解除事件监听
  * @author dron
  */
-///import baidu.event.eventBase._core;
+///import baidu.event._core;
 ///import baidu.event;
 ///import baidu.forEach;
 
@@ -30,7 +30,7 @@
 
 baidu.query.extend({
     off: function( events, selector, fn ){
-        var eb = baidu.event.eventBase._core, me = this;
+        var eb = baidu.event._core, me = this;
         if( !events )
             baidu.forEach( this, function( item ){
                 eb.remove( item );

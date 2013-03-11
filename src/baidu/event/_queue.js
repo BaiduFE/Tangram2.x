@@ -4,8 +4,7 @@
 
 ///import baidu.id;
 ///import baidu.event;
-///import baidu.event.eventBase
-///import baidu.event.eventBase._listener;
+///import baidu.event._listener;
 
 void function( base, be ){
     if( base._queue )return ;
@@ -102,4 +101,4 @@ void function( base, be ){
         };
     }();
 
-}( baidu.event.eventBase, baidu.event );
+}( baidu.event, baidu.event );
