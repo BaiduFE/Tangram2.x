@@ -1,7 +1,7 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 baidu.support = baidu.support || function(){
     var div = document.createElement('div'),
         baseSupport, a, input, select, opt;
@@ -25,13 +25,13 @@ baidu.support = baidu.support || function(){
 //        radioValue: only import by baidu._util.attr
 //        hrefNormalized: only import by baidu._util.attr
 //        style: only import by baidu._util.attr
-//        optDisabled: only import by baidu.dom.val
-//        checkOn: only import by baidu.dom.val
-//        noCloneEvent: only import by baidu.dom.clone
-//        noCloneChecked: only import by baidu.dom.clone
-//        cssFloat: only import baidu.dom.styleFixer
-//        htmlSerialize: only import baidu.dom.html
-//        leadingWhitespace: only import baidu.dom.html
+//        optDisabled: only import by baidu.query.val
+//        checkOn: only import by baidu.query.val
+//        noCloneEvent: only import by baidu.query.clone
+//        noCloneChecked: only import by baidu.query.clone
+//        cssFloat: only import baidu.query.styleFixer
+//        htmlSerialize: only import baidu.query.html
+//        leadingWhitespace: only import baidu.query.html
     };
     return baseSupport;
 }();

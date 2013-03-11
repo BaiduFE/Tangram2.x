@@ -2,7 +2,7 @@
  * @author dron
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.event;
 ///import baidu.event.eventBase;
 ///import baidu.event.eventBase._queue;
@@ -26,13 +26,13 @@ void function( base, be ){
         var bindElements;
 
         if( selector )
-            bindElements = baidu.dom( selector, target );
+            bindElements = baidu.query( selector, target );
 
         if( ( name in special ) && special[name].pack )
             fn = special[name].pack( fn );
 
         return function( e ){ // e is instance of baidu.event()
-            var t = baidu.dom( e.target ), args = [ e ], bindElement;
+            var t = baidu.query( e.target ), args = [ e ], bindElement;
 
             if( data && !e.data ) 
                 e.data = data;
@@ -45,7 +45,7 @@ void function( base, be ){
             for(var i = 0; i < 2; i ++){
                 if( bindElement = findVestedEl( e.target, bindElements ) )
                     return e.result = fn.apply( bindElement, args );
-                bindElements = baidu.dom( selector, target );
+                bindElements = baidu.query( selector, target );
             }
         };
     };

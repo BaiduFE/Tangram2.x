@@ -8,8 +8,8 @@
 /**
  * @description 框架内一些私用方法的集合
  * @Object 
- * @name baidu._util_
+ * @name baidu.dom
  */
 
 
-baidu._util_ = baidu._util_ || {};
+baidu.dom = baidu.dom || {};

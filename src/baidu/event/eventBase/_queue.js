@@ -95,7 +95,7 @@ void function( base, be ){
             if( !attachElements )
                 add( target, type, bindType, fnAry );
             else{
-                target = baidu.dom( attachElements, target );
+                target = baidu.query( attachElements, target );
                 for(var i = 0, l = target.length; i < l; i ++)
                     add( target[i], type, bindType, fnAry );
             }

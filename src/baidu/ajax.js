@@ -8,7 +8,7 @@
 ///import baidu.when;
 ///import baidu.id;
 ///import baidu.support;
-///import baidu.dom.on;
+///import baidu.query.on;
 
 /**
  * @description 执行一个异步的ajax请求
@@ -864,7 +864,7 @@ void function(){
                             if(xhrOnUnloadAbort){
                                 if(!xhrCallbacks){
                                     xhrCallbacks = {};
-                                    baidu.dom(window).on('unload', xhrOnUnloadAbort);
+                                    baidu.query(window).on('unload', xhrOnUnloadAbort);
                                 }
                                 xhrCallbacks[handle] = callback;
                             }
