@@ -88,7 +88,7 @@ baidu.query.extend({
                             item = options[i];
                             if((item.selected || i === index)
                                 && (optDisabled ? !item.disabled : item.getAttribute('disabled') === null)
-                                && (!item.parentNode.disabled || !util.nodeName(item.parentNode, 'optgroup'))){
+                                && (!item.parentNode.disabled || !baidu.dom._nodeName(item.parentNode, 'optgroup'))){
                                 val = baidu.query(item).val();
                                 if(one){return val;}
                                 ret.push(val);

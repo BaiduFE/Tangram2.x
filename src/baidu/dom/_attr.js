@@ -15,22 +15,22 @@ baidu.dom._attr = function(){
         radioValue = supportDom.input.value === 't',
         hrefNormalized = supportDom.a.getAttribute('href') === '/a',
         style = /top/.test(supportDom.a.getAttribute('style')),
-        nodeHook = util.nodeHook,
+        nodeHook = baidu.dom._nodeHook,
         attrFixer = {
             className: 'class'
         },
         boolHook = {//处理对属性值是布尔值的情况
             get: function(ele, key){
-                var val = util.prop(ele, key), attrNode;
+                var val = baidu.dom._prop(ele, key), attrNode;
                 return val === true || typeof val !== 'boolean'
                     && (attrNode = ele.getAttributeNode(key))
                     && attrNode.nodeValue !== false ? key.toLowerCase() : undefined;
             },
             set: function(ele, key, val){
                 if(val === false){
-                    util.removeAttr(ele, key);
+                    baidu.dom._removeAttr(ele, key);
                 }else{
-                    var propName = util.propFixer[key] || key;
+                    var propName = baidu.dom._propFixer[key] || key;
                     (propName in ele) && (ele[propName] = true);
                     ele.setAttribute(key, key.toLowerCase());
                 }
@@ -41,9 +41,9 @@ baidu.dom._attr = function(){
             type: {
                 set: function(ele, key, val){
                     // We can't allow the type property to be changed (since it causes problems in IE)
-//                    if(rtype.test(ele.nodeName) && util.contains(document.body, ele)){return val;};
+//                    if(rtype.test(ele.nodeName) && baidu.dom._contains(document.body, ele)){return val;};
                     if(rtype.test(ele.nodeName) && ele.parentNode){return val;};
-                    if(!radioValue && val === 'radio' && util.nodeName(ele, 'input')){
+                    if(!radioValue && val === 'radio' && baidu.dom._nodeName(ele, 'input')){
                         var v = ele.value;
                         ele.setAttribute('type', val);
                         v && (ele.value = v);
@@ -53,13 +53,13 @@ baidu.dom._attr = function(){
             },
             value: {
                 get: function(ele, key){
-                    if(nodeHook && util.nodeName(ele, 'button')){
+                    if(nodeHook && baidu.dom._nodeName(ele, 'button')){
                         return nodeHook.get(ele, key);
                     }
                     return key in ele ? ele.value : null;
                 },
                 set: function(ele, key, val){
-                    if(nodeHook && util.nodeName(ele, 'button')){
+                    if(nodeHook && baidu.dom._nodeName(ele, 'button')){
                         return nodeHook.set(ele, key, val);
                     }
                     ele.value = val;
@@ -107,7 +107,7 @@ baidu.dom._attr = function(){
     //attr
     return function(ele, key, val, pass){
         var nType = ele.nodeType,
-            notxml = nType !== 1 || !util.isXML(ele),
+            notxml = nType !== 1 || !baidu.dom._isXML(ele),
             hooks, ret;
         if(!ele || ~'238'.indexOf(nType)){return;}
         if(pass && baidu.query.fn[key]){
@@ -116,11 +116,11 @@ baidu.dom._attr = function(){
         //if getAttribute is undefined, use prop interface
         if(notxml){
             key = attrFixer[key] || key.toLowerCase();
-            hooks = attrHooks[key] || (util.propFixer.rboolean.test(key) ? boolHook : nodeHook);
+            hooks = attrHooks[key] || (baidu.dom._propFixer.rboolean.test(key) ? boolHook : nodeHook);
         }
         if(val!== undefined){
             if(val === null){
-                util.removeAttr(ele, key);
+                baidu.dom._removeAttr(ele, key);
                 return
             }else if(notxml && hooks && hooks.set && (ret = hooks.set(ele, key, val)) !== undefined){
                 return ret;
