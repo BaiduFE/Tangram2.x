@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.query.match;
 ///import baidu.array.indexOf;
@@ -14,8 +14,8 @@
  * @description 查找当前元素的所有的父辈元素，直到遇到匹配的那个元素为止
  *
  * @function
- * @name baidu.dom().parentsUntil()
- * @grammar baidu.dom(args).parentsUntil(selector[, filter])
+ * @name baidu.query().parentsUntil()
+ * @grammar baidu.query(args).parentsUntil(selector[, filter])
  * @param   {Object}            selector    选择器
  * @param   {String|Function}   filter      [可选]过滤函数
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
@@ -40,6 +40,6 @@ baidu.query.extend({
             baidu.merge(array, a);
         });
 
-        return baidu.dom( baidu.query.match(array, filter) );
+        return baidu.query( baidu.query.match(array, filter) );
     }
 });

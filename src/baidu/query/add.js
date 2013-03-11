@@ -1,9 +1,9 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.merge;
 ///import baidu.type;
 ///import baidu._query;
 ///import baidu.array.unique;
-///import baidu.dom._createElements;
+///import baidu.query.createElements;
 
 /**
  * @fileoverview
@@ -16,32 +16,32 @@
 /**
  * @description 给当前TangramDom对象添加新的DOM元素
  * @function
- * @name baidu.dom().add()
- * @grammar baidu.dom(args).add(selector)
+ * @name baidu.query().add()
+ * @grammar baidu.query(args).add(selector)
  * @param   {String}    selector    CSS选择器
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 /**
  * @description 给当前TangramDom对象添加新的DOM元素
  * @function
- * @name baidu.dom().add()
- * @grammar baidu.dom(args).add(HTMLElement)
+ * @name baidu.query().add()
+ * @grammar baidu.query(args).add(HTMLElement)
  * @param   {HTMLElement}    HTMLElement    DOM对象
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 /**
  * @description 给当前TangramDom对象添加新的DOM元素
  * @function
- * @name baidu.dom().add()
- * @grammar baidu.dom(args).add(HTMLString)
+ * @name baidu.query().add()
+ * @grammar baidu.query(args).add(HTMLString)
  * @param   {String}    HTMLString    HTML文本
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 /**
  * @description 给当前TangramDom对象添加新的DOM元素
  * @function
- * @name baidu.dom().add()
- * @grammar baidu.dom(args).add(tangramDom)
+ * @name baidu.query().add()
+ * @grammar baidu.query(args).add(tangramDom)
  * @param   {TangramDom} tangramDom TangramDom元素
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -61,7 +61,7 @@ baidu.query.extend({
 
             // HTMLString or selector
             case "string" :
-                baidu.merge(a, baidu.dom(object, context));
+                baidu.merge(a, baidu.query(object, context));
                 break;
             // [TODO] case "NodeList" :
             default :
@@ -69,8 +69,8 @@ baidu.query.extend({
                     baidu.merge(a, object)
                 }
         }
-        return baidu.dom( a.unique() );
+        return baidu.query( a.unique() );
     }
 });
 
-// meizz 20120601 add方法可以完全使用 baidu.merge(this, baidu.dom(object, context)) 这一句代码完成所有功能，但为节约内存和提高效率的原因，将几个常用分支单独处理了
+// meizz 20120601 add方法可以完全使用 baidu.merge(this, baidu.query(object, context)) 这一句代码完成所有功能，但为节约内存和提高效率的原因，将几个常用分支单独处理了

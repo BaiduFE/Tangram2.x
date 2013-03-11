@@ -1,14 +1,14 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom._cleanData;
 
 /**
  * @description 将匹配到的DOM元素的内部内容全部清空
  * @function 
- * @name baidu.dom().empty()
- * @grammar baidu.dom(args).empty()
+ * @name baidu.query().empty()
+ * @grammar baidu.query(args).empty()
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example
  该方法会移除掉匹配元素中的元素，但是该方法不会去移除已经绑定在元素上面的事件，
@@ -42,4 +42,3 @@ baidu.query.extend({
         return this;
     }
 });
-

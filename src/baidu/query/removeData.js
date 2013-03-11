@@ -1,5 +1,5 @@
 ///import baidu.id;
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.type;
 ///import baidu.global;
@@ -14,8 +14,8 @@
 
 /**
  * @description 移除在 DOM 对象上存放的数据
- * @name baidu.dom().removeData()
- * @grammar baidu.dom().removeData(key)
+ * @name baidu.query().removeData()
+ * @grammar baidu.query().removeData(key)
  * @function
  * @param {String} key 数据的索引
  * @return {TangramDom} 返回之前的tangramDom对象

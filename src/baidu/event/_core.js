@@ -2,15 +2,15 @@
  * @author dron
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.event;
 ///import baidu.event._queue;
 
 void function( base, be ){
-    if( base.core )return ;
+    if( base._core )return ;
 
-    var queue = base.queue;
-    var core = base.core = {};
+    var _queue = base._queue;
+    var _core = base._core = {};
     var special = be.special = {};
     var push = [].push;
 
@@ -20,18 +20,18 @@ void function( base, be ){
                 return parents[i];
     };
 
-    core.build = function( target, name, fn, selector, data ){
+    _core.build = function( target, name, fn, selector, data ){
 
         var bindElements;
 
         if( selector )
-            bindElements = baidu.dom( selector, target );
+            bindElements = baidu.query( selector, target );
 
         if( ( name in special ) && special[name].pack )
             fn = special[name].pack( fn );
 
         return function( e ){ // e is instance of baidu.event()
-            var t = baidu.dom( e.target ), args = [ e ], bindElement;
+            var t = baidu.query( e.target ), args = [ e ], bindElement;
 
             if( data && !e.data ) 
                 e.data = data;
@@ -44,23 +44,23 @@ void function( base, be ){
             for(var i = 0; i < 2; i ++){
                 if( bindElement = findVestedEl( e.target, bindElements ) )
                     return e.result = fn.apply( bindElement, args );
-                bindElements = baidu.dom( selector, target );
+                bindElements = baidu.query( selector, target );
             }
         };
     };
 
-    core.add = function( target, type, fn, selector, data, one ){
+    _core.add = function( target, type, fn, selector, data, one ){
         var pkg = this.build( target, type, fn, selector, data ), attachElements, bindType;
         bindType = type;
         if(type in special)
             attachElements = special[type].attachElements,
             bindType = special[type].bindType || type;
 
-        queue.add( target, type, bindType, { type: type, pkg: pkg, orig: fn, one: one }, attachElements );
+        _queue.add( target, type, bindType, { type: type, pkg: pkg, orig: fn, one: one }, attachElements );
     };
 
-    core.remove = function( target, type, fn, selector ){
-        queue.remove( target, type, fn, selector );
+    _core.remove = function( target, type, fn, selector ){
+        _queue.remove( target, type, fn, selector );
     };
 
-}( baidu.dom._eventBase, baidu.event );
+}( baidu.event, baidu.event );

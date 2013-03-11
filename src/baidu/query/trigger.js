@@ -2,10 +2,9 @@
  * @author dron
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.query.each;
 ///import baidu.event;
-///import baidu.dom._eventBase;
 ///import baidu.event._queue;
 ///import baidu.event.simulate;
 ///import baidu.query.triggerHandler;
@@ -13,8 +12,8 @@
 /**
  * @description 对指定的 TangramDom 集合派发指定的事件，并触发事件默认行为
  * @function 
- * @name baidu.dom().trigger()
- * @grammar baidu.dom(args).trigger(type[,data])
+ * @name baidu.query().trigger()
+ * @grammar baidu.query(args).trigger(type[,data])
  * @param {String} type 事件类型
  * @param {Array} data 触发事件函数时携带的参数
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象 
@@ -22,8 +21,8 @@
 
 void function( base, be ){
     var special = be.special;
-    var queue = base.queue;
-    var dom = baidu.dom;
+    var _queue = base._queue;
+    var dom = baidu.query;
 
     var ie = !window.addEventListener, firefox = /firefox/i.test(navigator.userAgent);
 
@@ -74,7 +73,7 @@ void function( base, be ){
                 evnt.triggerData = triggerData;
             
             if( special )
-                queue.call( element, type, null, evnt );
+                _queue.call( element, type, null, evnt );
             else{
                 var abnormalsType = element.window === window ? 3 : abnormals[ type ];
 
@@ -110,4 +109,4 @@ void function( base, be ){
             return this;
         }
     });
-}( baidu.dom._eventBase, baidu.event );
+}( baidu.event, baidu.event );

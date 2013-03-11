@@ -5,7 +5,7 @@
 ///import baidu.dom;
 ///import baidu.type;
 ///import baidu.forEach;
-///import baidu.dom._createElements;
+///import baidu.query.createElements;
 ///import baidu.query.getDocument;
 ///import baidu.query.html;
 
@@ -15,7 +15,7 @@ baidu.dom._smartInsert = function(tang, args, callback){
         var fn = args[0],
             tangItem;
         return baidu.forEach(tang, function(item, index){
-            tangItem = baidu.dom(item);
+            tangItem = baidu.query(item);
             args[0] = fn.call(item, index, tangItem.html());
             baidu.dom._smartInsert(tangItem, args, callback);
         });
@@ -29,7 +29,7 @@ baidu.dom._smartInsert = function(tang, args, callback){
             fragment.appendChild(item);
         }else{
             baidu.forEach(~'string|number'.indexOf(baidu.type(item)) ?
-                baidu.dom._createElements(item, doc)
+                baidu.query.createElements(item, doc)
                     : item, function(ele){
                         fragment.appendChild(ele);
                     });

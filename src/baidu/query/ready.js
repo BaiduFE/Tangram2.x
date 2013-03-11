@@ -3,15 +3,15 @@
  */
 
 ///import baidu;
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom;
 ///import baidu.deferred;
 
 /**
  * @description 监听 documentDomReady 事件
  * @function 
- * @name baidu.dom().ready()
- * @grammar baidu.dom(args).ready(fn)
+ * @name baidu.query().ready()
+ * @grammar baidu.query(args).ready(fn)
  * @param {Function} fn 事件回调函数
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象 
  */
@@ -41,7 +41,7 @@ baidu.query.extend({
 
         // A counter to track how many items to wait for before
         // the ready event fires. See #6781
-        baidu.dom._readyWait = 1;
+        baidu.dom.__readyWait = 1;
 
         // Hold (or release) the ready event
         baidu.query.holdReady = function( hold ) {
@@ -78,7 +78,7 @@ baidu.query.extend({
 
             // Trigger any bound ready events
             if ( baidu.query.trigger ) {
-                baidu.dom( document ).trigger("ready").off("ready");
+                baidu.query( document ).trigger("ready").off("ready");
             }
         };
 
@@ -162,4 +162,3 @@ baidu.query.extend({
 
     }()
 });
-

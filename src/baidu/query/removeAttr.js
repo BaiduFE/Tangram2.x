@@ -5,8 +5,8 @@
 /**
  * @description 为匹配的元素删除设置的属性。
  * @function 
- * @name baidu.dom().removeAttr()
- * @grammar baidu.dom(args).removeAttr(attributeName);
+ * @name baidu.query().removeAttr()
+ * @grammar baidu.query(args).removeAttr(attributeName);
  * @param {String} attributeName 要设置属性的名称，它可以是一个空格分隔的属性列表;
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example 

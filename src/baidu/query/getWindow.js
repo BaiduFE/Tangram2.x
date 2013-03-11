@@ -1,14 +1,14 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.query.getDocument;
 
 /**
  * @description 取得匹配元素所属的window对象
  * @function 
- * @name baidu.dom().getWindow()
- * @grammar baidu.dom(args).getWindow()
+ * @name baidu.query().getWindow()
+ * @grammar baidu.query(args).getWindow()
  * @return {window} 返回匹配元素所属的window对象
  */
 /**

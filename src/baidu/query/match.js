@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.type;
 ///import baidu._query;
 ///import baidu.forEach;
@@ -59,12 +59,12 @@ baidu.query.match = function(){
 
             // CSS 选择器
             case "string" :
-                var da = baidu.query(selector, context || document);
+                var da = baidu._query(selector, context || document);
                 baidu.forEach(array, function(item){
                     if ( root = getRoot(item) ) {
                         var t = root.nodeType == 1
                             // in DocumentFragment
-                            ? baidu.query(selector, root)
+                            ? baidu._query(selector, root)
                             : da;
 
                         for (var i=0, n=t.length; i<n; i++) {

@@ -6,8 +6,8 @@
 /**
  * @description 为每个匹配的元素添加指定的className
  * @function 
- * @name baidu.dom().addClass()
- * @grammar baidu.dom(args).addClass(className)
+ * @name baidu.query().addClass()
+ * @grammar baidu.query(args).addClass(className)
  * @param {String} className 为每个匹配元素所要增加的一个或多个class属性名(多个用空格分隔)。
  * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
  * @example 
@@ -30,8 +30,8 @@
 /**
  * @description 为每个匹配的元素添加指定的className
  * @function 
- * @name baidu.dom().addClass()
- * @grammar baidu.dom(args).addClass(fn)
+ * @name baidu.query().addClass()
+ * @grammar baidu.query(args).addClass(fn)
  * @param {Function} fn 这个函数返回一个或更多用空格隔开的要增加的样式名，接收元素的索引index和元素旧的样式名className作为参数。
  * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
  * @example
@@ -58,7 +58,7 @@
  */
 
 ///import baidu;
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.string.trim;
 
@@ -86,7 +86,7 @@ baidu.query.extend({
             } );
         }else if( t == "function" )
             baidu.forEach(this, function(item, index){
-                baidu.dom(item).addClass(value.call(item, index, item.className));
+                baidu.query(item).addClass(value.call(item, index, item.className));
             });
 
         return this;

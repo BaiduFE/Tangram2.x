@@ -1,6 +1,7 @@
 ///import baidu.support.getSetAttribute;
+///import baidu.dom;
 baidu.dom._nodeHook = function(){
-    if(baidu.dom._support.getSetAttribute){return;}
+    if(baidu.support.getSetAttribute){return;}
     var fixSpecified = {};
     fixSpecified.name = fixSpecified.id = fixSpecified.coords = true;
     return {
