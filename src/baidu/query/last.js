@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 
 
 /**
@@ -12,14 +12,12 @@
  * @description 当前集合最后一个对象
  *
  * @function
- * @name baidu.dom().last()
- * @grammar baidu.dom(args).last()
+ * @name baidu.query().last()
+ * @grammar baidu.query(args).last()
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 baidu.query.extend({
     last : function () {
-        return baidu.dom(this.get(-1));
+        return baidu.query(this.get(-1));
     }
 });
-
-

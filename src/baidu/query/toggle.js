@@ -11,8 +11,8 @@
 /**
  * @description 显示或隐藏匹配的元素
  * @function 
- * @name baidu.dom().toggle()
- * @grammar baidu.dom(args).toggle()
+ * @name baidu.query().toggle()
+ * @grammar baidu.query(args).toggle()
  * @return {TangramDom} 之前匹配的TangramDom对象
  * @example 
  toggle方法是最简单的显示或者隐藏一个元素的方法，
@@ -47,5 +47,3 @@ baidu.query.extend({
         };
     }
 });
-
-

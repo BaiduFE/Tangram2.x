@@ -7,8 +7,8 @@
 /**
  * @description 显示匹配的元素
  * @function 
- * @name baidu.dom().show()
- * @grammar baidu.dom(args).show()
+ * @name baidu.query().show()
+ * @grammar baidu.query(args).show()
  * @return {TangramDom} 之前匹配的TangramDom对象
  * @example 
  show和hide方法是最简单的显示或者隐藏一个元素的方法
@@ -29,7 +29,7 @@ baidu.query.extend({
             if(valMap[tagName]){return valMap[tagName];}
             var ele = document.createElement(tagName), val, frame, ownDoc;
             document.body.appendChild(ele);
-            val = baidu.dom(ele).getCurrentStyle('display');
+            val = baidu.query(ele).getCurrentStyle('display');
             document.body.removeChild(ele);
             if(val === '' || val === 'none'){
                 frame = document.body.appendChild(document.createElement('iframe'));
@@ -40,7 +40,7 @@ baidu.query.extend({
                 ownDoc.writeln('<!DOCTYPE html><html><body>');
                 ownDoc.close();
                 ele = ownDoc.appendChild(ownDoc.createElement(tagName));
-                val = baidu.dom(ele).getCurrentStyle('display');
+                val = baidu.query(ele).getCurrentStyle('display');
                 document.body.removeChild(frame);
                 frame = null;
             }
@@ -52,7 +52,7 @@ baidu.query.extend({
             this.each(function(index, ele){
                 if(!ele.style){return;}
                 ele.style.display = '';
-                tang = baidu.dom(ele);
+                tang = baidu.query(ele);
                 if(tang.getCurrentStyle('display') === 'none'
                     || !baidu.dom._contains(tang.getDocument(), ele)){
                     ele.style.display = valMap[ele.nodeName] || getDefaultDisplayValue(ele.nodeName);

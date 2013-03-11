@@ -1,7 +1,7 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.type;
 ///import baidu.dom._access;
 ///import baidu.dom._getWidthOrHeight;
@@ -9,8 +9,8 @@
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的宽度，该宽度忽略margin, border, padding的计算
  * @function 
- * @name baidu.dom().width()
- * @grammar baidu.dom(args).width()
+ * @name baidu.query().width()
+ * @grammar baidu.query(args).width()
  * @return {Number} 返回一个宽度数值
  * @example 
  .width()和.css('width')之间的区别是.width()返回一个没有单位的数值（例如，400），
@@ -36,8 +36,8 @@
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的宽度，该宽度忽略margin, border, padding的计算
  * @function 
- * @name baidu.dom().width()
- * @grammar baidu.dom(args).width(value)
+ * @name baidu.query().width()
+ * @grammar baidu.query(args).width(value)
  * @param {Number|String} value （参数支持整型数据，字符串数据，带单位的字符串数值），接口设置所有匹配元素的宽度
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example
@@ -63,11 +63,11 @@
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的宽度，该宽度忽略margin, border, padding的计算
  * @function 
- * @name baidu.dom().width()
- * @grammar baidu.dom(args).width(fn)
+ * @name baidu.query().width()
+ * @grammar baidu.query(args).width(fn)
  * @param {function} fn 接收两个参数，index参数表示匹配元素在集合中的索引，width表示匹配元素的宽度，fn最终需要返回合法的数值来设置宽度
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
- * @example baidu.dom("<div>").width(function(index, width){});
+ * @example baidu.query("<div>").width(function(index, width){});
  */
 baidu.query.extend({
     width: function(value){

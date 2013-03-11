@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.type;
 ///import baidu.query.each;
@@ -14,8 +14,8 @@
 /**
  * @description 所有子元素的集合
  * @function
- * @name baidu.dom().children()
- * @grammar baidu.dom(args).children(selector)
+ * @name baidu.query().children()
+ * @grammar baidu.query(args).children(selector)
  * @param   {Object}            selector    选择器
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -29,7 +29,7 @@ baidu.query.extend({
             });
         });
 
-        return baidu.dom( baidu.query.match(a, selector) );
+        return baidu.query( baidu.query.match(a, selector) );
     }
 });
-
+

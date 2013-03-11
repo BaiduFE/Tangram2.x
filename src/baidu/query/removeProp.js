@@ -5,8 +5,8 @@
 /**
  * @description 为匹配的元素删除设置的属性。
  * @function 
- * @name baidu.dom().removeProp()
- * @grammar baidu.dom(args).removeProp(property)
+ * @name baidu.query().removeProp()
+ * @grammar baidu.query(args).removeProp(property)
  * @param {String} property 要删除的属性名称（不支持多个）
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
   * @example 
@@ -26,7 +26,7 @@
 
 */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom._propFixer;
 baidu.query.extend({
     removeProp: function(key){

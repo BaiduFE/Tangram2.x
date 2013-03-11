@@ -21,7 +21,7 @@ baidu.dom._getWidthOrHeight = function(){
     baidu.forEach(['Width', 'Height'], function(item){
         var cssExpand = {Width: ['Right', 'Left'], Height: ['Top', 'Bottom']}[item];
         ret['get' + item] = function(ele, extra){
-            var tang = baidu.dom(ele),
+            var tang = baidu.query(ele),
                 defaultValue = ele.offsetWidth === 0
                     && rdisplayswap.test(tang.getCurrentStyle('display'))
                     && (swap(ele, cssShow)),

@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.merge;
 ///import baidu.query.match;
@@ -15,8 +15,8 @@
  * @description 查找当前元素之前所有的同辈元素
  *
  * @function
- * @name baidu.dom().prevAll()
- * @grammar baidu.dom(args).prevAll(filter)
+ * @name baidu.query().prevAll()
+ * @grammar baidu.query(args).prevAll(filter)
  * @param   {Object}        filter      [可选]过滤函数
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -31,6 +31,6 @@ baidu.query.extend({
             baidu.merge(array, a.reverse());
         });
 
-        return baidu.dom(typeof filter == "string" ? baidu.query.match(array, filter) : array.unique());
+        return baidu.query(typeof filter == "string" ? baidu.query.match(array, filter) : array.unique());
     }
 });

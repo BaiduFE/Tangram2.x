@@ -5,8 +5,8 @@
 /**
  * @description 得到匹配元素集合中每个元素的文本内容结合,包括他们的后代。
  * @function 
- * @name baidu.dom().text()
- * @grammar baidu.dom(args).text()
+ * @name baidu.query().text()
+ * @grammar baidu.query(args).text()
  * @param {Null} null 不传入参数
  * @return {String|Undefined} 得到匹配元素集合中每个元素的文本内容结合,包括他们的后代。
  * @example
@@ -29,8 +29,8 @@
 /**
  * @description 设置匹配元素集合中每个元素的文本内容为指定的文本内容。
  * @function 
- * @name baidu.dom().text()
- * @grammar baidu.dom(args).text(text)
+ * @name baidu.query().text()
+ * @grammar baidu.query(args).text(text)
  * @param {String} text 用于设置匹配元素内容的文本
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example
@@ -52,11 +52,11 @@
 /**
  * @description 设置匹配元素集合中每个元素的文本内容为指定的文本内容。
  * @function 
- * @name baidu.dom().text()
- * @grammar baidu.dom(args).text(fn)
+ * @name baidu.query().text()
+ * @grammar baidu.query(args).text(fn)
  * @param {Function} fn 用来返回设置文本内容的一个函数。接收元素的索引位置和元素旧的文本值作为参数。
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
- * @example baidu.dom("<div>").text(function(index, text))
+ * @example baidu.query("<div>").text(function(index, text))
  */
 
 ///import baidu.query.empty;
@@ -66,7 +66,7 @@
 baidu.query.extend({
     text: function(value){
 
-        var bd = baidu.dom,
+        var bd = baidu.query,
             me = this,
             isSet = false,
             result;

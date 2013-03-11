@@ -7,8 +7,8 @@
 /**
  * @description 将匹配到的DOM元素从文档中移除，并移除对应的DOM元素的事件
  * @function 
- * @name baidu.dom().remove()
- * @grammar baidu.dom(args).remove([selector])
+ * @name baidu.query().remove()
+ * @grammar baidu.query(args).remove([selector])
  * @param {String} selector 一个字符串的选择器，对前面匹配到的DOM元素再做进一步的过滤
  * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
  * @example

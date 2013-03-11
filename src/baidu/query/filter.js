@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.query.match;
 
 /**
@@ -11,8 +11,8 @@
 /**
  * @description 对 TangramDom 里的所有元素进行筛选
  * @function
- * @name baidu.dom().filter()
- * @grammar baidu.dom(args).filter(selector|tangramDom|HTMLElement|fn)
+ * @name baidu.query().filter()
+ * @grammar baidu.query(args).filter(selector|tangramDom|HTMLElement|fn)
  * @param   {String}        selector    CSS选择器
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -20,8 +20,8 @@
 /**
  * @description 对 TangramDom 里的所有元素进行筛选
  * @function
- * @name baidu.dom().filter()
- * @grammar baidu.dom(args).filter(selector|tangramDom|HTMLElement|fn)
+ * @name baidu.query().filter()
+ * @grammar baidu.query(args).filter(selector|tangramDom|HTMLElement|fn)
  * @param   {TangramDom}    tangramDom 对象
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -29,8 +29,8 @@
 /**
  * @description 对 TangramDom 里的所有元素进行筛选
  * @function
- * @name baidu.dom().filter()
- * @grammar baidu.dom(args).filter(selector)
+ * @name baidu.query().filter()
+ * @grammar baidu.query(args).filter(selector)
  * @param   {Selector} selector 选择器
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -38,14 +38,14 @@
 /**
  * @description 对 TangramDom 里的所有元素进行筛选
  * @function
- * @name baidu.dom().filter()
- * @grammar baidu.dom(args).filter(selector|tangramDom|HTMLElement|fn)
+ * @name baidu.query().filter()
+ * @grammar baidu.query(args).filter(selector|tangramDom|HTMLElement|fn)
  * @param   {Function}   fn   筛选的指定方法
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 
 baidu.query.extend({
     filter : function (selector) {
-        return baidu.dom(baidu.query.match(this, selector));
+        return baidu.query(baidu.query.match(this, selector));
     }
 });

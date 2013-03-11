@@ -2,19 +2,19 @@
  * @author dron
  */
 
-///import baidu.dom._eventBase;
+///import baidu.event
 
-void function( base, listener ){
-    if( base.listener )return ;
+void function( base, _listener ){
+    if( base._listener )return ;
     
-    listener = base.listener = {};
+    _listener = base._listener = {};
     
     if( window.addEventListener )
-        listener.add = function( target, name, fn ){
+        _listener.add = function( target, name, fn ){
             target.addEventListener( name, fn, false );
         };
     else if( window.attachEvent )
-        listener.add = function( target, name, fn ){
+        _listener.add = function( target, name, fn ){
             target.attachEvent( "on" + name, fn );
         };
-}( baidu.dom._eventBase );
+}( baidu.event );

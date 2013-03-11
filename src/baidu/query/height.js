@@ -1,15 +1,15 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom._access;
 ///import baidu.dom._getWidthOrHeight;
 ///import baidu.dom._getWindowOrDocumentWidthOrHeight;
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的高度，该高度忽略margin, border, padding的计算
  * @function 
- * @name baidu.dom().height()
- * @grammar baidu.dom(args).height()
+ * @name baidu.query().height()
+ * @grammar baidu.query(args).height()
  * @return {Number} 返回一个高度数值
  * @example 
  .height()和.css('height')之间的区别是.height()返回一个没有单位的数值（例如，400），
@@ -36,8 +36,8 @@
 /**
  * @description 设置匹配元素或是设置多个匹配元素的高度，该高度忽略margin, border, padding的计算
  * @function 
- * @name baidu.dom().height()
- * @grammar baidu.dom(args).height(value)
+ * @name baidu.query().height()
+ * @grammar baidu.query(args).height(value)
  * @param {Number|String} value （参数支持整型数据，字符串数据，带单位的字符串数值），接口设置所有匹配元素的高度
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example
@@ -64,11 +64,11 @@
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的高度，该高度忽略margin, border, padding的计算
  * @function 
- * @name baidu.dom().height()
- * @grammar baidu.dom(args).height(fn)
+ * @name baidu.query().height()
+ * @grammar baidu.query(args).height(fn)
  * @param {function} fn 接收两个参数，index参数表示匹配元素在集合中的索引，height表示匹配元素的高度，fn最终需要返回合法的数值来设置高度
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
- * @example baidu.dom("<div>").height(function(index, height){})
+ * @example baidu.query("<div>").height(function(index, height){})
  */
 baidu.query.extend({
     height: function(value){

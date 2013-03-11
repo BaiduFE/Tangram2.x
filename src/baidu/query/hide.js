@@ -8,8 +8,8 @@
 /**
  * @description 隐藏匹配的元素
  * @function 
- * @name baidu.dom().hide()
- * @grammar baidu.dom(args).hide()
+ * @name baidu.query().hide()
+ * @grammar baidu.query(args).hide()
  * @return {TangramDom} 之前匹配的TangramDom对象
  * @example 
  show和hide方法是最简单的显示或者隐藏一个元素的方法

@@ -17,7 +17,7 @@
  * Copyright 2012 Baidu Inc. All rights reserved.
  *
  * @author meizz, dron, linlingyu, erik, berg, allstar
- * @modify 2012-05-20   meizz 转接到baidu.dom()做链头方法用
+ * @modify 2012-05-20   meizz 转接到baidu.query()做链头方法用
  */
 
 
@@ -109,7 +109,7 @@
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  */
 
-var T, baidu = T = baidu || function(q, c) { return baidu.dom ? baidu.dom(q, c) : null; };
+var T, baidu = T = baidu || function(q, c) { return baidu.query ? baidu.query(q, c) : null; };
 
 baidu.version = '2.0.2.1';
 baidu.guid = "$BAIDU$";
