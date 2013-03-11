@@ -2,15 +2,15 @@
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
  * 
- * path: baidu/dom.js
- * author: allstar, erik
+ * path: baidu/cookie.js
+ * author: erik
  * version: 1.1.0
  * date: 2009/12/02
  */
 
 ///import pack.baidu;
 /**
- * 操作dom的方法
- * @namespace baidu.dom 
+ * 操作cookie的方法
+ * @namespace baidu.cookie
  */
-baidu.dom = baidu.dom || {};
+baidu.cookie = baidu.cookie || {};
