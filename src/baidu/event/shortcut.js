@@ -25,7 +25,7 @@ void function(){
     for(var i = 0, l = arr.length; i < l; i ++)
         create( arr[i] );
 
-    baidu.query.extend( conf );
+    baidu.dom.extend( conf );
 }();
 
 /**

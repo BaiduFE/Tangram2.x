@@ -1,4 +1,4 @@
-///import baidu.dom._smartAjax;
+///import baidu.ajax.smartAjax;
 /**
  * @description 通过服务器HTTP POST请求加载数据
  * @function 
@@ -10,4 +10,4 @@
  * @param {String} dataType 从服务器返回的预期的数据类型。默认：智能猜测（xml, json, script, or html）
  * @return {tangramAjax} 一个tangramAjax对象
  */
-baidu.post = baidu.post || baidu.dom._smartAjax('post');
+baidu.post = baidu.post || baidu.ajax.smartAjax('post');

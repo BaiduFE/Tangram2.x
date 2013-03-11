@@ -1,8 +1,8 @@
 ///import baidu.merge;
 ///import baidu.makeArray;
 ///import baidu.string.trim;
-///import baidu.dom._isXML;
-///import baidu.dom._contains;
+///import baidu._util_.isXML;
+///import baidu._util_.contains;
 
 
 /*
@@ -23,7 +23,7 @@ void function( window, undefined ) {
 
  //在用户选择使用 Sizzle 时会被覆盖原有简化版本的baidu.query方法
 
-    baidu.query = function( selector, context, results ) {
+    baidu._query = function( selector, context, results ) {
         return baidu.merge( results || [], baidu.sizzle(selector, context) );
     };
 
@@ -352,7 +352,7 @@ void function( window, undefined ) {
         return results;
     };
 
-    var isXML = baidu.dom._isXML;
+    var isXML = baidu._util_.isXML;
     //var isXML = Sizzle.isXML = function( elem ) {
     //    // documentElement is verified for cases where it doesn't yet exist
     //    // (such as loading iframes in IE - #4833)
@@ -415,7 +415,7 @@ void function( window, undefined ) {
     //        }
     //        return false;
     //    };
-    var contains = baidu.dom._contains;
+    var contains = baidu._util_.contains;
 
 
     // Sizzle.matchesSelector = function( node, expr ) {
@@ -1427,7 +1427,7 @@ void function( window, undefined ) {
     // EXPOSE
 
     window.Sizzle = baidu.sizzle = Sizzle;
-    baidu.query.matches = function( expr, set ) {
+    baidu._query.matches = function( expr, set ) {
         return select( expr, document, [], set, isXML( document ) );
     };
 

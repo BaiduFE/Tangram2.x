@@ -89,7 +89,7 @@ baidu.createChain("dom",
 
 
 function(selector, context) {
-    var e, me = new baidu.query.$DOM(context);
+    var e, me = new baidu.dom.$DOM(context);
 
     // Handle $(""), $(null), or $(undefined)
     if (!selector) {
@@ -118,11 +118,11 @@ function(selector, context) {
                 doc = context && context._type_ === '$DOM' ? context[0] : context,
                 ret = rsingleTag.exec(selector);
             doc = doc && doc.nodeType ? doc.ownerDocument || doc : document;
-            ret = ret ? [doc.createElement(ret[1])] : (baidu.dom._createElements ? baidu.dom._createElements( selector ) : []);
+            ret = ret ? [doc.createElement(ret[1])] : (baidu.dom.createElements ? baidu.dom.createElements( selector ) : []);
             baidu.merge( me, ret);
         // baidu.query
         } else {
-            baidu.query(selector, context, me);
+            baidu._query(selector, context, me);
         }
     
     // document.ready

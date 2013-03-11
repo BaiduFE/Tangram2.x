@@ -8,7 +8,7 @@
 ///import baidu.when;
 ///import baidu.id;
 ///import baidu.support;
-///import baidu.query.on;
+///import baidu.dom.on;
 
 /**
  * @description 执行一个异步的ajax请求
@@ -771,15 +771,15 @@ void function(){
     } : createStandardXHR;
     
     void function(xhr){
-        baidu.extend(baidu.dom._support, {
+        baidu.extend(baidu.support, {
             ajax: !!xhr,
             cors: !!xhr && ('withCredentials' in xhr)
         });
     }(baidu.ajax.settings.xhr());
     
-    if(baidu.dom._support.ajax){
+    if(baidu.support.ajax){
         baidu.ajax.transport(function(opts){
-            if(!opts.crossDomain || baidu.dom._support.cors){
+            if(!opts.crossDomain || baidu.support.cors){
                 var callback;
                 return {
                     send: function(headers, complete){
