@@ -2,15 +2,16 @@
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
  * 
- * path: baidu/dom.js
+ * path: baidu/browser.js
  * author: allstar, erik
  * version: 1.1.0
  * date: 2009/12/02
  */
 
 ///import pack.baidu;
+
 /**
- * 操作dom的方法
- * @namespace baidu.dom 
+ * 判断浏览器类型和特性的属性
+ * @namespace baidu.browser
  */
-baidu.dom = baidu.dom || {};
+baidu.browser = baidu.browser || {};

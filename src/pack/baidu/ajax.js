@@ -2,15 +2,15 @@
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
  * 
- * path: baidu/dom.js
+ * path: baidu/ajax.js
  * author: allstar, erik
  * version: 1.1.0
- * date: 2009/12/02
+ * date: 2009/11/13
  */
 
 ///import pack.baidu;
 /**
- * 操作dom的方法
- * @namespace baidu.dom 
+ * 对XMLHttpRequest请求的封装
+ * @namespace baidu.ajax
  */
-baidu.dom = baidu.dom || {};
+baidu.ajax = baidu.ajax || {};
