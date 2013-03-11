@@ -1,12 +1,12 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 /**
  * @description 取得第一个匹配元素的computed style值。如果元素的样式值不能被浏览器计算，则会返回空字符串（IE）
  * @function 
- * @name baidu.dom().getComputedStyle()
- * @grammar baidu.dom(args).getComputedStyle(key)
+ * @name baidu.query().getComputedStyle()
+ * @grammar baidu.query(args).getComputedStyle(key)
  * @param {String} key 参数是一个css的属性名称，通过该属性名称取得第一个匹配元素的computed style值
  * @return {String} 返回一个字符串的computed style值
  */

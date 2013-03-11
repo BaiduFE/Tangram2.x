@@ -20,7 +20,7 @@
  */
 baidu.createChain = function(chainName, fn, constructor) {
     // 创建一个内部类名
-    var className = chainName=="dom"?"$DOM":"$"+chainName.charAt(0).toUpperCase()+chainName.substr(1);
+    var className = chainName=="query"?"$DOM":"$"+chainName.charAt(0).toUpperCase()+chainName.substr(1);
     var slice = Array.prototype.slice;
 
     // 构建链头执行方法
@@ -40,7 +40,7 @@ baidu.createChain = function(chainName, fn, constructor) {
                     var id = arguments[0];
 
                     // 在新版接口中，ID选择器必须用 # 开头
-                    chainName=="dom" && baidu.type(id)=="string" && (id = "#"+ id);
+                    chainName=="query" && baidu.type(id)=="string" && (id = "#"+ id);
 
                     var object = chain(id);
                     var result = object[method].apply(object, slice.call(arguments, 1));

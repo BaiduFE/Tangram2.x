@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.merge;
 
@@ -13,12 +13,12 @@
  * @description 通过 HTMLString 创建 DOM 对象
  *
  * @function
- * @name baidu.dom._createElements
- * @grammar baidu.dom._createElements(HTMLString)
+ * @name baidu.query.createElements
+ * @grammar baidu.query.createElements(HTMLString)
  * @param   {HTMLString}    htmlstring HTMLString
  * @return  {$DOM}          new TangramDom
  */
-baidu.dom._createElements = function() {
+baidu.query.createElements = function() {
     var tagReg  = /<(\w+)/i,
         rhtml = /<|&#?\w+;/,
         tagMap  = {

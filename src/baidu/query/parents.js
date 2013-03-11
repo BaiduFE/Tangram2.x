@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.merge;
 ///import baidu.query.match;
@@ -14,8 +14,8 @@
  * @description 取得一个包含着所有匹配元素的祖先元素的元素集合（不包含根元素）。可以通过一个可选的表达式进行筛选。
  *
  * @function
- * @name baidu.dom().parents()
- * @grammar baidu.dom(args).parents([filter])
+ * @name baidu.query().parents()
+ * @grammar baidu.query(args).parents([filter])
  * @param   {String|Function}   filter      [可选]过滤函数
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
@@ -31,6 +31,6 @@ baidu.query.extend({
             baidu.merge(array, a);
         });
 
-        return baidu.dom( baidu.query.match(array, filter) );
+        return baidu.query( baidu.query.match(array, filter) );
     }
 });

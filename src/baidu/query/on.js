@@ -11,8 +11,8 @@
 /**
  * @description 对当前 TangramDom 集合添加事件监听
  * @function 
- * @name baidu.dom().on()
- * @grammar baidu.dom(args).on(events[,selector][,data][,fn])
+ * @name baidu.query().on()
+ * @grammar baidu.query(args).on(events[,selector][,data][,fn])
  * @param {String} events 事件名称，如果是多个事件，以空格或半角逗号隔开
  * @param {String} selector 选择器表达式，用限制事件源对象范围，当符合表达式，才触发事件，此参数可选。
  * @param {Object} data 事件触发时携带的数据，JSON 格式，此参数可选。
@@ -32,8 +32,8 @@
 /**
  * @description 对当前 TangramDom 集合添加事件监听
  * @function 
- * @name baidu.dom().on()
- * @grammar baidu.dom(args).on(eventsMap[,selector][,data])
+ * @name baidu.query().on()
+ * @grammar baidu.query(args).on(eventsMap[,selector][,data])
  * @param {Object} eventsMap 一个用 eventName: eventFn 键值对表示的 JSON 格式对象
  * @param {String} selector 选择器表达式，用限制事件源对象范围，当符合表达式，才触发事件，此参数可选。
  * @param {Object} data 事件触发时携带的数据，JSON 格式，此参数可选。
@@ -52,7 +52,7 @@
 
 baidu.query.extend({
     on: function( events, selector, data, fn, _one ){
-        var eb = baidu.dom._eventBase.core;
+        var eb = baidu.event._core;
         // var specials = { mouseenter: 1, mouseleave: 1, focusin: 1, focusout: 1 };
 
         if( typeof selector == "object" && selector )
@@ -88,11 +88,11 @@ baidu.query.extend({
     }
 
     // _on: function( name, data, fn ){
-    //     var eb = baidu.dom._eventBase;
+    //     var eb = baidu.event;
     //     this.each(function(){
     //         eb.add( this, name, fn, undefined, data );
     //     });
     //     return this;
     // }
 });
-
+

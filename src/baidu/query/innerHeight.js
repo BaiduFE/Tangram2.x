@@ -2,14 +2,14 @@
  * @author linlingyu
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom._getWindowOrDocumentWidthOrHeight;
 ///import baidu.dom._getWidthOrHeight;
 /**
  * @description 取得第一个匹配元素的高度，该高度忽略margin, border的计算，但包含padding的计算
  * @function 
- * @name baidu.dom().innerHeight()
- * @grammar baidu.dom(args).innerHeight()
+ * @name baidu.query().innerHeight()
+ * @grammar baidu.query(args).innerHeight()
  * @return {Number} 返回一个整型的高度值
  */
 baidu.query.extend({

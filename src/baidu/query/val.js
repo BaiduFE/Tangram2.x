@@ -2,7 +2,7 @@
 ///import baidu.query.find;
 ///import baidu.support;
 ///import baidu.dom._nodeName;
-///import baidu.dom._inArray;
+///import baidu.inArray;
 ///import baidu.makeArray;
 ///import baidu.forEach;
 ///import baidu.type;
@@ -13,8 +13,8 @@
 /**
  * @description 获取匹配的元素集合中第一个元素的当前值。
  * @function 
- * @name baidu.dom().val()
- * @grammar baidu.dom(args).val()
+ * @name baidu.query().val()
+ * @grammar baidu.query(args).val()
  * @return {String|Number|Undefined} 获取匹配的元素集合中第一个元素的当前值。
  * @example
  .val()方法主要用于获取表单元素的值，下拉框（select）和复选框（checkbox），
@@ -36,8 +36,8 @@
 /**
  * @description 设置匹配的元素集合中每个元素的value值。
  * @function 
- * @name baidu.dom().val()
- * @grammar baidu.dom(args).val(value)
+ * @name baidu.query().val()
+ * @grammar baidu.query(args).val(value)
  * @param {String} value 一个文本字符串来设定每个匹配元素的值。
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example
@@ -54,19 +54,19 @@
 /**
  * @description 设置匹配的元素集合中每个元素的value值。
  * @function 
- * @name baidu.dom().val()
- * @grammar baidu.dom(args).val(fn)
+ * @name baidu.query().val()
+ * @grammar baidu.query(args).val(fn)
  * @param {Function} fn 一个用来返回设置value值的函数。接收元素的索引位置和元素旧的value值作为参数。
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
- * @example baidu.dom("<div>").val(function(index, value){});
+ * @example baidu.query("<div>").val(function(index, value){});
  */
 
 baidu.query.extend({
     val: function(){
-        baidu.dom._support.dom.select.disabled = true;
-        var util = baidu._util_,
-            checkOn = util.support.dom.input.value === 'on',
-            optDisabled = !util.support.dom.opt.disabled,
+        baidu.support.dom.select.disabled = true;
+        var util = baidu.dom,
+            checkOn = baidu.support.dom.input.value === 'on',
+            optDisabled = !baidu.support.dom.opt.disabled,
             inputType = ['radio', 'checkbox'],
             valHooks = {
                 option: {
@@ -88,8 +88,8 @@ baidu.query.extend({
                             item = options[i];
                             if((item.selected || i === index)
                                 && (optDisabled ? !item.disabled : item.getAttribute('disabled') === null)
-                                && (!item.parentNode.disabled || !util.nodeName(item.parentNode, 'optgroup'))){
-                                val = baidu.dom(item).val();
+                                && (!item.parentNode.disabled || !baidu.dom._nodeName(item.parentNode, 'optgroup'))){
+                                val = baidu.query(item).val();
                                 if(one){return val;}
                                 ret.push(val);
                             }
@@ -98,15 +98,15 @@ baidu.query.extend({
                     },
                     set: function(ele, key, val){
                         var ret = baidu.makeArray(val);
-                        baidu.dom(ele).find('option').each(function(index, item){
-                            item.selected = util.inArray(baidu.dom(this).val(), ret) >= 0;
+                        baidu.query(ele).find('option').each(function(index, item){
+                            item.selected = baidu.inArray(baidu.query(this).val(), ret) >= 0;
                         });
                         !ret.length && (ele.selectedIndex = -1);
                         return ret;
                     }
                 }
             };
-        !util.support.getSetAttribute && (valHooks.button = util.nodeHook);
+        !baidu.support.getSetAttribute && (valHooks.button = util.nodeHook);
         if(!checkOn){
             baidu.forEach(inputType, function(item){
                 valHooks[item] = {
@@ -120,7 +120,7 @@ baidu.query.extend({
             valHooks[item] = valHooks[item] || {};
             valHooks[item].set = function(ele, key, val){
                 if(baidu.type(val) === 'array'){
-                    return (ele.checked = util.inArray(baidu.dom(ele).val(), val) >= 0);
+                    return (ele.checked = baidu.inArray(baidu.query(ele).val(), val) >= 0);
                 }
             }
         });
@@ -134,7 +134,7 @@ baidu.query.extend({
             }
             this.each(function(index, item){
                 if(item.nodeType !== 1){return;}
-                var tang = baidu.dom(item),
+                var tang = baidu.query(item),
                     val = baidu.type(value) === 'function' ?
                         value.call(item, index, tang.val()) : value;
                 if(val == null){

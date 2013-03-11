@@ -8,14 +8,14 @@
  * date: 2009/11/17
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom._contains;
 
 /**
  * @description 判断一个元素是否包含另一个元素
- * @name baidu.dom().contains()
+ * @name baidu.query().contains()
  * @function
- * @grammar baidu.dom(args).contains(contained)
+ * @grammar baidu.query(args).contains(contained)
  * @param {HTMLElement|string} args 包含元素或元素的id
  * @param {HTMLElement|string} contained 被包含元素或元素的id
  * @meta standard
@@ -27,10 +27,8 @@
 baidu.query.extend({
     contains : function(contained) {
         var container = this[0];
-            contained = baidu.dom(contained)[0];
+            contained = baidu.query(contained)[0];
         if(!container || !contained){return false;}
         return baidu.dom._contains(container, contained);
     }    
 });
-
-

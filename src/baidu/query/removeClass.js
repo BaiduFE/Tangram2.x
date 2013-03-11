@@ -6,8 +6,8 @@
 /**
  * @description 移除每个匹配元素的一个，多个或全部样式。
  * @function 
- * @name baidu.dom().removeClass()
- * @grammar baidu.dom(args).removeClass([className])
+ * @name baidu.query().removeClass()
+ * @grammar baidu.query(args).removeClass([className])
  * @param {String}  className 所要移除的一个或多个class属性名(多个用空格分隔)，不填全部删除。
  * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
  * @example 
@@ -30,8 +30,8 @@
 /**
  * @description 移除每个匹配元素的一个，多个或全部样式。
  * @function 
- * @name baidu.dom().removeClass()
- * @grammar baidu.dom(args).removeClass(fn)
+ * @name baidu.query().removeClass()
+ * @grammar baidu.query(args).removeClass(fn)
  * @param {Function}  fn(index,className)  这个函数返回一个或更多用空格隔开的要增加的样式名。接收元素的索引index和元素旧的样式名className作为参数。
  * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
  * @example
@@ -57,7 +57,7 @@
 
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.string.trim;
 
@@ -85,7 +85,7 @@ baidu.query.extend({
 
         }else if(type == "function"){
             baidu.forEach(this, function(item, index ,className){
-                baidu.dom(item).removeClass(value.call(item, index, item.className));
+                baidu.query(item).removeClass(value.call(item, index, item.className));
             }); 
         }
 

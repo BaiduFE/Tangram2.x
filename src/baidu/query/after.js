@@ -9,8 +9,8 @@
 /**
  * @description 在匹配的每个DOM元素后面插入新的内容
  * @function 
- * @name baidu.dom().after()
- * @grammar baidu.dom(args).after(content1[, content2])
+ * @name baidu.query().after()
+ * @grammar baidu.query(args).after(content1[, content2])
  * @param {HTMLString|Element|TangramDom} content1 支持一个DOM元素或是一段HTMLString或是一个TangramDom对象
  * @param {HTMLString|Array|Element|TangramDom} content2 支持一个或多个DOM元素或是DOM元素的数组或是一段HTMLString或是一个TangramDom对象
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
@@ -48,11 +48,11 @@
 /**
  * @description 在匹配的每个DOM元素后面插入新的内容
  * @function 
- * @name baidu.dom().after()
- * @grammar baidu.dom(args).after(fn)
+ * @name baidu.query().after()
+ * @grammar baidu.query(args).after(fn)
  * @param {Function} fn 支持一个函数作为参数，函数最终需要返回一个HTMLString|Element|TangramDom
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
- * @example baidu.dom(args).after(function(index,html))
+ * @example baidu.query(args).after(function(index,html))
  */
 baidu.query.extend({
     after: function(){

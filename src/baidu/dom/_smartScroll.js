@@ -3,7 +3,7 @@
  */
 ///import baidu.dom;
 ///import baidu.type;
-///import baidu.browser.isStrict;
+///import baidu.browser;
 
 baidu.dom._smartScroll = function(axis){
     var orie = {scrollLeft: 'pageXOffset', scrollTop: 'pageYOffset'}[axis],

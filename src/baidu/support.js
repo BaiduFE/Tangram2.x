@@ -1,8 +1,8 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
-baidu.dom._support = baidu.dom._support || function(){
+///import baidu.query;
+baidu.support = baidu.support || function(){
     var div = document.createElement('div'),
         baseSupport, a, input, select, opt;
     div.setAttribute('className', 't');
