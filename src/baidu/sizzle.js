@@ -23,7 +23,7 @@ void function( window, undefined ) {
 
  //在用户选择使用 Sizzle 时会被覆盖原有简化版本的baidu.query方法
 
-    baidu.query = function( selector, context, results ) {
+    baidu._query = function( selector, context, results ) {
         return baidu.merge( results || [], baidu.sizzle(selector, context) );
     };
 
@@ -1427,7 +1427,7 @@ void function( window, undefined ) {
     // EXPOSE
 
     window.Sizzle = baidu.sizzle = Sizzle;
-    baidu.query.matches = function( expr, set ) {
+    baidu._query.matches = function( expr, set ) {
         return select( expr, document, [], set, isXML( document ) );
     };
 

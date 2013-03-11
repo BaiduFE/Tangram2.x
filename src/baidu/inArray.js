@@ -1,5 +1,5 @@
-///import baidu.dom;
-baidu.dom._inArray = function(ele, array, index){
+
+baidu.inArray = function(ele, array, index){
     if(!array){return -1;}
     var indexOf = Array.prototype.indexOf,
         len;

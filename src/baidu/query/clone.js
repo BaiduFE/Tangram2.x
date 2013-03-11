@@ -11,8 +11,8 @@
 /**
  * @description 对匹配元素进行深度克隆
  * @function 
- * @name baidu.dom().clone()
- * @grammar baidu.dom(args).clone([withDataAndEvents[,deepWithDataAndEvents]])
+ * @name baidu.query().clone()
+ * @grammar baidu.query(args).clone([withDataAndEvents[,deepWithDataAndEvents]])
  * @param {Boolean} withDataAndEvents 一个可选的布尔值参数，当参数为true时，表示当次克隆需要将该匹配元素的数据和事件也做克隆
  * @param {Boolean} deepWithDataAndEvents 一个可选的布尔值参数，当参数为true时，表示当次克隆需要将该匹配元素的所有子元素的数据和事件也做克隆
  * @return {TangramDom} 接口最终返回一个TangramDom对象，该对象包装了克隆的节点
@@ -61,11 +61,11 @@
 
 baidu.query.extend({
     clone: function(){
-        var util = baidu._util_,
-            eventCore = util.eventBase.core,
-            eventQueue = util.eventBase.queue,
-            div = util.support.dom.div,
-            noCloneChecked = util.support.dom.input.cloneNode(true).checked,//用于判断ie是否支持clone属性
+        var util = baidu.dom,
+            eventCore = baidu.event._core,
+            eventQueue = baidu.event._queue,
+            div = baidu.support.dom.div,
+            noCloneChecked = baidu.support.dom.input.cloneNode(true).checked,//用于判断ie是否支持clone属性
             noCloneEvent = true;
         if (!div.addEventListener && div.attachEvent && div.fireEvent){
             div.attachEvent('onclick', function(){noCloneEvent = false;});

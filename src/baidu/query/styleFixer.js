@@ -6,6 +6,7 @@
 ///import baidu.extend;
 ///import baidu.forEach;
 ///import baidu.support;
+///import baidu.dom._getWidthOrHeight;
 ///import baidu.type;
 ///import baidu.string.toCamelCase;
 
@@ -55,7 +56,7 @@ baidu.query.styleFixer = function(){
     baidu.forEach(['width', 'height'], function(item){
         cssHooks[item] = {
             get: function(ele){
-                return baidu._util_.getWidthOrHeight(ele, item) + 'px';
+                return baidu.dom._getWidthOrHeight(ele, item) + 'px';
             },
             set: function(ele, key, val){
                 baidu.type(val) === 'number' && val < 0 && (val = 0);

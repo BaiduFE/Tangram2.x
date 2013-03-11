@@ -6,8 +6,8 @@
 /**
  * @description 在匹配的元素集合中的每个元素上添加或删除一个或多个className，如果存在就删除一个className，不存在就添加。
  * @function 
- * @name baidu.dom().toggleClass()
- * @grammar baidu.dom(args).toggleClass(className)
+ * @name baidu.query().toggleClass()
+ * @grammar baidu.query(args).toggleClass(className)
  * @param {String} className 要添加或者删除的className名（多个用空格间隔）
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example 
@@ -29,8 +29,8 @@
 /**
  * @description 在匹配的元素集合中的每个元素上添加或删除一个或多个className，如果存在就删除一个className，不存在就添加。
  * @function 
- * @name baidu.dom().toggleClass()
- * @grammar baidu.dom(args).toggleClass(className,switch)
+ * @name baidu.query().toggleClass()
+ * @grammar baidu.query(args).toggleClass(className,switch)
  * @param {String} className 要添加或者删除的className名（多个用空格间隔）
  * @param {Boolean} switch 一个用来判断传入的className添加还是移除的 boolean 值。true则都添加，false则都删除。
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
@@ -59,8 +59,8 @@
 /**
  * @description 在匹配的元素集合中的每个元素上添加或删除一个或多个className，如果存在就删除一个className，不存在就添加。
  * @function 
- * @name baidu.dom().toggleClass()
- * @grammar baidu.dom(args).toggleClass(fn[,switch])
+ * @name baidu.query().toggleClass()
+ * @grammar baidu.query(args).toggleClass(fn[,switch])
  * @param {Function} fn 用来返回在匹配的元素集合中的每个元素上用来切换的className的一个函数。接收元素的索引位置和元素旧的className作为参数。
  * @param {Boolean} switch 一个用来判断传入的className添加还是移除的 boolean 值。true则都添加，false则都删除。
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
@@ -87,7 +87,7 @@
 
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 
 baidu.query.extend({
@@ -132,7 +132,7 @@ baidu.query.extend({
             case 'function':
 
                 baidu.forEach(this, function(item, index){
-                    baidu.dom(item).toggleClass(value.call(item, index, item.className),status);
+                    baidu.query(item).toggleClass(value.call(item, index, item.className),status);
                 });
 
             break;
@@ -141,5 +141,3 @@ baidu.query.extend({
         return this;
     }
 });
-
-

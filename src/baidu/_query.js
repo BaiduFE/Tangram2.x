@@ -4,10 +4,10 @@
 ///import baidu.array.unique;
 /*
  * @fileoverview
- * @name baidu.query
+ * @name baidu._query
  * @author meizz
  * @create 2012-05-30
- * @modify 2012-06-10 将大函数分拆成 query() 和 queryCombo()；使用 querySelectAll()；
+ * @modify 2012-06-10 将大函数分拆成 _query() 和 queryCombo()；使用 querySelectAll()；
  */
 
 /**
@@ -16,14 +16,14 @@
  * 目前这个简版的 selector 函数支持四种选择器 * #id .class tagName
  *
  * @function
- * @name baidu.query
- * @grammar baidu.query(selector[, context[, results]])
+ * @name baidu._query
+ * @grammar baidu._query(selector[, context[, results]])
  * @param   {String}    selector    CSS选择器字符串
  * @param   {Document}  context     选择的范围
  * @param   {Array}     results     返回的结果对象（数组）
  * @return  {Array}                 筛选后的对象组
  */
-baidu.query = baidu.query || function(){
+baidu._query = baidu._query || function(){
     var rId = /^(\w*)#([\w\-\$]+)$/
        ,rId0= /^#([\w\-\$]+)$/
        ,rTag = /^\w+$/

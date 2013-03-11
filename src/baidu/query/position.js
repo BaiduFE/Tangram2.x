@@ -8,8 +8,8 @@
 /**
  * @description 取得第一个匹配元素相对于父元素的偏移量
  * @function 
- * @name baidu.dom().position()
- * @grammar baidu.dom(args).position()
+ * @name baidu.query().position()
+ * @grammar baidu.query(args).position()
  * @return {Object} 返回一个包含left和top键名的json来标示元素相对于父元素的偏移量
  */
 baidu.query.extend({

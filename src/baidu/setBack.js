@@ -1,5 +1,4 @@
 ///import baidu;
-
 /*
  * @description 为当前的新链头对象赋加.getBack()方法
  * @author meizz

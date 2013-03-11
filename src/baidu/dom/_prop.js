@@ -1,3 +1,4 @@
+///import baidu.dom;
 ///import baidu.dom._propFixer;
 ///import baidu.dom._isXML;
 baidu.dom._prop = function(){

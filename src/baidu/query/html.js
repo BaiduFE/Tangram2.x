@@ -69,6 +69,7 @@ baidu.query.extend({
     html: function(value){
 
         var bd = baidu.query,
+            bt = baidu.dom,
             me = this,
             isSet = false,
             htmlSerialize = !!baidu.support.dom.div.getElementsByTagName('link').length,

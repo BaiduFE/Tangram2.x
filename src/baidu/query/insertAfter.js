@@ -2,14 +2,14 @@
  * @author linlingyu
  */
 
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.dom._smartInsertTo;
 
 /**
  * @description 将匹配到的DOM元素插入到参数指定的DOM元素的后面
  * @function 
- * @name baidu.dom().insertAfter()
- * @grammar baidu.dom(args).insertAfter(target)
+ * @name baidu.query().insertAfter()
+ * @grammar baidu.query(args).insertAfter(target)
  * @param {HTMLString|selector|Element|TangramDom} target 一个HTMLString或是选择器字符串或是DOM元素或是TangramDom对象
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
  * @example 

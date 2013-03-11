@@ -4,18 +4,17 @@
 
 ///import baidu.id;
 ///import baidu.event;
-///import baidu.dom._eventBase;
 ///import baidu.event._listener;
 
 void function( base, be ){
-    if( base.queue )return ;
+    if( base._queue )return ;
 
     var I = baidu.id;
-    var queue = base.queue = {};
-    var attaCache = queue.attaCache = baidu.global( "eventQueueCache" );
-    var listener = base.listener;
+    var _queue = base._queue = {};
+    var attaCache = _queue.attaCache = baidu.global( "eventQueueCache" );
+    var _listener = base._listener;
 
-    queue.get = function( target, type, bindType, attachElements ){
+    _queue.get = function( target, type, bindType, attachElements ){
         var id = I( target ), c;
 
         if( !attaCache[id] )
@@ -31,11 +30,11 @@ void function( base, be ){
         }else return c;
     };
 
-    queue.add = function( target, type, bindType, item, attachElements ){
+    _queue.add = function( target, type, bindType, item, attachElements ){
         this.get( target, type, bindType, attachElements ).push( item );
     };
 
-    queue.remove = function( target, type, fn ){
+    _queue.remove = function( target, type, fn ){
         var arr, c;
         if( type ){
             var arr = this.get( target, type );
@@ -53,7 +52,7 @@ void function( base, be ){
         }
     };
 
-    queue.call = function( target, type, fnAry, e ){
+    _queue.call = function( target, type, fnAry, e ){
         if( fnAry ){
             if( !fnAry.length )
                 return ;
@@ -85,21 +84,21 @@ void function( base, be ){
         }
     };
 
-    queue.setupCall = function(){
+    _queue.setupCall = function(){
         var add = function( target, type, bindType, fnAry ){
-            listener.add( target, bindType, function( e ){
-                queue.call( target, type, fnAry, e );
+            _listener.add( target, bindType, function( e ){
+                _queue.call( target, type, fnAry, e );
             } );
         };
         return function( target, type, bindType, fnAry, attachElements ){
             if( !attachElements )
                 add( target, type, bindType, fnAry );
             else{
-                target = baidu.dom( attachElements, target );
+                target = baidu.query( attachElements, target );
                 for(var i = 0, l = target.length; i < l; i ++)
                     add( target[i], type, bindType, fnAry );
             }
         };
     }();
 
-}( baidu.dom._eventBase, baidu.event );
+}( baidu.event, baidu.event );

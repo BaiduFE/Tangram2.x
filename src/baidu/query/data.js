@@ -1,5 +1,5 @@
 ///import baidu.id;
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.type;
 ///import baidu.global;
@@ -15,8 +15,8 @@
 /**
  * @description 设置 DOM 对象上存储数据
  * @function
- * @name baidu.dom().data()
- * @grammar baidu.dom().data(key, value)
+ * @name baidu.query().data()
+ * @grammar baidu.query().data(key, value)
  * @param {String} key 数据的键值
  * @param {String|Number} value 数据的值 
  * @return
@@ -25,8 +25,8 @@
 /**
  * @description 取出在 DOM 对象上存储数据，也可以取出以“data-”开头的自定义属性
  * @function
- * @name baidu.dom().data()
- * @grammar baidu.dom().data(key)
+ * @name baidu.query().data()
+ * @grammar baidu.query().data(key)
  * @param {String} key 数据的键值
  * @return {String|Object} 取出的数据
  */

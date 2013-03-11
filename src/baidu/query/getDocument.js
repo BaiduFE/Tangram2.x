@@ -1,12 +1,12 @@
 /**
  * @author linlingyu
  */
-///import baidu.dom;
+///import baidu.query;
 /**
  * @description 取得匹配元素所属的document对象
  * @function 
- * @name baidu.dom().getDocument()
- * @grammar baidu.dom(args).getDocument()
+ * @name baidu.query().getDocument()
+ * @grammar baidu.query(args).getDocument()
  * @return {document} 返回一个document对象
  */
 /**

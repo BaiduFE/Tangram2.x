@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 ///import baidu.type;
 ///import baidu.query.match;
 
@@ -13,8 +13,8 @@
  * @description 去除当前集合中符合再次输入的选择器的项
  *
  * @function
- * @name baidu.dom().not()
- * @grammar baidu.dom(args).not(selector)
+ * @name baidu.query().not()
+ * @grammar baidu.query(args).not(selector)
  * @param   {Object}            selector    选择器
   
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
@@ -49,6 +49,6 @@ baidu.query.extend({
             }
         }
 
-        return baidu.dom(all);
+        return baidu.query(all);
     }
 });

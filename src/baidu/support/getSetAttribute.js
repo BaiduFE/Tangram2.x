@@ -1,2 +1,2 @@
 ///import baidu.support;
-baidu.dom._support.getSetAttribute = baidu.dom._support.dom.div.className !== 't';
+baidu.support.getSetAttribute = baidu.support.dom.div.className !== 't';

@@ -1,4 +1,4 @@
-///import baidu.dom;
+///import baidu.query;
 
 /**
  * @fileoverview
@@ -10,8 +10,8 @@
 /**
  * @description 截取一段DOM对象
  * @function
- * @name baidu.dom().slice()
- * @grammar baidu.dom(args).slice(start[, end])
+ * @name baidu.query().slice()
+ * @grammar baidu.query(args).slice(start[, end])
  * @param   {Number}        start   起始位置
  * @param   {Number}        end     [可选]结束位置
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
@@ -25,8 +25,8 @@ baidu.query.extend({
             baidu.check("number(,number)?","baidu.query.slice");
 
             // ie bug
-            // return baidu.dom( this.toArray().slice(start, end) );
-            return baidu.dom( slice.apply(this, arguments) );
+            // return baidu.query( this.toArray().slice(start, end) );
+            return baidu.query( slice.apply(this, arguments) );
         }
     }()
 });

@@ -4,8 +4,8 @@
 
 ///import baidu.dom;
 ///import baidu.forEach;
-///import baidu.dom;
-///import baidu.browser.isStrict;
+///import baidu.query;
+///import baidu.browser;
 
 baidu.dom._getWindowOrDocumentWidthOrHeight = baidu.dom._getWindowOrDocumentWidthOrHeight || function(){
     var ret = {'window': {}, 'document': {}};
