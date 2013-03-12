@@ -1,6 +1,4 @@
 ///import baidu.extend;
-///import baidu.isString;
-///import baidu.isFunction;
 ///import baidu.base.Class;
 
 /**
