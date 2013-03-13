@@ -1,5 +1,4 @@
 ///import baidu.extend;
-///import baidu.isString;
 ///import baidu.base.Class;
 
 /**
