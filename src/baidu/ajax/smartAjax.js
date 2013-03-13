@@ -2,12 +2,12 @@
 ///import baidu.type;
 
 /**
- * @description 根据类型创建一个ajax方法(POST/GET...)
+ * @description 鏍规嵁绫诲瀷鍒涘缓涓�涓猘jax鏂规硶(POST/GET...)
  * @function 
  * @name baidu.smartAjax()
  * @grammar baidu.smartAjax(type)
- * @param {String} type 请求类型(POST/GET...)
- * @return {tangramAjax} 一个tangramAjax方法
+ * @param {String} type 璇锋眰绫诲瀷(POST/GET...)
+ * @return {tangramAjax} 涓�涓猼angramAjax鏂规硶
  */
 baidu.ajax.smartAjax = baidu.ajax.smartAjax || function(method){
     return function(url, data, callback, type){
