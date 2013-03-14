@@ -1,4 +1,5 @@
 ///import baidu.array;
+///import baidu.type;
 /**
  * @fileoverview
  * @author meizz
@@ -27,9 +28,6 @@
  * @return  {Array}             已经过滤后的数组
  */
 
-
-///import baidu.array;
-///import baidu.type;
 /**
  * @fileoverview
  * @author meizz
