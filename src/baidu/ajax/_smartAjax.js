@@ -3,13 +3,14 @@
 
 /**
  * @description 根据类型创建一个ajax方法(POST/GET...)
+ * @private
  * @function 
- * @name baidu.smartAjax()
- * @grammar baidu.smartAjax(type)
+ * @name baidu._smartAjax()
+ * @grammar baidu._smartAjax(type)
  * @param {String} type 请求类型(POST/GET...)
  * @return {tangramAjax} 一个tangramAjax方法
  */
-baidu.ajax.smartAjax = baidu.ajax.smartAjax || function(method){
+baidu.ajax._smartAjax = baidu.ajax._smartAjax || function(method){
     return function(url, data, callback, type){
         if(baidu.type(data) === 'function'){
             type = type || callback;
