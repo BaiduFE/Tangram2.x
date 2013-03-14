@@ -7,7 +7,7 @@
 ///import baidu.forEach;
 ///import baidu.type;
 ///import baidu.dom._nodeHook;
-///import baidu.support.getSetAttribute;
+///import baidu.support._getSetAttribute;
 ///import baidu.array.map;
 
 /**
@@ -106,7 +106,7 @@ baidu.query.extend({
                     }
                 }
             };
-        !baidu.support.getSetAttribute && (valHooks.button = util.nodeHook);
+        !baidu.support._getSetAttribute && (valHooks.button = util.nodeHook);
         if(!checkOn){
             baidu.forEach(inputType, function(item){
                 valHooks[item] = {
