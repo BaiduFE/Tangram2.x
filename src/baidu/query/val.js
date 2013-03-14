@@ -2,7 +2,7 @@
 ///import baidu.query.find;
 ///import baidu.support;
 ///import baidu.dom._nodeName;
-///import baidu.inArray;
+///import baidu.array.indexOf;
 ///import baidu.makeArray;
 ///import baidu.forEach;
 ///import baidu.type;
@@ -99,7 +99,7 @@ baidu.query.extend({
                     set: function(ele, key, val){
                         var ret = baidu.makeArray(val);
                         baidu.query(ele).find('option').each(function(index, item){
-                            item.selected = baidu.inArray(baidu.query(this).val(), ret) >= 0;
+                            item.selected = baidu.array(ret).indexOf(baidu.query(this).val()) >= 0;
                         });
                         !ret.length && (ele.selectedIndex = -1);
                         return ret;
@@ -120,7 +120,7 @@ baidu.query.extend({
             valHooks[item] = valHooks[item] || {};
             valHooks[item].set = function(ele, key, val){
                 if(baidu.type(val) === 'array'){
-                    return (ele.checked = baidu.inArray(baidu.query(ele).val(), val) >= 0);
+                    return (ele.checked = baidu.array(val).indexOf(baidu.query(ele).val()) >= 0);
                 }
             }
         });
