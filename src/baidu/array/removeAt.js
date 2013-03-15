@@ -1,7 +1,7 @@
 ///import baidu.array;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -10,7 +10,7 @@
 /**
  * @description 删除数组指定的项
  *
- * @name baidu.array.removeAt
+ * @name baidu.array.removeAt()
  * @function
  * @grammar $Array.removeAt(index)
  * @param   {Number}        index   指定项的索引位置

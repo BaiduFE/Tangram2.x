@@ -1,7 +1,8 @@
 ///import baidu.array;
 
 /**
- * @fileoverview
+ * @fileOverview
+ * @description 清空数组的元素
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -10,7 +11,7 @@
 /**
  * @description 清空数组
  *
- * @name baidu.array.empty
+ * @name baidu.array.empty()
  * @function
  * @grammar $Array.empty()
  * @return  {Array}             空数组

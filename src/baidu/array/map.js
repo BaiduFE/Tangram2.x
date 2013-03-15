@@ -2,7 +2,7 @@
 ///import baidu.type;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -28,4 +28,5 @@ baidu.array.extend({
         }
         return array;
     }
-});
+});
+

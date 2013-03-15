@@ -2,7 +2,7 @@
 ///import baidu.type;
 
 /*
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2010-01-23
  * @modify 2012-08-31 mz 添加深度clone和多对象拷贝策略
@@ -11,20 +11,21 @@
 /**
  * @description 拷贝某对象的所有属性/方法，并返回一个全新对象(非深度克隆)
  * @function
- * @name baidu.extend
- * @grammar baidu.extend(obj1[,objN])
- * @param   {Object} obj0,obj1,objN  每一个传入的对象
+ * @name baidu.extend()
+ * @grammar baidu.extend(obj0[,objN])
+ * @param   {Object} obj0 需要拓展的第一个对象
+ * @param   {Object} objN [可选]需要拓展的其他对象
  * @return  {Object}                合并后的JS对象
  */
 
 /**
  * @description 拷贝某对象的所有属性/方法；如果第一个参数为true，则进入深度克隆，并返回一个全新对象
  * @function
- * @name baidu.extend
- *
+ * @name baidu.extend()
  * @grammar baidu.extend(depthClone, obj1[,objN])
  * @param   {Boolean}   depthClone  是否深度克隆的标识，默认为false，可以不传。
- * @param   {Object} obj0,obj1,objN  每一个传入的对象
+ * @param   {Object} obj0 需要拓展的第一个对象
+ * @param   {Object} objN [可选]需要拓展的其他对象
  * @return  {Object}                合并后的JS对象
  */
 

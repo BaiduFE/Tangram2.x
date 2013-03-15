@@ -6,7 +6,7 @@
 ///import baidu.array.unique;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-06-18
  * @modify

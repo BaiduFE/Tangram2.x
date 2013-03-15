@@ -39,9 +39,10 @@ baidu.extend(baidu.base.Class.prototype, {
 
     /**
      * @description 类的析构方法，且触发 ondispose 事件，此方法执行后 .disposed 值为 true
-     * @name obj.dispose
+     * @name obj.dispose()
      * @function 
      * @grammar obj.dispose()
+     * @return {undefined} 无返回值
      * TODO: 将_listeners中绑定的事件剔除掉
      */
     ,dispose: function() {
@@ -67,6 +68,7 @@ baidu.extend(baidu.base.Class.prototype, {
     }
 
     /**
+     * @private
      * @description 派发自定义事件，使得绑定到自定义事件上面的函数都会被执行。引入baidu.base.Event后，Class的子类实例才会获得该方法。
      * @grammar instance.fire(event[, options])
      * @param {baidu.base.Event|String}   event   Event对象，或事件名称(1.1.1起支持)
@@ -108,6 +110,7 @@ baidu.extend(baidu.base.Class.prototype, {
     }
 
     /**
+     * @private
      * @description 事件注册
      * @grammer instance.on(event, handler)
      * @param   {String}    type    事件名
@@ -139,6 +142,7 @@ baidu.extend(baidu.base.Class.prototype, {
     }
 
     /**
+     * @private
      * @description 注销事件处理函数
      * @grammer instance.off([event[, handler]])
      * @param   {String}    type    [可选]事件名
@@ -196,6 +200,7 @@ window["baiduInstance"] = function(guid) {
 
 
 /**
+ * @private
  * @class   自定义的事件对象。
  * @name    baidu.base.Event
  * @grammar new baidu.base.Event(type[, target])

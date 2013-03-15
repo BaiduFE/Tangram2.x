@@ -3,7 +3,7 @@
 ///import baidu.query.match;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-06-11
  * @modify

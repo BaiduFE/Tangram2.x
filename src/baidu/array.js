@@ -3,7 +3,7 @@
 ///import baidu.createChain;
 
 /*
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-05-20
  * @modify
@@ -11,7 +11,7 @@
 
 /**
  * @description array对象链式语法的链头
- * @name baidu.array
+ * @name baidu.array()
  * @function
  * @grammar baidu.array(array)
  * @param   {Array}         array   Array对象

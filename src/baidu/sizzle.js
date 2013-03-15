@@ -6,7 +6,7 @@
 
 
 /*
- * @fileoverview
+ * @fileOverview
  * @name baidu.sizzle
  * @author meizz
  * @create 2012-05-30

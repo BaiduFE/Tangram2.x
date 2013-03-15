@@ -3,7 +3,7 @@
 ///import baidu.merge;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-07-05
  * @modify

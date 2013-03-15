@@ -1,6 +1,8 @@
 ///import baidu.array;
+///import baidu.type;
 /**
- * @fileoverview
+ * @fileOverview
+ * @description 过滤数组
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -9,13 +11,14 @@
 /**
  * @description 过滤数组
  *
- * @name baidu.array.filter
+ * @name baidu.array.filter()
  * @function
  * @grammar array.filter(iterator[, context])
  * @param   {Function}      iterator 用于做过滤的函数
  * @param   {context}       context  方法作用域
  * @return  {Array}             已经过滤后的数组
  */
+
 /**
  * @description 过滤数组
  *
@@ -27,26 +30,17 @@
  * @return  {Array}             已经过滤后的数组
  */
 
-
-///import baidu.array;
-///import baidu.type;
-/**
- * @fileoverview
- * @author meizz
- * @create 2012-07-30
- * @modify
- */
-
 /**
  * @description 过滤数组
  *
- * @name baidu.array.filter
+ * @name baidu.array.filter()
  * @function
  * @grammar array.filter(iterator[, context])
  * @param   {Function}      iterator 用于做过滤的函数
  * @param   {context}       context  方法作用域
  * @return  {Array}             已经过滤后的数组
  */
+
 /**
  * @description 过滤数组
  *
@@ -73,4 +67,4 @@ baidu.array.extend({
         }
         return result;
     }
-});
+});

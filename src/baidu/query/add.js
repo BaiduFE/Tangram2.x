@@ -6,7 +6,7 @@
 ///import baidu.query.createElements;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @name baidu.query.add
  * @author meizz
  * @create 2012-05-28

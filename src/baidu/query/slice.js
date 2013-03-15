@@ -1,7 +1,7 @@
 ///import baidu.query;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-06-01
  * @modify 2012-07-27 meizz end为undefined时在IE浏览器里出错

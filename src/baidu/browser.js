@@ -1,7 +1,7 @@
 ///import baidu.extend;
 
 /*
- * @fileoverview
+ * @fileOverview
  * @name baidu.browser
  * @author meizz
  * @create 2012-06-29

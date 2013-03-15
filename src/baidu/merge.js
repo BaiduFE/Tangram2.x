@@ -1,7 +1,7 @@
 ///import baidu;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-05-20
  * @modify

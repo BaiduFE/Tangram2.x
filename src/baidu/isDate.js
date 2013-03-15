@@ -7,7 +7,7 @@
  * @create 2012-05-04
  *
  * @function
- * @name baidu.isDate
+ * @name baidu.isDate()
  * @grammer baidu.isDate( unknow )
  *
  * @param   {Any}       unknow  任意类型的对象

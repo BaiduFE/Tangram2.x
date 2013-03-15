@@ -1,7 +1,7 @@
 ///import baidu.array;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -10,7 +10,7 @@
 /**
  * @description 去除数组中的重复项
  *
- * @name baidu.array.unique
+ * @name baidu.array.unique()
  * @function
  * @grammar $Array.unique([fn])
  * @param   {Function}      fn  用于做除重对比的函数

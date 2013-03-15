@@ -5,7 +5,7 @@
 ///import baidu.global;
 
 /**
- * @fileoverview
+ * @fileOverview
  * @name baidu.query.data
  * @create 2012-07-13
  * @author meizz

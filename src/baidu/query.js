@@ -4,7 +4,7 @@
 ///import baidu.createChain;
 
 /**
- * @fileoverview DOM操作链式语法头
+ * @fileOverview DOM操作链式语法头
  * @author meizz
  * @create 2012-05-20
  * @modify
