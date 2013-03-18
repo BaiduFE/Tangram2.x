@@ -2,7 +2,7 @@
 ///import baidu.array;
 ///import baidu.each;
 ///import baidu.forEach;
-/**
+/*
  * @fileOverview
  * @description 枚举数组的元素执行某个操作
  * @author meizz

@@ -1,5 +1,5 @@
 ///import baidu.array.indexOf;
-/**
+/*
  * @fileOverview
  * @description 判断数组是否包含指定的元素
  * @author meizz

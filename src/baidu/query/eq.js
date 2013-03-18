@@ -1,6 +1,6 @@
 ///import baidu.query;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-06-06
@@ -12,7 +12,7 @@
  * @function
  * @name baidu.query().eq()
  * @grammar baidu.query(args).eq(index)
- * @param   {Number}        index|-index    指定的元素下标
+ * @param   {Number}        index    指定的元素下标，如果指定为负数，则从
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 baidu.query.extend({

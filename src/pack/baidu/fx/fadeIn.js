@@ -12,8 +12,9 @@
 
  
 /**
- * 渐现渐变效果。注意，如果元素的visibility属性如果为hidden，效果将表现不出来。
+ * @description 渐现渐变效果。注意，如果元素的visibility属性如果为hidden，效果将表现不出来。
  * @function
+ * @name baidu.fx.fadeIn
  * @grammar baidu.fx.fadeIn(element, options)
  * @param      {string|HTMLElement}     element            元素或者元素的ID
  * @param      {Object}                 options            选项。参数的详细说明如下表所示
@@ -26,6 +27,7 @@
  * @config     {Function}               onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config     {Function}               oncancel           function(){},//效果被撤销时的回调函数
  * @see baidu.fx.fadeOut
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 
 baidu.fx.fadeIn = function(element, options) {

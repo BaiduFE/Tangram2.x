@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -19,7 +19,7 @@
 /**
  * @description 对目标字符串进行格式化
  * @function 
- * @name baidu.string.format
+ * @name baidu.string.format()
  * @grammar baidu.string.format(str, options)
  * @param {String} str 目标字符串
  * @param {String|Object} options 提供相应数据的对象或多个字符串，参数为object时，替换目标字符串中的#{property name}部分；参数为String时，替换目标字符串中的#{0}、#{1}...部分

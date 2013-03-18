@@ -12,7 +12,7 @@
 ///import pack.baidu.lang.isString;
 
 /**
- * 从文档中获取指定的DOM元素
+ * @description 从文档中获取指定的DOM元素
  * **内部方法**
  * 
  * @param {string|HTMLElement} id 元素的id或DOM元素

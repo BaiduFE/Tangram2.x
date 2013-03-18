@@ -11,8 +11,9 @@
 
 
 /**
- * 获取线型函数
+ * @description 获取线型函数
  * @function
+ * @name baidu.fx.getTransition
  * @grammar baidu.fx.getTransition(name)
  * @param   {String}    name    transition的名称
  * @return  {function}          线型函数

@@ -10,7 +10,8 @@
 
 ///import pack.baidu;
 /**
- * 对form的操作，解决表单数据问题
- * @namespace baidu.form
+ * @description 对form的操作，解决表单数据问题
+ * @namespace
+ * @name baidu.form
  */
 baidu.form = baidu.form || {};

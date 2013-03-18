@@ -14,7 +14,7 @@
 ///import pack.baidu.dom.getPosition;
 
 /**
- * 检查两个元素是否相交
+ * @description 检查两个元素是否相交
  * @name baidu.dom.intersect
  * @function
  * @grammar baidu.dom.intersect(element1, element2)
@@ -22,7 +22,7 @@
  * @param {HTMLElement|string} element2 要检查的元素或元素的id
  * @see baidu.dom.contains
  *
- * @returns {boolean} 两个元素是否相交的检查结果
+ * @return {boolean} 两个元素是否相交的检查结果
  */
 baidu.dom.intersect = function (element1, element2) {
     var g = baidu.dom.g, 

@@ -1,12 +1,3 @@
-/**
- * 获得页面里的目前鼠标所在的坐标
- * @name baidu.page.getMousePosition
- * @function
- * @grammar baidu.page.getMousePosition()
- * @version 1.2
- *             
- * @returns {object} 鼠标坐标值{x:[Number], y:[Number]}
- */
 /*
  * Tangram
  * Copyright 2010 Baidu Inc. All rights reserved.
@@ -20,11 +11,17 @@
 ///import pack.baidu.event.on;
 ///import pack.baidu.page.getScrollTop;
 ///import pack.baidu.page.getScrollLeft;
+
 /**
- * 取得当前页面里的目前鼠标所在的坐标（x y）
- *
- * @return  {JSON}  当前鼠标的坐标值({x, y})
+ * @description 获得页面里的目前鼠标所在的坐标
+ * @name baidu.page.getMousePosition
+ * @function
+ * @grammar baidu.page.getMousePosition()
+ * @version 1.2
+ *             
+ * @return {object} 鼠标坐标值{x:[Number], y:[Number]}
  */
+
 (function(){
 
  baidu.page.getMousePosition = function(){

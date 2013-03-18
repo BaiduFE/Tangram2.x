@@ -11,6 +11,6 @@
 ///import baidu.dom;
 
 /**
- * 提供给setStyle与getStyle使用
+ * @description 提供给setStyle与getStyle使用
  */
 baidu.dom._styleFixer = baidu.dom._styleFixer || {};

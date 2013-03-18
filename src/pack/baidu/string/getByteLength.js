@@ -11,7 +11,7 @@
 ///import pack.baidu.string;
 
 /**
- * 获取目标字符串在gbk编码下的字节长度
+ * @description 获取目标字符串在gbk编码下的字节长度
  * @name baidu.string.getByteLength
  * @function
  * @grammar baidu.string.getByteLength(source)
@@ -21,7 +21,7 @@
  * @meta standard
  * @see baidu.string.subByte
  *             
- * @returns {number} 字节长度
+ * @return {number} 字节长度
  */
 baidu.string.getByteLength = function (source) {
     return String(source).replace(/[^\x00-\xff]/g, "ci").length;

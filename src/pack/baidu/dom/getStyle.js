@@ -10,7 +10,7 @@
 ///import baidu.string.toCamelCase;
 
 /**
- * 获取目标元素的样式值
+ * @description 获取目标元素的样式值
  * @name baidu.dom.getStyle
  * @function
  * @grammar baidu.dom.getStyle(element, key)
@@ -25,7 +25,7 @@
  * @meta standard
  * @see baidu.dom.setStyle,baidu.dom.setStyles, baidu.dom.getComputedStyle
  *             
- * @returns {string} 目标元素的样式值
+ * @return {string} 目标元素的样式值
  */
 // TODO
 // 1. 无法解决px/em单位统一的问题（IE）

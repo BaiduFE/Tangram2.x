@@ -1,6 +1,6 @@
 ///import baidu.array;
 
-/**
+/*
  * @fileOverview
  * @description 清空数组的元素
  * @author meizz

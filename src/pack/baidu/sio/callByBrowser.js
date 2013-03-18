@@ -8,7 +8,7 @@
 ///import pack.baidu.sio._removeScriptTag;
 
 /**
- * 通过script标签加载数据，加载完成由浏览器端触发回调
+ * @description 通过script标签加载数据，加载完成由浏览器端触发回调
  * @name baidu.sio.callByBrowser
  * @function
  * @grammar baidu.sio.callByBrowser(url, opt_callback, opt_options)
@@ -23,6 +23,7 @@
  * 2、如果请求了一个不存在的页面，callback函数在IE/opera下也会被调用，因此使用者需要在onsuccess函数中判断数据是否正确加载。
  * @meta standard
  * @see baidu.sio.callByServer
+ * @return {Void} 无
  */
 baidu.sio.callByBrowser = function (url, opt_callback, opt_options) {
     var scr = document.createElement("SCRIPT"),

@@ -11,7 +11,7 @@
 ///import pack.baidu.lang;
 
 /**
- * 为类型构造器建立继承关系
+ * @description 为类型构造器建立继承关系
  * @name baidu.lang.inherits
  * @function
  * @grammar baidu.lang.inherits(subClass, superClass[, type])
@@ -27,6 +27,7 @@
  * @shortcut inherits
  * @meta standard
  * @see baidu.lang.Class
+ * @return {Class} 返回subClass
  */
 baidu.lang.inherits = function (subClass, superClass, type) {
     var key, proto, 

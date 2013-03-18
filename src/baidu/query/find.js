@@ -5,7 +5,7 @@
 ///import baidu.forEach;
 ///import baidu.type;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-06-12

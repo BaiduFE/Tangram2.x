@@ -10,7 +10,9 @@
 
 ///import pack.baidu;
 /**
- * 对XMLHttpRequest请求的封装
- * @namespace baidu.ajax
+ * @description 对XMLHttpRequest请求的封装
+ * @name baidu.ajax
+ * @namespace
+ * @name baidu.ajax
  */
 baidu.ajax = baidu.ajax || {};

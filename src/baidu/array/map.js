@@ -1,7 +1,7 @@
 ///import baidu.array;
 ///import baidu.type;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-07-30

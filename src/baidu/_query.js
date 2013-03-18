@@ -4,7 +4,7 @@
 ///import baidu.array.unique;
 /*
  * @fileOverview
- * @name baidu._query
+ * @name baidu._query()
  * @private
  * @author meizz
  * @create 2012-05-30

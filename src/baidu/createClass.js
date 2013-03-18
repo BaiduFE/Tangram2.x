@@ -1,7 +1,7 @@
 ///import baidu.extend;
 ///import baidu.base.Class;
 
-/**
+/*
  * @description 创建一个类，包括创造类的构造器、继承基类Class
  * @author meizz
  * @modify 2012.11.05 meizz

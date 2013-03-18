@@ -1,6 +1,6 @@
 ///import baidu.query;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-06-01

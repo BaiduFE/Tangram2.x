@@ -4,7 +4,7 @@
 ///import baidu.type;
 ///import baidu.forEach;
 
-/**
+/*
  * @fileOverview 百度回调对象
  * @author wangxiao, linlingyu
  */

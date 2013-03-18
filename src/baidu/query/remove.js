@@ -1,4 +1,4 @@
-/**
+/*
  * @author linlingyu
  */
  
@@ -34,7 +34,7 @@
 /**
  * @description 从DOM树上移除目标元素
  * @function 
- * @name baidu.query.remove
+ * @name baidu.query.remove()
  * @grammar baidu.query.remove(element)
  * @param {String|Element} element 需要移除的元素或元素的id
  * @return {Element} 被移除的DOM元素

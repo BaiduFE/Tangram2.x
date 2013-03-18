@@ -1,7 +1,7 @@
 ///import baidu.base;
 
 
-/**
+/*
  * @description 子类继承父类
  *
  * @author meizz

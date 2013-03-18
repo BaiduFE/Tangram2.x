@@ -1,7 +1,7 @@
 ///import baidu.query;
 ///import baidu.forEach;
 ///import baidu.query.find;
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-05-28

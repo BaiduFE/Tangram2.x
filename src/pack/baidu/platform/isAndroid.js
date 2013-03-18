@@ -5,7 +5,7 @@
 
 ///import pack.baidu.platform;
 
-/**
+/*
  * 判断是否为android平台
  * @property android 是否为android平台
  * @grammar baidu.platform.android

@@ -11,14 +11,14 @@
 ///import pack.baidu.lang;
 
 /**
- * 返回一个当前页面的唯一标识字符串。
+ * @description 返回一个当前页面的唯一标识字符串。
  * @name baidu.lang.guid
  * @function
  * @grammar baidu.lang.guid()
  * @version 1.1.1
  * @meta standard
  *             
- * @returns {String} 当前页面的唯一标识字符串
+ * @return {String} 当前页面的唯一标识字符串
  */
 baidu.lang.guid = function() {
     return "TANGRAM$" + baidu.$$._counter ++;

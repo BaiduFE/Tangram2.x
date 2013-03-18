@@ -5,7 +5,7 @@
 
 ///import pack.baidu.platform;
 
-/**
+/*
  * 判断是否为iphone平台
  * @property iphone 是否为iphone平台
  * @grammar baidu.platform.iphone

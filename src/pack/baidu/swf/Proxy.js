@@ -9,7 +9,7 @@
 ///import pack.baidu.lang.createClass;
 
 /**
- * Js 调用 Flash方法的代理类.
+ * @description Js 调用 Flash方法的代理类.
  * @function
  * @name baidu.swf.Proxy
  * @grammar new baidu.swf.Proxy(id, property, [, loadedHandler])
@@ -18,9 +18,10 @@
  * @param {Function} loadedHandler 初始化之后的回调函数.
  * @remark Flash对应的DOM元素必须已经存在, 否则抛错. 可以使用baidu.swf.create预先创建Flash对应的DOM元素.
  * @author liyubei@baidu.com (leeight)
+ * @return {Void} 无
  */
 baidu.swf.Proxy = function(id, property, loadedHandler) {
-    /**
+    /*
      * 页面上的Flash对象
      * @type {HTMLElement}
      */
@@ -32,7 +33,7 @@ baidu.swf.Proxy = function(id, property, loadedHandler) {
     }
     timer = setInterval(function() {
         try {
-            /** @preserveTry */
+            /* @preserveTry */
             if (flash[property]) {
                 me._initialized = true;
                 clearInterval(timer);
@@ -44,20 +45,20 @@ baidu.swf.Proxy = function(id, property, loadedHandler) {
         }
     }, 100);
 };
-/**
+/*
  * 获取flash对象.
  * @return {HTMLElement} Flash对象.
  */
 baidu.swf.Proxy.prototype.getFlash = function() {
     return this._flash;
 };
-/**
+/*
  * 判断Flash是否初始化完成,可以与js进行交互.
  */
 baidu.swf.Proxy.prototype.isReady = function() {
     return !! this._initialized;
 };
-/**
+/*
  * 调用Flash中的某个方法
  * @param {string} methodName 方法名.
  * @param {...*} var_args 方法的参数.

@@ -1,7 +1,7 @@
 ///import baidu.extend;
 ///import baidu.base.Class;
 
-/**
+/*
  * @description 创建一个baidu.base.Class的单例实例，主要用于创建 EventCenter DataCenter等全局唯一对象
  * @author meizz
  * @create 2010-05-13

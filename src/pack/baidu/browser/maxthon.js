@@ -13,11 +13,11 @@
 try {
     if (/(\d+\.\d+)/.test(external.max_version)) {
 /**
- * 判断是否为maxthon浏览器
+ * @description 判断是否为maxthon浏览器
  * @property maxthon maxthon版本号
  * @grammar baidu.browser.maxthon
  * @see baidu.browser.ie
- * @returns {Number} maxthon版本号
+ * @return {Number} maxthon版本号
  */
         baidu.browser.maxthon = + RegExp['\x241'];
     }

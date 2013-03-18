@@ -11,7 +11,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 查询一个元素是否包含指定的属性
+ * @description 查询一个元素是否包含指定的属性
  * @name baidu.dom.hasAttr
  * @function
  * @grammar baidu.dom.hasAttr(element, name)
@@ -19,7 +19,7 @@
  * @param {string} name 要查找的属性名
  * @version 1.3
  *             
- * @returns {Boolean} 是否包含此属性        
+ * @return {Boolean} 是否包含此属性        
  */
 
 baidu.dom.hasAttr = function (element, name){

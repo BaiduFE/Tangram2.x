@@ -1,6 +1,6 @@
 ///import baidu.array;
 ///import baidu.type;
-/**
+/*
  * @fileOverview
  * @description 过滤数组
  * @author meizz

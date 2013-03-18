@@ -14,8 +14,9 @@
 
  
 /**
- * 移动渐变效果，该效果使元素移动到指定的位置。注意：对static定位的DOM元素无效。
+ * @description 移动渐变效果，该效果使元素移动到指定的位置。注意：对static定位的DOM元素无效。
  * @function
+ * @name baidu.fx.moveTo
  * @grammar baidu.fx.moveTo(element, point, options)
  * @param       {string|HTMLElement}      element               元素或者元素的ID
  * @param       {Array|Object}            point                 目标点坐标。若为数组，索引0为x方向，索引1为y方向；若为Object，键x为x方向，键y为y方向；单位：px，默认值：元素本来的坐标。
@@ -31,6 +32,7 @@
  * @remark
  * 1.0.0开始支持
  * @see baidu.fx.moveTo
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.moveTo = function(element, point, options) {
     if (!(element = baidu.dom.g(element))

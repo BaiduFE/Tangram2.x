@@ -11,7 +11,7 @@
 ///import pack.baidu.lang;
 
 /**
- * 判断目标参数是否为Object对象
+ * @description 判断目标参数是否为Object对象
  * @name baidu.lang.isObject
  * @function
  * @grammar baidu.lang.isObject(source)
@@ -20,7 +20,7 @@
  * @meta standard
  * @see baidu.lang.isString,baidu.lang.isNumber,baidu.lang.isArray,baidu.lang.isElement,baidu.lang.isBoolean,baidu.lang.isDate
  *             
- * @returns {boolean} 类型判断结果
+ * @return {boolean} 类型判断结果
  */
 baidu.lang.isObject = function (source) {
     return 'function' == typeof source || !!(source && 'object' == typeof source);

@@ -11,8 +11,9 @@
 ///import pack.baidu;
 
 /**
- * 屏蔽浏览器差异性的事件封装
- * @namespace baidu.event
+ * @description 屏蔽浏览器差异性的事件封装
+ * @namespace
+ * @name baidu.event
  * @property target 	事件的触发元素
  * @property pageX 		鼠标事件的鼠标x坐标
  * @property pageY 		鼠标事件的鼠标y坐标

@@ -1,12 +1,13 @@
 ///import baidu;
 
-/**
+/*
+ * @private
  * @description 判断对象是否为Object或Function类型
  * @author meizz
  * @create 2012-05-04
  *
  * @function
- * @name baidu.isObject
+ * @name baidu.isObject()
  * @grammer baidu.isObject( unknow )
  *
  * @param   {Any}       unknow  任意类型的对象

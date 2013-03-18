@@ -11,12 +11,13 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 获取DOM元素正在运行的效果实例列表
+ * @description 获取DOM元素正在运行的效果实例列表
  * @function
+ * @name baidu.fx.current
  * @grammar baidu.fx.current(element)
  * @param     {string|HTMLElement}     element     被查询的DOM元素或元素id
  * @see baidu.fx.current
- * @returns {Array} 效果对象
+ * @return {Array} 效果对象
  */
 baidu.fx.current = function(element) {
     if (!(element = baidu.dom.g(element))) return null;

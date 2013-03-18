@@ -11,7 +11,7 @@
  * @description 分析形参对象的类型
  *
  * @function
- * @name baidu.check
+ * @name baidu.check()
  * @private
  * @grammar baidu.check(regString, moduleName[, object1,[objectn, ...]])
  * @param   {String}    regString     被分析的形参匹配字符串

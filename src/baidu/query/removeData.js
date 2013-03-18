@@ -6,7 +6,7 @@
 
 /*
  * @fileOverview
- * @name baidu.query.removeData
+ * @name baidu.query.removeData()
  * @create 2012-07-13
  * @author meizz
  * @modify

@@ -1,5 +1,5 @@
 ///import baidu;
-/**
+/*
  * @fileOverview 
  * @author meizz
  * @create 2012-08-30

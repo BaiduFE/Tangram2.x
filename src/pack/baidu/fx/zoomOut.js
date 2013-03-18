@@ -15,8 +15,9 @@
 
  
 /**
- * 将元素缩小的消失效果。
+ * @description 将元素缩小的消失效果。
  * @function
+ * @name  baidu.fx.zoomOut
  * @grammar baidu.fx.zoomOut(element, options)
  * @param     {string|HTMLElement}    element            元素或者元素的ID
  * @param     {Object}                options            选项。参数的详细说明如下表所示
@@ -31,6 +32,7 @@
  * @config    {Function}              onafterupdate      function(){},//每次刷新画面之后会调用的回调函数
  * @config    {Function}              onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config    {Function}              oncancel           function(){},//效果被撤销时的回调函数
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.zoomOut = function(element, options) {
     if (!(element = baidu.dom.g(element))) return null;

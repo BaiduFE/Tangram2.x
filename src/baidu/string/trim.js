@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -16,7 +16,7 @@
 /**
  * @description 删除目标字符串两端的空白字符
  * @function 
- * @name baidu.string.trim
+ * @name baidu.string.trim()
  * @grammar baidu.string.trim(str)
  * @param {String} str 目标字符串
  * @return {String} 删除两端空白字符后的字符串

@@ -11,7 +11,8 @@
 ///import baidu.dom._styleFilter;
 
 /**
- * 提供给setStyle与getStyle使用
+ * @private
+ * @description 提供给setStyle与getStyle使用
  * @meta standard
  */
 baidu.dom._styleFilter[baidu.dom._styleFilter.length] = {

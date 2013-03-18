@@ -6,7 +6,7 @@
 ///import pack.baidu.ajax;
 ///import pack.baidu.fn.blank;
 
-/**
+/*
  * 发送一个ajax请求
  * @author: allstar, erik, berg
  * @name baidu.ajax.request
@@ -30,7 +30,7 @@
  * @meta standard
  * @see baidu.ajax.get,baidu.ajax.post,baidu.ajax.form
  *             
- * @returns {XMLHttpRequest} 发送请求的XMLHttpRequest对象
+ * @return {XMLHttpRequest} 发送请求的XMLHttpRequest对象
  */
 baidu.ajax.request = function (url, opt_options) {
     var options     = opt_options || {},
@@ -45,7 +45,7 @@ baidu.ajax.request = function (url, opt_options) {
         eventHandlers = {},
         tick, key, xhr;
 
-    /**
+    /*
      * readyState发生变更时调用
      * 
      * @ignore
@@ -110,7 +110,7 @@ baidu.ajax.request = function (url, opt_options) {
         }
     }
     
-    /**
+    /*
      * 获取XMLHttpRequest对象
      * 
      * @ignore
@@ -131,7 +131,7 @@ baidu.ajax.request = function (url, opt_options) {
         }
     }
     
-    /**
+    /*
      * 触发事件
      * 
      * @ignore

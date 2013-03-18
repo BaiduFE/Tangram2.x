@@ -9,7 +9,9 @@
 ///import pack.baidu;
 
 /**
- * @namespace baidu.global 操作global对象的方法。
+ * @description 操作global对象的方法。
+ * @namespace
+ * @name baidu.global 
  * @author meizz
  */
 baidu.global = baidu.global || {};

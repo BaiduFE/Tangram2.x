@@ -11,7 +11,7 @@
 ///import pack.baidu.array;
 
 /**
- * 移除数组中的项
+ * @description 移除数组中的项
  * @name baidu.array.remove
  * @function
  * @grammar baidu.array.remove(source, match)
@@ -20,7 +20,7 @@
  * @meta standard
  * @see baidu.array.removeAt
  *             
- * @returns {Array} 移除后的数组
+ * @return {Array} 移除后的数组
  */
 baidu.array.remove = function (source, match) {
     var len = source.length;

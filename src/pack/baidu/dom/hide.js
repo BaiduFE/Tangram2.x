@@ -11,7 +11,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 隐藏目标元素
+ * @description 隐藏目标元素
  * @name baidu.dom.hide
  * @function
  * @grammar baidu.dom.hide(element)
@@ -20,7 +20,7 @@
  * @meta standard
  * @see baidu.dom.show,baidu.dom.toggle
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.hide = function (element) {
     element = baidu.dom.g(element);

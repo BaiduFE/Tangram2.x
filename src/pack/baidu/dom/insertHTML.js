@@ -7,7 +7,7 @@
 ///import pack.baidu.browser.opera;
 
 /**
- * 在目标元素的指定位置插入HTML代码
+ * @description 在目标元素的指定位置插入HTML代码
  * @name baidu.dom.insertHTML
  * @function
  * @grammar baidu.dom.insertHTML(element, position, html)
@@ -23,7 +23,7 @@
  * @shortcut insertHTML
  * @meta standard
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.insertHTML = function (element, position, html) {
     element = baidu.dom.g(element);

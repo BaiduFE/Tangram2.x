@@ -15,9 +15,9 @@
 
  
 /**
- * 颤动的效果。
- * 说明：在效果执行过程中会修改DOM元素的position属性，可能会对包含的DOM元素带来影响
+ * @description 颤动的效果。在效果执行过程中会修改DOM元素的position属性，可能会对包含的DOM元素带来影响
  * @function
+ * @name baidu.fx.shake
  * @grammar baidu.fx.shake(element, offset, options)
  * @param     {string|HTMLElement}    element            元素或者元素的ID
  * @param     {Array|Object}          offset             震动范围。若为数组，索引0为x方向，索引1为y方向；若为Object，键x为x方向，键y为y方向；单位：px，默认值：元素本来的坐标。
@@ -30,6 +30,7 @@
  * @config    {Function}              onafterupdate      function(){},//每次刷新画面之后会调用的回调函数
  * @config    {Function}              onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config    {Function}              oncancel           function(){},//效果被撤销时的回调函数
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.shake = function(element, offset, options) {
     if (!(element = baidu.dom.g(element))) return null;

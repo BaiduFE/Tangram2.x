@@ -9,14 +9,14 @@
  */
 
 /**
- * 删除一个节点下面的所有子节点。
+ * @description 删除一个节点下面的所有子节点。
  * @name baidu.dom.empty
  * @function
  * @grammar baidu.dom.empty(element)
  * @param {HTMLElement|string} element 目标元素或目标元素的id
  * @version 1.3
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
         
  */
 ///import pack.baidu.dom;

@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -16,7 +16,7 @@
 /**
  * @description 获取目标字符串在gbk编码下的字节长度
  * @function 
- * @name baidu.string.getByteLength
+ * @name baidu.string.getByteLength()
  * @grammar baidu.string.getByteLength(str)
  * @param {String} str 目标字符串
  * @return {Number} 字节长度

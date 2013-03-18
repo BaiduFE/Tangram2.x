@@ -1,4 +1,4 @@
-/**
+/*
  * @author linlingyu
  */
 ///import baidu.query;
@@ -14,7 +14,7 @@
 /**
  * @description 获取目标元素所属的window对象
  * @function 
- * @name baidu.query.getWindow
+ * @name baidu.query.getWindow()
  * @grammar baidu.query.getWindow(element)
  * @param {String|Element} element 目标元素或目标元素的id
  * @return {window} 目标元素所属的window对象

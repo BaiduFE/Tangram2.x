@@ -12,7 +12,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 从目标元素指定的方向搜索元素
+ * @description 从目标元素指定的方向搜索元素
  *
  * @param {HTMLElement|string} element   目标元素或目标元素的id
  * @param {string}             direction 遍历的方向名称，取值为previousSibling,nextSibling

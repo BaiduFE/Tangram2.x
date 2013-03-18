@@ -14,8 +14,9 @@
 
  
 /**
- * 按指定量移动滚动条。
+ * @description 按指定量移动滚动条。
  * @function
+ * @name baidu.fx.scrollBy
  * @grammar baidu.fx.scrollBy(element, distance, options)
  * @param       {string|HTMLElement}      element               元素或者元素的ID
  * @param       {Array|JSON}              distance              移动的距离 [,] | {x,y}，支持数组与JSON格式
@@ -28,6 +29,7 @@
  * @config      {Function}                onafterupdate         function(){},//每次刷新画面之后会调用的回调函数
  * @config      {Function}                onafterfinish         function(){},//效果结束后会执行的回调函数
  * @config      {Function}                oncancel              function(){},//效果被撤销时的回调函数
+ * @return {Instance}  baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.scrollBy = function(element, distance, options) {
     if (!(element = baidu.dom.g(element)) || typeof distance != "object") return null;

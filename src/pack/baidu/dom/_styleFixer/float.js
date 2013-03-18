@@ -11,7 +11,8 @@
 ///import baidu.browser.ie;
 
 /**
- * 提供给setStyle与getStyle使用
+ * @private
+ * @description 提供给setStyle与getStyle使用
  * @meta standard
  */
 baidu.dom._styleFixer["float"] = baidu.browser.ie ? "styleFloat" : "cssFloat";

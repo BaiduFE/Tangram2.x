@@ -11,7 +11,7 @@
 ///import baidu.event;
 
 /**
- * 事件监听器的存储表
+ * @description 事件监听器的存储表
  * @private
  * @meta standard
  */

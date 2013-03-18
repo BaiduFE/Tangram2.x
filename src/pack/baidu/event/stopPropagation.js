@@ -11,11 +11,12 @@
 ///import pack.baidu.event;
 
 /**
- * 阻止事件传播
+ * @description 阻止事件传播
  * @name baidu.event.stopPropagation
  * @function
  * @grammar baidu.event.stopPropagation(event)
  * @param {Event} event 事件对象
+ * @return {undefined} 无返回值
  * @see baidu.event.stop,baidu.event.preventDefault
  */
 baidu.event.stopPropagation = function (event) {

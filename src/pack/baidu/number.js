@@ -10,7 +10,8 @@
 
 ///import pack.baidu;
 /**
- * 操作number的方法
- * @namespace baidu.number
+ * @description 操作number的方法
+ * @namespace
+ * @name baidu.number
  */
 baidu.number = baidu.number || {};

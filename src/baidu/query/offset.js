@@ -1,4 +1,4 @@
-/**
+/*
  * @author linlingyu
  */
 
@@ -15,8 +15,6 @@
  * @name baidu.query().offset()
  * @grammar baidu.query(args).offset()
  * @return {Object} 返回一个包含left和top键名的json来标示元素的偏移量
- * @example 
- 
  */
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素相对于文档的偏移量

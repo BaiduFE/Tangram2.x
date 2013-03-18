@@ -11,14 +11,14 @@
 ///import pack.baidu.array;
 
 /**
- * 过滤数组中的相同项。如果两个元素相同，会删除后一个元素。
+ * @description 过滤数组中的相同项。如果两个元素相同，会删除后一个元素。
  * @name baidu.array.unique
  * @function
  * @grammar baidu.array.unique(source[, compareFn])
  * @param {Array} source 需要过滤相同项的数组
- * @param {Function} [compareFn] 比较两个数组项是否相同的函数,两个数组项作为函数的参数。
+ * @param {Function} compareFn [可选] 比较两个数组项是否相同的函数,两个数组项作为函数的参数。
  *             
- * @returns {Array} 过滤后的新数组
+ * @return {Array} 过滤后的新数组
  */
 baidu.array.unique = function (source, compareFn) {
     var len = source.length,

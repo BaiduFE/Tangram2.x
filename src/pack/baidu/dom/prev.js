@@ -11,7 +11,7 @@
 ///import pack.baidu.dom._matchNode;
 
 /**
- * 获取目标元素的上一个兄弟元素节点
+ * @description 获取目标元素的上一个兄弟元素节点
  * @name baidu.dom.prev
  * @function
  * @grammar baidu.dom.prev(element)
@@ -19,7 +19,7 @@
  * @see baidu.dom.first,baidu.dom.last,baidu.dom.next
  *             
  *             
- * @returns {HTMLElement|null} 目标元素的上一个兄弟元素节点，查找不到时返回null
+ * @return {HTMLElement|null} 目标元素的上一个兄弟元素节点，查找不到时返回null
  */
 baidu.dom.prev = function (element) {
     return baidu.dom._matchNode(element, 'previousSibling', 'previousSibling');

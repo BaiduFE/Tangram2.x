@@ -11,7 +11,8 @@
 ///import pack.baidu;
 
 /**
- * 判断浏览器类型和特性的属性
- * @namespace baidu.browser
+ * @description 判断浏览器类型和特性的属性
+ * @namespace
+ * @name baidu.browser
  */
 baidu.browser = baidu.browser || {};

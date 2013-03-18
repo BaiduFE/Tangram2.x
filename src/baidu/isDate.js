@@ -1,6 +1,7 @@
 ///import baidu.type;
 
-/**
+/*
+ * @private
  * @description 判断对象类型
  *
  * @author meizz

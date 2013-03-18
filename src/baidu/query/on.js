@@ -1,4 +1,4 @@
-/**
+/*
  * @fileOverview 对当前 TangramDom 集合添加事件监听
  * @author dron
  */

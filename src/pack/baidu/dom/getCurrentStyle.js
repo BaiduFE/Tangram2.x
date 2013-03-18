@@ -9,7 +9,7 @@
 ///import pack.baidu.dom.g;
 ///import pack.baidu.dom.getComputedStyle;
 
-/**
+/*
  * 获取目标元素的 currentStyle 值，兼容非IE浏览器
  * 某些样式名称或者值需要hack的话，需要别外处理！
  * @author meizz
@@ -21,7 +21,7 @@
  *
  * @see baidu.dom.getStyle
  *             
- * @returns {string} 目标元素的computed style值
+ * @return {string} 目标元素的computed style值
  */
 
 baidu.dom.getCurrentStyle = function(element, key){

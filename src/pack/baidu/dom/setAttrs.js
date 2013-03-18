@@ -12,7 +12,7 @@
 ///import pack.baidu.dom.setAttr;
 
 /**
- * 批量设置目标元素的attribute值
+ * @description 批量设置目标元素的attribute值
  * @name baidu.dom.setAttrs
  * @function
  * @grammar baidu.dom.setAttrs(element, attributes)
@@ -22,7 +22,7 @@
  * @meta standard
  * @see baidu.dom.setAttr,baidu.dom.getAttr
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.setAttrs = function (element, attributes) {
     element = baidu.dom.g(element);

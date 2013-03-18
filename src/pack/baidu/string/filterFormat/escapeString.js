@@ -10,7 +10,7 @@
 
 ///import pack.baidu.string.filterFormat;
 /**
- * 对字符串做安全转义,转义字符包括: 单引号,双引号,左右小括号,斜杠,反斜杠,上引号.
+ * @description 对字符串做安全转义,转义字符包括: 单引号,双引号,左右小括号,斜杠,反斜杠,上引号.
  * @name baidu.string.filterFormat.escapeString
  * @function
  * @grammar baidu.string.filterFormat.escapeString(source)

@@ -1,18 +1,19 @@
 ///import baidu.type;
 
-/**
- * @description 检查对象是否为一个简单对象 {}
+/*
+ * @private
+ * @description 检查对象是否为字面量 {}
  * @author meizz
  * @create 2012-09-03
  *
  * @function
- * @name baidu.isPlainObject
+ * @name baidu.isPlainObject()
  * @grammer baidu.isPlainObject( unknow )
  *
  * @param   {Any}       unknow  任意类型的对象
  * @return  {Boolean}           true|false
  */
-// 20120903 mz 检查对象是否为一个简单对象 {}
+// 20120903 mz 检查对象是否为字面量 {}
 baidu.isPlainObject = function(unknow) {
     var key,
         hasOwnProperty = Object.prototype.hasOwnProperty;

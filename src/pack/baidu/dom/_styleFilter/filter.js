@@ -11,7 +11,7 @@
 ///import baidu.dom._styleFilter;
 
 /**
- * 为获取和设置样式的过滤器
+ * @description 为获取和设置样式的过滤器
  * @private
  * @meta standard
  */

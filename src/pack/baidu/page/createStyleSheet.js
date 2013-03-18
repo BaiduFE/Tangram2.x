@@ -12,7 +12,7 @@
 ///import pack.baidu.page;
 
 /**
- * 在页面中创建样式表对象
+ * @description 在页面中创建样式表对象
  * @name baidu.page.createStyleSheet
  * @function
  * @grammar baidu.page.createStyleSheet(options)
@@ -27,7 +27,7 @@
  * 
  * @see baidu.page.createStyleSheet.StyleSheet
  *             
- * @returns {baidu.page.createStyleSheet.StyleSheet} styleSheet对象(注意: 仅IE下,其他浏览器均返回null)
+ * @return {StyleSheet} styleSheet对象(注意: 仅IE下,其他浏览器均返回null)
  */
 baidu.page.createStyleSheet = function(options){
     var op = options || {},

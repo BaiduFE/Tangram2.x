@@ -11,7 +11,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 获取目标元素所属的document对象
+ * @description 获取目标元素所属的document对象
  * @name baidu.dom.getDocument
  * @function
  * @grammar baidu.dom.getDocument(element)
@@ -19,7 +19,7 @@
  * @meta standard
  * @see baidu.dom.getWindow
  *             
- * @returns {HTMLDocument} 目标元素所属的document对象
+ * @return {HTMLDocument} 目标元素所属的document对象
  */
 baidu.dom.getDocument = function (element) {
     element = baidu.dom.g(element);

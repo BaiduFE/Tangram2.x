@@ -11,7 +11,7 @@
 ///import pack.baidu.dom;
 
 /**
- * 从文档中获取指定的DOM元素
+ * @description 从文档中获取指定的DOM元素
  * @name baidu.dom.g
  * @function
  * @grammar baidu.dom.g(id)

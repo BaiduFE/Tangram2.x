@@ -5,9 +5,9 @@
 ///import baidu.array.unique;
 ///import baidu.query.createElements;
 
-/**
+/*
  * @fileOverview
- * @name baidu.query.add
+ * @name baidu.query.add()
  * @author meizz
  * @create 2012-05-28
  * @modify

@@ -6,7 +6,7 @@
 ///import baidu.createChain;
 /*
  * @fileOverview
- * @name baidu.event
+ * @name baidu.event()
  * @author meizz, dron
  * @create 2012-06-14
  * @modify

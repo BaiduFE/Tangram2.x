@@ -12,7 +12,7 @@
 ///import pack.baidu.string.trim;
 
 /**
- * 获取目标元素指定元素className最近的祖先元素
+ * @description 获取目标元素指定元素className最近的祖先元素
  * @name baidu.dom.getAncestorByClass
  * @function
  * @grammar baidu.dom.getAncestorByClass(element, className)
@@ -21,7 +21,7 @@
  * @remark 使用者应保证提供的className合法性，不应包含不合法字符，className合法字符参考：http://www.w3.org/TR/CSS2/syndata.html。
  * @see baidu.dom.getAncestorBy,baidu.dom.getAncestorByTag
  *             
- * @returns {HTMLElement|null} 指定元素className最近的祖先元素，查找不到时返回null
+ * @return {HTMLElement|null} 指定元素className最近的祖先元素，查找不到时返回null
  */
 baidu.dom.getAncestorByClass = function (element, className) {
     element = baidu.dom.g(element);

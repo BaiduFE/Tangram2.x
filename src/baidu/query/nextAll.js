@@ -2,7 +2,7 @@
 ///import baidu.forEach;
 ///import baidu.query.match;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-06-11

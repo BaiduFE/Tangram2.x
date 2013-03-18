@@ -17,7 +17,7 @@
 ///import pack.baidu.dom._styleFilter.px;
 
 /**
- * 设置目标元素的top和left值到用户指定的位置
+ * @description 设置目标元素的top和left值到用户指定的位置
  * 
  * @name baidu.dom.setPosition
  * @function

@@ -1,7 +1,7 @@
 ///import baidu.query;
 ///import baidu.array.unique;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-05-28
@@ -12,9 +12,9 @@
  * @description 去重
  *
  * @function
- * @name baidu.unique
+ * @name baidu.unique()
  * @grammar baidu.query(args).unique([fn])
- * @param   {Function}      fn(a, b)    [可选]
+ * @param   {Function}      fn   [可选] 过滤去重后的结果
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 baidu.query.extend({

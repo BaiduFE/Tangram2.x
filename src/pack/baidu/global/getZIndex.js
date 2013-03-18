@@ -12,8 +12,10 @@
 ///import pack.baidu.global.set;
 
 /**
- * @namespace baidu.global.getZIndex 全局统一管理 z-index。
- *
+ * @description baidu.global.getZIndex 全局统一管理 z-index。
+ * @function
+ * @grammar baidu.global.getZIndex(key,step)
+ * @name baidu.global.getZIndex
  * @param   {String}    key 	信息对应的 key 值(popup | dialog)
  * @param   {Number}    step 	z-index 增长的步长
  * @return  {Number}            z-index

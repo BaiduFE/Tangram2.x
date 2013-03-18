@@ -17,7 +17,7 @@
 /**
  * @description 将各种浏览器里的颜色值转换成#RRGGBB的格式
  * @function 
- * @name baidu.string.formatColor
+ * @name baidu.string.formatColor()
  * @grammar baidu.string.formatColor(color)
  * @param {String} color 浏览器中的颜色值字符串
  * @return {String} #RRGGBB格式的字符串或空

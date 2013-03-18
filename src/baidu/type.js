@@ -2,7 +2,7 @@
 ///import baidu.forEach;
 /*
  * @fileOverview
- * @name baidu.type
+ * @name baidu.type()
  * @author meizz
  * @create 2012-05-20
  * @modify 2012.6.29 mz 将baidu.isArray() 类似的接口直接在本文件中实现，并且为兼容老版本处理

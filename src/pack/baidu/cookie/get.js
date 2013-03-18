@@ -11,7 +11,7 @@
 ///import pack.baidu.cookie.getRaw;
 
 /**
- * 获取cookie的值，用decodeURIComponent进行解码
+ * @description 获取cookie的值，用decodeURIComponent进行解码
  * @name baidu.cookie.get
  * @function
  * @grammar baidu.cookie.get(key)
@@ -21,7 +21,7 @@
  * @meta standard
  * @see baidu.cookie.getRaw,baidu.cookie.set
  *             
- * @returns {string|null} cookie的值，获取不到时返回null
+ * @return {string|null} cookie的值，获取不到时返回null
  */
 baidu.cookie.get = function (key) {
     var value = baidu.cookie.getRaw(key);

@@ -5,7 +5,7 @@
 ///import baidu.merge;
 ///import baidu.array.unique;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-06-18
@@ -14,7 +14,8 @@
 
 /**
  * @description 对 TangramDom 里的所有元素进行筛选匹配，返回匹配上的DOM元素数组
- * @name baidu.query.match
+ * @name baidu.query.match()
+ * @function
  * @grammar baidu.query.match(selector)
  * @grammar baidu.query.match(tangramDom)
  * @grammar baidu.query.match(HTMLElement)

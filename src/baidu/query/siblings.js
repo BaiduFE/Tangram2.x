@@ -2,7 +2,7 @@
 ///import baidu.forEach;
 ///import baidu.query.match;
 
-/**
+/*
  * @fileOverview
  * @author meizz
  * @create 2012-05-28
@@ -14,7 +14,7 @@
  * @function
  * @name baidu.query().siblings()
  * @grammar baidu.query(args).siblings(filter)
- * @param   {Function}      fn(a,b)    [可选]
+ * @param   {Function} filter 指定使用函数 function(index,dom)进行筛选
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
  */
 baidu.query.extend({

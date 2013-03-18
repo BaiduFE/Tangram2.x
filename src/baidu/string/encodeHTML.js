@@ -16,7 +16,7 @@
 /**
  * @description 对目标字符串进行html编码
  * @function 
- * @name baidu.string.encodeHTML
+ * @name baidu.string.encodeHTML()
  * @grammar baidu.string.encodeHTML(str)
  * @param {String} str 目标字符串
  * @return {String} html编码后的字符串

@@ -3,7 +3,7 @@
 ///import baidu.type;
 ///import baidu.extend;
 
-/**
+/*
  * @description Tangram继承机制提供的一个基类，用户可以通过继承baidu.base.Class来获取它的属性及方法。
  *
  * @author meizz
@@ -11,7 +11,7 @@
  * @modify 2012.09.27   将原来的BaseEvent部分合并进来
  *
  * @class
- * @name baidu.base.Class
+ * @name baidu.base.Class()
  * @grammar new baidu.base.Class()
  * @remark baidu.base.Class和它的子类的实例均包含一个全局唯一的标识guid。guid是在构造函数中生成的，因此，继承自baidu.base.Class的类应该直接或者间接调用它的构造函数。<br>baidu.base.Class的构造函数中产生guid的方式可以保证guid的唯一性，及每个实例都有一个全局唯一的guid。
  */
@@ -202,7 +202,7 @@ window["baiduInstance"] = function(guid) {
 /**
  * @private
  * @class   自定义的事件对象。
- * @name    baidu.base.Event
+ * @name    baidu.base.Event()
  * @grammar new baidu.base.Event(type[, target])
  * @param   {string} type    事件类型名称。为了方便区分事件和一个普通的方法，事件类型名称必须以"on"(小写)开头。
  * @param   {Object} [target]触发事件的对象

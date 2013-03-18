@@ -11,14 +11,14 @@
 ///import pack.baidu.event;
 
 /**
- * 获取鼠标事件的鼠标x坐标
+ * @description 获取鼠标事件的鼠标x坐标
  * @name baidu.event.getPageX
  * @function
  * @grammar baidu.event.getPageX(event)
  * @param {Event} event 事件对象
  * @see baidu.event.getPageY
  *             
- * @returns {number} 鼠标事件的鼠标x坐标
+ * @return {number} 鼠标事件的鼠标x坐标
  */
 baidu.event.getPageX = function (event) {
     var result = event.pageX,
