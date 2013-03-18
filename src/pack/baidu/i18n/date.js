@@ -5,19 +5,20 @@
 
 ///import pack.baidu.i18n;
 /**
- * date
+ * @description 日期转换函数集合
  * @name baidu.i18n.date
- * @Object
- * @grammar baidu.i18n.date
+ * @namespace
  */
-baidu.i18n.date = baidu.i18n.date || /**@lends baidu.i18n.date.prototype*/{
+baidu.i18n.date = baidu.i18n.date || /*@lends baidu.i18n.date.prototype*/{
 
     /**
-     * 获取某年某个月的天数
+     * @description 获取某年某个月的天数
+     * @function
+     * @name baidu.i18n.date.getDaysInMonth
      * @grammar baidu.i18n.date.getDaysInMonth(year, month)
      * @param {Number} year 年份.
      * @param {Number} month 月份.
-     * @return {Number}
+     * @return {Number} 转换完成后的数字
      */
     getDaysInMonth: function(year, month) {
         var days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -29,29 +30,33 @@ baidu.i18n.date = baidu.i18n.date || /**@lends baidu.i18n.date.prototype*/{
     },
 
     /**
-     * 判断传入年份是否时润年
+     * @description 判断传入年份是否时润年
+     * @function
+     * @name baidu.i18n.date.isLeaapYear
      * @grammar baidu.i18n.date.isLeapYear(year)
      * @param {Number} year 年份.
-     * @return {Boolean}
+     * @return {Boolean} 为true表示是闰年
      */
     isLeapYear: function(year) {
         return !(year % 400) || (!(year % 4) && !!(year % 100));
     },
 
     /**
-     * 将传入的date对象转换成指定地区的date对象
+     * @description 将传入的date对象转换成指定地区的date对象
+     * @function
+     * @name baidu.i18n.date.toLocalDate
      * @grammar baidu.i18n.date.toLocaleDate(dateObject, sLocale, tLocale)
-     * @param {Date} dateObject
+     * @param {Date} dateObject 日期对象
      * @param {String} sLocale dateObject 的地区标识，可选参数，不传则以dateObject中获取的为准
      * @param {String} tLocale 地区名称简写字符.
-     * @return {Date}
+     * @return {Date} 返回日期对象
      */
     toLocaleDate: function(dateObject, sLocale, tLocale) {
         return this._basicDate(dateObject, sLocale, tLocale || baidu.i18n.currentLocale);
     },
 
     /**
-     * 本地日历和格力高利公历相互转换的基础函数
+     * @description 本地日历和格力高利公历相互转换的基础函数
      * @private
      * @param {Date} dateObject 需要转换的日期函数.
      * @param {String} sLocale dateObject 的地区标识，可选参数，否则以dateObject中获取的为准
@@ -75,7 +80,9 @@ baidu.i18n.date = baidu.i18n.date || /**@lends baidu.i18n.date.prototype*/{
     },
 
     /*
-     * @格式化日期显示
+     * @description 格式化日期显示
+     * @function 
+     * @name baidu.i18n.data.format
      * @param {Date} dateObject  日期对象(必须)
      * @param {String} tLocale 给定目标locale(可选)
      * @return {String}  格式化后的日期字符串

@@ -11,7 +11,7 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 将目标元素添加到基准元素之前
+ * @description 将目标元素添加到基准元素之前
  * @name baidu.dom.insertBefore
  * @function
  * @grammar baidu.dom.insertBefore(newElement, existElement)
@@ -20,7 +20,7 @@
  * @meta standard
  * @see baidu.dom.insertAfter
  *             
- * @returns {HTMLElement} 被添加的目标元素
+ * @return {HTMLElement} 被添加的目标元素
  */
 baidu.dom.insertBefore = function (newElement, existElement) {
     var g, existParent;

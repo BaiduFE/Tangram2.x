@@ -10,7 +10,8 @@
 
 ///import pack.baidu;
 /**
- * 对方法的操作，解决内存泄露问题
- * @namespace baidu.fn
+ * @description 对方法的操作，解决内存泄露问题
+ * @namespace
+ * @name baidu.fn
  */
 baidu.fn = baidu.fn || {};

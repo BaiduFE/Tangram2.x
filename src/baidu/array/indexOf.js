@@ -1,13 +1,7 @@
 ///import baidu.array;
 
-/**
- * @fileoverview
- * @author meizz
- * @create 2012-06-21
- * @modify
- */
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -16,13 +10,14 @@
 /**
  * @description 查询数组中指定元素的索引位置
  *
- * @name baidu.array.indexOf
+ * @name baidu.array.indexOf()
  * @function
  * @grammar $Aarray.indexOf(match[, fromIndex])
  * @param   {Object}      match     匹配项
  * @param   {Number}      fromIndex 起始位置
  * @return  {Number}      被匹配项的下标
  */
+
 /**
  * @description 查询数组中指定元素的索引位置
  *

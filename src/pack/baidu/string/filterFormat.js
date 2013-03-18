@@ -11,12 +11,12 @@
 ///import pack.baidu.string;
 
 /**
- * 对目标字符串进行格式化,支持过滤
+ * @description 对目标字符串进行格式化,支持过滤
  * @name baidu.string.filterFormat
  * @function
  * @grammar baidu.string.filterFormat(source, opts)
  * @param {string} source 目标字符串
- * @param {Object|string...} opts 提供相应数据的对象
+ * @param {Object|string} opts 提供相应数据的对象
  * @version 1.2
  * @remark
  * 
@@ -25,7 +25,7 @@
 过滤函数需要之前挂载在baidu.string.filterFormat属性中.
 		
  * @see baidu.string.format,baidu.string.filterFormat.escapeJs,baidu.string.filterFormat.escapeString,baidu.string.filterFormat.toInt
- * @returns {string} 格式化后的字符串
+ * @return {string} 格式化后的字符串
  */
 baidu.string.filterFormat = function (source, opts) {
     var data = Array.prototype.slice.call(arguments,1), toString = Object.prototype.toString;

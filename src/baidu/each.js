@@ -1,6 +1,6 @@
 ///import baidu;
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-05-20
  * @modify 2012.6.29 mz 扩展对 String Number 的支持
@@ -10,7 +10,7 @@
 /**
  * @description 枚举目标对象中的每一个元素，进行指定函数操作
  * @function
- * @name baidu.each
+ * @name baidu.each()
  * @grammar baidu.each( enumerable, iterator[, context] )
  * @param   {Object}        enumerable      被枚举的对象（Array|ArrayLike|NodeList|String|Number）
  * @param   {Function}      iterator        遍历操作的函数

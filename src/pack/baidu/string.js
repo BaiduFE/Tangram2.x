@@ -10,7 +10,8 @@
 
 ///import pack.baidu;
 /**
- * 操作字符串的方法
- * @namespace baidu.string
+ * @description 操作字符串的方法
+ * @namespace
+ * @name baidu.string
  */
 baidu.string = baidu.string || {};

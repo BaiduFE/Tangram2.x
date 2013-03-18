@@ -6,11 +6,13 @@
 ///import pack.baidu.sio;
 
 /**
- * 通过请求一个图片的方式令服务器存储一条日志
+ * @description 通过请求一个图片的方式令服务器存储一条日志
+ * @name baidu.sio.log
  * @function
  * @grammar baidu.sio.log(url)
  * @param {string} url 要发送的地址.
  * @author: int08h,leeight
+ * @return {Void} 无
  */
 baidu.sio.log = function(url) {
   var img = new Image(),

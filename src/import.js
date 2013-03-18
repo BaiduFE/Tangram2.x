@@ -1,5 +1,5 @@
 /*
- * @fileoverview JavaScript framework 脚本开发框架的核心文件
+ * @fileOverview JavaScript framework 脚本开发框架的核心文件
  * 负责脚本模块的依赖、加载、管理等脚本框架运行环境的搭建
  *
  * @author meizz

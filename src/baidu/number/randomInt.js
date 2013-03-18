@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -8,7 +8,7 @@
 /**
  * @description 生成随机整数，范围是[min, max]
  * @function 
- * @name baidu.number.randomInt
+ * @name baidu.number.randomInt()
  * @grammar baidu.number.randomInt(min, max)
  * @param {Number} min 随机整数的最小值
  * @param {Number} max 随机整数的最大值

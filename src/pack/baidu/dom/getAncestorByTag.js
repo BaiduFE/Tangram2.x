@@ -11,7 +11,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 获取目标元素指定标签的最近的祖先元素
+ * @description 获取目标元素指定标签的最近的祖先元素
  * @name baidu.dom.getAncestorByTag
  * @function
  * @grammar baidu.dom.getAncestorByTag(element, tagName)
@@ -19,7 +19,7 @@
  * @param {string} tagName 祖先元素的标签名
  * @see baidu.dom.getAncestorBy,baidu.dom.getAncestorByClass
  *             
- * @returns {HTMLElement|null} 指定标签的最近的祖先元素，查找不到时返回null
+ * @return {HTMLElement|null} 指定标签的最近的祖先元素，查找不到时返回null
  */
 baidu.dom.getAncestorByTag = function (element, tagName) {
     element = baidu.dom.g(element);

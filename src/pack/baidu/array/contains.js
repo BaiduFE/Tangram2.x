@@ -7,7 +7,7 @@
 ///import pack.baidu.array.indexOf;
 
 /**
- * 判断一个数组中是否包含给定元素
+ * @description 判断一个数组中是否包含给定元素
  * @name baidu.array.contains
  * @function
  * @grammar baidu.array.contains(source, obj)

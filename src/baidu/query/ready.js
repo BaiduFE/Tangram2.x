@@ -1,4 +1,4 @@
-/**
+/*
  * @author dron,wangxiao
  */
 
@@ -19,7 +19,7 @@
 /**
  * @description 监听 documentDomReady 事件
  * @function 
- * @name baidu.query.ready
+ * @name baidu.query.ready()
  * @grammar baidu.query.ready(fn)
  * @param {Function} fn 事件回调函数
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象 

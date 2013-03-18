@@ -11,8 +11,9 @@
 ///import pack.baidu.object;
 
 /**
- * 检测一个对象是否是空的，需要注意的是：如果污染了Object.prototype或者Array.prototype，那么baidu.object.isEmpty({})或者baidu.object.isEmpty([])可能返回的就是false.
+ * @description 检测一个对象是否是空的，需要注意的是：如果污染了Object.prototype或者Array.prototype，那么baidu.object.isEmpty({})或者baidu.object.isEmpty([])可能返回的就是false.
  * @function
+ * @name baidu.object.isEmpty
  * @grammar baidu.object.isEmpty(obj)
  * @param {Object} obj 需要检测的对象.
  * @return {boolean} 如果是空的对象就返回true.

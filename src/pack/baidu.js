@@ -17,13 +17,14 @@
  * Copyright 2009 Baidu Inc. All rights reserved.
  */
 
- /**
- * @namespace T Tangram七巧板
+/*
+ * @description T Tangram七巧板
+ * @namespace 
  * @name T
  * @version 1.5.2.2
-*/
+ */
 
-/**
+/*
  * 声明baidu包
  * @author: allstar, erik, meizz, berg
  */

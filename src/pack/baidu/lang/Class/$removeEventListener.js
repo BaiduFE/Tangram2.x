@@ -13,14 +13,15 @@
 
  
 /**
- * 移除对象的事件监听器。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
- * 事件移除操作是一个不常用的方法，如果你有需求再import调入，可以节约代码
- * 可能通过参数走不同的分支：不传handler会移除某类事件监听；如果连type都不传那就移除当前实例的全部事件监听
- *
+ * @description 移除对象的事件监听器。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+  事件移除操作是一个不常用的方法，如果你有需求再import调入，可以节约代码
+  可能通过参数走不同的分支：不传handler会移除某类事件监听；如果连type都不传那就移除当前实例的全部事件监听
+ * @addon
  * @grammar obj.removeEventListener(type, handler)
  * @param {string}   type     事件类型
  * @param {Function} handler  要移除的事件监听函数或者监听函数的key
  * @remark 	如果第二个参数handler没有被绑定到对应的自定义事件中，什么也不做。
+ * @return {Void} 无
  */
 baidu.lang.Class.prototype.un =
 baidu.lang.Class.prototype.removeEventListener = function (type, handler) {

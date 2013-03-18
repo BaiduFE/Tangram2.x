@@ -12,7 +12,7 @@
 ///import baidu.browser.ie;
 
 /**
- * 提供给setAttr与getAttr方法作名称转换使用
+ * @description 提供给setAttr与getAttr方法作名称转换使用
  * ie6,7下class要转换成className
  * @meta standard
  */

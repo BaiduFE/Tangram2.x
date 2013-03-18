@@ -5,7 +5,7 @@
 
 ///import pack.baidu.platform;
 
-/**
+/*
  * 判断是否为windows平台
  * @property windows 是否为windows平台
  * @grammar baidu.platform.windows

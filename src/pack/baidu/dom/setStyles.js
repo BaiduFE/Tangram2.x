@@ -12,7 +12,7 @@
 ///import pack.baidu.dom.setStyle;
 
 /**
- * 批量设置目标元素的style样式值
+ * @description 批量设置目标元素的style样式值
  * @name baidu.dom.setStyles
  * @function
  * @grammar baidu.dom.setStyles(element, styles)
@@ -22,7 +22,7 @@
  * @meta standard
  * @see baidu.dom.setStyle,baidu.dom.getStyle
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.setStyles = function (element, styles) {
     element = baidu.dom.g(element);

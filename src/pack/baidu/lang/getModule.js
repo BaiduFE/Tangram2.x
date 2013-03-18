@@ -11,13 +11,15 @@
 ///import pack.baidu.lang;
 
 /**
- * 根据变量名或者命名空间来查找对象
+ * @description 根据变量名或者命名空间来查找对象
+ * @name baidu.lange.getModule
  * @function
  * @grammar baidu.lang.getModule(name, opt_obj)
  * @param {string} name 变量或者命名空间的名字.
- * @param {Object=} opt_obj 从这个对象开始查找，默认是window;
- * @return {?Object} 返回找到的对象，如果没有找到返回null.
+ * @param {Object} opt_obj 从这个对象开始查找，默认是window;
+ * @return {Object} 返回找到的对象，如果没有找到返回null.
  * @see goog.getObjectByName
+ * @return {Object} 当前的窗体对象
  */
 baidu.lang.getModule = function(name, opt_obj) {
     var parts = name.split('.'),

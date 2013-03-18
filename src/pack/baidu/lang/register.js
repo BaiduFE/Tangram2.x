@@ -11,7 +11,7 @@
 ///import pack.baidu.lang;
 
 /**
- * 向某个类注册插件
+ * @description 向某个类注册插件
  * @name baidu.lang.register
  * @function
  * @grammar baidu.lang.register(Class, constructorHook, methods)
@@ -19,7 +19,7 @@
  * @param   {Function}  constructorHook 运行在载体类构造器里钩子函数
  * @param	{JSON}		methods			挂载到载体类原型链上的方法集，可选
  * @meta standard
- *             
+ * @return {Void} 无
  */
 baidu.lang.register = function (Class, constructorHook, methods) {
     var reg = Class["\x06r"] || (Class["\x06r"] = []);

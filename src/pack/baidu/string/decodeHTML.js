@@ -11,7 +11,7 @@
 ///import pack.baidu.string;
 
 /**
- * 对目标字符串进行html解码
+ * @description 对目标字符串进行html解码
  * @name baidu.string.decodeHTML
  * @function
  * @grammar baidu.string.decodeHTML(source)
@@ -20,7 +20,7 @@
  * @meta standard
  * @see baidu.string.encodeHTML
  *             
- * @returns {string} html解码后的字符串
+ * @return {string} html解码后的字符串
  */
 baidu.string.decodeHTML = function (source) {
     var str = String(source)

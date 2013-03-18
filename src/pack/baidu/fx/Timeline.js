@@ -14,8 +14,8 @@
 ///import pack.baidu.lang.inherits;
 ///import pack.baidu.object.extend;
 
-/**
- * 提供一个按时间进程的时间线类
+/*
+ * @description 提供一个按时间进程的时间线类
  *
  * 本类提供两个方法：
  *  cancel()    取消操作
@@ -28,21 +28,22 @@
  *  render(schedule)        每个脉冲在DOM上的效果展现
  *  restore()               效果被取消时作的恢复操作
  *
- * @config {Number} interval 脉冲间隔时间（毫秒）
- * @config {Number} duration 时间线总时长（毫秒）
- * @config {Number} percent  时间线进度的百分比
+ * @param {Number} interval 脉冲间隔时间（毫秒）
+ * @param {Number} duration 时间线总时长（毫秒）
+ * @param {Number} percent  时间线进度的百分比
  */
  
  
  
 /**
- * 提供一个按时间进程的时间线类
+ * @description 提供一个按时间进程的时间线类
  * @class
  * @grammar new baidu.fx.Timeline(options)
  * @param {Object} options 参数
- * @config {Number} interval 脉冲间隔时间（毫秒）
- * @config {Number} duration 时间线总时长（毫秒）
- * @config {Number} percent  时间线进度的百分比
+ * @param {Number} interval 脉冲间隔时间（毫秒）
+ * @param {Number} duration 时间线总时长（毫秒）
+ * @param {Number} percent  时间线进度的百分比
+ * @return {Timeline}  时间线类的一个实例
  */
 baidu.fx.Timeline = function(options){
     baidu.lang.Class.call(this);
@@ -54,20 +55,23 @@ baidu.fx.Timeline = function(options){
     baidu.object.extend(this, options);
 };
 baidu.lang.inherits(baidu.fx.Timeline, baidu.lang.Class, "baidu.fx.Timeline").extend({
-/**
+/*
  *  @lends baidu.fx.Timeline.prototype
  */
     /**
-     * 启动时间线
+     * @function
+     * @description 启动时间线
+     * @name baidu.fx.Timeline#lanch
+     * @grammar baidu.fx.Timeline#luncu()
      * @return {instance} 类实例
      */
     launch : function(){
         var me = this;
         me.dispatchEvent("onbeforestart");
 
-        /**
-        * initialize()接口，当时间线初始化同步进行的操作
-        */
+        /*
+         * initialize()接口，当时间线初始化同步进行的操作
+         */
         typeof me.initialize =="function" && me.initialize();
 
         me["\x06btime"] = new Date().getTime();
@@ -101,27 +105,33 @@ baidu.lang.inherits(baidu.fx.Timeline, baidu.lang.Class, "baidu.fx.Timeline").ex
             return;
         }
 
-        /**
-        * [interface run] render() 用来实现每个脉冲所要实现的效果
-        * @param {Number} schedule 时间线的进度
-        */
+        /*
+         * [interface run] render() 用来实现每个脉冲所要实现的效果
+         * @param {Number} schedule 时间线的进度
+         */
         typeof me.render == "function" && me.render(me.transition(me.percent));
         me.dispatchEvent("onafterupdate");
 
         me["\x06timer"] = setTimeout(function(){me["\x06pulsed"]()}, me.interval);
     }
     /**
-     * 重新计算 schedule，以产生各种适合需求的进度曲线
+     * @private
+     * @name baidu.fx.Timeline#transition
+     * @description 重新计算 schedule，以产生各种适合需求的进度曲线
      * @function
      * @param {Function} percent 
+     * @return {number} 返回计算后的百分比
      */
     ,transition: function(percent) {
         return percent;
     }
 
     /**
-     * 撤销当前时间线的操作，并引发 restore() 接口函数的操作
+     * @name baidu.fx.Timeline#cancel
+     * @description 撤销当前时间线的操作，并引发 restore() 接口函数的操作
      * @function
+     * @grammar baidu.fx.Timeline().cancel()
+     * @return {undefined} 没有返回值
      */
     ,cancel : function() {
         this["\x06timer"] && clearTimeout(this["\x06timer"]);
@@ -134,7 +144,7 @@ baidu.lang.inherits(baidu.fx.Timeline, baidu.lang.Class, "baidu.fx.Timeline").ex
         this.dispose();
     }
 
-    /**
+    /*
      * 直接将时间线运行到结束点
      */
     ,end : function() {

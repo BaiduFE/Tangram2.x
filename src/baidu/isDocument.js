@@ -1,12 +1,13 @@
 ///import baidu.type;
 
-/**
+/*
+ * @private
  * @description 判断对象是否为 Document
  * @author meizz
  * @create 2012-11-27
  *
  * @function
- * @name baidu.isDocument
+ * @name baidu.isDocument()
  * @grammer baidu.isDocument( unknow )
  *
  * @param   {Any}       unknow  任意类型的对象

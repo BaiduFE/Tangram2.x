@@ -2,8 +2,8 @@
 ///import baidu.query.match;
 ///import baidu.array.unique;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-06-12
  * @modify

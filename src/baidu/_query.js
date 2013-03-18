@@ -3,8 +3,9 @@
 ///import baidu.merge;
 ///import baidu.array.unique;
 /*
- * @fileoverview
- * @name baidu._query
+ * @fileOverview
+ * @name baidu._query()
+ * @private
  * @author meizz
  * @create 2012-05-30
  * @modify 2012-06-10 将大函数分拆成 _query() 和 queryCombo()；使用 querySelectAll()；
@@ -16,7 +17,7 @@
  * 目前这个简版的 selector 函数支持四种选择器 * #id .class tagName
  *
  * @function
- * @name baidu._query
+ * @name baidu._query()
  * @grammar baidu._query(selector[, context[, results]])
  * @param   {String}    selector    CSS选择器字符串
  * @param   {Document}  context     选择的范围

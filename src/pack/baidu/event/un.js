@@ -12,7 +12,7 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 为目标元素移除事件监听器
+ * @description 为目标元素移除事件监听器
  * @name baidu.event.un
  * @function
  * @grammar baidu.event.un(element, type, listener)
@@ -23,7 +23,7 @@
  * @meta standard
  * @see baidu.event.on
  *             
- * @returns {HTMLElement|window} 目标元素
+ * @return {HTMLElement|window} 目标元素
  */
 baidu.event.un = function (element, type, listener) {
     element = baidu.dom._g(element);

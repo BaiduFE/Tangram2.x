@@ -12,7 +12,7 @@
 ///import pack.baidu.number;
 
 /**
- * 生成随机整数，范围是[min, max]
+ * @description 生成随机整数，范围是[min, max]
  * @name baidu.number.randomInt
  * @function
  * @grammar baidu.number.randomInt(min, max) 

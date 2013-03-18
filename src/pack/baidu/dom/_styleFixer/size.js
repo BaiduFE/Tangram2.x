@@ -11,7 +11,8 @@
 ///import baidu.dom._styleFixer;
 
 /**
- * 提供给getStyle使用
+ * @private
+ * @description 提供给getStyle使用
  * @meta standard
  */
 baidu.dom._styleFixer.width = baidu.dom._styleFixer.height = {

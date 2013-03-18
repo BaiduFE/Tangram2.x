@@ -14,7 +14,7 @@
 ///import pack.baidu.string.toCamelCase;
 
 /**
- * 设置目标元素的style样式值
+ * @description 设置目标元素的style样式值
  * @name baidu.dom.setStyle
  * @function
  * @grammar baidu.dom.setStyle(element, key, value)
@@ -31,7 +31,7 @@ baidu.dom._styleFixer和baidu.dom._styleFilter可以为本模块提供支持。<
  * @meta standard
  * @see baidu.dom.getStyle,baidu.dom.setStyles
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.setStyle = function (element, key, value) {
     var dom = baidu.dom, fixer;

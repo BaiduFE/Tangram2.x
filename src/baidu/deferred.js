@@ -3,7 +3,7 @@
 ///import baidu.callbacks;
 ///import baidu.extend;
 ///import baidu.forEach;
-/**
+/*
  * @author wangxiao, linlingyu
  */
 

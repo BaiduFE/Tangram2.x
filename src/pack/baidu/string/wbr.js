@@ -11,7 +11,7 @@
 ///import pack.baidu.string;
 
 /**
- * 为目标字符串添加wbr软换行
+ * @description 为目标字符串添加wbr软换行
  * @name baidu.string.wbr
  * @function
  * @grammar baidu.string.wbr(source)
@@ -23,7 +23,7 @@
 3.在opera下，浏览器默认css不会为wbr加上样式，导致没有换行效果，可以在css中加上 wbr:after { content: "\00200B" } 解决此问题
 		
  *             
- * @returns {string} 添加软换行后的字符串
+ * @return {string} 添加软换行后的字符串
  */
 baidu.string.wbr = function (source) {
     return String(source)

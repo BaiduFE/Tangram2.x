@@ -12,7 +12,7 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 为目标元素添加事件监听器
+ * @description 为目标元素添加事件监听器
  * @name baidu.event.on
  * @function
  * @grammar baidu.event.on(element, type, listener)
@@ -27,9 +27,9 @@
  * @shortcut on
  * @meta standard
  * @see baidu.event.un
- * @returns {HTMLElement|window} 目标元素
+ * @return {HTMLElement|window} 目标元素
  */
-baidu.event.on = /**@function*/function (element, type, listener) {
+baidu.event.on = function (element, type, listener) {
     type = type.replace(/^on/i, '');
     element = baidu.dom._g(element);
 

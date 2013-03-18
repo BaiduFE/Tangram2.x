@@ -14,7 +14,7 @@
 ///import pack.baidu.object.values;
 ///import pack.baidu.lang.isNumber;
 /**
- * 触发已经注册的事件。注：在ie下不支持load和unload事件
+ * @description 触发已经注册的事件。注：在ie下不支持load和unload事件
  * @name baidu.event.fire
  * @function
  * @grammar baidu.event.fire(element, type, options)
@@ -40,7 +40,7 @@
  * @param {HTMLElement} options.relatedTarget 指定 Event 的相关 EventTarget
  * @version 1.3
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 (function(){
 	var browser = baidu.browser,

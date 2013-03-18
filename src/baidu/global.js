@@ -1,12 +1,12 @@
 ///import baidu;
 
-/**
+/*
  * @description 在页面全局读取或写入指定值
  * @author meizz
  * @create 2012-07-25
  *
  * @function
- * @name baidu.global
+ * @name baidu.global()
  * @grammar baidu.global(key[, value[, overwrite]])
  * @param   {String}    key         被存储的变量名
  * @param   {Object}    value       [可选]需要存储的变量值

@@ -11,7 +11,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 改变目标元素的显示/隐藏状态
+ * @description 改变目标元素的显示/隐藏状态
  * @name baidu.dom.toggle
  * @function
  * @grammar baidu.dom.toggle(element)
@@ -19,7 +19,7 @@
  * @meta standard
  * @see baidu.dom.show,baidu.dom.hide
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.toggle = function (element) {
     element = baidu.dom.g(element);

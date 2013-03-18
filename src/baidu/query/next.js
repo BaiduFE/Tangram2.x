@@ -2,8 +2,8 @@
 ///import baidu.forEach;
 ///import baidu.query.filter;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-06-11
  * @modify

@@ -1,7 +1,7 @@
 ///import baidu;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-05-20
  * @modify
@@ -11,11 +11,11 @@
  * @description 将第二个 ArrayLike对象合并到第一个 ArrayLike 中去
  * 
  * @function
- * @name baidu.merge
+ * @name baidu.merge()
  * @grammar baidu.merge(first,second)
  * @param   {Object}    first   第一个 ArrayLike
  * @param   {Object}    second  第二个 ArrayLike
- * @return              first   第一个对象
+ * @return  {Object}    first   第一个对象
  */
 baidu.merge = function(first, second) {
     var i = first.length,

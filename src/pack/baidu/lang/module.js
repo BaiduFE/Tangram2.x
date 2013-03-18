@@ -5,7 +5,7 @@
 
 ///import pack.baidu.lang;
 
-/**
+/*
  * 增加自定义模块扩展,默认创建在当前作用域
  * @author erik, berg
  * @name baidu.lang.module
@@ -13,7 +13,7 @@
  * @grammar baidu.lang.module(name, module[, owner])
  * @param {string} name 需要创建的模块名.
  * @param {Any} module 需要创建的模块对象.
- * @param {Object} [owner] 模块创建的目标环境，默认为window.
+ * @param {Object} owner [可选] 模块创建的目标环境，默认为window.
  * @remark
  *
             从1.1.1开始，module方法会优先在当前作用域下寻找模块，如果无法找到，则寻找window下的模块

@@ -15,8 +15,9 @@
 
  
 /**
- * 移动渐变效果。这个效果会使目标元素移动指定的距离。注意: 对static定位的DOM元素无效。
+ * @description 移动渐变效果。这个效果会使目标元素移动指定的距离。注意: 对static定位的DOM元素无效。
  * @function
+ * @name baidu.fx.moveBy
  * @grammar baidu.fx.moveBy(element, distance, options)
  * @param       {string|HTMLElement}      element               元素或者元素的ID
  * @param       {Array|Object}            distance              偏移距离。若为数组，索引0为x方向，索引1为y方向；若为Object，键x为x方向，键y为y方向；单位：px，默认值为：0。
@@ -34,6 +35,7 @@
  * @remark
  * 1.0.0开始支持
  * @see baidu.fx.moveBy
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.moveBy = function(element, distance, options) {
     if (!(element = baidu.dom.g(element))

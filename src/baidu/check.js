@@ -1,7 +1,7 @@
 ///import baidu;
 ///import baidu.type;
 /*
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-07-10
  * @modify 2012-08-28 mz 添加对指定对象列的检查
@@ -11,7 +11,8 @@
  * @description 分析形参对象的类型
  *
  * @function
- * @name baidu.check
+ * @name baidu.check()
+ * @private
  * @grammar baidu.check(regString, moduleName[, object1,[objectn, ...]])
  * @param   {String}    regString     被分析的形参匹配字符串
  * @param   {String}    moduleName    被分析的模块名

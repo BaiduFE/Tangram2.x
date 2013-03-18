@@ -12,14 +12,15 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 从DOM树上移除目标元素
+ * @description 从DOM树上移除目标元素
  * @name baidu.dom.remove
  * @function
  * @grammar baidu.dom.remove(element)
  * @param {HTMLElement|string} element 需要移除的元素或元素的id
- * @remark
+ * @example
  * <b>注意：</b>对于移除的dom元素，IE下会释放该元素的空间，继续使用该元素的引用进行操作将会引发不可预料的问题。
  * @meta standard
+ * @return {undefined} 没有返回值
  */
 
 baidu.dom.remove = function (element) {

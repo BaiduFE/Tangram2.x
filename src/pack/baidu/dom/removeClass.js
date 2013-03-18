@@ -12,7 +12,7 @@
 ///import pack.baidu.dom.g;
 
 /**
- * 移除目标元素的className
+ * @description 移除目标元素的className
  * @name baidu.dom.removeClass
  * @function
  * @grammar baidu.dom.removeClass(element, className)
@@ -24,7 +24,7 @@
  * @meta standard
  * @see baidu.dom.addClass
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.removeClass = function (element, className) {
     element = baidu.dom.g(element);

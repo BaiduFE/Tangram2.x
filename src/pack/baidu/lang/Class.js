@@ -11,7 +11,7 @@
 ///import pack.baidu.lang.guid;
 
 /**
- * Tangram继承机制提供的一个基类，用户可以通过继承baidu.lang.Class来获取它的属性及方法。
+ * @description Tangram继承机制提供的一个基类，用户可以通过继承baidu.lang.Class来获取它的属性及方法。
  * @class
  * @name 	baidu.lang.Class
  * @grammar baidu.lang.Class(guid)
@@ -30,9 +30,11 @@ baidu.lang.Class = function() {
 baidu.$$._instances = baidu.$$._instances || {};
 
 /**
- * 释放对象所持有的资源，主要是自定义事件。
- * @name dispose
+ * @description 释放对象所持有的资源，主要是自定义事件。
+ * @function
+ * @name baidu.lang.Class.dispose
  * @grammar obj.dispose()
+ * @return {undefined} 无返回值
  * TODO: 将_listeners中绑定的事件剔除掉
  */
 baidu.lang.Class.prototype.dispose = function(){
@@ -47,7 +49,10 @@ baidu.lang.Class.prototype.dispose = function(){
 };
 
 /**
- * 重载了默认的toString方法，使得返回信息更加准确一些。
+ * @function
+ * @name baidu.lang.Class.toString()
+ * @grammar baidu.lang.Class().toString()
+ * @description 重载了默认的toString方法，使得返回信息更加准确一些。
  * 20111219 meizz 为支持老版本的className属性，以后统一改成 __type
  * @return {string} 对象的String表示形式
  */
@@ -55,11 +60,11 @@ baidu.lang.Class.prototype.toString = function(){
     return "[object " + (this.__type || this._className || "Object") + "]";
 };
 
-/**
- * 按唯一标识guid字符串取得实例对象
+/*
+ * @description 按唯一标识guid字符串取得实例对象
  *
  * @param   {String}    guid
- * @return  {object}            实例对象
+ * @return  {object}    实例对象
  */
  window["baiduInstance"] = function(guid) {
      return baidu.$$._instances[guid];

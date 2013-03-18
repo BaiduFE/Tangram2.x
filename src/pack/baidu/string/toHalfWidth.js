@@ -10,7 +10,7 @@
 
 ///import pack.baidu.string;
 /**
- * 将目标字符串中常见全角字符转换成半角字符
+ * @description 将目标字符串中常见全角字符转换成半角字符
  * @name baidu.string.toHalfWidth
  * @function
  * @grammar baidu.string.toHalfWidth(source)
@@ -115,7 +115,7 @@
 ～ => ~<br>
 		
  *             
- * @returns {string} 转换后的字符串
+ * @return {string} 转换后的字符串
  */
 
 baidu.string.toHalfWidth = function (source) {

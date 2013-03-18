@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -16,7 +16,7 @@
 /**
  * @description 将目标字符串进行驼峰化处理
  * @function 
- * @name baidu.string.toCamelCase
+ * @name baidu.string.toCamelCase()
  * @grammar baidu.string.toCamelCase(str)
  * @param {String} str 目标字符串
  * @return {String} 驼峰化处理后的字符串

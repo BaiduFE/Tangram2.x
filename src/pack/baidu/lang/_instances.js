@@ -12,7 +12,7 @@
 
 
 /**
- * 所有类的实例的容器
+ * @description 所有类的实例的容器
  * key为每个实例的guid
  * @meta standard
  */

@@ -6,8 +6,8 @@
 
 
 /*
- * @fileoverview
- * @name baidu.sizzle
+ * @fileOverview
+ * @name baidu.sizzle()
  * @author meizz
  * @create 2012-05-30
  * @modify
@@ -553,7 +553,7 @@ void function( window, undefined ) {
         throw new Error( msg );
     };
 
-    /**
+    /*
      * Utility function for retreiving the text value of an array of DOM nodes
      * @param {Array|Element} elem
      */

@@ -3,9 +3,12 @@
 ///import baidu.array.indexOf;
 ///import baidu.type;
 ///import baidu.forEach;
-/**
+
+/*
+ * @fileOverview 百度回调对象
  * @author wangxiao, linlingyu
  */
+
 /**
  * @description 一个多用途的回调列表对象，提供了强大的的方式来管理回调函数列表
  * @function 

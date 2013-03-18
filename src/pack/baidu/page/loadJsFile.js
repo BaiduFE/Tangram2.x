@@ -11,12 +11,13 @@
 ///import pack.baidu.page;
 
 /**
- * 动态在页面上加载一个外部js文件
+ * @description 动态在页面上加载一个外部js文件
  * @name baidu.page.loadJsFile
  * @function
  * @grammar baidu.page.loadJsFile(path)
  * @param {string} path js文件路径
  * @see baidu.page.loadCssFile
+ * @return {Void} 无
  */
 baidu.page.loadJsFile = function (path) {
     var element = document.createElement('script');

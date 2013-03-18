@@ -8,7 +8,7 @@
 
 ///import pack.baidu.global;
 
-/**
+/*
  * @namespace baidu.global.set 向global全局对象里存储信息。
  * @author meizz
  *

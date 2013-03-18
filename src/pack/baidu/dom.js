@@ -10,7 +10,8 @@
 
 ///import pack.baidu;
 /**
- * 操作dom的方法
- * @namespace baidu.dom 
+ * @description 操作dom的方法
+ * @namespace 
+ * @name baidu.dom 
  */
 baidu.dom = baidu.dom || {};

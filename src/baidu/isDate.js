@@ -1,13 +1,14 @@
 ///import baidu.type;
 
-/**
+/*
+ * @private
  * @description 判断对象类型
  *
  * @author meizz
  * @create 2012-05-04
  *
  * @function
- * @name baidu.isDate
+ * @name baidu.isDate()
  * @grammer baidu.isDate( unknow )
  *
  * @param   {Any}       unknow  任意类型的对象

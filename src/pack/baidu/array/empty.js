@@ -5,7 +5,7 @@
 
 ///import pack.baidu.array;
 
-/**
+/*
  * 清空一个数组
  * @name baidu.array.empty
  * @function

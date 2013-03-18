@@ -18,8 +18,9 @@
 
  
 /**
- * 自上而下展开DOM元素的效果。
+ * @description 自上而下展开DOM元素的效果。
  * @function
+ * @name baidu.fx.expand
  * @grammar baidu.fx.expand(element, options)
  * @param     {string|HTMLElement}    element            元素或者元素的ID
  * @param     {Object}                options            选项。参数的详细说明如下表所示
@@ -33,6 +34,7 @@
  * @config    {Function}              onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config    {Function}              oncancel           function(){},//效果被撤销时的回调函数
  * @see baidu.fx.collapse
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 
 baidu.fx.expand = function(element, options) {

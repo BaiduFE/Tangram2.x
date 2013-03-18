@@ -11,14 +11,14 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 获得元素中的文本内容。
+ * @description 获得元素中的文本内容。
  * @name baidu.dom.getText
  * @function
  * @grammar baidu.dom.getText(element)
  * @param {HTMLElement|string} element 目标元素或目标元素的id
  * @version 1.3
  *             
- * @returns {String} 元素中文本的内容      
+ * @return {String} 元素中文本的内容      
  */
 baidu.dom.getText = function (element) {
     var ret = "", childs, i=0, l;

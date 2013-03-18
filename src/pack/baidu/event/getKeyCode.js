@@ -10,13 +10,13 @@
 
 ///import pack.baidu.event;
 /**
- * 获取键盘事件的键值
+ * @description 获取键盘事件的键值
  * @name baidu.event.getKeyCode
  * @function
  * @grammar baidu.event.getKeyCode(event)
  * @param {Event} event 事件对象
  *             
- * @returns {number} 键盘事件的键值
+ * @return {number} 键盘事件的键值
  */
 baidu.event.getKeyCode = function (event) {
     return event.which || event.keyCode;

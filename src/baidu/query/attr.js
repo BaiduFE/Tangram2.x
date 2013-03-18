@@ -48,7 +48,7 @@
 /**
  * @description 为指定元素设置一个或多个属性。
  * @function 
- * @name baidu.query().attr();
+ * @name baidu.query().attr()
  * @grammar baidu.query(args).attr(object);
  * @param {Object} object 一个配对的属性值的object对象
  * @return {TangramDom} 返回之前匹配元素的TangramDom对象
@@ -73,7 +73,7 @@
  /**
  * @description 设置指定元素属性的迭代器方法。
  * @function 
- * @name baidu.query().attr();
+ * @name baidu.query().attr()
  * @grammar baidu.query(args).attr(attributeName,fn);
  * @param {String} attributeName 要设置值的属性名.
  * @param {Function} fn 这个函数返回用来设置的值，this 是当前的元素，接收元素的索引位置index和元素旧的样属性值attr为参数。

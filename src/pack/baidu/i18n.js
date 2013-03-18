@@ -4,7 +4,8 @@
  */
 ///import pack.baidu;
 /**
- * 提供国际的一些接口
- * @namespace baidu.i18n
+ * @description 提供国际的一些接口
+ * @namespace
+ * @name baidu.i18n
  */
 baidu.i18n = baidu.i18n || {};

@@ -11,7 +11,7 @@
 ///import pack.baidu.string;
 
 /**
- * 删除目标字符串两端的空白字符
+ * @description 删除目标字符串两端的空白字符
  * @name baidu.string.trim
  * @function
  * @grammar baidu.string.trim(source)
@@ -21,7 +21,7 @@
  * @shortcut trim
  * @meta standard
  *             
- * @returns {string} 删除两端空白字符后的字符串
+ * @return {string} 删除两端空白字符后的字符串
  */
 
 (function () {

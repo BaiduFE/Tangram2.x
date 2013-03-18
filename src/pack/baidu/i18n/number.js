@@ -4,20 +4,21 @@
  */
 ///import pack.baidu.i18n;
 /**
- * number
+ * @description 数字转换函数
  * @name baidu.i18n.number
- * @Object
- * @grammar baidu.i18n.number
+ * @namespace
  */
-baidu.i18n.number = baidu.i18n.number || /**@lends baidu.i18n.number.prototype*/{
+baidu.i18n.number = baidu.i18n.number || /*@lends baidu.i18n.number.prototype*/{
 
     /**
-     * 将传入的数字或者文字某种语言的格式进行格式化
+     * @description 将传入的数字或者文字某种语言的格式进行格式化
+     * @name baidu.i18n.number.format
+     * @function
      * @grammar baidu.i18n.number.format(number, sLocale, tLocale)
      * @param {String|Number} number 需要进行格式化的数字或者文字
-     * @param {String} [sLocale] 可选参数，若传入的number格式为字符串，则该参数必须传入
-     * @param {String} [tLocale] 目标语言
-     * @return {String}
+     * @param {String} sLocale [可选] 可选参数，若传入的number格式为字符串，则该参数必须传入
+     * @param {String} tLocale [可选] 目标语言
+     * @return {String} 转换后的字符
      */
     format: function(number, sLocale, tLocale){
         var me = this,
@@ -54,7 +55,7 @@ baidu.i18n.number = baidu.i18n.number || /**@lends baidu.i18n.number.prototype*/
     },
 
     /**
-     * 格式化数字
+     * @description 格式化数字
      * @private
      * @param {Number} number 需要格式化的数字
      * @param {Object} options 格式化数字使用的参数

@@ -11,8 +11,9 @@
 ///import pack.baidu.fx.Timeline;
 
 /**
- * 效果基类。
+ * @description 创建一个效果基类。
  * @function
+ * @name baidu.fx.collapse
  * @grammar baidu.fx.collapse(element, options, fxName)
  * @param     {HTMLElement}           element            添加效果的DOM元素
  * @param     {JSON}                  options            时间线的配置参数对象
@@ -23,7 +24,7 @@
  * @config    {Function}              onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config    {Function}              oncancel           function(){},//效果被撤销时的回调函数
  * @param     {String}                fxName             效果名（可选）
- * @return {baidu.fx.Timeline}  时间线类的一个实例
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.create = function(element, options, fxName) {
     var timeline = new baidu.fx.Timeline(options);
@@ -33,7 +34,7 @@ baidu.fx.create = function(element, options, fxName) {
     timeline["\x06original"] = {};   // 20100708
     var catt = "baidu_current_effect";
 
-    /**
+    /*
      * 将实例的guid记录到DOM元素上，以便多个效果叠加时的处理
      */
     timeline.addEventListener("onbeforestart", function(){
@@ -51,7 +52,7 @@ baidu.fx.create = function(element, options, fxName) {
         }
     });
 
-    /**
+    /*
      * 打扫dom元素上的痕迹，删除元素自定义属性
      */
     timeline["\x06clean"] = function(e) {
@@ -65,7 +66,7 @@ baidu.fx.create = function(element, options, fxName) {
         }
     };
 
-    /**
+    /*
      * 在时间线结束时净化对DOM元素的污染
      */
     timeline.addEventListener("oncancel", function() {
@@ -73,7 +74,7 @@ baidu.fx.create = function(element, options, fxName) {
         this["\x06restore"]();
     });
 
-    /**
+    /*
      * 在时间线结束时净化对DOM元素的污染
      */
     timeline.addEventListener("onafterfinish", function() {
@@ -81,14 +82,14 @@ baidu.fx.create = function(element, options, fxName) {
         this.restoreAfterFinish && this["\x06restore"]();
     });
 
-    /**
+    /*
      * 保存原始的CSS属性值 20100708
      */
     timeline.protect = function(key) {
         this["\x06original"][key] = this.element.style[key];
     };
 
-    /**
+    /*
      * 时间线结束，恢复那些被改过的CSS属性值
      */
     timeline["\x06restore"] = function() {
@@ -111,8 +112,8 @@ baidu.fx.create = function(element, options, fxName) {
 };
 
 
-/**
- * fx 的所有 【属性、方法、接口、事件】 列表
+/*
+ * @description fx 的所有 【属性、方法、接口、事件】 列表
  *
  * property【七个属性】                 默认值 
  *  element             {HTMLElement}           效果作用的DOM元素

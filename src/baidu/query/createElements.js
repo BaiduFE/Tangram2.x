@@ -2,18 +2,19 @@
 ///import baidu.forEach;
 ///import baidu.merge;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-07-05
  * @modify
  */
 
 /**
+ * @private
  * @description 通过 HTMLString 创建 DOM 对象
  *
  * @function
- * @name baidu.query.createElements
+ * @name baidu.query.createElements()
  * @grammar baidu.query.createElements(HTMLString)
  * @param   {HTMLString}    htmlstring HTMLString
  * @return  {$DOM}          new TangramDom

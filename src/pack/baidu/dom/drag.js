@@ -10,7 +10,7 @@
  */
 
 /**
- * 拖动指定的DOM元素
+ * @description 拖动指定的DOM元素
  * @name baidu.dom.drag
  * @function
  * @grammar baidu.dom.drag(element, options)
@@ -26,7 +26,8 @@
  * @param {Function} options.ondragend drag结束时触发.
  * @param {function} options.autoStop 是否在onmouseup时自动停止拖拽。默认为true.
  * @version 1.2
- * @remark
+ * @return {Draggable} Draggable 对象
+ * @example
  * 要拖拽的元素必须事先设定样式的postion值，如果postion为absloute，并且没有设定top和left，拖拽开始时，无法取得元素的top和left值，这时会从[0,0]点开始拖拽
 
  * @see baidu.dom.draggable
