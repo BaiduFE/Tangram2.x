@@ -14,8 +14,9 @@
     
     /**
      * @description 判断是否为safari浏览器, 支持ipad
-     * @property safari safari版本号
-     * @grammar baidu.browser.safari
+     * @property
+     * @name baidu.browser.safari
+     * @type {number}
      * @meta standard
      * @see baidu.browser.ie,baidu.browser.firefox,baidu.browser.opera,baidu.browser.chrome   
      */

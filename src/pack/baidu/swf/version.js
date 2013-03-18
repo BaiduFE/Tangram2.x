@@ -13,7 +13,8 @@
 /**
  * @description 浏览器支持的flash插件版本
  * @property
- * @grammar baidu.swf.version
+ * @name baidu.swf.version
+ * @type {String}
  * @return {String} 版本号
  * @meta standard
  */

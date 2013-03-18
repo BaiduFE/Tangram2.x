@@ -12,8 +12,9 @@
 
 /**
  * @description 判断是否为opera浏览器
- * @property opera opera版本号
- * @grammar baidu.browser.opera
+ * @property
+ * @type {Number}
+ * @name baidu.browser.opera
  * @meta standard
  * @see baidu.browser.ie,baidu.browser.firefox,baidu.browser.safari,baidu.browser.chrome
  * @return {Number} opera版本号

@@ -38,6 +38,7 @@
 /**
  * @description 提供一个按时间进程的时间线类
  * @class
+ * @name baidu.fx.Timeline
  * @grammar new baidu.fx.Timeline(options)
  * @param {Object} options 参数
  * @param {Number} interval 脉冲间隔时间（毫秒）
