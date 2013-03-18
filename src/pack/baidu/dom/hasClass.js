@@ -14,7 +14,7 @@
 ///import pack.baidu.string.trim;
 
 /**
- * 判断元素是否拥有指定的className
+ * @description 判断元素是否拥有指定的className
  * @name baidu.dom.hasClass
  * @function
  * @grammar baidu.dom.hasClass(element, className)
@@ -25,7 +25,7 @@
  * 对于参数className，支持空格分隔的多个className
  * @see baidu.dom.addClass, baidu.dom.removeClass
  * @meta standard
- * @returns {Boolean} 是否拥有指定的className，如果要查询的classname有一个或多个不在元素的className中，返回false
+ * @return {Boolean} 是否拥有指定的className，如果要查询的classname有一个或多个不在元素的className中，返回false
  */
 baidu.dom.hasClass = function (element, className) {
     element = baidu.dom.g(element);

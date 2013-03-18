@@ -11,7 +11,7 @@
 ///import pack.baidu.cookie._isValidKey;
 
 /**
- * 获取cookie的值，不对值进行解码
+ * @description 获取cookie的值，不对值进行解码
  * @name baidu.cookie.getRaw
  * @function
  * @grammar baidu.cookie.getRaw(key)
@@ -19,7 +19,7 @@
  * @meta standard
  * @see baidu.cookie.get,baidu.cookie.setRaw
  *             
- * @returns {string|null} 获取的Cookie值，获取不到时返回null
+ * @return {string|null} 获取的Cookie值，获取不到时返回null
  */
 baidu.cookie.getRaw = function (key) {
     if (baidu.cookie._isValidKey(key)) {

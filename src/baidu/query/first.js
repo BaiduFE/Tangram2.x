@@ -2,8 +2,8 @@
 ///import baidu.query.children;
 ///import baidu.type;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-05-28
  * @modify

@@ -11,7 +11,7 @@
 ///import pack.baidu.json;
 
 /**
- * 将json对象序列化
+ * @description 将json对象序列化
  * @name baidu.json.stringify
  * @function
  * @grammar baidu.json.stringify(value)
@@ -21,7 +21,7 @@
  * @meta standard
  * @see baidu.json.parse,baidu.json.encode
  *             
- * @returns {string} 序列化后的字符串
+ * @return {string} 序列化后的字符串
  */
 baidu.json.stringify = (function () {
     /**

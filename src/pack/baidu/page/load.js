@@ -18,23 +18,22 @@
 ///import pack.baidu.lang.isString;
 
 /**
- *
- * 加载一组资源，支持多种格式资源的串/并行加载，支持每个文件有单独回调函数。
+ * @description  加载一组资源，支持多种格式资源的串/并行加载，支持每个文件有单独回调函数。
  *
  * @name baidu.page.load
  * @function
  * @grammar baidu.page.load(resources[, options])
  *
- * @param {Array} resources               资源描述数组，单个resource含如下属性.
- * @param {String} resources.url           链接地址.
- * @param {String} [resources.type]        取值["css","js","html"]，默认参考文件后缀.
- * @param {String} [resources.requestType] 取值["dom","ajax"]，默认js和css用dom标签，html用ajax.
- * @param {Function} resources.onload        当前resource加载完成的回调函数，若requestType为ajax，参数为xhr(可能失效)，responseText；若requestType为dom，无参数，执行时this为相应dom标签。.
+ * @param {Array}      resources                资源描述数组，单个resource含如下属性.
+ * @param {String}     resources.url            链接地址.
+ * @param {String}     resources.type           取值["css","js","html"]，默认参考文件后缀.
+ * @param {String}     resources.requestType    取值["dom","ajax"]，默认js和css用dom标签，html用ajax.
+ * @param {Function}   resources.onload         当前resource加载完成的回调函数，若requestType为ajax，参数为xhr(可能失效)，responseText；若requestType为dom，无参数，执行时this为相应dom标签。.
  *
- * @param {Object} [options]               可选参数.
- * @param {Function} [options.onload]        资源全部加载完成的回调函数，无参数。.
- * @param {Boolean} [options.parallel]      是否并行加载，默认为false，串行。.
- * @param {Boolean} [ignoreAllLoaded]       全部加载之后不触发回调事件.主要用于内部实现.
+ * @param {Object}   options               可选参数.
+ * @param {Function} options.onload        资源全部加载完成的回调函数，无参数。.
+ * @param {Boolean}  options.parallel      是否并行加载，默认为false，串行。.
+ * @param {Boolean}  ignoreAllLoaded       可选,全部加载之后不触发回调事件.主要用于内部实现.
  *
  *
  * @remark
@@ -71,8 +70,9 @@
  *      parallel : true,
  *      onload : fnWhenEverythingIsOK
  * });
+ * @return {Void} 无
  */
-baidu.page.load = /**@function*/function(resources, options, ignoreAllLoaded) {
+baidu.page.load = function(resources, options, ignoreAllLoaded) {
     //TODO failure, 整体onload能不能每个都调用; resources.charset
     options = options || {};
     var self = baidu.page.load,

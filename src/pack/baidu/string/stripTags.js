@@ -11,11 +11,12 @@
 ///import pack.baidu.string;
 
 /**
- * 去掉字符串中的html标签
+ * @description 去掉字符串中的html标签
+ * @name baidu.strng.striptags
  * @function
  * @grammar baidu.string.stripTags(source)
  * @param {string} source 要处理的字符串.
- * @return {String}
+ * @return {String} 返回去掉HTML标签后的字符
  */
 baidu.string.stripTags = function(source) {
     return String(source || '').replace(/<[^>]+>/g, '');

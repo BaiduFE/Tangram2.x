@@ -1,7 +1,7 @@
 ///import baidu.array;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -10,7 +10,7 @@
 /**
  * @description 删除数组项
  *
- * @name baidu.array.remove
+ * @name baidu.array.remove()
  * @function
  * @grammar $Array.remove(item)
  * @param   {Object}     item   数组匹配项

@@ -5,7 +5,7 @@
 
 ///import pack.baidu.object;
 
-/**
+/*
  * 将源对象的所有属性拷贝到目标对象中
  * @author erik
  * @name baidu.object.extend
@@ -22,7 +22,7 @@
  * @shortcut extend
  * @meta standard
  *             
- * @returns {Object} 目标对象
+ * @return {Object} 目标对象
  */
 baidu.extend =
 baidu.object.extend = function (target, source) {

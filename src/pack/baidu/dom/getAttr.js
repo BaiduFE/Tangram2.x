@@ -12,7 +12,7 @@
 ///import pack.baidu.dom._NAME_ATTRS;
 
 /**
- * 获取目标元素的属性值
+ * @description 获取目标元素的属性值
  * @name baidu.dom.getAttr
  * @function
  * @grammar baidu.dom.getAttr(element, key)
@@ -22,7 +22,7 @@
  * @meta standard
  * @see baidu.dom.setAttr,baidu.dom.setAttrs
  *             
- * @returns {string|null} 目标元素的attribute值，获取不到时返回null
+ * @return {string|null} 目标元素的attribute值，获取不到时返回null
  */
 baidu.dom.getAttr = function (element, key) {
     element = baidu.dom.g(element);

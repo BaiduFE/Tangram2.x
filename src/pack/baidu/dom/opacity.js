@@ -1,7 +1,7 @@
 ///import pack.baidu.dom.g;
 ///import pack.baidu.browser.ie;
 
-/**
+/*
  * 设置HTML元素的不透明性，跨浏览器种类兼容处理
  * 
  * @author: meizz

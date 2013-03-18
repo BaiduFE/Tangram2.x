@@ -8,7 +8,7 @@
 ///import pack.baidu.browser.opera;
 ///import pack.baidu.dom;
 
-/**
+/*
  * 使函数在页面dom节点加载完毕时调用
  * @author allstar
  * @name baidu.dom.ready

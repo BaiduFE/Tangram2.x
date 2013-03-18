@@ -14,16 +14,17 @@
 ///import pack.baidu.lang.isString;
 
 /**
- * 自定义的事件对象。
+ * @description 自定义的事件对象。
  * @class
  * @name 	baidu.lang.Event
  * @grammar baidu.lang.Event(type[, target])
  * @param 	{string} type	 事件类型名称。为了方便区分事件和一个普通的方法，事件类型名称必须以"on"(小写)开头。
- * @param 	{Object} [target]触发事件的对象
+ * @param 	{Object} target 触发事件的对象
  * @meta standard
  * @remark 引入该模块，会自动为Class引入3个事件扩展方法：addEventListener、removeEventListener和dispatchEvent。
  * @meta standard
  * @see baidu.lang.Class
+ * @return {Void} 无
  */
 baidu.lang.Event = function (type, target) {
     this.type = type;
@@ -33,13 +34,16 @@ baidu.lang.Event = function (type, target) {
 };
  
 /**
- * 派发自定义事件，使得绑定到自定义事件上面的函数都会被执行。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
- * @grammar obj.dispatchEvent(event, options)
- * @param {baidu.lang.Event|String} event 	Event对象，或事件名称(1.1.1起支持)
+ * @description 派发自定义事件，使得绑定到自定义事件上面的函数都会被执行。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+ * @function
+ * @name baidu.lang.Event#dispatchEvent
+ * @grammar baidu.lang.Event#dispatchEvent(event, options)
+ * @param {Event|String} event 	baidu.lang.Event对象，或事件名称(1.1.1起支持)
  * @param {Object} 					options 扩展参数,所含属性键值会扩展到Event对象上(1.2起支持)
  * @remark 处理会调用通过addEventListenr绑定的自定义事件回调函数之外，还会调用直接绑定到对象上面的自定义事件。例如：<br>
 myobj.onMyEvent = function(){}<br>
 myobj.addEventListener("onMyEvent", function(){});
+ * @return {Void} 无
  */
 baidu.lang.Class.prototype.fire =
 baidu.lang.Class.prototype.dispatchEvent = function (event, options) {
@@ -70,7 +74,9 @@ baidu.lang.Class.prototype.dispatchEvent = function (event, options) {
 };
 
 /**
- * 注册对象的事件监听器。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+ * @description 注册对象的事件监听器。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+ * @function
+ * @name baidu.lang.Class#addEventListener
  * @grammar obj.addEventListener(type, handler[, key])
  * @param   {string}   type         自定义事件的名称
  * @param   {Function} handler      自定义事件被触发时应该调用的回调函数

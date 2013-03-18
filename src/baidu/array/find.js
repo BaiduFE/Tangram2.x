@@ -1,8 +1,8 @@
 ///import baidu.type;
 ///import baidu.array;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -11,7 +11,7 @@
 /**
  * @description 从数组中寻找符合条件的第一个元素
  *
- * @name baidu.array.find
+ * @name baidu.array.find()
  * @function
  * @grammar $Array.find([fn])
  * @param   {Function}     fn    用于做对比的函数

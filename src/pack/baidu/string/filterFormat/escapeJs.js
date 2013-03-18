@@ -10,7 +10,7 @@
 
 ///import pack.baidu.string.filterFormat;
 /**
- * 对js片段的字符做安全转义,编码低于255的都将转换成\x加16进制数
+ * @description 对js片段的字符做安全转义,编码低于255的都将转换成\x加16进制数
  * @name baidu.string.filterFormat.escapeJs
  * @function
  * @grammar baidu.string.filterFormat.escapeJs(source)

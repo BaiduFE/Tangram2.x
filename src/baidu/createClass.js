@@ -1,11 +1,11 @@
 ///import baidu.extend;
 ///import baidu.base.Class;
 
-/**
+/*
  * @description 创建一个类，包括创造类的构造器、继承基类Class
  * @author meizz
  * @modify 2012.11.05 meizz
- * @name baidu.createClass
+ * @name baidu.createClass()
  * @function
  * @grammar baidu.createClass(constructor[, options])
  * @remark
@@ -16,7 +16,7 @@
  * @param {Object}   options     [可选]配置{superClass: 父类, type:className: 类名, decontrolled: 不受控}
  * @return {Function}            类的最终构造器
  */
-baidu.createClass = /**@function*/function(constructor, type, options) {
+baidu.createClass = function(constructor, type, options) {
     constructor = baidu.isFunction(constructor) ? constructor : function(){};
     options = typeof type == "object" ? type : options || {};
 

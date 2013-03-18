@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -18,7 +18,7 @@
 /**
  * @description 对目标字符串按gbk编码截取字节长度
  * @function 
- * @name baidu.string.subByte
+ * @name baidu.string.subByte()
  * @grammar baidu.string.subByte(str, len[, tail])
  * @param {String} str 目标字符串
  * @param {Number} len 需要截取的字节长度

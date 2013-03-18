@@ -2,7 +2,7 @@
 ///import baidu.type;
 ///import baidu.extend;
 /*
- * @fileoverview
+ * @fileOverview
  * @author meizz
  * @create 2012-05-20
  * @modify
@@ -11,7 +11,8 @@
 /**
  * @description 创建链头对象，用于链式语法
  * @function
- * @name baidu.createChain
+ * @private
+ * @name baidu.createChain()
  * @grammar baidu.createChain(chainName[, fn[, constructor]])
  * @param   {String}    chainName   链头方法名，一般小写
  * @param   {Function}  fn          链头方法函数体
@@ -64,7 +65,7 @@ baidu.createChain = function(chainName, fn, constructor) {
 
 /**
  * @description 将系统对象上的方法重写到 自定义对象上去（为链式语法准备）
- *
+ * @private
  * @function
  * @grammar baidu.overwrite(Class, list, fn)
  * @param   {Object}        Class   系统对象原型

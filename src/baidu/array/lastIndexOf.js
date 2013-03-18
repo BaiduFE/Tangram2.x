@@ -1,6 +1,6 @@
 ///import baidu.array;
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -9,7 +9,7 @@
 /**
  * @description 从后往前，查询数组中指定元素的索引位置
  *
- * @name baidu.array.lastIndexOf
+ * @name baidu.array.lastIndexOf()
  * @function
  * @grammar $Aarray.lastIndexOf(match[, fromIndex])
  * @param   {Object}      match     匹配项

@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -16,7 +16,7 @@
 /**
  * @description 对目标字符串进行html解码
  * @function 
- * @name baidu.string.decodeHTML
+ * @name baidu.string.decodeHTML()
  * @grammar baidu.string.decodeHTML(str)
  * @param {String} str 目标字符串
  * @return {String} html解码后的字符串

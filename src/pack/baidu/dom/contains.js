@@ -11,7 +11,7 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 判断一个元素是否包含另一个元素
+ * @description 判断一个元素是否包含另一个元素
  * @name baidu.dom.contains
  * @function
  * @grammar baidu.dom.contains(container, contained)
@@ -20,7 +20,7 @@
  * @meta standard
  * @see baidu.dom.intersect
  *             
- * @returns {boolean} contained元素是否被包含于container元素的DOM节点上
+ * @return {boolean} contained元素是否被包含于container元素的DOM节点上
  */
 baidu.dom.contains = function (container, contained) {
 

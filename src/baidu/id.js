@@ -3,7 +3,7 @@
 ///import baidu.global;
 ///import baidu.browser;
 /*
- * @fileoverview
+ * @fileOverview
  * @author dron,meizz
  * @create 2012-06-13
  * @modify
@@ -12,7 +12,7 @@
 /**
  * @description 页面级唯一标识的方法
  * @function
- * @name baidu.id
+ * @name baidu.id()
  * @grammar baidu.id( [id[, command]] )
  * @param   {Object}        object      Object or id
  * @param   {String}        command     [可选] 操作名，若该字符不是指定操作符时将认为是指定 id

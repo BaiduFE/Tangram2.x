@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -19,7 +19,7 @@
 /**
  * @description 对目标数字进行0补齐处理
  * @function 
- * @name baidu.number.pad
+ * @name baidu.number.pad()
  * @grammar baidu.number.pad(num, len)
  * @param {Number} num 需要处理的数字
  * @param {Number} len 需要输出的长度

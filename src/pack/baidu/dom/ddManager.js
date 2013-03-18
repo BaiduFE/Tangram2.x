@@ -12,7 +12,7 @@
 ///import pack.baidu.lang.Event;
 ///import pack.baidu.lang.Class.$removeEventListener;
 /**
- * 拖曳管理器
+ * @description 拖曳管理器
  * @function
  * @param   {HTMLElement|ID}    element 被拖曳的元素
  * @param   {JSON}              options 拖曳配置项 {toggle, autoStop, interval, capture, range, ondragstart, ondragend, ondrag}

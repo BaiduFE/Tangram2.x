@@ -14,8 +14,9 @@
 
  
 /**
- * 心跳闪现效果。
+ * @description 心跳闪现效果。
  * @function
+ * @name baidu.fx.pulsate
  * @grammar baidu.fx.pulsate(element, loop, options)
  * @param       {string|HTMLElement}      element               元素或者元素的ID
  * @param       {Number}                  loop                  心跳次数，小于0则为永远跳动，默认为0次。
@@ -28,6 +29,7 @@
  * @config      {Function}                onafterupdate         function(){},//每次刷新画面之后会调用的回调函数
  * @config      {Function}                onafterfinish         function(){},//效果结束后会执行的回调函数
  * @config      {Function}                oncancel              function(){},//效果被撤销时的回调函数
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.pulsate = function(element, loop, options) {
     if (!(element = baidu.dom.g(element))) return null;

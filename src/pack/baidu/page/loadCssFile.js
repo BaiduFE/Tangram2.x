@@ -11,12 +11,13 @@
 ///import pack.baidu.page;
 
 /**
- * 动态在页面上加载一个外部css文件
+ * @description 动态在页面上加载一个外部css文件
  * @name baidu.page.loadCssFile
  * @function
  * @grammar baidu.page.loadCssFile(path)
  * @param {string} path css文件路径
  * @see baidu.page.loadJsFile
+ * @return {Void} 无
  */
 
 baidu.page.loadCssFile = function (path) {

@@ -5,7 +5,7 @@
  * @create 2012-11-19
  *
  * @function
- * @name baidu.setBack
+ * @name baidu.setBack()
  * @grammar baidu.setBack(current, oldChain)
  * @param   {Object}    current     新链头对象
  * @param   {Object}    oldChain    老链头对象

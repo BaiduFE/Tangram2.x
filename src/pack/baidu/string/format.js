@@ -11,12 +11,12 @@
 ///import pack.baidu.string;
 
 /**
- * 对目标字符串进行格式化
+ * @description 对目标字符串进行格式化
  * @name baidu.string.format
  * @function
  * @grammar baidu.string.format(source, opts)
  * @param {string} source 目标字符串
- * @param {Object|string...} opts 提供相应数据的对象或多个字符串
+ * @param {Object|string} opts 提供相应数据的对象或多个字符串
  * @remark
  * 
 opts参数为“Object”时，替换目标字符串中的#{property name}部分。<br>
@@ -25,7 +25,7 @@ opts为“string...”时，替换目标字符串中的#{0}、#{1}...部分。
  * @shortcut format
  * @meta standard
  *             
- * @returns {string} 格式化后的字符串
+ * @return {string} 格式化后的字符串
  */
 baidu.string.format = function (source, opts) {
     source = String(source);

@@ -11,13 +11,14 @@
 ///import pack.baidu.cookie.setRaw;
 
 /**
- * 删除cookie的值
+ * @description 删除cookie的值
  * @name baidu.cookie.remove
  * @function
  * @grammar baidu.cookie.remove(key, options)
  * @param {string} key 需要删除Cookie的键名
  * @param {Object} options 需要删除的cookie对应的 path domain 等值
  * @meta standard
+ * @return {undefined} 无返回值
  */
 baidu.cookie.remove = function (key, options) {
     options = options || {};

@@ -13,12 +13,12 @@
 ///import pack.baidu.url.escapeSymbol;
 
 /**
- * 将一个表单用ajax方式提交
+ * @description 将一个表单用ajax方式提交
  * @name baidu.ajax.form
  * @function
  * @grammar baidu.ajax.form(form[, options])
  * @param {HTMLFormElement} form             需要提交的表单元素
- * @param {Object} 	[options] 					发送请求的选项参数
+ * @param {Object} 	options					发送请求的选项参数
  * @config {Boolean} [async] 			是否异步请求。默认为true（异步）
  * @config {String} 	[username] 			用户名
  * @config {String} 	[password] 			密码
@@ -31,7 +31,7 @@
 	
  * @see baidu.ajax.request
  *             
- * @returns {XMLHttpRequest} 发送请求的XMLHttpRequest对象
+ * @return {XMLHttpRequest} 发送请求的XMLHttpRequest对象
  */
 baidu.ajax.form = function (form, options) {
     options = options || {};

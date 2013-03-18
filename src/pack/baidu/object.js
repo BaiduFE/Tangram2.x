@@ -10,7 +10,8 @@
 
 ///import pack.baidu;
 /**
- * 操作原生对象的方法
- * @namespace baidu.object
+ * @description 操作原生对象的方法
+ * @namespace
+ * @name baidu.object
  */
 baidu.object = baidu.object || {};

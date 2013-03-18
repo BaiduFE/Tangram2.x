@@ -9,7 +9,7 @@
  * 
  * @param {HTMLElement} src script节点
  * @param {String} url script节点的地址
- * @param {String} [charset] 编码
+ * @param {String} charset [可选] 编码
  */
 baidu.sio._createScriptTag = function(scr, url, charset){
     scr.setAttribute('type', 'text/javascript');

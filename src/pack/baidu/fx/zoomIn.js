@@ -14,8 +14,9 @@
 
  
 /**
- * 将元素放大的展现效果。
+ * @description 将元素放大的展现效果。
  * @function
+ * @name baidu.fx.zoomIn
  * @grammar baidu.fx.zoomIn(element, options)
  * @param     {string|HTMLElement}    element            元素或者元素的ID
  * @param     {Object}                options            选项。参数的详细说明如下表所示
@@ -30,6 +31,7 @@
  * @config    {Function}              onafterupdate      function(){},//每次刷新画面之后会调用的回调函数
  * @config    {Function}              onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config    {Function}              oncancel           function(){},//效果被撤销时的回调函数
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.zoomIn = function(element, options) {
     if (!(element = baidu.dom.g(element))) return null;

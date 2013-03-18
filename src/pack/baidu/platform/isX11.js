@@ -5,7 +5,7 @@
 
 ///import pack.baidu.platform;
 
-/**
+/*
  * 判断是否为x11平台
  * @property x11 是否为x11平台
  * @grammar baidu.platform.x11

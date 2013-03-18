@@ -1,4 +1,4 @@
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -17,7 +17,7 @@
 /**
  * @description 将目标字符串中常见全角字符转换成半角字符
  * @function 
- * @name baidu.string.toHalfWidth
+ * @name baidu.string.toHalfWidth()
  * @grammar baidu.string.toHalfWidth(str)
  * @param {String} str 目标字符串
  * @return {String} 转换后的字符串

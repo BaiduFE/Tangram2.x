@@ -10,7 +10,7 @@
 
 ///import pack.baidu.string.filterFormat;
 /**
- * 对数字做安全转义,确保是十进制数字;否则返回0.
+ * @description 对数字做安全转义,确保是十进制数字;否则返回0.
  * @name baidu.string.filterFormat.toInt
  * @function
  * @grammar baidu.string.filterFormat.toInt(source)

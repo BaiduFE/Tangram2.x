@@ -12,14 +12,14 @@
 ///import pack.baidu.dom.getDocument;
 
 /**
- * 获取目标元素所属的window对象
+ * @description 获取目标元素所属的window对象
  * @name baidu.dom.getWindow
  * @function
  * @grammar baidu.dom.getWindow(element)
  * @param {HTMLElement|string} element 目标元素或目标元素的id
  * @see baidu.dom.getDocument
  *             
- * @returns {window} 目标元素所属的window对象
+ * @return {window} 目标元素所属的window对象
  */
 baidu.dom.getWindow = function (element) {
     element = baidu.dom.g(element);

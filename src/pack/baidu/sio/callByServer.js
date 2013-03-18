@@ -10,7 +10,7 @@
 ///import pack.baidu.sio._removeScriptTag;
 
 /**
- * 通过script标签加载数据，加载完成由服务器端触发回调
+ * @description 通过script标签加载数据，加载完成由服务器端触发回调
  * @name baidu.sio.callByServer
  * @function
  * @grammar baidu.sio.callByServer(url, callback[, opt_options])
@@ -25,8 +25,9 @@
  * 如果url中已经包含key为“options['queryField']”的query项，将会被替换成callback中参数传递或自动生成的函数名。
  * @meta standard
  * @see baidu.sio.callByBrowser
+ * @return {Void} 无
  */
-baidu.sio.callByServer = /**@function*/function(url, callback, opt_options) {
+baidu.sio.callByServer = function(url, callback, opt_options) {
     var scr = document.createElement('SCRIPT'),
         prefix = 'bd__cbs__',
         callbackName,

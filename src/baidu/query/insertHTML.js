@@ -1,5 +1,5 @@
 
-/**
+/*
  * @author wangxiao
  * @email  1988wangxiao@gmail.com
  */
@@ -20,7 +20,7 @@
 
 /**
  * @description 在目标元素的指定位置插入HTML代码
- * @name baidu.query.insertHTML
+ * @name baidu.query.insertHTML()
  * @function
  * @grammar baidu.query.insertHTML(element, position, html)
  * @param {HTMLElement|string} element 目标元素或目标元素的id

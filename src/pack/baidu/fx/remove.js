@@ -14,8 +14,9 @@
 
  
 /**
- * 删除元素的时候使用fadeOut效果
+ * @description 删除元素的时候使用fadeOut效果
  * @function
+ * @name baidu.fx.remove
  * @grammar baidu.fx.remove(element, options)
  * @param       {string|HTMLElement}      element               元素或者元素的ID
  * @param       {Object}                  options               选项。参数的详细说明如下表所示
@@ -27,6 +28,7 @@
  * @config      {Function}                onafterupdate         function(){},//每次刷新画面之后会调用的回调函数
  * @config      {Function}                onafterfinish         function(){},//效果结束后会执行的回调函数
  * @config      {Function}                oncancel              function(){},//效果被撤销时的回调函数
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 
 baidu.fx.remove = function(element, options) {

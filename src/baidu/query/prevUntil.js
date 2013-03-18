@@ -3,8 +3,8 @@
 ///import baidu.query.match;
 ///import baidu.array.indexOf;
 
-/**
- * @fileoverview
+/*
+ * @fileOverview
  * @author meizz
  * @create 2012-05-28
  * @modify

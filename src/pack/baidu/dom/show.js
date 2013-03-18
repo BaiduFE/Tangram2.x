@@ -5,7 +5,7 @@
 
 ///import pack.baidu.dom.g;
 
-/**
+/*
  * 显示目标元素，即将目标元素的display属性还原成默认值。默认值可能在stylesheet中定义，或者是继承了浏览器的默认样式值
  * @author allstar, berg
  * @name baidu.dom.show
@@ -25,7 +25,7 @@
  * @meta standard
  * @see baidu.dom.hide,baidu.dom.toggle
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.show = function (element) {
     element = baidu.dom.g(element);

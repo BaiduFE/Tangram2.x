@@ -11,7 +11,7 @@
 ///import pack.baidu.string;
 
 /**
- * 对目标字符串进行html编码
+ * @description 对目标字符串进行html编码
  * @name baidu.string.encodeHTML
  * @function
  * @grammar baidu.string.encodeHTML(source)
@@ -22,7 +22,7 @@
  * @meta standard
  * @see baidu.string.decodeHTML
  *             
- * @returns {string} html编码后的字符串
+ * @return {string} html编码后的字符串
  */
 baidu.string.encodeHTML = function (source) {
     return String(source)

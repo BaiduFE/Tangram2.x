@@ -11,8 +11,9 @@
 ///import pack.baidu;
 
 /**
- * 操作数组的方法
- * @namespace baidu.array
+ * @namespace
+ * @description 操作数组的方法
+ * @name baidu.array
  */
 
 baidu.array = baidu.array || {};

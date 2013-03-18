@@ -13,7 +13,7 @@
      */
     
     /**
-     * 判断是否为safari浏览器, 支持ipad
+     * @description 判断是否为safari浏览器, 支持ipad
      * @property safari safari版本号
      * @grammar baidu.browser.safari
      * @meta standard

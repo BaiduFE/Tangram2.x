@@ -1,8 +1,8 @@
 ///import baidu.query;
 
-/**
- * @fileoverview
- * @name baidu.query.each
+/*
+ * @fileOverview
+ * @name baidu.query.each()
  * @author meizz
  * @create 2012-06-05
  * @modify

@@ -11,18 +11,18 @@
 ///import pack.baidu.string.getByteLength;
 
 /**
- * 对目标字符串按gbk编码截取字节长度
+ * @description 对目标字符串按gbk编码截取字节长度
  * @name baidu.string.subByte
  * @function
  * @grammar baidu.string.subByte(source, length)
  * @param {string} source 目标字符串
  * @param {number} length 需要截取的字节长度
- * @param {string} [tail] 追加字符串,可选.
+ * @param {string} tail 追加字符串,可选.
  * @remark
  * 截取过程中，遇到半个汉字时，向下取整。
  * @see baidu.string.getByteLength
  *             
- * @returns {string} 字符串截取结果
+ * @return {string} 字符串截取结果
  */
 baidu.string.subByte = function (source, length, tail) {
     source = String(source);

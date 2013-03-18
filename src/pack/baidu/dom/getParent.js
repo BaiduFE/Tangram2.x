@@ -12,12 +12,12 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 获得元素的父节点
+ * @description 获得元素的父节点
  * @name baidu.dom.getParent
  * @function
  * @grammar baidu.dom.getParent(element)
  * @param {HTMLElement|string} element   目标元素或目标元素的id
- * @returns {HTMLElement|null} 父元素，如果找不到父元素，返回null
+ * @return {HTMLElement|null} 父元素，如果找不到父元素，返回null
  */
 baidu.dom.getParent = function (element) {
     element = baidu.dom._g(element);

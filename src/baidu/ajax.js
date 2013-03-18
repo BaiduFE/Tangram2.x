@@ -53,7 +53,7 @@
 /**
  * @description 设置全局的AJAX请求默认选项
  * @function 
- * @name baidu.ajax.setup
+ * @name baidu.ajax.setup()
  * @grammar baiud.ajax.setup(options)
  * @param {Object} options 用于设置AJAX的全局参数, 参见baidu.ajax()
  * @return {Object} 最终的options结果
@@ -62,7 +62,7 @@
 /**
  * @description 创建一个序列化的数组或对象，适用于一个URL 地址查询字符串或Ajax请求
  * @function 
- * @name baidu.ajax.param
+ * @name baidu.ajax.param()
  * @grammar baidu.ajax.param(obj[, traditional ])
  * @param {Object} obj 一个数组或序列化的对象
  * @param {Boolean} traditional 一个布尔值，指示是否执行了传统的“shallow”的序列化

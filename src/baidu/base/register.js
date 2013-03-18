@@ -4,7 +4,8 @@
  * @description 向某个类注册插件
  * author meizz, dron
  * create 2011/11/29
- * @name baidu.base.register
+ * @private
+ * @name baidu.base.register()
  * @function
  * @grammar baidu.base.register(Class, constructorHook[, methods])
  * @param   {Class}     Class           接受注册的载体 类

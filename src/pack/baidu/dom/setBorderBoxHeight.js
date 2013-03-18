@@ -6,7 +6,7 @@
 ///import pack.baidu.dom;
 ///import pack.baidu.dom.setBorderBoxSize;
 
-/**
+/*
  * 按照border-box模型设置元素的height值
  * 
  * @author berg

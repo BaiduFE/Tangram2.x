@@ -10,14 +10,14 @@
 ///import pack.baidu.string;
 
 /**
- * 将各种浏览器里的颜色值转换成 #RRGGBB 的格式
+ * @description 将各种浏览器里的颜色值转换成 #RRGGBB 的格式
  * @name baidu.string.formatColor
  * @function
  * @grammar baidu.string.formatColor(color)
  * @param {string} color 颜色值字符串
  * @version 1.3
  *             
- * @returns {string} #RRGGBB格式的字符串或空
+ * @return {string} #RRGGBB格式的字符串或空
  */
 (function(){
     // 将正则表达式预创建，可提高效率

@@ -13,8 +13,9 @@
 ///import pack.baidu.fx.create;
 
 /**
- * 从下向上收拢DOM元素的效果。
+ * @description 从下向上收拢DOM元素的效果。
  * @function
+ * @name baidu.fx.collapse
  * @grammar baidu.fx.collapse(element, options)
  * @param     {string|HTMLElement}    element            元素或者元素的ID
  * @param     {Object}                options            选项。参数的详细说明如下表所示
@@ -28,6 +29,7 @@
  * @config    {Function}              onafterfinish      function(){},//效果结束后会执行的回调函数
  * @config    {Function}              oncancel           function(){},//在onafterfinish与oncancel时默认调用
  * @see baidu.fx.expand
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 
 baidu.fx.collapse = function(element, options) {

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /*
- * @fileoverview Tangram
+ * @fileOverview Tangram
  * Copyright 2012 Baidu Inc. All rights reserved.
  *
  * @author meizz, dron, linlingyu, erik, berg, allstar
@@ -29,7 +29,7 @@
 /**
  * @description 从文档中获取指定的DOM元素
  * @function 
- * @name baidu.g
+ * @name baidu.g()
  * @grammar baidu.g(id)
  * @param {String|Element} id 元素的ID名称或者直接传入元素本身
  * @return {Element} 如果传入的ID是不存在的则返回Null

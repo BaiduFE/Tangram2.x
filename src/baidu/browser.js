@@ -1,8 +1,8 @@
 ///import baidu.extend;
 
 /*
- * @fileoverview
- * @name baidu.browser
+ * @fileOverview
+ * @name baidu.browser()
  * @author meizz
  * @create 2012-06-29
  * @modify
@@ -11,7 +11,7 @@
 /**
  * @description 判断浏览器类型和特性的属性
  * @namespace
- * @name baidu.browser
+ * @name baidu.browser()
  * @grammar baidu.browser.ie
  * @grammar baidu.browser.chrome
  * @grammar baidu.browser.firefox

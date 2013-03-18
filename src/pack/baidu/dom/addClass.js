@@ -12,7 +12,7 @@
 ///import pack.baidu.string.trim;
 
 /**
- * 为目标元素添加className
+ * @description 为目标元素添加className
  * @name baidu.dom.addClass
  * @function
  * @grammar baidu.dom.addClass(element, className)
@@ -25,7 +25,7 @@
  * @see baidu.dom.removeClass
  * 	
  * 	            
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
 baidu.dom.addClass = function (element, className) {
     element = baidu.dom.g(element);

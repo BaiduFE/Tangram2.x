@@ -5,7 +5,7 @@
 
 ///import pack.baidu.platform;
 
-/**
+/*
  * 判断是否为ipad平台
  * @property ipad 是否为ipad平台
  * @grammar baidu.platform.ipad

@@ -11,7 +11,7 @@
 ///import pack.baidu.event;
 
 /**
- * 获取事件对象
+ * @description 获取事件对象
  * @name baidu.event.getEvent
  * @function
  * @param {Event} event event对象，目前没有使用这个参数，只是保留接口。by dengping.

@@ -6,7 +6,7 @@
 ///import pack.baidu.dom._g;
 ///import pack.baidu.dom.getDocument;
 
-/**
+/*
  * 获取目标元素的computed style值。如果元素的样式值不能被浏览器计算，则会返回空字符串（IE）
  *
  * @author berg
@@ -18,7 +18,7 @@
  *
  * @see baidu.dom.getStyle
  *             
- * @returns {string} 目标元素的computed style值
+ * @return {string} 目标元素的computed style值
  */
 
 baidu.dom.getComputedStyle = function(element, key){

@@ -12,7 +12,7 @@
 ///import pack.baidu.string.toCamelCase;
 
 /**
- * 删除元素的某个样式
+ * @description 删除元素的某个样式
  * @name baidu.dom.removeStyle
  * @function
  * @grammar baidu.dom.removeStyle(element, styleName)
@@ -21,7 +21,7 @@
  * @version 1.3
  * @see baidu.dom.setStyle
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
  
 // todo: 1. 只支持现代浏览器，有一些老浏览器可能不支持; 2. 有部分属性无法被正常移除

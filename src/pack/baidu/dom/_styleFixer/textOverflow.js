@@ -13,7 +13,7 @@
 ///import baidu.browser.firefox;
 ///import baidu.browser.opera;
 
-/**
+/*
  * 提供给setStyle与getStyle使用，在做textOverflow时会向element对象中添加,_baiduOverflow, _baiduHTML两个属性保存原始的innerHTML信息
  */
 baidu.dom._styleFixer.textOverflow = (function () {

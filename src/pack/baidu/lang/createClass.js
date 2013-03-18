@@ -13,15 +13,14 @@
 ///import pack.baidu.lang.Event;
 
 /**
- * 创建一个类，包括创造类的构造器、继承基类Class
+ * @description 创建一个类，包括创造类的构造器、继承基类Class
  * @name baidu.lang.createClass
  * @function
  * @grammar baidu.lang.createClass(constructor[, options])
  * @param {Function} constructor 类的构造器函数
- * @param {Object} [options] 
-                
- * @config {string} [type] 类名
- * @config {Function} [superClass] 父类，默认为baidu.lang.Class
+ * @param {Object} options [可选] 
+ * @param {string} type 类名
+ * @config {Function} superClass 父类，默认为baidu.lang.Class
  * @version 1.2
  * @remark
  * 
@@ -29,10 +28,10 @@
         
  * @see baidu.lang.Class,baidu.lang.inherits
  *             
- * @returns {Object} 一个类对象
+ * @return {Object} 一个类对象
  */
 
-baidu.lang.createClass = /**@function*/function(constructor, options) {
+baidu.lang.createClass =unction(constructor, options) {
     options = options || {};
     var superClass = options.superClass || baidu.lang.Class;
 

@@ -5,7 +5,7 @@
 
 ///import pack.baidu.fn;
 
-/**
+/*
  * 这是一个空函数，用于需要排除函数作用域链干扰的情况.
  * @author rocy
  * @name baidu.fn.blank

@@ -5,9 +5,10 @@
 
 ///import pack.baidu;
 
-/**
- * 判断平台类型和特性的属性
- * @namespace baidu.platform
+/*
+ * @description 判断平台类型和特性的属性
+ * @namespace
+ * @name baidu.platform
  * @author jz
  */
 baidu.platform = baidu.platform || {};

@@ -5,7 +5,7 @@
 
 ///import pack.baidu.platform;
 
-/**
+/*
  * 判断是否为macintosh平台
  * @property macintosh 是否为macintosh平台
  * @grammar baidu.platform.macintosh

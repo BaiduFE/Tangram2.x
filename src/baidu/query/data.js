@@ -4,9 +4,9 @@
 ///import baidu.type;
 ///import baidu.global;
 
-/**
- * @fileoverview
- * @name baidu.query.data
+/*
+ * @fileOverview
+ * @name baidu.query.data()
  * @create 2012-07-13
  * @author meizz
  * @modify
@@ -19,7 +19,7 @@
  * @grammar baidu.query().data(key, value)
  * @param {String} key 数据的键值
  * @param {String|Number} value 数据的值 
- * @return
+ * @return {TangramDom} TangramDom 对象
  */
 
 /**

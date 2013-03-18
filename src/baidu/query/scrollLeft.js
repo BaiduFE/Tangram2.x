@@ -1,4 +1,4 @@
-/**
+/*
  * @author linlingyu
  */
 ///import baidu.query;

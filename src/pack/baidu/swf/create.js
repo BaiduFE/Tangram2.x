@@ -12,7 +12,7 @@
 ///import pack.baidu.swf.createHTML;
 
 /**
- * 在页面中创建一个flash对象
+ * @description 在页面中创建一个flash对象
  * @name baidu.swf.create
  * @function
  * @grammar baidu.swf.create(options[, container])
@@ -42,9 +42,10 @@
  * @param {boolean} options.swliveconnect 		第一次加载flash时浏览器是否应启动Java。允许值：true/false
  * @param {Object} 	options.vars 				要传递给flash的参数，支持JSON或string类型。
  * 
- * @param {HTMLElement|string} [container] 		flash对象的父容器元素，不传递该参数时在当前代码位置创建flash对象。
+ * @param {HTMLElement|string} container 		flash对象的父容器元素，不传递该参数时在当前代码位置创建flash对象。
  * @meta standard
  * @see baidu.swf.createHTML,baidu.swf.getMovie
+ * @return {Void} 无返回值
  */
 baidu.swf.create = function (options, target) {
     options = options || {};

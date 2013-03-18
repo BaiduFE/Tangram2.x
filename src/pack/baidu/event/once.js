@@ -13,7 +13,7 @@
 ///import pack.baidu.dom._g;
 
 /**
- * 为目标元素添加一次事件绑定
+ * @description 为目标元素添加一次事件绑定
  * @name baidu.event.once
  * @function
  * @grammar baidu.event.once(element, type, listener)
@@ -23,9 +23,9 @@
  * @version 1.3
  * @see baidu.event.un,baidu.event.on
  *             
- * @returns {HTMLElement} 目标元素
+ * @return {HTMLElement} 目标元素
  */
-baidu.event.once = /**@function*/function(element, type, listener){
+baidu.event.once = function(element, type, listener){
     element = baidu.dom._g(element);
     function onceListener(event){
         listener.call(element,event);

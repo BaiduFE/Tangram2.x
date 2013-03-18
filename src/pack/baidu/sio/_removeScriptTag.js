@@ -6,7 +6,7 @@
 ///import pack.baidu.sio;
 
 /**
- * 删除script的属性，再删除script标签，以解决修复内存泄漏的问题
+ * @description 删除script的属性，再删除script标签，以解决修复内存泄漏的问题
  * 
  * @param {HTMLElement} src script节点
  */

@@ -13,8 +13,9 @@
 
  
 /**
- * 渐隐渐变效果，效果执行结束后会将元素完全隐藏起来。
+ * @description 渐隐渐变效果，效果执行结束后会将元素完全隐藏起来。
  * @function
+ * @name baidu.fx.fadeOut
  * @grammar baidu.fx.fadeOut(element, options)
  * @param {string|HTMLElement} element 元素或者元素的ID
  * @param {Object} options 选项。参数的详细说明如下表所示
@@ -29,6 +30,7 @@
  * @see baidu.fx.fadeIn
  * @remark
  * 1.0.0开始支持
+ * @return    {Instance}              baidu.fx.Timeline时间线类的一个实例
  */
 baidu.fx.fadeOut = function(element, options) {
     if (!(element = baidu.dom.g(element))) return null;
