@@ -3,7 +3,7 @@
 ///import baidu.dom._prop;
 ///import baidu.dom._propFixer;
 ///import baidu.dom._nodeHook;
-///import baidu.support.getSetAttribute;
+///import baidu.support._getSetAttribute;
 ///import baidu.dom._isXML;
 ///import baidu.dom._removeAttr;
 ///import baidu.dom._contains;
@@ -68,7 +68,7 @@ baidu.dom._attr = function(){
         };
     // Set width and height to auto instead of 0 on empty string
     // This is for removals
-    if(!baidu.support.getSetAttribute){//
+    if(!baidu.support._getSetAttribute){//
         baidu.forEach(['width', 'height'], function(item){
             attrHooks[item] = {
                 set: function(ele, key, val){
