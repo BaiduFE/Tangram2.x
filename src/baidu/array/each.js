@@ -38,4 +38,4 @@ baidu.array.extend({
     forEach: function(iterator, context){
         return baidu.forEach(this, iterator, context);
     }
-});
+});

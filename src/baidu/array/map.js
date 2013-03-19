@@ -28,5 +28,5 @@ baidu.array.extend({
         }
         return array;
     }
-});
+});
 

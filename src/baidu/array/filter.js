@@ -67,4 +67,4 @@ baidu.array.extend({
         }
         return result;
     }
-});
+});
