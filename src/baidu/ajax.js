@@ -1,8 +1,7 @@
 ///import baidu.createChain;
-///import baidu.isPlainObject;
+///import baidu.type;
 ///import baidu.extend;
 ///import baidu.string.trim;
-///import baidu.type;
 ///import baidu.deferred;
 ///import baidu.callbacks;
 ///import baidu.when;
