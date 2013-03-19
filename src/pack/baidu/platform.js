@@ -5,7 +5,7 @@
 
 ///import pack.baidu;
 
-/*
+/**
  * @description 判断平台类型和特性的属性
  * @namespace
  * @name baidu.platform

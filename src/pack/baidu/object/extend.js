@@ -5,8 +5,8 @@
 
 ///import pack.baidu.object;
 
-/*
- * 将源对象的所有属性拷贝到目标对象中
+/**
+ * @description 将源对象的所有属性拷贝到目标对象中
  * @author erik
  * @name baidu.object.extend
  * @function

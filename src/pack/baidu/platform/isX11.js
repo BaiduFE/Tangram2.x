@@ -5,10 +5,11 @@
 
 ///import pack.baidu.platform;
 
-/*
- * 判断是否为x11平台
+/**
+ * @description 判断是否为x11平台
  * @property x11 是否为x11平台
- * @grammar baidu.platform.x11
+ * @name baidu.platform.isX11
+ * @type {boolean}
  * @meta standard
  * @see baidu.platform.windows,baidu.platform.macintosh,baidu.platform.iphone,baidu.platform.ipad,baidu.platform.android
  * @return {Boolean} 布尔值 

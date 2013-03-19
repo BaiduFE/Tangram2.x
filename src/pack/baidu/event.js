@@ -10,7 +10,7 @@
 
 ///import pack.baidu;
 
-/*
+/**
  * @description 屏蔽浏览器差异性的事件封装
  * @namespace
  * @name baidu.event

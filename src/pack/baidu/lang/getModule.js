@@ -12,7 +12,7 @@
 
 /**
  * @description 根据变量名或者命名空间来查找对象
- * @name baidu.lange.getModule
+ * @name baidu.lang.getModule
  * @function
  * @grammar baidu.lang.getModule(name, opt_obj)
  * @param {string} name 变量或者命名空间的名字.

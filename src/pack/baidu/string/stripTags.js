@@ -12,7 +12,7 @@
 
 /**
  * @description 去掉字符串中的html标签
- * @name baidu.strng.striptags
+ * @name baidu.string.stripTags
  * @function
  * @grammar baidu.string.stripTags(source)
  * @param {string} source 要处理的字符串.

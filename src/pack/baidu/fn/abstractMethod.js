@@ -12,8 +12,10 @@
 
 /**
  * @description 定义一个抽象方法
+ * @function
  * @private
- * @type {!Function}
+ * @name baidu.fn.abstractMethod
+ * @type {Function}
  * @throws {Error} when invoked to indicate the method should be
  *   overridden.
  * @see goog.abstractMethod

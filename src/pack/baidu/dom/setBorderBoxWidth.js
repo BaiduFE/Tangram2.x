@@ -6,8 +6,8 @@
 ///import pack.baidu.dom;
 ///import pack.baidu.dom.setBorderBoxSize;
 
-/*
- * 按照border-box模型设置元素的width值
+/**
+ * @description 按照border-box模型设置元素的width值
  * 
  * @author berg
  * @name baidu.dom.setBorderBoxWidth
@@ -20,6 +20,7 @@
  * @return {HTMLElement}  设置好的元素
  * @see baidu.dom.setBorderBoxHeight, baidu.dom.setBorderBoxSize
  * @shortcut dom.setOuterWidth
+ * @return {HTMLElement}  设置好的元素
  */
 baidu.dom.setOuterWidth = 
 baidu.dom.setBorderBoxWidth = function (element, width) {
