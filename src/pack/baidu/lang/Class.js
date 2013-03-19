@@ -33,7 +33,7 @@ baidu.$$._instances = baidu.$$._instances || {};
 /**
  * @description 释放对象所持有的资源，主要是自定义事件。
  * @function
- * @name baidu.lang.Class.dispose
+ * @name baidu.lang.Class#dispose
  * @grammar obj.dispose()
  * @return {undefined} 无返回值
  * TODO: 将_listeners中绑定的事件剔除掉
