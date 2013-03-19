@@ -5,12 +5,13 @@
 
 ///import pack.baidu.array;
 
-/*
- * 清空一个数组
+/**
+ * @description 清空一个数组
  * @name baidu.array.empty
  * @function
  * @grammar baidu.array.empty(source)
  * @param {Array} source 需要清空的数组.
+ * @return {void} 无返回值
  * @author berg
  */
 baidu.array.empty = function(source) {

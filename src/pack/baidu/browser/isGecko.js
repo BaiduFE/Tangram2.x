@@ -12,8 +12,9 @@
 
 /**
  * @description 判断是否为gecko内核
- * @property isGecko 
- * @grammar baidu.browser.isGecko
+ * @property
+ * @type {boolean}
+ * @name baidu.browser.isGecko
  * @meta standard
  * @see baidu.browser.isWebkit
  * @return {Boolean} 布尔值

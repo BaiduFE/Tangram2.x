@@ -5,10 +5,11 @@
 
 ///import pack.baidu.platform;
 
-/*
- * 判断是否为iphone平台
+/**
+ * @description 判断是否为iphone平台
  * @property iphone 是否为iphone平台
- * @grammar baidu.platform.iphone
+ * @name baidu.platform.isIphone
+ * @type {boolean}
  * @meta standard
  * @see baidu.platform.x11,baidu.platform.windows,baidu.platform.macintosh,baidu.platform.ipad,baidu.platform.android
  * @return {Boolean} 布尔值

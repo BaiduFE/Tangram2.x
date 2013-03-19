@@ -13,17 +13,18 @@
 ///import pack.baidu.lang.isFunction;
 
 
-/*
+/**
  * @description 延迟加载图片. 默认只加载可见高度以上的图片, 随着窗口滚动加载剩余图片.注意: 仅支持垂直方向.
  * @name baidu.page.lazyLoadImage
  * @function
  * @grammar baidu.page.lazyLoadImage([options])
- * @param {Object} options
- * @param {String} [options.className] 延迟加载的IMG的className,如果不传入该值将延迟加载所有IMG.
- * @param {Number} [options.preloadHeight] 预加载的高度, 可见窗口下该高度内的图片将被加载.
- * @param {String} [options.placeHolder] 占位图url.
- * @param {Function} [options.onlazyload] 延迟加载回调函数,在实际加载时触发.
+ * @param {Object} options 选项
+ * @param {String} options.className 延迟加载的IMG的className,如果不传入该值将延迟加载所有IMG.
+ * @param {Number} options.preloadHeight 预加载的高度, 可见窗口下该高度内的图片将被加载.
+ * @param {String} options.placeHolder 占位图url.
+ * @param {Function} options.onlazyload 延迟加载回调函数,在实际加载时触发.
  * @author rocy
+ * @return {Void} 无
  */
 baidu.page.lazyLoadImage = function(options) {
     options = options || {};

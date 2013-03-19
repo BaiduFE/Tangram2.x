@@ -14,7 +14,8 @@
 /**
  * @description 添加多个自定义事件。
  * @addon
- * @grammar baidu.lang.Class$addEventListeners(events, fn)
+ * @name baidu.lang.Class.$addEventListeners
+ * @grammar baidu.lang.Class.$addEventListeners(events, fn)
  * @param 	{object}   events       json对象，key为事件名称，value为事件被触发时应该调用的回调函数
  * @param 	{Function} fn	        要挂载的函数
  * @version 1.3

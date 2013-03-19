@@ -5,8 +5,8 @@
 
 ///import pack.baidu.lang;
 
-/*
- * 增加自定义模块扩展,默认创建在当前作用域
+/**
+ * @description 增加自定义模块扩展,默认创建在当前作用域
  * @author erik, berg
  * @name baidu.lang.module
  * @function
@@ -19,6 +19,7 @@
             从1.1.1开始，module方法会优先在当前作用域下寻找模块，如果无法找到，则寻找window下的模块
 
  * @meta standard
+ * @return {Void} 无
  */
 baidu.lang.module = function(name, module, owner) {
     var packages = name.split('.'),

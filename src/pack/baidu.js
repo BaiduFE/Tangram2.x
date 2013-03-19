@@ -17,10 +17,10 @@
  * Copyright 2009 Baidu Inc. All rights reserved.
  */
 
-/*
+/**
  * @description T Tangram七巧板
  * @namespace 
- * @name T
+ * @name baidu
  * @version 1.5.2.2
  */
 

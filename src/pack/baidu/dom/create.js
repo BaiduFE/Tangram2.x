@@ -4,8 +4,8 @@
  */
 ///import pack.baidu.dom.setAttrs;
 
-/*
- * 创建 Element 对象。
+/**
+ * @description 创建 Element 对象。
  * @author berg
  * @name baidu.dom.create
  * @function

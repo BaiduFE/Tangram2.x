@@ -11,8 +11,8 @@
  * 默认情况下，所有在源对象上的属性都会被非递归地合并到目标对象上
  * 并且如果目标对象上已有此属性，不会被覆盖
  */
-/*
- * 合并源对象的属性到目标对象。
+/**
+ * @description 合并源对象的属性到目标对象。
  *
  * @name baidu.object.merge
  * @function
@@ -27,6 +27,7 @@
  * @return {object} merge后的object.
  * @see baidu.object.extend
  * @author berg
+ * @return {Object} 合并后的对象
  */
 (function() {
 var isPlainObject = function(source) {

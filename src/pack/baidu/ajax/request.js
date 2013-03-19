@@ -6,8 +6,8 @@
 ///import pack.baidu.ajax;
 ///import pack.baidu.fn.blank;
 
-/*
- * 发送一个ajax请求
+/**
+ * @description 发送一个ajax请求
  * @author: allstar, erik, berg
  * @name baidu.ajax.request
  * @function

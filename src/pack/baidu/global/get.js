@@ -8,8 +8,11 @@
 
 ///import pack.baidu.global;
 
-/*
- * @namespace baidu.global.get 取得global全局对象里存储的信息。
+/**
+ * @description  取得global全局对象里存储的信息。
+ * @function
+ * @name baidu.global.get
+ * @grammar baidu.global.get(key)
  * @author meizz
  *
  * @param   {string}    key     信息对应的 key 值

@@ -10,6 +10,7 @@
 /**
  * @description 判断是否为ie浏览器
  * @name baidu.browser.ie
+ * @type {string}
  * @property
  * @grammar baidu.browser.ie
  * @return {Number} IE版本号
