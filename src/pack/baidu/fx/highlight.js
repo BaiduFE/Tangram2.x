@@ -19,7 +19,7 @@
 /**
  * @description 这个方法改变DOM元素的背景色，实现高亮的效果。
  * @function
- * @name baidu.fx.hilight
+ * @name baidu.fx.highlight
  * @grammar baidu.fx.highlight(element, options)
  * @param      {string|HTMLElement}     element            元素或者元素的ID
  * @param      {Object}                 options            选项。参数的详细说明如下表所示

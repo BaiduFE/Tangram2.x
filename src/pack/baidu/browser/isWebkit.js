@@ -12,8 +12,9 @@
 
 /**
  * @description 判断是否为webkit内核
- * @property isWebkit 
- * @grammar baidu.browser.isWebkit
+ * @property
+ * @type {boolean}
+ * @name baidu.browser.isWebkit
  * @meta standard
  * @see baidu.browser.isGecko
  * @return {Boolean} 布尔值

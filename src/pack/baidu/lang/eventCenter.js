@@ -5,11 +5,13 @@
 ///import pack.baidu.lang;
 ///import pack.baidu.lang.createSingle;
 
-/*
- * 事件中心
+/**
+ * @description 事件中心
  * @class
  * @name baidu.lang.eventCenter
+ * @grammar new baidu.lange.eventCenter()
  * @author rocy
+ * @return {Object} EventCenter对象
  */
 baidu.lang.eventCenter = baidu.lang.eventCenter || baidu.lang.createSingle();
 

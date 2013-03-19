@@ -5,10 +5,11 @@
 
 ///import pack.baidu.platform;
 
-/*
- * 判断是否为macintosh平台
+/**
+ * @description 判断是否为macintosh平台
  * @property macintosh 是否为macintosh平台
- * @grammar baidu.platform.macintosh
+ * @name baidu.platform.isMacintosh
+ * @type {boolean}
  * @meta standard
  * @see baidu.platform.x11,baidu.platform.windows,baidu.platform.iphone,baidu.platform.ipad,baidu.platform.android
  * @return {Boolean} 布尔值 

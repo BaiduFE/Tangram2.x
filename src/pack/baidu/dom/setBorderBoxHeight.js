@@ -6,8 +6,8 @@
 ///import pack.baidu.dom;
 ///import pack.baidu.dom.setBorderBoxSize;
 
-/*
- * 按照border-box模型设置元素的height值
+/**
+ * @description 按照border-box模型设置元素的height值
  * 
  * @author berg
  * @name baidu.dom.setBorderBoxHeight
@@ -20,6 +20,7 @@
  * @return {HTMLElement}  设置好的元素
  * @see baidu.dom.setBorderBoxWidth, baidu.dom.setBorderBoxSize
  * @shortcut dom.setOuterHeight
+ * @return {HTMLElement}  设置好的元素
  */
 baidu.dom.setOuterHeight = 
 baidu.dom.setBorderBoxHeight = function (element, height) {

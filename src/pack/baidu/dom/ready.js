@@ -8,8 +8,8 @@
 ///import pack.baidu.browser.opera;
 ///import pack.baidu.dom;
 
-/*
- * 使函数在页面dom节点加载完毕时调用
+/**
+ * @description 使函数在页面dom节点加载完毕时调用
  * @author allstar
  * @name baidu.dom.ready
  * @function
@@ -18,6 +18,7 @@
  * @remark
  * 如果有条件将js放在页面最底部, 也能达到同样效果，不必使用该方法。
  * @meta standard
+ * @return {Void} 无
  */
 (function() {
 
