@@ -125,7 +125,7 @@ void function(){
     
     function parseJSON(data){
         if(!data || baidu.type(data) !== 'string'){return null;}
-        data = baidu.string(data).trim();
+        data = baidu.string.trim(data);
         if ( window.JSON && window.JSON.parse ) {
             return window.JSON.parse( data );
         }
@@ -445,7 +445,7 @@ void function(){
         
         //if url is window.location must + ''
         opts.url = ((url || opts.url) + '').replace(rhash, '').replace(rprotocol, ajaxLocParts[1] + '//');
-        opts.dataTypes = baidu.string(opts.dataType || '*').trim().toLowerCase().split(/\s+/);
+        opts.dataTypes = baidu.string.trim(opts.dataType || '*').toLowerCase().split(/\s+/);
         // Determine if a cross-domain request is in order
         if (opts.crossDomain == null){
             parts = rurl.exec(opts.url.toLowerCase());

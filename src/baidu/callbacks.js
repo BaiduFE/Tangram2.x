@@ -183,7 +183,13 @@ baidu.createChain('Callbacks', function(options){
             },
             
             has: function(fn){
-                return baidu.array(fnArray).indexOf(fn) > -1;
+                var i = 0, j = fnArray.length;
+                for(; i < j; i++){
+                    if(fnArray[ i ] === fn){
+                        return true;
+                    }
+                }
+                return false;
             },
             
             empty: function(){

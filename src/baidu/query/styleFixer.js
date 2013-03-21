@@ -85,7 +85,7 @@ baidu.query.styleFixer = function(){
     
     //
     return function(ele, key, val){
-        var origKey = baidu.string(key).toCamelCase(),
+        var origKey = baidu.string.toCamelCase(key),
             method = val === undefined ? 'get' : 'set',
             origVal, hooks;
         origKey = cssProps[origKey] || origKey;

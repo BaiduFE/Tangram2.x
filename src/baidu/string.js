@@ -1,6 +1,6 @@
 /*
- * @author wangxiao
- * @email  1988wangxiao@gmail.com
+ * @author bility
+ * @email  xspider.org@gmail.com
  */
 
 ///import baidu.createChain;
@@ -16,15 +16,28 @@
  * @return {TangramString} 返回一个TangramString对象
  */
 
-baidu.createChain('string',
-    // 执行方法
-    function(string){
-        var type = baidu.type(string),
-            str = new String(~'string|number'.indexOf(type) ? string : type),
-            pro = String.prototype;
-        baidu.forEach(baidu.string.$String.prototype, function(fn, key) {
-            pro[key] || (str[key] = fn);
-        });
-        return str;
-    }
-);
+//Compatible not
+
+/*
+baidu.string = baidu.string || {};
+*/
+
+//Compatible start
+
+//这里这样写是为了兼容之前的baidu.string()
+//如果不兼容了就直接 baidu.string = baidu.string || {};
+baidu.string = baidu.string || function(string){
+    var 
+        type = baidu.type(string),
+        str  = new String(~'string|number'.indexOf(type) ? string : type),
+        pro  = String.prototype,
+        key;
+    
+
+    for(key in baidu.string){
+        str[key] = baidu.string[key];
+    };
+    
+    return str;
+};
+//Compatible end

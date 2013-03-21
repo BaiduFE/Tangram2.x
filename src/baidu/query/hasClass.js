@@ -34,7 +34,7 @@
 ///import baidu;
 ///import baidu.query;
 ///import baidu.forEach;
-
+///import baidu.string.trim;
 baidu.query.extend({
     hasClass: function(value){
         //异常处理
@@ -46,10 +46,12 @@ baidu.query.extend({
             return false;
         };
 
-        //对输入进行处理
-        value = value.replace(/^\s+/g,'').replace(/\s+$/g,'').replace(/\s+/g,' ');
-        var arr = value.split(' ');
-        var result;
+        var arr,result;
+            
+        arr = (value.indexOf(' ') > 0) ? 
+            baidu.string.trim(value).replace(/\s+/g,' ').split(/\s+/): 
+            [value];
+            
         baidu.forEach(this, function(item){
             var str = item.className;
             for(var i = 0;i<arr.length;i++){
