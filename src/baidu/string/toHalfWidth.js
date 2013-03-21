@@ -6,13 +6,6 @@
 
 ///import baidu.string;
 
-/**
- * @description 将目标字符串中常见全角字符转换成半角字符
- * @function 
- * @name baidu.string().toHalfWidth()
- * @grammar baidu.string(str).toHalfWidth()
- * @return {String} 转换后的字符串
- */
 
 /**
  * @description 将目标字符串中常见全角字符转换成半角字符
@@ -121,11 +114,21 @@
 ｝ => }<br>
 ～ => ~<br>
  */
-baidu.string.extend({
-    toHalfWidth : function () {
-        return this.replace(/[\uFF01-\uFF5E]/g,
+
+baidu.string.toHalfWidth = baidu.string.toHalfWidth || function(){
+    var txt;
+    
+    (arguments.length > 0) ? 
+        (
+            txt = arguments[0],
+
+            type = baidu.type(txt),
+            txt  = new String(~'string|number'.indexOf(type) ? txt : type)
+        ) : (txt = this);
+    
+    return txt.replace(/[\uFF01-\uFF5E]/g,
             function(c){
                 return String.fromCharCode(c.charCodeAt(0) - 65248);
             }).replace(/\u3000/g," ");
-    }
-});
+};
+

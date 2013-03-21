@@ -5,13 +5,7 @@
 
 ///import baidu.string;
 
-/**
- * @description 删除目标字符串两端的空白字符
- * @function 
- * @name baidu.string().trim()
- * @grammar baidu.string(str).trim()
- * @return {String} 删除两端空白字符后的字符串
- */
+
 
 /**
  * @description 删除目标字符串两端的空白字符
@@ -22,11 +16,24 @@
  * @return {String} 删除两端空白字符后的字符串
  */
 
-baidu.string.extend({
-    trim: function(){
-        var trimer = new RegExp('(^[\\s\\t\\xa0\\u3000]+)|([\\u3000\\xa0\\s\\t]+\x24)', 'g');
-        return function(){
-            return this.replace(trimer, '');
+
+
+baidu.string.trim = baidu.string.trim || function(){
+    
+    var core_trim = String.prototype.trim;
+    
+    return core_trim && !core_trim.call("\uFEFF\xA0") ? 
+        function(txt){
+            txt = arguments.length ? txt : this;
+            return txt == null ?
+                '' :
+                core_trim.call(txt);
+        } : 
+        function(txt){
+            var 
+                trimer = new RegExp('(^[\\s\\t\\xa0\\u3000]+)|([\\u3000\\xa0\\s\\t]+\x24)', 'g'),
+                txt = arguments.length ? txt : this;
+            return txt.replace(trimer, '');
         }
-    }()
-});
+    
+}();
