@@ -169,7 +169,7 @@ void function( window, undefined ) {
         if ( !selector || typeof selector !== "string" ) {
             return results;
         }else{
-            selector = baidu.string(selector).trim();
+            selector = baidu.string.trim(selector);
             if(!selector){return results;};
         }
 

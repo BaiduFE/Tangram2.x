@@ -100,6 +100,11 @@ baidu.isObject = function( unknow ) {
     return typeof unknow === "function" || ( typeof unknow === "object" && unknow != null );
 };
 
+baidu.isBoolean = function(unknow){
+    return (unknow === true) ||
+            (unknow === false) ||
+            ((unknow !== null) && ((unknow.valueOf() === true) || (unknow.valueOf() === false)));
+};
 
 /*
  1-ELEMENT

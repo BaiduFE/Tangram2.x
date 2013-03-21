@@ -1,7 +1,6 @@
 ///import baidu.array.indexOf;
 /*
- * @fileOverview
- * @description 判断数组是否包含指定的元素
+ * @fileoverview
  * @author meizz
  * @create 2012-07-30
  * @modify
@@ -13,22 +12,17 @@
  * @name baidu.array.contains()
  * @function
  * @grammar $Array.contains( item )
+ * @param   {Array}       source  要遍历的数组
  * @param   {Object}      item  被包含项
  * @return  {Boolean}           是否包含
  */
 
-/**
- * @description 数组包含某项
- *
- * @name baidu.array().contains()
- * @function
- * @grammar $Array.contains( item )
- * @param   {Object}      item  被包含项
- * @return  {Boolean}           是否包含
- */
+baidu.array.contains = baidu.array.contains || function(item){
+    var source;
+    (arguments.length > 1) ?
+        (source = item,item = arguments[1]) :
+        (source = this);
 
-baidu.array.extend({
-    contains : function (item) {
-        return !!~this.indexOf(item);
-    }
-});
+    return !!~baidu.array.indexOf(source,item);
+};
+

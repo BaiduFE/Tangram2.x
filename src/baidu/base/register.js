@@ -2,8 +2,8 @@
 
 /**
  * @description 向某个类注册插件
- * author meizz, dron
- * create 2011/11/29
+ * @author meizz, dron
+ * @create 2011/11/29
  * @private
  * @name baidu.base.register()
  * @function
