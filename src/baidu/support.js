@@ -1,7 +1,7 @@
 /*
  * @author linlingyu
  */
-///import baidu.query;
+///import baidu;
 baidu.support = baidu.support || function(){
     var div = document.createElement('div'),
         baseSupport, a, input, select, opt;

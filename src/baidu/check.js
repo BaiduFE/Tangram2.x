@@ -1,4 +1,3 @@
-///import baidu;
 ///import baidu.type;
 /*
  * @fileOverview
