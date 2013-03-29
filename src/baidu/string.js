@@ -27,17 +27,13 @@ baidu.string = baidu.string || {};
 //这里这样写是为了兼容之前的baidu.string()
 //如果不兼容了就直接 baidu.string = baidu.string || {};
 baidu.string = baidu.string || function(string){
-    var 
-        type = baidu.type(string),
+    var type = baidu.type(string),
         str  = new String(~'string|number'.indexOf(type) ? string : type),
         pro  = String.prototype,
         key;
-    
-
     for(key in baidu.string){
         str[key] = baidu.string[key];
     };
-    
     return str;
 };
 //Compatible end
