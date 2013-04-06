@@ -1,7 +1,6 @@
 ///import baidu.query;
 ///import baidu.merge;
 ///import baidu.type;
-///import baidu._query;
 ///import baidu.array.unique;
 ///import baidu.query.createElements;
 
