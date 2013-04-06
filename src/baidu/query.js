@@ -1,6 +1,6 @@
 ///import baidu;
 ///import baidu.merge;
-///import baidu._query;
+///import baidu.selector;
 ///import baidu.createChain;
 
 /*
@@ -122,7 +122,7 @@ function(selector, context) {
             baidu.merge( me, ret);
         // baidu.query
         } else {
-            baidu._query(selector, context, me);
+            baidu.selector(selector, context, me);
         }
     
     // document.ready

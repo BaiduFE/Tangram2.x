@@ -21,7 +21,7 @@
  */
 baidu.createChain = function(chainName, fn, constructor) {
     // 创建一个内部类名
-    var className = chainName=="query"?"$DOM":"$"+chainName.charAt(0).toUpperCase()+chainName.substr(1);
+    var className = chainName == "query" ? "$DOM" : "$" + chainName.charAt(0).toUpperCase() + chainName.substr(1);
     var slice = Array.prototype.slice;
 
     // 构建链头执行方法
