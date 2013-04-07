@@ -1,0 +1,1 @@
+module("baidu.query.setBorderBoxSize");

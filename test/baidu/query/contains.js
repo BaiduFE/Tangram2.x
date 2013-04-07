@@ -1,0 +1,94 @@
+module("baidu.query.contains")
+
+test("父子关系",function(){
+	expect(10);
+	var div = document.createElement('div');
+	div.id = "father_div";
+	var divChild = document.createElement('div');
+	divChild.id = "child_div";
+	var img = document.createElement('img');
+	img.setAttribute('id',"img_id");
+	var text = document.createTextNode('text node');
+	var aGrand = document.createElement('a');
+	document.body.appendChild(div);
+	div.appendChild(divChild);
+	div.appendChild(img);
+	div.appendChild(text);
+	divChild.appendChild(aGrand);
+	ok(baidu.query(div).contains(divChild),"div contains child div");
+	ok(baidu.query(div).contains(img),"div contains img");
+	ok(baidu.query(div).contains(text), "div contains text");//text node
+	ok(baidu.query(divChild).contains(aGrand),"child div contains a");//grand child
+	ok(baidu.query('body').contains(div),"body contains div");//body
+
+	ok(baidu.query(div).contains(aGrand),"grandfather contains grandson");
+	ok(baidu.query('#father_div').contains(aGrand),"grandfather contains grandson-by id");
+	ok(baidu.query("#father_div").contains(divChild),"div contains child div--father by id");//id
+	ok(baidu.query(div).contains("#child_div"),"div contains child div--child by id");//id
+	ok(baidu.query("#father_div").contains("#child_div"),"div contains child div--both by id");//id
+	div.removeChild(divChild);
+	document.body.removeChild(div);
+});
+
+test("非父子关系",function(){
+	expect(5);
+	var div = document.createElement('div');
+	var a = document.createElement('a');
+	var div1 = document.createElement('div');
+	var img = document.createElement('img');
+	document.body.appendChild(div);
+	document.body.appendChild(div1);
+	document.body.appendChild(a);
+	div.appendChild(img);
+
+	ok(!baidu.query(div).contains(div),"can't contains self");//self
+	ok(!baidu.query(div).contains(div1),"div doesn't contain sibling div");//sibling
+	ok(!baidu.query(div).contains(a),"div doesn't contain sibling a");//sibling
+	ok(!baidu.query(div1).contains(img),"div1 doesn't contain relative img");//relative
+	ok(!baidu.query(a).contains(img),"a doesn't contain relative img");//relative
+
+	document.body.removeChild(div);
+	document.body.removeChild(div1);
+	document.body.removeChild(a);
+});
+
+test("iframe",function(){
+	expect(3);
+	stop();
+//	debugger
+	var f = document.createElement('iframe');
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	div.appendChild(f);
+	f.src = cpath+'test.html';
+	$(f).load(function(){//rendy发生在“网页本身的html”载入后就触发；load会等到“网页html标签中引用的图档、内嵌物件（如flash）、iframe”等拉哩拉杂的东西都载入后才会触发
+		if(f.contentWindow.document&&f.contentWindow.document.body){
+//				clearInterval(handle);
+			var doc = f.contentWindow.document;
+			var divFrame = doc.createElement('div');
+			var imgFrame = doc.createElement('img');
+			doc.body.appendChild(divFrame);
+			divFrame.appendChild(imgFrame);
+			ok(!baidu.query(div).contains(divFrame),"div doesn't contain div in iframe");
+			ok(baidu.query(div).contains(f),"div contains iframe");
+			ok(baidu.query(divFrame).contains(imgFrame),"in iframe,div contains img");//in frame, div contains img
+			document.body.removeChild(div);
+			start();
+		}
+	});	
+
+});
+
+test('异常case',function(){
+	var div = document.createElement('div');
+	var divChild = document.createElement('div');
+	document.body.appendChild(div);
+	div.appendChild(divChild);
+	div.id = "div_id";
+	divChild.id = "div_id";
+	ok(!baidu.query(div).contains("div_id"),"father and child have the same id--1");
+	ok(!baidu.query("#div_id").contains(div),"father and child have the same id--2");
+	ok(baidu.query(div).contains(divChild),"father and child have the same id--3");
+	ok(!baidu.query("#div_id").contains("div_id"),"father and child have the same id--4");
+	document.body.removeChild(div);
+});
