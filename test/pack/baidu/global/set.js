@@ -1,29 +1,29 @@
-module("baidu.global.set");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * version: 1.4.0
+ * date: 2011/07/05
+ */
 
-test("common",function(){
-	expect(4);
-	var a = baidu.global.set('id', 'value1');
-	equals(a, 'value1', 'common');
-	a = baidu.global.set('id', 'value2', true);
-	equals(a, 'value1', 'protected_=true');
-	a = baidu.global.set('id', 'value3');
-	equals(a, 'value3', 'protected_=default');
-	a = baidu.global.set('id', 'value4', false);
-	equals(a, 'value4', 'protected_=false');
-});
+///import pack.baidu.global;
 
-test("''",function(){
-	expect(1);
-	var a = baidu.global.set('id1', '');
-	equals(a, '', 'common');
-});
+/**
+ * @namespace baidu.global.set 向global全局对象里存储信息。
+ * @author meizz
+ *
+ * @param   {string}    key         信息对应的 key 值
+ * @param   {object}    value       被存储的信息
+ * @param   {boolean}   protected_  保护原值不被覆盖，默认值 false 可覆盖
+ * @return  {object}                信息
+ */
+(function(){
+    var global = window[baidu.guid].global;
 
-test("iframe",function(){
-	expect(1);
-	stop();
-	ua.frameExt(function(w, f) {
-		var a = w.baidu.global.set('id2', 'value1');
-		equals(a, 'value1', 'iframe');
-		this.finish();
-	});
-});
+    baidu.global.set = function(key, value, protected_) {
+        var b = !protected_ || (protected_ && typeof global[key] == "undefined");
+
+        b && (global[key] = value);
+        return global[key];
+    };
+})();

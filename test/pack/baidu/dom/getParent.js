@@ -1,15 +1,26 @@
-module("baidu.dom.getParent");
+
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All right reserved.
+ * 
+ * path: baidu/dom/getParent.js
+ * author: berg
+ * version: 1.0.0
+ * date: 2010/12/02
+ */
+
+///import pack.baidu.dom._g;
 
 /**
- * parentNode跟parentElement除了前者是w3c标准，后者只ie支持，其他的区别就不是那么明显了。
- * 
- * 当父节点的nodeType不是1，即不是element节点的话，它的parentElement就会是null。
- * 这就明白了名字中“Element”的含义了。
+ * 获得元素的父节点
+ * @name baidu.dom.getParent
+ * @function
+ * @grammar baidu.dom.getParent(element)
+ * @param {HTMLElement|string} element   目标元素或目标元素的id
+ * @returns {HTMLElement|null} 父元素，如果找不到父元素，返回null
  */
-test("基础校验", function() {
-//	equals(baidu.dom.getParent(document.body), document);
-	equals(baidu.dom.getParent(document.body.firstChild), document.body);
-	equals(baidu.dom.getParent(document.createElement("div")), null);
-	equals(baidu.dom.getParent(document.body.appendChild(document
-			.createTextNode("test"))), document.body);
-});
+baidu.dom.getParent = function (element) {
+    element = baidu.dom._g(element);
+    //parentElement在IE下准确，parentNode在ie下可能不准确
+    return element.parentElement || element.parentNode || null;
+};

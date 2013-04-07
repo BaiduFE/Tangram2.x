@@ -1,43 +1,31 @@
-module('baidu.dom.getWindow')
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/getWindow.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/02
+ */
 
-test('当前页元素weindow', function() {
-	expect(5);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_id';
-	equal(baidu.dom.getWindow(div), window);
-	equal(baidu.dom.getWindow(document), window);// document
-	equal(baidu.dom.getWindow(document.body), window);// body
-	equal(baidu.dom.getWindow(document.documentElement), window);
-	equal(baidu.dom.getWindow('div_id'), window);
+///import pack.baidu.dom.g;
+///import pack.baidu.dom.getDocument;
 
-	document.body.removeChild(div);
-});
-
-test('iframe', function() {
-	ua.frameExt(function(w){
-		var gw = w.parent.baidu.dom.getWindow;
-		w.$(w.document.body).append('<div id="test_div"></div>');
-		equals(gw(w.$('div#test_div')[0]), w);
-		equals(gw(w.document), w);
-		equals(w.baidu.dom.getWindow(w.parent.document), w.parent);
-		this.finish();
-	});
-});
-
-// //baidu.dom.getWindow测试
-// describe("baidu.dom.getWindow测试",{
-// '获取当前页元素的window': function () {
-// value_of(baidu.dom.getWindow(document.getElementById('selfWin'))).should_be(window);
-// value_of(baidu.dom.getWindow('selfWin')).should_be(window);
-// },
-//
-// '获取框架页元素的window': function () {
-// var ifr = document.getElementById('winSubFrame');
-// ifr.contentWindow.document.write('<html><head></head><body><div
-// id="test"></div></body></html>');
-// value_of(baidu.dom.getWindow(
-// ifr.contentWindow.document.getElementById('test')))
-// .should_be(ifr.contentWindow);
-// }
-// });
+/**
+ * 获取目标元素所属的window对象
+ * @name baidu.dom.getWindow
+ * @function
+ * @grammar baidu.dom.getWindow(element)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @see baidu.dom.getDocument
+ *             
+ * @returns {window} 目标元素所属的window对象
+ */
+baidu.dom.getWindow = function (element) {
+    element = baidu.dom.g(element);
+    var doc = baidu.dom.getDocument(element);
+    
+    // 没有考虑版本低于safari2的情况
+    // @see goog/dom/dom.js#goog.dom.DomHelper.prototype.getWindow
+    return doc.parentWindow || doc.defaultView || null;
+};

@@ -1,59 +1,105 @@
-module('baidu.dom.ready');
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ */
 
-test('页面载入完毕后调用该方法？', function() {
-	stop();
-	expect(1);
-	baidu.dom.ready(function() {
-		ok(true);
-		start();
-	});
-});
+///import pack.baidu.browser.safari;
+///import pack.baidu.browser.ie;
+///import pack.baidu.browser.opera;
+///import pack.baidu.dom;
 
-test('ready before onload', function() {
-	expect(2);
-	var f = document.createElement('iframe');
-	document.body.appendChild(f);
-	var step = 0;
-	stop();
-	window.frameload = function(w) {
-		w.baidu.dom.ready(function() {
-			equals(step++, 0, 'ready before onload');
-			w.onload = function(){
-				equals(step++, 1, 'onload after ready');
-			};
-		});
-//		TT.on(w, 'load', function(){//IE6、8下，绑定事件的执行顺序并不固定，这个用例移除
-//			equals(step++, 1, 'onload after ready');
-//		});
-	};
-	f.src = upath + 'readyFrame.php?f=baidu.dom.ready';// 空页面
-	setTimeout(function(){
-		$(f).remove();
-		start();
-	}, 1000);
-});
+/**
+ * 使函数在页面dom节点加载完毕时调用
+ * @author allstar
+ * @name baidu.dom.ready
+ * @function
+ * @grammar baidu.dom.ready(callback)
+ * @param {Function} callback 页面加载完毕时调用的函数.
+ * @remark
+ * 如果有条件将js放在页面最底部, 也能达到同样效果，不必使用该方法。
+ * @meta standard
+ */
+(function() {
 
-test('ready after onload', function() {
-	expect(2);
-	stop();
-	setTimeout(function() {
-		var script = document.createElement('script');
-		script.src = upath + '../../../../src/pack/baidu/dom/ready.js';
-		var fun = function(){
-			if(ua.browser.ie && this.readyState == 'loaded' || !ua.browser.ie){
-				ok(true, "onload");
-				baidu.dom.ready(function() {
-						ok(true, "dom ready");
-						start();	
-				});
-			}
-		};
-		if(ua.browser.ie){
-			script.onreadystatechange = fun; 
-		}
-		else{
-			script.onload = fun;	
-		}
-		document.getElementsByTagName('head')[0].insertBefore(script, document.getElementsByTagName('head')[0].lastChild);
-	}, 100);
-});
+    var ready = baidu.dom.ready = function() {
+        var readyBound = false,
+            readyList = [],
+            DOMContentLoaded;
+
+        if (document.addEventListener) {
+            DOMContentLoaded = function() {
+                document.removeEventListener('DOMContentLoaded', DOMContentLoaded, false);
+                ready();
+            };
+
+        } else if (document.attachEvent) {
+            DOMContentLoaded = function() {
+                if (document.readyState === 'complete') {
+                    document.detachEvent('onreadystatechange', DOMContentLoaded);
+                    ready();
+                }
+            };
+        }
+        /**
+         * @private
+         */
+        function ready() {
+            if (!ready.isReady) {
+                ready.isReady = true;
+                for (var i = 0, j = readyList.length; i < j; i++) {
+                    readyList[i]();
+                }
+            }
+        }
+        /**
+         * @private
+         */
+        function doScrollCheck(){
+            try {
+                document.documentElement.doScroll("left");
+            } catch(e) {
+                setTimeout( doScrollCheck, 1 );
+                return;
+            }   
+            ready();
+        }
+        /**
+         * @private
+         */
+        function bindReady() {
+            if (readyBound) {
+                return;
+            }
+            readyBound = true;
+
+            if (document.readyState === 'complete') {
+                ready.isReady = true;
+            } else {
+                if (document.addEventListener) {
+                    document.addEventListener('DOMContentLoaded', DOMContentLoaded, false);
+                    window.addEventListener('load', ready, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent('onreadystatechange', DOMContentLoaded);
+                    window.attachEvent('onload', ready);
+
+                    var toplevel = false;
+
+                    try {
+                        toplevel = window.frameElement == null;
+                    } catch (e) {}
+
+                    if (document.documentElement.doScroll && toplevel) {
+                        doScrollCheck();
+                    }
+                }
+            }
+        }
+        bindReady();
+
+        return function(callback) {
+            ready.isReady ? callback() : readyList.push(callback);
+        };
+    }();
+
+    ready.isReady = false;
+})();

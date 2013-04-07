@@ -1,65 +1,34 @@
-module("baidu.dom.getAncestorBy")
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/getAncestorBy.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/02
+ */
 
-test("Element", function() {
-	expect(3);
-	var div = document.createElement('div');
-	var div1 = document.createElement('div');
-	var img = document.createElement('img');
-	var i = document.createElement('i');
-	var p = document.createElement('p');
-	document.body.appendChild(div);
-	div.appendChild(div1);
-	div1.appendChild(img);
-	div.appendChild(p);
-	p.appendChild(i);
-	i.innerHTML = "hello";
-	div.id = "id";
-	div1.id = "div1_id";
-	p.id = "id";
-	equal(baidu.dom.getAncestorBy(i, function(ele) {
-		return ele.id == 'id';
-	}), p, "get nearest ancestor by id");
-	equal(baidu.dom.getAncestorBy(img, function(ele) {
-		return ele.id == 'id';
-	}), div, "get div as img's ancestor");
-	equal(baidu.dom.getAncestorBy(img, function(ele) {
-		return ele.className == 'className'
-	}), null, "get no ele");
-	document.body.removeChild(div);
-})
+///import pack.baidu.dom.g;
 
-test("id", function() {
-	expect(3);
-	var div = document.createElement('div');
-	var div1 = document.createElement('div');
-	var img = document.createElement('img');
-	var i = document.createElement('i');
-	var p = document.createElement('p');
-	document.body.appendChild(div);
-	div.appendChild(div1);
-	div1.appendChild(img);
-	div.appendChild(p);
-	p.appendChild(i);
-	i.innerHTML = "hello";
-	img.id = "img_id";
-	div.id = "id";
-	div1.id = "div1_id";
-	p.id = "id";
-	equal(baidu.dom.getAncestorBy(i, function(ele) {
-		return ele.id == 'id';
-	}), p, "get nearest ancestor by id");
-	equal(baidu.dom.getAncestorBy('div1_id', function(ele) {
-		return ele.id == 'id';
-	}), div, "get div as img's ancestor");
-	equal(baidu.dom.getAncestorBy('img_id', function(ele) {
-		return ele.className == 'className'
-	}), null, "get no ele");
-	document.body.removeChild(div);
-})
+/**
+ * 获取目标元素符合条件的最近的祖先元素
+ * @name baidu.dom.getAncestorBy
+ * @function
+ * @grammar baidu.dom.getAncestorBy(element, method)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @param {Function} method 判断祖先元素条件的函数，function (element)
+ * @see baidu.dom.getAncestorByTag,baidu.dom.getAncestorByClass
+ *             
+ * @returns {HTMLElement|null} 符合条件的最近的祖先元素，查找不到时返回null
+ */
+baidu.dom.getAncestorBy = function (element, method) {
+    element = baidu.dom.g(element);
 
-test("body", function() {
-	expect(1);
-	equal(baidu.dom.getAncestorBy(document.body, function(ele) {
-		return true;
-	}), document.documentElement);
-})
+    while ((element = element.parentNode) && element.nodeType == 1) {
+        if (method(element)) {
+            return element;
+        }
+    }
+
+    return null;
+};

@@ -1,37 +1,44 @@
-//lastIndexOf测试
-module("baidu.array.lastIndexOf");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/array/lastIndexOf.js
+ * author: erik
+ * version: 1.1.0
+ * date: 2009/11/14
+ */
 
-test("正常用例",function(){
-	expect(3);
-	var arraytest = [2,5,8,19,56,5]; //检测indexOf的正常输入
-    r = baidu.array.lastIndexOf(arraytest,5);
-    equal(r,5,"查询数组元素");
-    r = baidu.array.lastIndexOf(arraytest,10);
-    equal(r,-1,"查询不存在的数组元素");
-    r = baidu.array.lastIndexOf(arraytest,5, -2);
-    equal(r,1,"负数的情况");
-});
+///import pack.baidu.array;
 
-test("特殊数组",function(){
-	expect(3);
-	var arraytest = [2,5,8,19,'name','44',56,5,'name']; //检测indexOf的正常输入
-    var r = baidu.array.lastIndexOf(arraytest,'name');
-    equal(r,8,"查询特殊数组项");
-    arraytest = [2,5,8,19,'name','44',56,5,'name'];
-    var i = 5;
-    r = baidu.array.lastIndexOf(arraytest,i);
-    equal(r,7,"查询数组项");
-    r = baidu.array.lastIndexOf(arraytest,'help');
-    equal(r,-1,"查询不存在的数组项");
-});
+/**
+ * 从后往前，查询数组中指定元素的索引位置
+ * @name baidu.array.lastIndexOf
+ * @function
+ * @grammar baidu.array.lastIndexOf(source, match)
+ * @param {Array} source 需要查询的数组
+ * @param {Any} match 查询项
+ * @param {number} [fromIndex] 查询的起始位索引位置，如果为负数，则从source.length+fromIndex往前开始查找
+ * @see baidu.array.indexOf
+ *             
+ * @returns {number} 指定元素的索引位置，查询不到时返回-1
+ */
 
+baidu.array.lastIndexOf = function (source, match, fromIndex) {
+    var len = source.length;
 
-test("异常用例",function(){
-	expect(2);
-	var r = baidu.array.lastIndexOf( [], 1);
-    equal(r,-1,"空数组查询数组元素");
-    var arraytest = new Array( );
-    var fn = function (x) { return x>15;};
-    r = baidu.array.lastIndexOf(arraytest,fn);
-    equal(r,-1,"空数组查询函数");
-});
+    fromIndex = fromIndex | 0;
+
+    if(!fromIndex || fromIndex >= len){
+        fromIndex = len - 1;
+    }
+    if(fromIndex < 0){
+        fromIndex += len;
+    }
+    for(; fromIndex >= 0; fromIndex --){
+        if(fromIndex in source && source[fromIndex] === match){
+            return fromIndex;
+        }
+    }
+    
+    return -1;
+};

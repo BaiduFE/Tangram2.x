@@ -1,196 +1,90 @@
-module("baidu.lang.createClass");
+/*
+ * Tangram
+ * Copyright 2010 Baidu Inc. All rights reserved.
+ * 
+ * @author: meizz
+ * @namespace: baidu.lang.createClass
+ * @version: 1.6.0
+ * @modify: 2011.11.24 meizz
+ */
 
-function myClass(option) {
-	this.name = "myclass";
-	// baidu.lang.Class.call(this); 
-	// 继承构造器，guid是在baidu.lang.Class的构造函数中生成的
-	this.givenName = option.givenName;
-	this.company = option.company;
-	this.salary = option.salary;
-	this.getInfo = option.getInfo;
-}
+///import pack.baidu.lang;
+///import pack.baidu.lang.Class;
+///import pack.baidu.lang.Event;
 
-test("default parent class", function(){
-	var NewClass = baidu.lang.createClass(myClass);
-	var sObject = new NewClass({
-		givenName: 'Jim',
-		company: 'baidu',
-		salary: 10000,
-		getInfo: function(){
-			return this.company + ' emploee ' + this.givenName + ' can get money ' + this.salary;
-		}
-	});
-	
-	equals(sObject.getInfo(), "baidu emploee Jim can get money 10000", 'sObject.getInfo() = "baidu emploee Jim can get money 10000"');
-	equals(sObject.givenName, "Jim", 'givenName = "Jim"');
-	equals(sObject.salary, 10000, 'salary = 10000');
-	equals(sObject.company, "baidu", '');
-	equals(sObject instanceof NewClass, true, 'sObject instanceof NewClass is true');
-	equals(sObject instanceof myClass, false, 'sObject instanceof myClass is false'); // sObject is not instance of myClass
-	equals(sObject instanceof baidu.lang.Class, true, 'sObject instanceof baidu.lang.Class is true');
-});
+/**
+ * 创建一个类，包括创造类的构造器、继承基类Class
+ * @name baidu.lang.createClass
+ * @function
+ * @grammar baidu.lang.createClass(constructor[, options])
+ * @param {Function} constructor 类的构造器函数
+ * @param {Object} [options] 
+                
+ * @config {string} [type] 类名
+ * @config {Function} [superClass] 父类，默认为baidu.lang.Class
+ * @version 1.2
+ * @remark
+ * 
+            使用createClass能方便的创建一个带有继承关系的类。同时会为返回的类对象添加extend方法，使用obj.extend({});可以方便的扩展原型链上的方法和属性
+        
+ * @see baidu.lang.Class,baidu.lang.inherits
+ *             
+ * @returns {Object} 一个类对象
+ */
 
-test("specific parent class point to baidu.lang.Class", function(){
-	var NewClass = baidu.lang.createClass(myClass, new function(){
-		baidu.lang.Class.call(this);
-	});
-	
-	var sObject = new NewClass({
-		givenName: 'Jim',
-		company: 'baidu',
-		salary: 10000,
-		getInfo: function(){
-			return this.company + " employee " + this.givenName + " can get money " + this.salary;
-		}
-	});
-	equals(sObject.getInfo(), "baidu employee Jim can get money 10000", 'sObject.getInfo() = "baidu employee Jim can get money 10000"');
-	equals(sObject.givenName, "Jim", 'givenName = "Jim"');
-	equals(sObject.salary, 10000, 'salary = 10000');
-	equals(sObject.company, "baidu", '');
-	equals(sObject instanceof NewClass, true, 'sObject instanceof NewClass is true');
-	equals(sObject instanceof myClass, false, 'sObject instanceof myClass is false'); // sObject is not instance of myClass
-	equals(sObject instanceof baidu.lang.Class, true, 'sObject instanceof baidu.lang.Class is true');
-});
+baidu.lang.createClass = /**@function*/function(constructor, options) {
+    options = options || {};
+    var superClass = options.superClass || baidu.lang.Class;
 
-test("specific parent class", function(){
-	var NewClass = baidu.lang.createClass(myClass, new function(){
-	});
-	
-	var sObject = new NewClass({
-		givenName: 'Jim',
-		company: 'baidu',
-		salary: 10000,
-		getInfo: function(){
-			return this.company + ' employee ' + this.givenName + ' can get money ' + this.salary;
-		}
-	});
-	
-	equals(sObject.getInfo(), "baidu employee Jim can get money 10000", 'sObject.getInfo() = "baidu employee Jim can get money 10000"');
-	equals(sObject.givenName, "Jim", 'givenName = "Jim"');
-	equals(sObject.salary, 10000, 'salary = 10000');
-	equals(sObject.company, "baidu", '');
-	equals(sObject instanceof NewClass, true, 'sObject instanceof NewClass is true');
-	equals(sObject instanceof myClass, false, 'sObject instanceof myClass is false'); // sObject is not instance of myClass
-	equals(sObject instanceof baidu.lang.Class, true, 'sObject instanceof baidu.lang.Class is true');
-});
+    // 创建新类的真构造器函数
+    var fn = function(){
+        var me = this;
 
-test("option param", function(){
-	function superClass(){
-		this.superClassname = "superMyclass";
-		ok(true,"to superClass !");
-	}
-	var NewClass = baidu.lang.createClass(myClass, {superClass:superClass});
-	
-	var sObject = new NewClass({
-		givenName: 'Jim',
-		company: 'baidu',
-		salary: 10000,
-		getInfo: function(){
-			return this.company + ' employee ' + this.givenName + ' can get money ' + this.salary;
-		}
-	});
-	equal(sObject.superClassname,new superClass().superClassname,"this is superClassname");
-});
+        // 20101030 某类在添加该属性控制时，guid将不在全局instances里控制
+        options.decontrolled && (me.__decontrolled = true);
 
-test("class extend", function(){
-	function superClass(){
-		this.superClassname = "superMyclass";
-	}
-	function extendFunc(){
-		return "extend function";
-	}
-	var NewClass = baidu.lang.createClass(myClass, {superClass:superClass}).extend({extend:extendFunc});
-	var sObject = new NewClass({
-		givenName: 'Jim',
-		company: 'baidu',
-		salary: 10000,
-		getInfo: function(){
-			return this.company + " employee " + this.givenName + " can get money " + this.salary;
-		}
-	});
-	equal(sObject.extend(),extendFunc(),"extend is success");
-});
+        // 继承父类的构造器
+        superClass.apply(me, arguments);
 
-test("global config", function(){
-	expect(4);
-	var NewClass = baidu.lang.createClass(myClass, {
-		options : {subtitle : "test"}
-	});
-	var sObject = new NewClass({
-		givenName: 'Jim'
-	});
-	var nObject = new NewClass({
-		givenName: 'Tom'
-	});
-	
-	equals(sObject.givenName, "Jim", 'sObject.givenName');
-	equals(nObject.givenName, "Tom", 'nObject.givenName');
-	equals(sObject.subtitle, "test", 'sObject.subtitle');
-	equals(nObject.subtitle, "test", 'nObject.subtitle');
-});
+        // 全局配置
+        for (i in fn.options) me[i] = fn.options[i];
 
-//describe('baidu.lang.createClass', {
-//	'default parent class' : function() {
-//		var NewClass = baidu.lang.createClass(myClass);
-//		var sObject = new NewClass( {
-//			givenName : 'Jim',
-//			company : 'baidu',
-//			salary : 10000,
-//			getInfo : function() {
-//				return this.company + ' employee ' + this.givenName
-//						+ ' can get money ' + this.salary;
-//			}
-//		});
-//		value_of(sObject.getInfo()).should_be(
-//				'baidu employee Jim can get money 10000');
-//		value_of(sObject.givenName).should_be('Jim');
-//		value_of(sObject.salary).should_be(10000);
-//		value_of(sObject.company).should_be('baidu');
-//		value_of(sObject instanceof NewClass).should_be_true();
-////		value_of(sObject instanceof MyClass).should_be_true();
-//		value_of(sObject instanceof baidu.lang.Class).should_be_true();
-//	},
-//	'specific parent class point to baidu.lang.Class' : function() {
-//		var NewClass = baidu.lang.createClass(myClass, new function() {
-//			baidu.lang.Class.call(this);
-//		});
-//		var sObject = new NewClass( {
-//			givenName : 'Jim',
-//			company : 'baidu',
-//			salary : 10000,
-//			getInfo : function() {
-//				return this.company + ' employee ' + this.givenName
-//						+ ' can get money ' + this.salary;
-//			}
-//		});
-//		value_of(sObject.getInfo()).should_be(
-//				'baidu employee Jim can get money 10000');
-//		value_of(sObject.givenName).should_be('Jim');
-//		value_of(sObject.salary).should_be(10000);
-//		value_of(sObject.company).should_be('baidu');
-//		value_of(sObject instanceof NewClass).should_be_true();
-////		value_of(sObject instanceof MyClass).should_be_true();
-//		value_of(sObject instanceof baidu.lang.Class).should_be_true();
-//	},
-//	'specific parent class' : function() {
-//		var NewClass = baidu.lang.createClass(myClass, new function() {
-//		});
-//		var sObject = new NewClass( {
-//			givenName : 'Jim',
-//			company : 'baidu',
-//			salary : 10000,
-//			getInfo : function() {
-//				return this.company + ' employee ' + this.givenName
-//						+ ' can get money ' + this.salary;
-//			}
-//		});
-//		value_of(sObject.getInfo()).should_be(
-//				'baidu employee Jim can get money 10000');
-//		value_of(sObject.givenName).should_be('Jim');
-//		value_of(sObject.salary).should_be(10000);
-//		value_of(sObject.company).should_be('baidu');
-//		value_of(sObject instanceof NewClass).should_be_true();
-////		value_of(sObject instanceof MyClass).should_be_true();
-//		value_of(sObject instanceof baidu.lang.Class).should_be_true();
-//	}
-//});
+        constructor.apply(me, arguments);
+
+        for (var i=0, reg=fn["\x06r"]; reg && i<reg.length; i++) {
+            reg[i].apply(me, arguments);
+        }
+    };
+
+    // [TODO delete 2013] 放置全局配置，这个全局配置可以直接写到类里面
+    fn.options = options.options || {};
+
+    var C = function(){},
+        cp = constructor.prototype;
+    C.prototype = superClass.prototype;
+
+    // 继承父类的原型（prototype)链
+    var fp = fn.prototype = new C();
+
+    // 继承传参进来的构造器的 prototype 不会丢
+    for (var i in cp) fp[i] = cp[i];
+
+    // 20111122 原className参数改名为type
+    var type = options.className || options.type;
+    typeof type == "string" && (fp.__type = type);
+
+    // 修正这种继承方式带来的 constructor 混乱的问题
+    fp.constructor = cp.constructor;
+
+    // 给类扩展出一个静态方法，以代替 baidu.object.extend()
+    fn.extend = function(json){
+        for (var i in json) {
+            fn.prototype[i] = json[i];
+        }
+        return fn;  // 这个静态方法也返回类对象本身
+    };
+
+    return fn;
+};
+
+// 20111221 meizz   修改插件函数的存放地，重新放回类构造器静态属性上

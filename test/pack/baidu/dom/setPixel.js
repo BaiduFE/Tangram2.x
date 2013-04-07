@@ -1,13 +1,22 @@
-module("baidu.dom.setPixel");
-test("set pixel",function(){
-	expect(2);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-    $(div).css('left', '0').css('top', '0').css('height', '10px')
-    .css('width', '10px').css('backgroundColor','red');
-	baidu.dom.setPixel(div,'width','20px');
-	baidu.dom.setPixel(div,'height','20');
-	equals(div.style.width, "20px", "20px");
-	equals(div.style.height, "20px", "20px");
-	document.body.removeChild(div);
-});
+/*
+ * Tangram
+ * Copyright 2011 Baidu Inc. All rights reserved.
+ *
+ * author: meizz
+ * create: 2011-12-14
+ */
+
+///import pack.baidu.dom;
+///import pack.baidu.dom.g;
+
+/**
+ * 给元素样式（比如width）赋值时，如果是数字则添加单位(px)，如果是其它值直接赋
+ * @grammar baidu.dom.setPixel(el, style, n)
+ * @param	{HTMLElement}	el 		DOM元素
+ * @param 	{String}		style 	样式属性名
+ * @param	{Number|String} n 		被赋的值
+ */
+baidu.dom.setPixel = function (el, style, n) {
+	typeof n != "undefined" &&
+	(baidu.dom.g(el).style[style] = n +(!isNaN(n) ? "px" : ""));
+};
