@@ -1,251 +1,237 @@
-module("baidu.ajax.request");
-var ajax_request_baseurl = upath + 'request.php';
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ */
 
-test("default async and get", function() {
-	baidu.ajax.request(ajax_request_baseurl, {
-		onsuccess : function(xhr) {
-			equals(xhr.responseText, "Hello World!", "xhr return");
-			start();
-		}
-	});
-	stop();
-});
-
-test("async get", function() {
-	baidu.ajax.request(ajax_request_baseurl, {
-		onsuccess : function(xhr) {
-			equals(xhr.responseText, "Hello World!", "xhr return");
-			start();
-		},
-		async : true
-	});
-	stop();
-});
-
-test("sync get", function() {
-	baidu.ajax.request(ajax_request_baseurl, {
-		method : 'get',
-		onsuccess : function(xhr) {
-			equals(xhr.responseText, "Hello World!", "xhr return");
-		},
-		async : false
-	});
-});
-
-test("async post", function() {
-	baidu.ajax.request(ajax_request_baseurl, {
-		method : 'post',
-		data : "var1=baidu&var2=tangram",
-		onsuccess : function successAction(xhr) {
-			equals(xhr.responseText, "baidutangram", "xhr return");
-			start();
-		}
-	});
-	stop();
-});
-
-test("sync post", function() {
-	stop();
-	baidu.ajax.request(ajax_request_baseurl, {
-		method : 'post',
-		async : false,
-		data : "var1=baidu&var2=tangram",
-		onsuccess : function successAction(xhr) {
-			equals(xhr.responseText, "baidutangram", "xhr return");
-			start();
-		}
-	});
-});
-
-test("header async get", function() {
-	baidu.ajax.request(ajax_request_baseurl + "?var1=baidu&var2=tangram", {
-		header : "Accept: text/html,application/xhtml+"
-				+ "xmlapplication/xml;q=0.9,*\/*;q=0.8",
-		onsuccess : function(xhr) {
-			equals(xhr.responseText, 'baidutangram', 'check response');
-			start();
-		}
-	});
-	stop();
-});
-
-test("header sync get", function() {
-	expect(1);
-	baidu.ajax.request(ajax_request_baseurl + "?var1=baidu&var2=tangram", {
-		header : "Accept: text/html,application/xhtml+"
-				+ "xmlapplication/xml;q=0.9,*\/*;q=0.8",
-		onsuccess : function(xhr) {
-			equals(xhr.responseText, 'baidutangram', 'check response');
-		},
-		async : false
-	});
-});
-
-test("cache async", function() {
-	stop();
-	baidu.ajax.request(ajax_request_baseurl + "?type=cache", {
-		noCache : false,
-		onsuccess : function(xhr, text) {
-			equals(text, "dog");
-			start();
-		}
-	});
-});
-
-test("no cache async", function() {
-	stop();
-	baidu.ajax.request(ajax_request_baseurl + "?type=cache", {
-		noCache : true,
-		onsuccess : function(xhr, text) {
-			ok(/=1dog/i.test(text), 'match');
-			start();
-		}
-	});
-});
-test("cache sync", function() {
-	stop();
-	baidu.ajax.request(ajax_request_baseurl + "?type=cache", {
-		method : 'get',
-		noCache : false,
-		onsuccess : function(xhr, text) {
-			equals(text, "dog");
-			start();
-		},
-		async : false
-	});
-});
-
-test("no cache sync", function() {
-	stop();
-	baidu.ajax.request(ajax_request_baseurl + "?type=cache", {
-		noCache : true,
-		onsuccess : function(xhr, text) {
-			ok(/=1dog/i.test(text), 'match');
-			start();
-		},
-		async : false
-	});
-});
-
-test('on', function() {
-	var onhandle = function(status) {
-		return function() {
-			ok(true, 'on' + status);
-		};
-	};
-	// 200
-	baidu.ajax.request(ajax_request_baseurl + "?type=on&status=200", {
-		onsuccess : function(xhr, text) {
-			equals(xhr.status, 200);
-		},
-		on200 : onhandle(200),
-		async : false
-	});
-
-	// 320
-	baidu.ajax.request(ajax_request_baseurl + "?type=on&status=320", {
-		onsuccess : function(xhr, text) {
-			equals(xhr.status, 200);
-		},
-		on200 : onhandle(320),
-		async : false
-	});
-
-	// 404
-	baidu.ajax.request(ajax_request_baseurl + "?type=on&status=404", {
-		onfailure : function(xhr, text) {
-			equals(xhr.status, 404);
-		},
-		on404 : onhandle(404),
-		async : false
-	});
-
-	// 500
-	baidu.ajax.request(ajax_request_baseurl + "?type=on&status=500", {
-		onfailure : function(xhr, text) {
-			equals(xhr.status, 500);
-		},
-		on500 : onhandle(500),
-		async : false
-	});
-});
-
-test("test beforerequest by user created ", function() {
-	baidu.ajax.onbeforerequest = function(xhr, text) {
-		ok(true, 'beforerequest handled');
-		equals(text, undefined, 'text is undefined before request');
-	};
-	baidu.ajax.request(ajax_request_baseurl, {
-		method : 'get',
-		noCache : 123,
-		onsuccess : function(xhr) {
-			equals(xhr.responseText, "Hello World!", "xhr return");
-		},
-		onfailure : function() {
-			ok(false, '貌似是个404');
-		},
-		async : false
-	});
-	delete baidu.ajax.onbeforerequest;
-});
+///import pack.baidu.ajax;
+///import pack.baidu.fn.blank;
 
 /**
- * 之前的校验方式采用超时，更新为使用全局的失败函数，貌似重复注册会有覆盖情况，暂不考虑
+ * 发送一个ajax请求
+ * @author: allstar, erik, berg
+ * @name baidu.ajax.request
+ * @function
+ * @grammar baidu.ajax.request(url[, options])
+ * @param {string} 	url 发送请求的url
+ * @param {Object} 	options 发送请求的选项参数
+ * @config {String} 	[method] 			请求发送的类型。默认为GET
+ * @config {Boolean}  [async] 			是否异步请求。默认为true（异步）
+ * @config {String} 	[data] 				需要发送的数据。如果是GET请求的话，不需要这个属性
+ * @config {Object} 	[headers] 			要设置的http request header
+ * @config {number}   [timeout]       超时时间，单位ms
+ * @config {String} 	[username] 			用户名
+ * @config {String} 	[password] 			密码
+ * @config {Function} [onsuccess] 		请求成功时触发，function(XMLHttpRequest xhr, string responseText)。
+ * @config {Function} [onfailure] 		请求失败时触发，function(XMLHttpRequest xhr)。
+ * @config {Function} [onbeforerequest]	发送请求之前触发，function(XMLHttpRequest xhr)。
+ * @config {Function} [on{STATUS_CODE}] 	当请求为相应状态码时触发的事件，如on302、on404、on500，function(XMLHttpRequest xhr)。3XX的状态码浏览器无法获取，4xx的，可能因为未知问题导致获取失败。
+ * @config {Boolean}  [noCache] 			是否需要缓存，默认为false（缓存），1.1.1起支持。
+ * 
+ * @meta standard
+ * @see baidu.ajax.get,baidu.ajax.post,baidu.ajax.form
+ *             
+ * @returns {XMLHttpRequest} 发送请求的XMLHttpRequest对象
  */
-test("输入不存在url以及设定onsuccess事件", function() {
-	stop();
-	var urlstring = upath + "notexsistpage.php";
-	var arg = "var1=baidu&var2=tangram";
-	// 注册一个全局fail
-	baidu.ajax.onfailure = function() {
-		// 这是个全局函数，实际上，post本身并不提供这个接口，而，全局返回失败时
-		ok(true, '失败时应该调用这个函数');
-		delete baidu.ajax.onfailure;
-		start();
-	};
-	var xhr = baidu.ajax.request(urlstring, {
-		'onsuccess' : function() {
-			failure('调到这个函数就是bug');
-		},
-		'method' : 'POST',
-		'data' : arg
-	});
-});
+baidu.ajax.request = function (url, opt_options) {
+    var options     = opt_options || {},
+        data        = options.data || "",
+        async       = !(options.async === false),
+        username    = options.username || "",
+        password    = options.password || "",
+        method      = (options.method || "GET").toUpperCase(),
+        headers     = options.headers || {},
+        // 基本的逻辑来自lili同学提供的patch
+        timeout     = options.timeout || 0,
+        eventHandlers = {},
+        tick, key, xhr;
 
-test('尝试通过图片获取服务器时间戳', function() {
-	stop();
-	baidu.ajax.request(upath + 'img.jpg', {
-		noCache : true,
-		'onsuccess' : function() {
-			ok(true, '事件应该被触发');
-			start();
-		}
-	});
-});
+    /**
+     * readyState发生变更时调用
+     * 
+     * @ignore
+     */
+    function stateChangeHandler() {
+        if (xhr.readyState == 4) {
+            try {
+                var stat = xhr.status;
+            } catch (ex) {
+                // 在请求时，如果网络中断，Firefox会无法取得status
+                fire('failure',ex.message);
+                return;
+            }
+            
+            fire(stat);
+            
+            // http://www.never-online.net/blog/article.asp?id=261
+            // case 12002: // Server timeout      
+            // case 12029: // dropped connections
+            // case 12030: // dropped connections
+            // case 12031: // dropped connections
+            // case 12152: // closed by server
+            // case 13030: // status and statusText are unavailable
+            
+            // IE error sometimes returns 1223 when it 
+            // should be 204, so treat it as success
+            if ((stat >= 200 && stat < 300)
+                || stat == 304
+                || stat == 1223) {
+                fire('success');
+            } else {
+                fire('failure',stat);
+            }
+            
+            /*
+             * NOTE: Testing discovered that for some bizarre reason, on Mozilla, the
+             * JavaScript <code>XmlHttpRequest.onreadystatechange</code> handler
+             * function maybe still be called after it is deleted. The theory is that the
+             * callback is cached somewhere. Setting it to null or an empty function does
+             * seem to work properly, though.
+             * 
+             * On IE, there are two problems: Setting onreadystatechange to null (as
+             * opposed to an empty function) sometimes throws an exception. With
+             * particular (rare) versions of jscript.dll, setting onreadystatechange from
+             * within onreadystatechange causes a crash. Setting it from within a timeout
+             * fixes this bug (see issue 1610).
+             * 
+             * End result: *always* set onreadystatechange to an empty function (never to
+             * null). Never set onreadystatechange from within onreadystatechange (always
+             * in a setTimeout()).
+             */
+            window.setTimeout(
+                function() {
+                    // 避免内存泄露.
+                    // 由new Function改成不含此作用域链的 baidu.fn.blank 函数,
+                    // 以避免作用域链带来的隐性循环引用导致的IE下内存泄露. By rocy 2011-01-05 .
+                    xhr.onreadystatechange = baidu.fn.blank;
+                    if (async) {
+                        xhr = null;
+                    }
+                }, 0);
+        }
+    }
+    
+    /**
+     * 获取XMLHttpRequest对象
+     * 
+     * @ignore
+     * @return {XMLHttpRequest} XMLHttpRequest对象
+     */
+    function getXHR() {
+        if (window.ActiveXObject) {
+            try {
+                return new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    return new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {}
+            }
+        }
+        if (window.XMLHttpRequest) {
+            return new XMLHttpRequest();
+        }
+    }
+    
+    /**
+     * 触发事件
+     * 
+     * @ignore
+     * @param {String} type 事件类型
+     * @param {String} msg  提示信息
+     */
+    function fire(type,msg) {
+        type = 'on' + type;
+        var handler = eventHandlers[type],
+            globelHandler = baidu.ajax[type];
+        
+        // 不对事件类型进行验证
+        if (handler) {
+            if (tick) {
+              clearTimeout(tick);
+            }
 
-test("ontimeout", function() {
-	stop();
-	baidu.ajax.request(upath + 'sleep.php?time=2', {// 由于用例执行有8秒限时，此处调整等待数据
-		'timeout' : 1000,
-		'ontimeout' : function() {
-			ok(true, 'timeout');
-			start();
-		},
-		'onsuccess' : function() {
-			ok(false, 'onsuccess should not trigger');
-			start();
-		}
-	});
-});
+            if (type != 'onsuccess') {
+                handler(xhr,msg);
+            } else {
+                //处理获取xhr.responseText导致出错的情况,比如请求图片地址.
+                try {
+                    xhr.responseText;
+                } catch(error) {
+                    return handler(xhr);
+                }
+                handler(xhr, xhr.responseText);
+            }
+        } else if (globelHandler) {
+            //onsuccess不支持全局事件
+            if (type == 'onsuccess') {
+                return;
+            }
+            globelHandler(xhr);
+        }
+    }
+    
+    
+    for (key in options) {
+        // 将options参数中的事件参数复制到eventHandlers对象中
+        // 这里复制所有options的成员，eventHandlers有冗余
+        // 但是不会产生任何影响，并且代码紧凑
+        eventHandlers[key] = options[key];
+    }
+    
+    headers['X-Requested-With'] = 'XMLHttpRequest';
+    
+    
+    try {
+        xhr = getXHR();
+        
+        if (method == 'GET') {
+            if (data) {
+                url += (url.indexOf('?') >= 0 ? '&' : '?') + data;
+                data = null;
+            }
+            if(options['noCache'])
+                url += (url.indexOf('?') >= 0 ? '&' : '?') + 'b' + (+ new Date) + '=1';
+        }
+        
+        if (username) {
+            xhr.open(method, url, async, username, password);
+        } else {
+            xhr.open(method, url, async);
+        }
+        
+        if (async) {
+            xhr.onreadystatechange = stateChangeHandler;
+        }
+        
+        // 在open之后再进行http请求头设定
+        // FIXME 是否需要添加; charset=UTF-8呢
+        if (method == 'POST') {
+            xhr.setRequestHeader("Content-Type",
+                (headers['Content-Type'] || "application/x-www-form-urlencoded"));
+        }
+        
+        for (key in headers) {
+            if (headers.hasOwnProperty(key)) {
+                xhr.setRequestHeader(key, headers[key]);
+            }
+        }
+        
+        fire('beforerequest');
 
-var test404flag = false;
-baidu.ajax.request('text.php', {
-	onfailure : function(xhr, msg) {
-		if(msg=='404'){
-			test404flag = true;
-		};
-	}
-});
-test("请求失败获得错误信息提示", function() {
-	ok(test404flag,'返回信息是404');
-});
+        if (timeout) {
+          tick = setTimeout(function(){
+            xhr.onreadystatechange = baidu.fn.blank;
+            xhr.abort();
+            fire("timeout");
+          }, timeout);
+        }
+        xhr.send(data);
+        
+        if (!async) {
+            stateChangeHandler();
+        }
+    } catch (ex) {
+        fire('failure',ex.message);
+    }
+    
+    return xhr;
+};

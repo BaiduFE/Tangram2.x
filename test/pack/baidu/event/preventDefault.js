@@ -1,34 +1,28 @@
-module("preventDefault");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/event/preventDefault.js
+ * author: erik
+ * version: 1.1.0
+ * date: 2009/11/23
+ */
 
-test("阻止默认行为", function() {
-    stop();
-	expect(1);
-	var div = document.createElement('div');
-	$(div).css('width', 200).css('height', 5000).css('border', 'solid');
-//	div.appendChild(img);
-	document.body.appendChild(div);
-	var a = document.createElement('a');
-	a.setAttribute("href", "#");
-	a.innerHTML = 'ToTop';
-	a.target = '_self';
-	document.body.appendChild(a);
-	
-    ua.beforedispatch = function(e){
-		e = e || window.event;
-		baidu.event.preventDefault(e);	
-	};
-    
-    setTimeout(function(){
-        window.scrollTo(0, document.body.scrollHeight);
+///import pack.baidu.event;
 
-        ua.click(a);
-	    var top = window.pageYOffset 
-        || document.documentElement.scrollTop 
-        || document.body.scrollTop 
-        || 0;
-        ok(top != 0, "preventDefault");
-	    document.body.removeChild(div);
-	    document.body.removeChild(a);
-        start();
-    }, 0);
-});
+/**
+ * 阻止事件的默认行为
+ * @name baidu.event.preventDefault
+ * @function
+ * @grammar baidu.event.preventDefault(event)
+ * @param {Event} event 事件对象
+ * @meta standard
+ * @see baidu.event.stop,baidu.event.stopPropagation
+ */
+baidu.event.preventDefault = function (event) {
+   if (event.preventDefault) {
+       event.preventDefault();
+   } else {
+       event.returnValue = false;
+   }
+};

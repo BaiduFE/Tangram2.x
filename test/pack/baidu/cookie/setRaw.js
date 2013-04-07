@@ -1,43 +1,58 @@
-module("baidu.cookie.setRaw");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/cookie/setRaw.js
+ * author: erik
+ * version: 1.1.0
+ * date: 2009/11/15
+ */
 
-function remove(key, path) {
-	path = path ? (';path=' + path) : '';
-	document.cookie = key + '=;expires=' + new Date().toGMTString() + path;
-}
+///import pack.baidu.cookie._isValidKey;
 
-test("valid key", function() {
-	var key = 'sr1';
-	baidu.cookie.setRaw(key, key);
-	ok(document.cookie.match(key + '=' + key), 'set success');
-	remove(key);
-});
-
-test("valid key with option", function() {
-	var key = 'sr2', value = '%E7%99%BE%E5%BA%A6';
-	var r = baidu.cookie.setRaw(key, value, {
-		path : "\/",
-		expires : 10000000
-	});
-	var res = document.cookie.match(key + "=[^;]+")[0];
-	equals(res, key + '=%E7%99%BE%E5%BA%A6', 'raw');
-	equals(decodeURIComponent(res), key + "=百度", "decode");
-	remove(key, '/');
-});
-test("invalid key, key = '百度Hi'", function() {
-	var key = '百度Hi';
-	baidu.cookie.setRaw(key, key);
-	equal(document.cookie.match(key + '=' + key), null, 'set success');
-	remove(key);
-});
-//    "输入非法的key": function(){
-//        r = baidu.cookie.setRaw("cookie;test", "百,度", {
-//            path: "\/",
-//            domain: "baidu.com",
-//            expires: 5000000
-//        });
-//        value_of(baidu.cookie.get("cookie;test")).should_be_null();
-//        
-//        r = baidu.cookie.setRaw("cookie test", "百,度");
-//        value_of(baidu.cookie.getRaw("cookie test")).should_be_null();
-//    }
-//});
+/**
+ * 设置cookie的值，不对值进行编码
+ * @name baidu.cookie.setRaw
+ * @function
+ * @grammar baidu.cookie.setRaw(key, value[, options])
+ * @param {string} key 需要设置Cookie的键名
+ * @param {string} value 需要设置Cookie的值
+ * @param {Object} [options] 设置Cookie的其他可选参数
+ * @config {string} [path] cookie路径
+ * @config {Date|number} [expires] cookie过期时间,如果类型是数字的话, 单位是毫秒
+ * @config {string} [domain] cookie域名
+ * @config {string} [secure] cookie是否安全传输
+ * @remark
+ * 
+<b>options参数包括：</b><br>
+path:cookie路径<br>
+expires:cookie过期时间，Number型，单位为毫秒。<br>
+domain:cookie域名<br>
+secure:cookie是否安全传输
+		
+ * @meta standard
+ * @see baidu.cookie.set,baidu.cookie.getRaw
+ */
+baidu.cookie.setRaw = function (key, value, options) {
+    if (!baidu.cookie._isValidKey(key)) {
+        return;
+    }
+    
+    options = options || {};
+    //options.path = options.path || "/"; // meizz 20100402 设定一个初始值，方便后续的操作
+    //berg 20100409 去掉，因为用户希望默认的path是当前路径，这样和浏览器对cookie的定义也是一致的
+    
+    // 计算cookie过期时间
+    var expires = options.expires;
+    if ('number' == typeof options.expires) {
+        expires = new Date();
+        expires.setTime(expires.getTime() + options.expires);
+    }
+    
+    document.cookie =
+        key + "=" + value
+        + (options.path ? "; path=" + options.path : "")
+        + (expires ? "; expires=" + expires.toGMTString() : "")
+        + (options.domain ? "; domain=" + options.domain : "")
+        + (options.secure ? "; secure" : ''); 
+};

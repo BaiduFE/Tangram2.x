@@ -1,70 +1,38 @@
-module("baidu.lang.getModule");
+/*
+ * tangram
+ * copyright 2011 baidu inc. all rights reserved.
+ *
+ * path: baidu/lang/getModule.js
+ * author: leeight
+ * version: 1.1.0
+ * date: 2011/04/29
+ */
 
-var a = 10;
-test("getModule", function(){
-  equals(baidu.lang.getModule('a'), 10);
-  equals(baidu.lang.getModule('nosuchvar'), null);
+///import pack.baidu.lang;
 
-  var b = {
-    a : 20
-  };
-
-  equals(baidu.lang.getModule('a', b), 20);
-  equals(baidu.lang.getModule('nosuchvar', b), null);
-
-  var a = {
-    b : {
-      c : {
-        d : {
-          e : 'hello'
+/**
+ * 根据变量名或者命名空间来查找对象
+ * @function
+ * @grammar baidu.lang.getModule(name, opt_obj)
+ * @param {string} name 变量或者命名空间的名字.
+ * @param {Object=} opt_obj 从这个对象开始查找，默认是window;
+ * @return {?Object} 返回找到的对象，如果没有找到返回null.
+ * @see goog.getObjectByName
+ */
+baidu.lang.getModule = function(name, opt_obj) {
+    var parts = name.split('.'),
+        cur = opt_obj || window,
+        part;
+    for (; part = parts.shift(); ) {
+        if (cur[part] != null) {
+            cur = cur[part];
+        } else {
+          return null;
         }
-      }
     }
-  };
-  equals(baidu.lang.getModule('b.c.d.e', a), 'hello');
-  
-  equals(baidu.lang.getModule('baidu.lang.getModule'), baidu.lang.getModule);
-  equals(baidu.lang.getModule('baidu.lang'), baidu.lang);
-  equals(baidu.lang.getModule('baidu'), baidu);
-  equals(baidu.lang.getModule('baidu.object.a'), null);
-});
 
-//test("performance", function(){
-//
-//function impl1(name, opt_obj) {
-//    var parts = name.split('.');
-//    var cur = opt_obj || window;
-//    for (var part; part = parts.shift(); ) {
-//        if (cur[part] != null) {
-//            cur = cur[part];
-//        } else {
-//          return null;
-//        }
-//    }
-//
-//    return cur;
-//};
-//
-//function impl2(name, opt_obj) {
-//    var conetxt = opt_obj || window,
-//        fn = new Function('o', 'try{o.' + name + '}catch(e){return null;}');
-//    return fn(conetxt);
-//}
-//
-//var now = Date.now();
-//for(var i = 0; i < 10000; i ++) {
-//  impl1('baidu.lang.getModule');
-//}
-//ok(true, 'impl1 take ' + (Date.now() - now) + 'ms');
-//
-//now = Date.now();
-//for(var i = 0; i < 10000; i ++) {
-//  impl2('baidu.lang.getModule');
-//}
-//ok(true, 'impl2 take ' + (Date.now() - now) + 'ms');
-//});
-
-
+    return cur;
+};
 
 
 

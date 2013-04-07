@@ -1,39 +1,39 @@
-module("baidu.cookie.set");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/cookie/set.js
+ * author: erik
+ * version: 1.1.0
+ * date: 2009/11/15
+ */
 
-function remove(key, path) {
-	path = path ? (';path=' + path) : '';
-	document.cookie = key + '=;expires=' + new Date().toGMTString() + path;
-}
+///import pack.baidu.cookie.setRaw;
 
-test("valid key", function() {
-	var key = 's1';
-	baidu.cookie.set(key, key);
-	ok(document.cookie.match(key + '=' + key), 'set success');
-	remove(key);
-});
-
-test("valid key with option", function() {
-	var key = 's21';
-	var r = baidu.cookie.set(key, "百度", {
-		path : "\/",
-		expires : 10000000
-	});
-	var res = document.cookie.match(key + "=[^;]+")[0];
-	equals(res, key + '=%E7%99%BE%E5%BA%A6', 'raw');
-	equals(decodeURIComponent(res), key + "=百度", "decode");
-	remove(key, '/');
-});
-
-// test("输入非法的key", function() {
-// stop();
-// expect(2);
-// var r = baidu.cookie.set("cookie;test", "百,度", {
-// path : "\/",
-// domain : "baidu.com",
-// expires : 10000000
-// });
-// ok(baidu.cookie.get("cookie;test") == null, "非法key 'cookie;test' success");
-// r = baidu.cookie.set("cookie test", "百,度");
-// ok(baidu.cookie.get("cookie test") == null, "非法key 'cookie test'success");
-// start();
-// });
+/**
+ * 设置cookie的值，用encodeURIComponent进行编码
+ * @name baidu.cookie.set
+ * @function
+ * @grammar baidu.cookie.set(key, value[, options])
+ * @param {string} key 需要设置Cookie的键名
+ * @param {string} value 需要设置Cookie的值
+ * @param {Object} [options] 设置Cookie的其他可选参数
+ * @config {string} [path] cookie路径
+ * @config {Date|number} [expires] cookie过期时间,如果类型是数字的话, 单位是毫秒
+ * @config {string} [domain] cookie域名
+ * @config {string} [secure] cookie是否安全传输
+ * @remark
+ * 
+1. <b>注意：</b>该方法会对cookie值进行encodeURIComponent编码。如果想设置cookie源字符串，请使用setRaw方法。<br><br>
+2. <b>options参数包括：</b><br>
+path:cookie路径<br>
+expires:cookie过期时间，Number型，单位为毫秒。<br>
+domain:cookie域名<br>
+secure:cookie是否安全传输
+		
+ * @meta standard
+ * @see baidu.cookie.setRaw,baidu.cookie.get
+ */
+baidu.cookie.set = function (key, value, options) {
+    baidu.cookie.setRaw(key, encodeURIComponent(value), options);
+};

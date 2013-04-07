@@ -1,6 +1,17 @@
-module('baidu.dom._styleFixer');
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All right reserved.
+ * 
+ * path: baidu/dom/_styleFixer/float.js
+ * author: allstar
+ * version: 1.1.0
+ * date: 2009/11/17
+ */
+///import baidu.dom._styleFixer;
+///import baidu.browser.ie;
 
-test('float', function() {
-	equals(baidu.dom._styleFixer["float"], ua.browser.ie ? "styleFloat"
-			: "cssFloat", 'check float');
-});
+/**
+ * 提供给setStyle与getStyle使用
+ * @meta standard
+ */
+baidu.dom._styleFixer["float"] = baidu.browser.ie ? "styleFloat" : "cssFloat";

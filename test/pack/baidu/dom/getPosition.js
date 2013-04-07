@@ -1,258 +1,131 @@
-module('baidu.dom.getPosition quirk');
-var fid = 0;
-/**
- * testing for get position
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
  * 
- * @param left
- *            expected left of testing item
- * @param top
- *            expected top of testing item
- * @param run
- *            callback method before check, if return, use this item as testing
- *            item parent
- * @param abs
- *            use callback return as testing item
- * @return
+ * path: baidu/dom/getPosition.js
+ * author: berg
+ * version: 1.2.0
+ * date: 2010/12/16
+ *
+ * thanks google closure & jquery
+ * 本函数部分思想来自：http://code.google.com/p/doctype/wiki/ArticlePageOffset
  */
-function go(/* Integer */left, /* Integer */top, /* Function */
-run, /* Boolean */abs) {
-	/* 提供调试模式，调试模式下添加的iframe不会删除 */
-	var debug = true;
-	ua.frameExt({
-		ontest : function(w) {
-			var p = (run && run(w.document)) || w.document.body;
-			var div = abs ? p : p.appendChild(w.document.createElement('div'));
-			w.$(div).css('width', 20).css('height', 20).css('backgroundColor',
-					'#ABC').attr('id', 'd0');
-			var pos = w.baidu.dom.getPosition(div);
-			// var l = div.style.left == 'auto' ? 0
-			// : parseInt(div.style.left), t = div.style.top = 'auto' ? 0
-			// : parseInt(div.style.top), p = div.offsetParent;
-			// do {
-			// l += p.offsetLeft;
-			// t += p.offsetTop;
-			// console.log(l + ' - ' + t);
-			// } while (p = p.offsetParent);
-			equals(pos.left, left, 'check left');
-			equals(pos.top, top, 'check top');
-			if (debug) {
-				// 追加一个用于调试定位的div，该div位置为absolute
-				var d1 = w.document.body.appendChild(w.document
-						.createElement('div'));
-				w.$(d1).css('position', 'absolute').css('left', 0)
-						.css('top', 0).css('height', 10).css('width', 10).css(
-								'backgroundColor', 'red').attr('id', 'd1');
-			}
-			var me = this;
-			setTimeout(me.finish, 20);
-		},
-		id : debug ? fid++ : 'f'
-	});
+
+///import pack.baidu.dom.getDocument;
+///import pack.baidu.dom.g;
+///import pack.baidu.dom.getStyle;
+///import pack.baidu.browser.ie;
+///import pack.baidu.browser.opera;
+///import pack.baidu.browser.isWebkit;
+///import pack.baidu.browser.isGecko;
+///import pack.baidu.browser.isStrict;
+
+/**
+ * 获取目标元素相对于整个文档左上角的位置
+ * @name baidu.dom.getPosition
+ * @function
+ * @grammar baidu.dom.getPosition(element)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @meta standard
+ *             
+ * @returns {Object} 目标元素的位置，键值为top和left的Object。
+ */
+baidu.dom.getPosition = function (element) {
+    element = baidu.dom.g(element);
+    var doc = baidu.dom.getDocument(element), 
+        browser = baidu.browser,
+        getStyle = baidu.dom.getStyle,
+    // Gecko 1.9版本以下用getBoxObjectFor计算位置
+    // 但是某些情况下是有bug的
+    // 对于这些有bug的情况
+    // 使用递归查找的方式
+        BUGGY_GECKO_BOX_OBJECT = browser.isGecko > 0 && 
+                                 doc.getBoxObjectFor &&
+                                 getStyle(element, 'position') == 'absolute' &&
+                                 (element.style.top === '' || element.style.left === ''),
+        pos = {"left":0,"top":0},
+        viewport = (browser.ie && !browser.isStrict) ? doc.body : doc.documentElement,
+        parent,
+        box;
+    
+    if(element == viewport){
+        return pos;
+    }
+
+
+    if(element.getBoundingClientRect){ // IE and Gecko 1.9+
+        
+    	//当HTML或者BODY有border width时, 原生的getBoundingClientRect返回值是不符合预期的
+    	//考虑到通常情况下 HTML和BODY的border只会设成0px,所以忽略该问题.
+        box = element.getBoundingClientRect();
+
+        pos.left = Math.floor(box.left) + Math.max(doc.documentElement.scrollLeft, doc.body.scrollLeft);
+        pos.top  = Math.floor(box.top)  + Math.max(doc.documentElement.scrollTop,  doc.body.scrollTop);
+	    
+        // IE会给HTML元素添加一个border，默认是medium（2px）
+        // 但是在IE 6 7 的怪异模式下，可以被html { border: 0; } 这条css规则覆盖
+        // 在IE7的标准模式下，border永远是2px，这个值通过clientLeft 和 clientTop取得
+        // 但是。。。在IE 6 7的怪异模式，如果用户使用css覆盖了默认的medium
+        // clientTop和clientLeft不会更新
+        pos.left -= doc.documentElement.clientLeft;
+        pos.top  -= doc.documentElement.clientTop;
+        
+        var htmlDom = doc.body,
+            // 在这里，不使用element.style.borderLeftWidth，只有computedStyle是可信的
+            htmlBorderLeftWidth = parseInt(getStyle(htmlDom, 'borderLeftWidth')),
+            htmlBorderTopWidth = parseInt(getStyle(htmlDom, 'borderTopWidth'));
+        if(browser.ie && !browser.isStrict){
+            pos.left -= isNaN(htmlBorderLeftWidth) ? 2 : htmlBorderLeftWidth;
+            pos.top  -= isNaN(htmlBorderTopWidth) ? 2 : htmlBorderTopWidth;
+        }
+    /*
+     * 因为firefox 3.6和4.0在特定页面下(场景待补充)都会出现1px偏移,所以暂时移除该逻辑分支
+     * 如果 2.0版本时firefox仍存在问题,该逻辑分支将彻底移除. by rocy 2011-01-20
+    } else if (doc.getBoxObjectFor && !BUGGY_GECKO_BOX_OBJECT){ // gecko 1.9-
+
+        // 1.9以下的Gecko，会忽略ancestors的scroll值
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=328881 and
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=330619
+
+        box = doc.getBoxObjectFor(element);
+        var vpBox = doc.getBoxObjectFor(viewport);
+        pos.left = box.screenX - vpBox.screenX;
+        pos.top  = box.screenY - vpBox.screenY;
+        */
+    } else { // safari/opera/firefox
+        parent = element;
+
+        do {
+            pos.left += parent.offsetLeft;
+            pos.top  += parent.offsetTop;
+      
+            // safari里面，如果遍历到了一个fixed的元素，后面的offset都不准了
+            if (browser.isWebkit > 0 && getStyle(parent, 'position') == 'fixed') {
+                pos.left += doc.body.scrollLeft;
+                pos.top  += doc.body.scrollTop;
+                break;
+            }
+            
+            parent = parent.offsetParent;
+        } while (parent && parent != element);
+
+        // 对body offsetTop的修正
+        if(browser.opera > 0 || (browser.isWebkit > 0 && getStyle(element, 'position') == 'absolute')){
+            pos.top  -= doc.body.offsetTop;
+        }
+
+        // 计算除了body的scroll
+        parent = element.offsetParent;
+        while (parent && parent != doc.body) {
+            pos.left -= parent.scrollLeft;
+            // see https://bugs.opera.com/show_bug.cgi?id=249965
+//            if (!b.opera || parent.tagName != 'TR') {
+            if (!browser.opera || parent.tagName != 'TR') {
+                pos.top -= parent.scrollTop;
+            }
+            parent = parent.offsetParent;
+        }
+    }
+
+    return pos;
 };
-
-/**
- * <li>set body margin as 0
- * <li>set body border width as 0
- */
-test('body border 0 and margin 0 and padding 0', function() {
-	go(0, 0, function(doc) {
-		doc.body.style.margin = '0px';
-		doc.body.style.borderWidth = '0px';
-		doc.body.style.padding = '0px';
-	});
-});
-
-if (ua.browser.ie == 0) {// TODO IE下这个用例固定失败，暂时屏蔽
-	test('border margin padding', function() {
-		go(20, 20, function(doc) {
-			doc.body.style.margin = '10px';
-			doc.body.style.padding = '10px';
-			doc.body.style.borderWidth = '10px';
-		});
-	});
-}
-test('position - absolute', function() {
-	go(20, 20, function(doc) {
-		doc.body.style.margin = '0px';
-		doc.body.style.borderWidth = '0px';
-		var div = doc.body.appendChild(doc.createElement('div'));
-		div.style.position = 'absolute';
-		div.style.left = '20px';
-		div.style.top = '20px';
-		return div;
-	}, true);
-});
-
-test('position - relative', function() {
-	go(20, 20, function(doc) {
-		doc.body.style.margin = '0px';
-		doc.body.style.borderWidth = '0px';
-		var div = doc.body.appendChild(doc.createElement('div'));
-		div.style.position = 'relative';
-		div.style.left = '20px';
-		div.style.top = '20px';
-		return div;
-	}, true);
-});
-
-/**
- * try scroll and check position
- */
-test('position fix', function() {
-	// fixed not supported by IE on strict mode;
-	if (ua.browser.ie)
-		return;
-	var top = 30, left = 30;
-	go(left, top, function(doc) {
-		doc.body.style.margin = '0px';
-		doc.body.style.borderWidth = '0px';
-		var div = doc.createElement('div');
-		doc.body.appendChild(div);
-		div.style.width = '200%';
-		div.style.height = '200%';
-		var div1 = doc.createElement('div');
-		div.appendChild(div1);
-		div1.style.position = 'fixed';
-		div1.style.left = '10px';
-		div1.style.top = '10px';
-		frames[frames.length - 1].scrollTo(20, 20);
-		return div1;
-	});
-});
-if (ua.browser.ie == 0) {// TODO IE下这个用例固定失败，暂时屏蔽
-	/**
-	 * set DIV with parent position as absolute
-	 * 
-	 */
-	test('parent border solid', function() {
-		go(ua.browser.ie == 8 ? 11 : 10, 10, function(doc) {
-			doc.body.style.margin = '0px';
-			doc.body.style.borderWidth = '0px';
-			var div = doc.createElement('div');
-			doc.body.appendChild(div);
-			div.style.position = 'absolute';
-			div.style.left = '10px';
-			div.style.top = '10px';
-			div.style.borderWidth = '2px';
-			div.style.margin = 0;
-			div.style.padding = 0;
-			return div;
-		});
-	});
-}
-//
-// /**
-// * set DIV's parent DIV postion as relative
-// */
-// test('parent relative', function() {
-// go(10, 10, function(doc) {
-// doc.body.style.margin = '0px';
-// doc.body.style.borderWidth = '0px';
-// var div = doc.createElement('div');
-// doc.body.appendChild(div);
-// div.style.position = 'relative';
-// div.style.left = '10px';
-// div.style.top = '10px';
-// return div;
-// });
-// });
-//
-// /**
-// * set DIV's parent padding
-// */
-// test('parent padding', function() {
-// go(10, 10, function(doc) {
-// doc.body.style.margin = '0px';
-// doc.body.style.borderWidth = '0px';
-// var div = doc.createElement('div');
-// doc.body.appendChild(div);
-// div.style.padding = '10px';
-// div.style.borderWidth = '0px';
-// div.style.margin = '0px';
-// return div;
-// });
-// });
-//
-// /**
-// * <li>set DIV's relative
-// * <li>DIV has no parent
-// */
-// test('self relative', function() {
-// go(10, 10, function(doc) {
-// doc.body.style.margin = '0px';
-// doc.body.style.borderWidth = '0px';
-// var div = doc.createElement('div');
-// doc.body.appendChild(div);
-// div.style.position = 'relative';
-// div.style.left = '10px';
-// div.style.top = '10px';
-// return div;
-// }, 8, true);
-// });
-//
-// /**
-// * <li>set DIV's position as relative
-// * <li>set DIV's parent DIV left and top as 10px
-// */
-// test('parent absolute and self relative', function() {
-// go(30, 30, function(doc) {
-// doc.body.style.margin = '0px';
-// doc.body.style.borderWidth = '0px';
-// var div = doc.createElement('div');
-// var divp = doc.createElement('div');
-// doc.body.appendChild(divp);
-// divp.appendChild(div);
-// divp.style.left = '20px';
-// divp.style.top = '20px';
-// divp.style.position = 'absolute';
-// div.style.position = 'relative';
-// div.style.left = '10px';
-// div.style.top = '10px';
-// // div.style.border = 'solid';
-// return div;
-// }, true);
-// });
-//
-// /**
-// * <li>set DIV's position as relative
-// * <li>set DIV's parent DIV left and top as 10px
-// */
-// test('many parent', function() {
-// var sum = function(num, __sum) {
-// return num <= 1 ? __sum : sum(num - 1, __sum + num);
-// };
-// var lay = 8;
-// go(sum(lay, 0), sum(lay, 0), function(doc) {
-// doc.body.style.margin = '0px';
-// doc.body.style.borderWidth = '0px';
-// var cc = function(p, num) {
-// var div = doc.createElement('div');
-// div.style.border = 'solid';
-// div.style.borderWidth = num + 'px';
-// div.style.height = '80%';
-// p.appendChild(div);
-// if (num == 1)
-// return div;
-// else
-// return cc(div, num - 1);
-// };
-// return cc(doc.body, lay);
-// }, true);
-// });
-//
-// /**
-// * <li>set DIV's relative
-// * <li>DIV has no parent
-// */
-// test('self absolute', function() {
-// go(0, 0, function(doc) {
-// doc.body.style.margin = '0px';
-// doc.body.style.borderWidth = '0px';
-// var div = doc.createElement('div');
-// doc.body.appendChild(div);
-// div.style.position = 'absolute';
-// div.style.left = '0px';
-// div.style.top = '0px';
-// return div;
-// }, true);
-// });

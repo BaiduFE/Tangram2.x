@@ -1,63 +1,34 @@
-module("baidu.dom.children");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/children.js
+ * author: allstar
+ * version: 1.1.0
+ * date: 2009/11/17
+ */
 
-test("Element or id ", function() {
-	expect(2);
-	var div = document.createElement('div');
-	div.id = "div_id";
-	var img = document.createElement('img');
-	var a = document.createElement('a');
-	a.innerHTML = "a text node";// textnode
-		var p = document.createElement('p');
-		var text = document.createTextNode('textnode');// nodeType==3,won't
-														// count in childs
-		document.body.appendChild(div);
-		div.appendChild(img);
-		div.appendChild(a);
-		div.appendChild(p);
-		div.appendChild(text);
-		var childs = baidu.dom.children(div);
-		ok(ua.isEqualArray(childs, [ img, a, p ]), "get all childs");
-		childs = baidu.dom.children("div_id");
-		ok(ua.isEqualArray(childs, [ img, a, p ]),
-				"get all childs by id");
-		document.body.removeChild(div);
-	});
+///import pack.baidu.dom;
+///import pack.baidu.dom.g;
 
-test("body", function() {
-	stop();
-	expect(1);
+/**
+ * 获取目标元素的直接子元素列表
+ * @name baidu.dom.children
+ * @function
+ * @grammar baidu.dom.children(element)
+ * @param {HTMLElement|String} element 目标元素或目标元素的id
+ * @meta standard
+ *             
+ * @returns {Array} 目标元素的子元素列表，没有子元素时返回空数组
+ */
+baidu.dom.children = function (element) {
+    element = baidu.dom.g(element);
 
-	var next = function() {
-		var w = frames[frames.length - 1];
-		var doc = w.document;
-		var div = doc.createElement('div');
-		var a = doc.createElement('a');
-		var img = doc.createElement('img');
-		var p = doc.createElement('p');
-		a.innerHTML = "a innerHTML";// 孙子节点
-		doc.body.appendChild(div);
-		div.appendChild(img);// grandson
-		doc.body.appendChild(a);
-		doc.body.appendChild(p);
-		var childs = baidu.dom.children(doc.body);
-		ok(ua.isEqualArray(childs, [ div, a, p ]),
-				"get all childs of body");
-		$('iframe#test_frame').remove();
-		start();
-	};
-	var f = document.createElement("iframe");
-	f.id = 'test_frame';
-	f.src = cpath + "test.html";
-	document.body.appendChild(f);
-	$('iframe#test_frame').load(next);
-});
-
-test("empty childs", function() {
-	expect(2);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = "div_id";
-	equal(baidu.dom.children(div), "", "no childs");
-	equal(baidu.dom.children('div_id'), "", "no childs by id");
-	document.body.removeChild(div);
-})
+    for (var children = [], tmpEl = element.firstChild; tmpEl; tmpEl = tmpEl.nextSibling) {
+        if (tmpEl.nodeType == 1) {
+            children.push(tmpEl);
+        }
+    }
+    
+    return children;    
+};

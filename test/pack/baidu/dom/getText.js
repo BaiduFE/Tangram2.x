@@ -1,72 +1,39 @@
-module('baidu.dom.getText')
-
-/**
- * 仅考虑针对core方法进行元素遍历
- */
-//应该考虑nodeType为4和8的情况！！！！
-test('getText', function(){
-	expect(2);
-	var text = document.createTextNode("textNode");
-	var text2 = document.createTextNode("textNode2");
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.appendChild(text);
-	div.appendChild(text2);
-	equal(baidu.dom.getText(text2),"textNode2","get text from textNode");
-	equal(baidu.dom.getText(div),"textNodetextNode2","div innerHTML is textNodetextNode2");
-	document.body.removeChild(div);
-})
-
-/**
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
  * 
+ * path: baidu/dom/getText.js
+ * author: berg
+ * version: 1.0
+ * date: 2010/07/16 
  */
 
-test('dom or id', function(){
-	expect(2);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.setAttribute('id',"id_div");
-	div.innerHTML = "text of div";
-	equal(baidu.dom.getText(div),"text of div","div text");//dom
-	equal(baidu.dom.getText("id_div"),"text of div","div id test");//id
-	document.body.removeChild(div);
-})
+///import pack.baidu.dom._g;
 
 /**
- * null or other parms
- * 
+ * 获得元素中的文本内容。
+ * @name baidu.dom.getText
+ * @function
+ * @grammar baidu.dom.getText(element)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @version 1.3
+ *             
+ * @returns {String} 元素中文本的内容      
  */
-test('null or other parms', function(){
-	expect(2);
-	var div;//非法节点
-	try{
-		baidu.dom.getText(div);
-	}catch(e){
-		ok(true,"catch exception ok");
-	}
-	try{
-		baidu.dom.getText();//空参数
-	}catch(e){
-		ok(true,"catch exception ok");
-	}
-})
+baidu.dom.getText = function (element) {
+    var ret = "", childs, i=0, l;
 
-/**
- * 
- */
-test('dom with none text', function(){
-	expect(1);
-	var p = document.createElement('p');
-	equal(baidu.dom.getText(p),"","no text in p");
-})
+    element = baidu._g(element);
 
-//确认一下哪些是特殊字符
-test('special character',function(){
-	expect(2);
-	var a  = document.createElement('a');
-	a.innerHTML = "百度一下"
-	equal(baidu.dom.getText(a),"百度一下","text in Chinese");
-	a.innerHTML = "^_'{}~@=?|/+-$%&*!<>\();:.,";
-	equal(baidu.dom.getText(a),"^_'{}~@=?|/+-$%&*!<>\();:.,","get special characters");
-})
+    //  text 和 CDATA 节点，取nodeValue
+    if ( element.nodeType === 3 || element.nodeType === 4 ) {
+        ret += element.nodeValue;
+    } else if ( element.nodeType !== 8 ) {// 8 是 comment Node
+        childs = element.childNodes;
+        for(l = childs.length; i < l; i++){
+            ret += baidu.dom.getText(childs[i]);
+        }
+    }
 
+    return ret;
+};

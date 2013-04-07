@@ -1,24 +1,31 @@
-module('baidu.dom._styleFixer.opacity');
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/_styleFixer/opacity.js
+ * author: allstar
+ * version: 1.1.0
+ * date: 2009/11/17
+ */
 
-test('opacity', function() {
-	var func = baidu.dom._styleFixer.opacity;
-	if (ua.browser.ie) {
-		stop();
-		$(document.body).append('<div style="left:20;top:20;" id="test_div"></div>');
-		var div = $('div#test_div').css('height', 20).css('width', 20).css('position', 'absolute').css(
-				'backgroundColor', 'red').css('filter', 'Alpha(opacity=50)')[0];
-		func.set(div, 1);
-		ok(func && func.get && func.set
-				&& (typeof func.get).toLowerCase() == 'function'
-				&& (typeof func.set).toLowerCase() == 'function', 'check opacity');
-		equals(func.get(div), '1');
-		func.set(div, 0.5);
-		equals(func.get(div), '0.5');
-		setTimeout(function() {
-			$(div).remove();
-			start();
-		}, 200);
-	} else {
-		equals(func, null);
-	}
-});
+///import baidu.dom._styleFixer;
+///import baidu.browser.ie;
+
+/**
+ * 提供给setStyle与getStyle使用
+ * @meta standard
+ */
+baidu.dom._styleFixer.opacity = baidu.browser.ie ? {
+    get: function (element) {
+        var filter = element.style.filter;
+        return filter && filter.indexOf("opacity=") >= 0 ? (parseFloat(filter.match(/opacity=([^)]*)/)[1]) / 100) + "" : "1";
+    },
+
+    set: function (element, value) {
+        var style = element.style;
+        // 只能Quirks Mode下面生效??
+        style.filter = (style.filter || "").replace(/alpha\([^\)]*\)/gi, "") + (value == 1 ? "" : "alpha(opacity=" + value * 100 + ")");
+        // IE filters only apply to elements with "layout."
+        style.zoom = 1;
+    }
+} : null;

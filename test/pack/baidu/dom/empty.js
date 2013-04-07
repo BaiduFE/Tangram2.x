@@ -1,28 +1,34 @@
-module('baidu.dom.empty')
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/empty.js
+ * author: berg
+ * version: 1.0
+ * date: 2010-07-06
+ */
 
 /**
- * 删除一个节点下面的所有子节点。会包含文本？
+ * 删除一个节点下面的所有子节点。
+ * @name baidu.dom.empty
+ * @function
+ * @grammar baidu.dom.empty(element)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @version 1.3
+ *             
+ * @returns {HTMLElement} 目标元素
+        
  */
-test('innerHTML is blank', function(){
-	var div = document.createElement('div');
-	var a = document.createElement('a');
-	document.body.appendChild(div);
-	document.body.appendChild(a);
-	a.innerHTML = "test_a";            //son of a
-	var img = document.createElement('img')//son of div
-	div.appendChild(img);
-	var txt=document.createTextNode("textNode");//son of p
-	var p=document.createElement('p');
-	document.body.appendChild(p);
-	p.appendChild(txt);	
-	
-	baidu.dom.empty(div);
-	baidu.dom.empty(p);
-	baidu.dom.empty(a);
-	ok(div.childNodes.length==0,"div is empty;");
-	ok(p.childNodes.length==0,"p is empty");
-	ok(a.childNodes.length==0,"a is empty");
-	document.body.removeChild(div);
-	document.body.removeChild(a);
-	document.body.removeChild(p);
-})
+///import pack.baidu.dom;
+///import pack.baidu.dom.g;
+
+baidu.dom.empty = function (element) {
+    element = baidu.dom.g(element);
+    
+    while(element.firstChild){
+        element.removeChild(element.firstChild);
+    }
+    //todo：删除元素上绑定的事件等?
+
+    return element;
+};

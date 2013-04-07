@@ -1,102 +1,43 @@
-module("baidu.array.reduce");
-/**
- * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
- * Apply a function against an accumulator and each value of the array (from
- * left-to-right) as to reduce it to a single value.
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
  */
 
-test("基础校验", function() {
-	var arr = [ 1, 2, 3 ], ite = function(last, now, index, arr) {
-		return last + now;
-	};
-	var sum = baidu.array.reduce(arr, ite, 0);
-	equals(sum, 6, "校验返回结果");
-
-	var arr = [ 1, 2, 3 ], ite = function(last, now, index, arr) {
-		return last + index;
-	};
-	var sum = baidu.array.reduce(arr, ite, 0);
-	equals(sum, 3, "校验返回结果");
-
-	var arr = [ 1, 2, 3 ], ite = function(last, now, index, arr) {
-		return last + arr[index];
-	};
-	var sum = baidu.array.reduce(arr, ite, 0);
-	equals(sum, 6, "校验返回结果");
-
-});
-
-test("特殊情况", function() {
-	// 空数组
-	var arr = [], ite = function(acc, i) {
-		return acc + 1;
-	};
-	equals(baidu.array.reduce(arr, ite, 0), 0, "空串转换应该返回初始值");
-	equals(baidu.array.reduce([], function() {
-	}), undefined, '空串空初始值返回undefined');
-	// If no initialValue was provided, then previousValue will be equal to the
-	// first value in the array and currentValue will be equal to the second.
-	equals(baidu.array.reduce([ 1 ], function(a, b) {
-		// 函数进不来
-		ok(false, '只有一个参数');
-		return a + b;
-	}), 1, '校验返回结果 - 数组只有一项');
-});
+///import pack.baidu.array;
 
 /**
- * [ 0, 1, 2, 3, 4 ] .reduce(function(previousValue, currentValue, index, array) {
- * return previousValue + currentValue; });
- * <li>// First call previousValue = 0, currentValue = 1, index = 1
- * <li>// Second call previousValue = 1, currentValue = 2, index = 2
- * <li>// Third call previousValue = 3, currentValue = 3, index = 3
- * <li>// Fourth call previousValue = 6, currentValue = 4, index = 4
- * <li>// array is always the object [0,1,2,3,4] upon which reduce was called //
- * Return Value: 10
+ * 遍历数组中所有元素，将每一个元素应用方法进行合并，并返回合并后的结果。
+ * @name baidu.array.reduce
+ * @function
+ * @grammar baidu.array.reduce(source, iterator[, initializer])
+ * @param {Array}    source 需要遍历的数组.
+ * @param {Function} iterator 对每个数组元素进行处理的函数，函数接受四个参数：上一次reduce的结果（或初始值），当前元素值，索引值，整个数组.
+ * @param {Object}   [initializer] 合并的初始项，如果没有此参数，默认用数组中的第一个值作为初始值.
+ * @return {Array} reduce后的值.
+ * @version 1.3.4
+ * @see baidu.array.reduce
  */
-test('参数判断', function() {
-	var step = 0;
-	equals(baidu.array.reduce([ 0, 1, 2, 3, 4 ],
-			function(last, now, index, arr) {
-				equals(last, step, 'check last');
-				equals(now, step + 1, 'check now');
-				equals(index - 1, step++, 'check index');
-				deepEqual(arr, [ 0, 1, 2, 3, 4 ], 'check arr');
-				return now;
-			}), 4, 'return value');
-	step = 0;
-	equals(baidu.array.reduce([ 0, 1, 2, 3, 4 ],
-			function(last, now, index, arr) {
-				equals(last, step - 1, 'check last');// 第一个last是-1
-				equals(now, step, 'check now');
-				equals(index, step++, 'check index');
-				deepEqual(arr, [ 0, 1, 2, 3, 4 ], 'check arr');
-				return now;
-			}, -1), 4, 'return value with initializer');
-});
+baidu.array.reduce = function(source, iterator, initializer) {
+    var i = 0,
+        l = source.length,
+        found = 0;
 
-/**
- * var flattened = [[0,1], [2,3], [4,5]].reduce(function(a,b) { return
- * a.concat(b); });
- * 
- */
-test('混合数组，来自w3c示例', function() {
-	var flatended = [ [ 0, 1 ], [ 2, 3 ], [ 4, 5 ] ];
-	deepEqual(baidu.array.reduce(flatended, function(last, now) {
-		return last.concat(now);
-	}), [ 0, 1, 2, 3, 4, 5 ], 'check mix array');
-});
+    if( arguments.length < 3){
+        //没有initializer的情况，找到第一个可用的值
+        for(; i < l; i++){
+            initializer = source[i++];
+            found = 1;
+            break;
+        }
+        if(!found){
+            return ;
+        }
+    }
 
-test('excluding holes in the array', function() {
-	equals(baidu.array.reduce([ 0, null, 1 ], function(a, b) {
-		return a + b;
-	}), 1, 'check holes');
-	equals(baidu.array.reduce([ null, 0, 1 ], function(a, b) {
-		return a + b;
-	}), 1, 'check holes');
-	equals(baidu.array.reduce([ 0, 1, null ], function(a, b) {
-		return a + b;
-	}), 1, 'check holes');
-	equals(baidu.array.reduce([ 0, 1, null ], function(a, b) {
-		return a + b;
-	},1), 2, 'check holes');
-});
+    for (; i < l; i++) {
+        if( i in source){
+            initializer = iterator(initializer, source[i] , i , source);
+        }
+    }
+    return initializer;
+};

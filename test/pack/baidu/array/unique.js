@@ -1,52 +1,48 @@
-//测试baidu.array.unique
-module("baidu.array.unique");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/array/unique.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/02
+ */
 
-test("输入数组有重复元素", function() {
-	expect(5);
-	var arraytest = [ 2, 3, 6, 2, 4, 2, 3, 'name', 4, 6, 'word', 'name', '2',
-			'3' ]; // 输入数组有重复元素
-	var rArr = baidu.array.unique(arraytest);
-	var array = [ 2, 3, 6, 4, 'name', 'word', '2', '3' ];
-	ok(ua.isEqualArray(rArr, array), "输入数组有重复项");
-	var input = [ 1, 2, 1, 3 ];
-	var output = baidu.array.unique(input);
-	equal(output.toString(), "1,2,3", "输入数组有重复元素");
+///import pack.baidu.array;
 
-	deepEqual([ 'abc', 'hasOwnProperty', 'toString' ], baidu.array.unique([
-			'abc', 'hasOwnProperty', 'toString', 'abc' ]));
-	deepEqual([ 123 ], baidu.array.unique([ Number(123), 123 ]));
-	deepEqual([ '123' ], baidu.array
-			.unique([ String(123), String('123'), '123' ]));
-});
+/**
+ * 过滤数组中的相同项。如果两个元素相同，会删除后一个元素。
+ * @name baidu.array.unique
+ * @function
+ * @grammar baidu.array.unique(source[, compareFn])
+ * @param {Array} source 需要过滤相同项的数组
+ * @param {Function} [compareFn] 比较两个数组项是否相同的函数,两个数组项作为函数的参数。
+ *             
+ * @returns {Array} 过滤后的新数组
+ */
+baidu.array.unique = function (source, compareFn) {
+    var len = source.length,
+        result = source.slice(0),
+        i, datum;
+        
+    if ('function' != typeof compareFn) {
+        compareFn = function (item1, item2) {
+            return item1 === item2;
+        };
+    }
+    
+    // 从后往前双重循环比较
+    // 如果两个元素相同，删除后一个
+    while (--len > 0) {
+        datum = result[len];
+        i = len;
+        while (i--) {
+            if (compareFn(datum, result[i])) {
+                result.splice(len, 1);
+                break;
+            }
+        }
+    }
 
-test("输入数组沒有重复元素", function() {
-	expect(1);
-	var arraytest = [ 2, 3, 4, 5, 'name', '2', '3', '5' ]; // 输入数组有重复元素
-	var rArr = baidu.array.unique(arraytest);
-	var array = [ 2, 3, 4, 5, 'name', '2', '3', '5' ];
-	ok(ua.isEqualArray(rArr, array), "输入数组沒有重复项");
-});
-
-test("空数组", function() {
-	expect(1);
-	var array = baidu.array.unique([]);
-	equal(array.toString(), "", "空数组");
-});
-
-test("输入函数并输入iterator", function() {
-	expect(2);
-	var arraytest = [ 'name', 'job', 'ghost', 'window', 'linux', 'mail', 'we',
-			'word' ];
-	var fn = function(x, y) {
-		return x.length == y.length;
-	};
-	var rArr = baidu.array.unique(arraytest, fn);
-	var array = [ 'name', 'job', 'ghost', 'window', 'we' ];
-	ok(ua.isEqualArray(rArr, array), "输入函数并输入iterator");
-
-	var input = [ "one", "two", "three", "four" ];
-	var output = baidu.array.unique(input, function(x, y) {
-		return (x.length == y.length);
-	});
-	equal(output.toString(), "one,three,four", "输入函数");
-});
+    return result;
+};

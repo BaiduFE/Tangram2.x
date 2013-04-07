@@ -1,40 +1,84 @@
-module("baidu.page.lazyLoadImage");
+/*
+ * Tangram
+ * Copyright 2010 Baidu Inc. All rights reserved.
+ */
 
-test("base", function() {
-	expect(3);
-	var iframe = document.createElement('iframe');
-	document.body.appendChild(iframe);
-	$(iframe).css('height', 200).css('width', 200);
-	stop();
-	iframe.src = upath + 'lli.php?time=' + new Date().getTime();
-	var h = setInterval(function() {
-		if (frames[0] && frames[0].document
-				&& frames[0].document.getElementById("test_img")
-				&& frames[0].document.getElementById("test_img").src == '') {
-			var img = frames[0].document.getElementById("test_img");
-			// 标签就位，
-			clearInterval(h);
-			var step = 0,
+///import pack.baidu.page.getScrollTop;
+///import pack.baidu.page.getViewHeight;
+///import pack.baidu.dom.getPosition;
+///import pack.baidu.dom.ready;
+///import pack.baidu.dom.hasClass;
+///import pack.baidu.event.on;
+///import pack.baidu.event.un;
+///import pack.baidu.lang.isFunction;
 
-			check = function() {
-				if (step == 0) {
-					ok(img.src.indexOf("test.jpg") == -1, "图片不会显示");
-					step = 1;
-					setTimeout(function() {// 这地方必须等，safari上不能连续滚
-						frames[0].scroll(0, 1000);
-					}, 0);
-				} else {
-					baidu.un(frames[0], 'scroll', check);
-					setTimeout(function() {
-						ok(img.src.indexOf("test.jpg") >= 0, "图片显示链接更新");
-						iframe.parentNode.removeChild(iframe);
-						start();
-					}, 0);
-				}
-			};
 
-			baidu.on(frames[0], 'scroll', check);
-			frames[0].scroll(0, 20);
-		}
-	}, 50);
-});
+/**
+ * 延迟加载图片. 默认只加载可见高度以上的图片, 随着窗口滚动加载剩余图片.注意: 仅支持垂直方向.
+ * @name baidu.page.lazyLoadImage
+ * @function
+ * @grammar baidu.page.lazyLoadImage([options])
+ * @param {Object} options
+ * @param {String} [options.className] 延迟加载的IMG的className,如果不传入该值将延迟加载所有IMG.
+ * @param {Number} [options.preloadHeight] 预加载的高度, 可见窗口下该高度内的图片将被加载.
+ * @param {String} [options.placeHolder] 占位图url.
+ * @param {Function} [options.onlazyload] 延迟加载回调函数,在实际加载时触发.
+ * @author rocy
+ */
+baidu.page.lazyLoadImage = function(options) {
+    options = options || {};
+    options.preloadHeight = options.preloadHeight || 0;
+
+    baidu.dom.ready(function() {
+        var imgs = document.getElementsByTagName('IMG'),
+                targets = imgs,
+                len = imgs.length,
+                i = 0,
+                viewOffset = getLoadOffset(),
+                srcAttr = 'data-tangram-ori-src',
+                target;
+        //避免循环中每次都判断className
+        if (options.className) {
+            targets = [];
+            for (; i < len; ++i) {
+                if (baidu.dom.hasClass(imgs[i], options.className)) {
+                    targets.push(imgs[i]);
+                }
+            }
+        }
+        //计算需要加载图片的页面高度
+        function getLoadOffset() {
+            return baidu.page.getScrollTop() + baidu.page.getViewHeight() + options.preloadHeight;
+        }
+        //加载可视图片
+        for (i = 0, len = targets.length; i < len; ++i) {
+            target = targets[i];
+            if (baidu.dom.getPosition(target).top > viewOffset) {
+                target.setAttribute(srcAttr, target.src);
+                options.placeHolder ? target.src = options.placeHolder : target.removeAttribute('src');
+            }
+        }
+        //处理延迟加载
+        var loadNeeded = function() {
+            var viewOffset = getLoadOffset(),
+                imgSrc,
+                finished = true,
+                i = 0,
+                len = targets.length;
+            for (; i < len; ++i) {
+                target = targets[i];
+                imgSrc = target.getAttribute(srcAttr);
+                imgSrc && (finished = false);
+                if (baidu.dom.getPosition(target).top < viewOffset && imgSrc) {
+                    target.src = imgSrc;
+                    target.removeAttribute(srcAttr);
+                    baidu.lang.isFunction(options.onlazyload) && options.onlazyload(target);
+                }
+            }
+            //当全部图片都已经加载, 去掉事件监听
+            finished && baidu.un(window, 'scroll', loadNeeded);
+        };
+
+        baidu.on(window, 'scroll', loadNeeded);
+    });
+};

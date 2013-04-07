@@ -1,181 +1,82 @@
-module("baidu.dom.q")
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/q.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/02
+ */
 
-test('1 param--className', function() {
-	expect(4);
-	var div = document.createElement('div');
-	var div2 = document.createElement('div');
-	var p = document.createElement('p');
-	var span = document.createElement('span');
-	var textNode = document.createTextNode('textnode');
-	var textArea = document.createElement('textarea');
-	document.body.appendChild(div);
-	document.body.appendChild(div2);
-	div2.appendChild(p);
-	div2.appendChild(span);
-	div2.appendChild(textNode);
-	div2.appendChild(textArea);
-	div.className = 'class1';
-	span.className = 'class1';
-	textArea.className = 'class1';
-	p.className = 'class';
-	var result = baidu.dom.q('class1');
-	equal(result.length, 3, 'get 3 results');
-	equal(result[0], div, 'div result');
-	equal(result[1], span, 'span result');
-	equal(result[2], textArea, 'textarea result');
+///import pack.baidu.dom.g;
+///import pack.baidu.string.trim;
+///import pack.baidu.string.escapeReg;
 
-	result = null;
-	document.body.removeChild(div2);
-	document.body.removeChild(div);
-})
+/**
+ * 通过className获取元素
+ * @name baidu.dom.q
+ * @function
+ * @grammar baidu.dom.q(className[, element, tagName])
+ * @param {string} className 元素的class，只能指定单一的class，如果为空字符串或者纯空白的字符串，返回空数组。
+ * @param {string|HTMLElement} [element] 开始搜索的元素，默认是document。
+ * @param {string} [tagName] 要获取元素的标签名，如果没有值或者值为空字符串或者纯空白的字符串，表示不限制标签名。
+ * @remark 不保证返回数组中DOM节点的顺序和文档中DOM节点的顺序一致。
+ * @shortcut q,T.Q
+ * @meta standard
+ * @see baidu.dom.g
+ *             
+ * @returns {Array} 获取的元素集合，查找不到或className参数错误时返回空数组.
+ */
+baidu.dom.q = function (className, element, tagName) {
+    var result = [], 
+    trim = baidu.string.trim, 
+    len, i, elements, node;
 
-test('2 params,element', function() {
-	expect(3);
-	var div = document.createElement('div');
-	var div2 = document.createElement('div');
-	var form = document.createElement('form');
-	var table = document.createElement('table');
-	var input = document.createElement('input');
-	var p = document.createElement('p');
-	var span = document.createElement('span');
-	var textNode = document.createTextNode('textnode');
-	var textArea = document.createElement('textarea');
-	document.body.appendChild(div);
-	document.body.appendChild(div2);
-	div2.appendChild(p);
-	div.appendChild(form);
-	div2.appendChild(textNode);
-	form.appendChild(span);
-	form.appendChild(textArea);
-	form.appendChild(input);
-	input.type = 'text';
-	div.className = 'class2';
-	div2.className = 'class2';
-	span.className = 'class2';
-	textArea.className = 'class2';
-	input.className = 'Class2';
-	var result = baidu.dom.q('class2', form);
+    if (!(className = trim(className))) {
+        return result;
+    }
+    
+    // 初始化element参数
+    if ('undefined' == typeof element) {
+        element = document;
+    } else {
+        element = baidu.dom.g(element);
+        if (!element) {
+            return result;
+        }
+    }
+    
+    // 初始化tagName参数
+    tagName && (tagName = trim(tagName).toUpperCase());
+    
+    // 查询元素
+    if (element.getElementsByClassName) {
+        elements = element.getElementsByClassName(className); 
+        len = elements.length;
+        for (i = 0; i < len; i++) {
+            node = elements[i];
+            if (tagName && node.tagName != tagName) {
+                continue;
+            }
+            result[result.length] = node;
+        }
+    } else {
+        className = new RegExp(
+                        "(^|\\s)" 
+                        + baidu.string.escapeReg(className)
+                        + "(\\s|\x24)");
+        elements = tagName 
+                    ? element.getElementsByTagName(tagName) 
+                    : (element.all || element.getElementsByTagName("*"));
+        len = elements.length;
+        for (i = 0; i < len; i++) {
+            node = elements[i];
+            className.test(node.className) && (result[result.length] = node);
+        }
+    }
 
-	equal(result.length, 2, 'get 2 results');
-	equal(result[0], span, 'span result');
-	equal(result[1], textArea, 'textarea result');
+    return result;
+};
 
-	result = null;
-	document.body.removeChild(div2);
-	document.body.removeChild(div);
-})
-test('2 params,document', function() {
-	expect(5);
-	var div = document.createElement('div');
-	var div2 = document.createElement('div');
-	var input = document.createElement('input');
-	var textArea = document.createElement('textarea');
-	document.body.appendChild(div);
-	document.body.appendChild(div2);
-	div.appendChild(input);
-	div.appendChild(textArea);
-	textArea.className = 'class2';
-	input.type = 'text';
-	div.className = 'class2';
-	div2.className = 'class2';
-	input.className = 'Class2';
-	var result = baidu.dom.q('class2', undefined, 'textarea');
-	equal(result.length, 1, 'get 1 result');
-	equal(result[0], textArea, 'textarea result');
-
-	result = baidu.dom.q('class2', undefined, 'div');
-	equal(result.length, 2, 'get 2 results');
-	equal(result[0], div, 'div result');
-	equal(result[1], div2, 'div2 result');
-
-	result = null;
-	document.body.removeChild(div2);
-	document.body.removeChild(div);
-})
-test('3 params', function() {
-	expect(4);
-	var div = document.createElement('div');
-	var div2 = document.createElement('div');
-	var form = document.createElement('form');
-	var table = document.createElement('table');
-	var input = document.createElement('input');
-	var p = document.createElement('p');
-	var span = document.createElement('span');
-	var textNode = document.createTextNode('textnode');
-	var textArea = document.createElement('textarea');
-	document.body.appendChild(div);
-	document.body.appendChild(div2);
-	div2.appendChild(p);
-	div.appendChild(form);
-	div2.appendChild(textNode);
-	form.appendChild(span);
-	form.appendChild(textArea);
-	form.appendChild(input);
-	input.type = 'text';
-	div.className = 'class2';
-	div2.className = 'class2';
-	span.className = 'class2';
-	textArea.className = 'class2';
-	input.className = 'Class2';
-	var result = baidu.dom.q('class2', form, 'span');
-
-	equal(result.length, 1, 'get 1 result');
-	equal(result[0], span, 'span result');
-
-	result = baidu.dom.q('class2', form, 'textarea');
-	equal(result.length, 1, 'get 1 result');
-	equal(result[0], textArea, 'textArea result');
-
-	result = null;
-	document.body.removeChild(div2);
-	document.body.removeChild(div);
-})
-test('short cut', function() {
-	expect(7);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.className = 'class3';
-	var result = baidu.Q('class3', document, 'div');
-	equal(result[0], div, 'baidu.Q');
-
-	result = baidu.Q('class3', undefined, 'div');
-	equal(result[0], div, 'baidu.Q--2 params');
-
-	result = baidu.Q('class3');
-	equal(result[0], div, 'baidu.Q--1 param');
-
-	result = baidu.q('class3', document, 'div');
-	equal(result[0], div, 'baidu.q--3params');
-
-	result = baidu.q('class3', undefined, 'div');
-	equal(result[0], div, 'baidu.q--2 params');
-
-	result = baidu.q('class3', document);
-	equal(result[0], div, 'baidu.q--2 params document');
-
-	result = baidu.q('class3');
-	equal(result[0], div, 'baidu.q--1 param');
-
-	result = null;
-	document.body.removeChild(div);
-})
-
-test('null', function() {
-	expect(2);
-	var result = baidu.dom.q('');
-	equal(result.length, 0, '空参数返回空数组');
-	result = baidu.dom.q();
-	equal(result, "", 'no param');
-})
-
-test('异常case', function() {
-	expect(2);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.className = 'classAbnormal';
-	var result = baidu.dom.q('class');
-	equal(result, "", "no result");
-	result = baidu.dom.q('classAbnormal', undefined, 'span');
-	equal(result, "", "no result of span");
-	document.body.removeChild(div);
-})
+// 声明快捷方法
+baidu.q = baidu.Q = baidu.dom.q;

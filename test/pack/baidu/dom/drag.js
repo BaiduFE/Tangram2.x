@@ -1,481 +1,138 @@
-module('baidu.dom.drag');
-/**
- * base stop update range autoStop
- * 
- * <li>mock mouse move and check dom position
- * 
+/*
+ * Tangram
+ * Copyright 2010 Baidu Inc. All rights reserved.
+ *
+ * path: baidu/dom/drag.js
+ * author: meizz
+ * modify: linlingyu
+ * version: 1.1.0
+ * date: 2010/06/02
  */
-(function() {
-	var td = QUnit.testDone;
-	var te = {
-		dom : []
-	};
-	QUnit.testDone = function() {
-		$.each(te.dom, function(i, node) {
-			$(node).remove();
-		});
-		td.apply(this, arguments);
-	};
 
-	/**
-	 * 追加一个check方法，返回拖动及拖动元素，并增加一些预处理操作
-	 * <li>开始会先移动鼠标到0,0或者特定位置
-	 * <li>创建div并追加到自动清除列表
-	 */
-	window.drag_check = function(opt) {
-		ua.mousemove(document.body, {
-			clientX : 0,
-			clientY : 0
-		});
-		$(document.body)
-				.append('<div id="test_div"></div>');
-		$(document.body).css('margin', 0).css('padding', 0);
-		var div = $("#test_div").css('position', 'absolute').css(
-				'height', 10).css('width', 10).css(
-				'background-color', 'red').css('left', 0).css('top',
-				0)[0];
-		te.dom.push(div);
-		opt = opt || {};
-		var dc = {
-			d : baidu.dom.drag(div, opt),
-			dom : div,
-			move : function(op, timeout, after) {
-				var callback = function() {
-					ua.mousemove(document.body, op);
-					after && after();
-				};
-				timeout ? setTimeout(callback, timeout) : callback();
-			},
-			check : function() {
-				equals(baidu.dom.getPosition(div).left, dc.check.left,
-				"check left after drag");
-				equals(baidu.dom.getPosition(div).top, dc.check.left,
-				"check top after drag");
-			}
-		};
-		return dc;
-	};
+/**
+ * 拖动指定的DOM元素
+ * @name baidu.dom.drag
+ * @function
+ * @grammar baidu.dom.drag(element, options)
+ * @param {HTMLElement|string} element 元素或者元素的id.
+ * @param {Object} options 拖曳配置项.
+
+ * @param {Array} options.range 限制drag的拖拽范围，数组中必须包含四个值，分别是上、右、下、左边缘相对上方或左方的像素距离。默认无限制.
+ * @param {Number} options.interval 拖曳行为的触发频度（时间：毫秒）.
+ * @param {Boolean} options.capture 鼠标拖曳粘滞.
+ * @param {Object} options.mouseEvent 键名为clientX和clientY的object，若不设置此项，默认会获取当前鼠标位置.
+ * @param {Function} options.ondragstart drag开始时触发.
+ * @param {Function} options.ondrag drag进行中触发.
+ * @param {Function} options.ondragend drag结束时触发.
+ * @param {function} options.autoStop 是否在onmouseup时自动停止拖拽。默认为true.
+ * @version 1.2
+ * @remark
+ * 要拖拽的元素必须事先设定样式的postion值，如果postion为absloute，并且没有设定top和left，拖拽开始时，无法取得元素的top和left值，这时会从[0,0]点开始拖拽
+
+ * @see baidu.dom.draggable
+ */
+///import pack.baidu.dom.g;
+///import pack.baidu.object.extend;
+///import pack.baidu.dom.getStyle;
+///import pack.baidu.page.getMousePosition;
+///import pack.baidu.event.on;
+///import pack.baidu.event.un;
+///import pack.baidu.event.preventDefault;
+///import pack.baidu.lang.isFunction;
+///import pack.baidu.lang.isObject;
+///import pack.baidu.page.getScrollLeft;
+///import pack.baidu.page.getScrollTop;
+
+(function(){
+    var dragging = false,//标识位
+        target, // 被拖曳的DOM元素
+        op, ox, oy, timer, left, top, lastLeft, lastTop, mozUserSelect;
+    baidu.dom.drag = function(element, options){
+        if(!(target = baidu.dom.g(element))){return false;}
+        op = baidu.object.extend({
+            autoStop: true, // false 用户手动结束拖曳 ｜ true 在mouseup时自动停止拖曳
+            capture: true,  // 鼠标拖曳粘滞
+            interval: 16    // 拖曳行为的触发频度（时间：毫秒）
+        }, options);
+        lastLeft = left = parseInt(baidu.dom.getStyle(target, 'left')) || 0;
+        lastTop = top = parseInt(baidu.dom.getStyle(target, 'top')) || 0;
+        dragging = true;
+        setTimeout(function(){
+            var mouse = baidu.page.getMousePosition();  // 得到当前鼠标坐标值
+            ox = op.mouseEvent ? (baidu.page.getScrollLeft() + op.mouseEvent.clientX) : mouse.x;
+            oy = op.mouseEvent ? (baidu.page.getScrollTop() + op.mouseEvent.clientY) : mouse.y;
+            clearInterval(timer);
+            timer = setInterval(render, op.interval);
+        }, 1);
+        // 这项为 true，缺省在 onmouseup 事件终止拖曳
+        op.autoStop && baidu.event.on(document, 'mouseup', stop);
+        // 在拖曳过程中页面里的文字会被选中高亮显示，在这里修正
+        baidu.event.on(document, 'selectstart', unselect);
+        // 设置鼠标粘滞
+        if (op.capture && target.setCapture) {
+            target.setCapture();
+        } else if (op.capture && window.captureEvents) {
+            window.captureEvents(Event.MOUSEMOVE|Event.MOUSEUP);
+        }
+        // fixed for firefox
+        mozUserSelect = document.body.style.MozUserSelect;
+        document.body.style.MozUserSelect = 'none';
+        baidu.lang.isFunction(op.ondragstart)
+            && op.ondragstart(target, op);
+        return {
+            stop: stop, dispose: stop,
+            update: function(options){
+                baidu.object.extend(op, options);
+            }
+        }
+    }
+    // 停止拖曳
+    function stop() {
+        dragging = false;
+        clearInterval(timer);
+        // 解除鼠标粘滞
+        if (op.capture && target.releaseCapture) {
+            target.releaseCapture();
+        } else if (op.capture && window.captureEvents) {
+            window.captureEvents(Event.MOUSEMOVE|Event.MOUSEUP);
+        }
+        // 拖曳时网页内容被框选
+        document.body.style.MozUserSelect = mozUserSelect;
+        baidu.event.un(document, 'selectstart', unselect);
+        op.autoStop && baidu.event.un(document, 'mouseup', stop);
+        // ondragend 事件
+        baidu.lang.isFunction(op.ondragend)
+            && op.ondragend(target, op, {left: lastLeft, top: lastTop});
+    }
+    // 对DOM元素进行top/left赋新值以实现拖曳的效果
+    function render(e) {
+        if(!dragging){
+            clearInterval(timer);
+            return;
+        }
+        var rg = op.range || [],
+            mouse = baidu.page.getMousePosition(),
+            el = left + mouse.x - ox,
+            et = top  + mouse.y - oy;
+
+        // 如果用户限定了可拖动的范围
+        if (baidu.lang.isObject(rg) && rg.length == 4) {
+            el = Math.max(rg[3], el);
+            el = Math.min(rg[1] - target.offsetWidth, el);
+            et = Math.max(rg[0], et);
+            et = Math.min(rg[2] - target.offsetHeight, et);
+        }
+        target.style.left = el + 'px';
+        target.style.top  = et + 'px';
+        lastLeft = el;
+        lastTop = et;
+        baidu.lang.isFunction(op.ondrag)
+            && op.ondrag(target, op, {left: lastLeft, top: lastTop});
+    }
+    // 对document.body.onselectstart事件进行监听，避免拖曳时文字被选中
+    function unselect(e) {
+        return baidu.event.preventDefault(e, false);
+    }
 })();
-
-/**
- * ondragstart ondragend ondrag
- */
-test('base and events', function() {
-	expect(5);
-	QUnit.stop();
-	ua.importsrc("baidu.dom.getPosition", function(){
-		var noDragging = true;
-		var dc = window.drag_check({
-			ondragstart : function() {
-				ok(true, 'drag start');
-			},
-			ondrag : function() {
-				if (noDragging) {
-					ok(true, 'dragging');
-					noDragging = false;
-				}
-			},
-			ondragend : function() {
-				ok(true, 'drag end');
-			}
-		});
-		ua.fnQueue().add(function() {
-			dc.move({
-				clientX : 50,
-				clientY : 50
-			});
-		}, 50).add(function() {
-			dc.check.left = 50;
-			dc.check();
-			dc.d.stop();
-		}, 50).add(QUnit.start, 50).next();
-	}, "baidu.dom.getPosition", "baidu.dom.drag");
-});
-
-test('update', function() {
-	var dc = window.drag_check({
-		autoStop : false,
-		ondragend : function() {
-			ok(enstop, 'stop not trigger by mouseup');
-		}
-	});
-	var enstop = false;
-	// mouseup不应该出发drag的stop
-	ua.mouseup(document.body);
-
-	QUnit.stop();
-	ua.fnQueue().add(function() {
-		dc.move({
-			clientX : 50,
-			clientY : 50
-		});
-	}, 50).add(function() {
-		dc.check.left = 0;
-		dc.check();
-		enstop = true;
-		dc.d.stop();
-	}).add(QUnit.start, 50).next();
-});
-
-test('range and update range', function() {
-	var dc = window.drag_check({
-		range : [ 0, 100, 100, 0 ]
-	// 上右下左
-	});
-	QUnit.stop();
-	ua.fnQueue().add(function() {
-		dc.move({
-			clientX : 50,
-			clientY : 50
-		});
-	}, 50).add(function() {
-		dc.check.left = 50;
-		dc.check();
-	}, 50).add(function() {
-		dc.move({// out of range
-			clientX : 100,
-			clientY : 100
-		});
-	}, 50).add(
-			function() {
-				ok(parseInt($(dc.dom).css('left')) < 100,
-						"check left after drag");
-				ok(parseInt($(dc.dom).css('top')) < 100,
-						"check top after drag");
-				dc.d.update({
-					range : [ 0, 200, 200, 0 ]
-				});
-			}, 50).add(function() {
-		dc.move({// out of range
-			clientX : 150,
-			clientY : 150
-		});
-	}, 50).add(function() {
-		dc.check.left = 150;
-		dc.check();
-		dc.d.stop();
-	}, 50).add(QUnit.start, 50).next();
-
-});
-
-test('margin', function() {
-	stop();
-	var div = document.createElement("div");
-	div.id = 'test_margin_div';
-	document.body.appendChild(div);
-	$("#test_margin_div").css('position', 'absolute').css(
-		'height', 10).css('width', 10).css(
-		'background-color', 'red').css('left', 0).css('top',
-		0);
-	$("#test_margin_div").css('margin', '20px');
-	ua.mousemove(document.body, {
-		clientX : 0,
-		clientY : 0
-	});
-	var d = baidu.dom.drag(div);
-	setTimeout(function(){
-		ua.mousemove(document.body, {
-			clientX : 50,
-			clientY : 50
-		});
-		setTimeout(function(){
-			d.stop();
-			equals(baidu.dom.getPosition(div).left, "70", "left right");
-			equals(baidu.dom.getPosition(div).top, "70", "top right");
-			equals(div.style["margin"], "20px", "The margin is not changed");
-			document.body.removeChild(div);
-			start();
-		}, 20);
-	}, 20);
-});
-
-test('margin autoStop', function() {
-	stop();
-	var div = document.createElement("div");
-	div.id = 'test_margin_div';
-	document.body.appendChild(div);
-	$("#test_margin_div").css('position', 'absolute').css(
-		'height', 10).css('width', 10).css(
-		'background-color', 'red').css('left', 0).css('top',
-		0);
-	$("#test_margin_div").css('margin', '20px');
-	ua.mousemove(document.body, {
-		clientX : 0,
-		clientY : 0
-	});
-	var d = baidu.dom.drag(div);
-	setTimeout(function(){
-		ua.mousemove(document.body, {
-			clientX : 50,
-			clientY : 50
-		});
-		setTimeout(function(){
-			ua.mouseup(document.body);
-			equals(baidu.dom.getPosition(div).left, "70", "left right");
-			equals(baidu.dom.getPosition(div).top, "70", "top right");
-			equals(div.style["margin"], "20px", "The margin is not changed");
-			document.body.removeChild(div);
-			start();
-		}, 20);
-	}, 20);
-});
-
-test('no margin', function() {
-	stop();
-	var div = document.createElement("div");
-	div.id = 'test_margin_div';
-	document.body.appendChild(div);
-	$("#test_margin_div").css('position', 'absolute').css(
-		'height', 10).css('width', 10).css(
-		'background-color', 'red').css('left', 0).css('top',
-		0);
-	$("#test_margin_div").css('margin', '0px');
-	ua.mousemove(document.body, {
-		clientX : 0,
-		clientY : 0
-	});
-	var d = baidu.dom.drag(div);
-	setTimeout(function(){
-		ua.mousemove(document.body, {
-			clientX : 50,
-			clientY : 50
-		});
-		setTimeout(function(){
-			equals(baidu.dom.getPosition(div).left, "50", "left right");
-			equals(baidu.dom.getPosition(div).top, "50", "top right");
-			equals(div.style["margin"], "0px", "The margin is not changed");
-			d.stop();
-			document.body.removeChild(div);
-			start();
-		}, 20);
-	}, 20);
-});
-
-test('border', function() {
-	stop();
-	ua.importsrc("baidu.dom.getPosition", function(){
-		var div = document.createElement("div");
-		div.id = 'test_margin_div';
-		document.body.appendChild(div);
-		$("#test_margin_div").css('position', 'absolute').css(
-				'height', 10).css('width', 10).css("top", 0).css("left", 0).
-				css('background-color', 'green').css('border', '5px');
-		ua.mousemove(document.body, {
-			clientX : 0,
-			clientY : 0
-		});
-		var d = baidu.dom.drag(div);
-		setTimeout(function(){
-			ua.mousemove(document.body, {
-				clientX : 50,
-				clientY : 50
-			});
-			setTimeout(function(){
-				d.stop();
-				equals(baidu.dom.getPosition(div).left, "50", "left right");
-				equals(baidu.dom.getPosition(div).top, "50", "top right");
-				document.body.removeChild(div);
-				start();
-			}, 20);
-		}, 20);
-	}, "baidu.dom.getPosition", "baidu.dom.drag");
-});
-
-// test('drag with update', function() {
-// stop();
-// expect(2);
-// var div = document.createElement('div');
-// document.body.appendChild(div);
-// $(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-// 'height', '100px').css('width', '100px').css('backgroundColor','red');
-// ua.mousemove(document, {
-// clientX : 0,
-// clientY : 0
-// });
-// var d = baidu.dom.drag(div, {
-// ondragend : function(ele, op) {
-// setTimeout(function() {
-// equal(parseInt($(ele).css('left')), 100, 'stop left');
-// equal(parseInt($(ele).css('top')), 50, 'stop top');
-// document.body.removeChild(div);
-// start();
-// }, 1);
-// }
-// });
-// var options = {
-// ondragend : function(ele, op) {
-// setTimeout(function() {
-// equal(parseInt($(ele).css('left')), 150, 'stop left');
-// equal(parseInt($(ele).css('top')), 100, 'stop top');
-// document.body.removeChild(div);
-// start();
-// }, 1);
-// }
-// };
-// d.update(options);
-// setTimeout(function() {
-// ua.mousemove(document, {
-// clientX : 150,
-// clientY : 100
-// });
-// }, 50);
-// setTimeout(function() {
-// ua.mouseup(document);
-// }, 100);
-// });
-//
-// test('drag', function() {
-// stop();
-// // if (ua.browser.opera) {
-// // expect(4);
-// // } else
-// expect(2);
-// var div = document.createElement('div');
-// document.body.appendChild(div);
-// $(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-// 'height', '100px').css('width', '100px').css('backgroundColor',
-// 'red');
-// ua.mousemove(document, {
-// clientX : 0,
-// clientY : 0
-// });
-// var d = baidu.dom.drag(div, {
-// ondrag : function(ele, op) {
-// // ok(true,'div is dragged');
-// },
-// ondragend : function(ele, op) {
-// setTimeout(function() {
-// equal(parseInt($(ele).css('left')), 100, 'stop left');
-// equal(parseInt($(ele).css('top')), 50, 'stop top');
-// document.body.removeChild(div);
-// start();
-// }, 1);
-// }
-// });
-//	
-// setTimeout(function() {
-// ua.mousemove(document, {
-// clientX : 100,
-// clientY : 50
-// });
-//
-// }, 50);
-// setTimeout(function() {
-// ua.mouseup(document);
-// }, 100);
-// });
-//
-// test('drag within range from outside to edge', function() {
-// stop();
-// expect(4);
-// var div = document.createElement('div');
-// document.body.appendChild(div);
-// ua.mousemove(document, {
-// clientX : 0,
-// clientY : 0
-// });
-// $(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-// 'height', '100px').css('width', '100px').css('backgroundColor',
-// 'red');
-// baidu.dom.drag(div, {
-// ondragstart : function(ele, op) {
-// equal(parseInt($(ele).css('left')), 0, 'start left');
-// equal(parseInt($(ele).css('top')), 0, 'start top');
-// },
-// ondragend : function(ele, op) {
-// setTimeout(function() {
-// equal(parseInt($(ele).css('left')), 30, 'stop left');
-// equal(parseInt($(ele).css('top')), 30, 'stop top');
-// document.body.removeChild(div);
-// start();
-// }, 1);
-// },
-// range : [ 20, 130, 130, 30 ]//上右下左
-// });
-// // move(div, 0, 0);
-// setTimeout(function() {
-// ua.mousemove(document, {
-// clientX : 50,
-// clientY : 50
-// });
-// }, 50);
-// setTimeout(function() {
-// ua.mouseup(div);
-// }, 100);
-// });
-//
-// test('drag within range from inside to edge', function() {
-// stop();
-// expect(4);
-// var div = document.createElement('div');
-// document.body.appendChild(div);
-// ua.mousemove(document, {
-// clientX : 0,
-// clientY : 0
-// });
-// $(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-// 'height', '50px').css('width', '50px').css('backgroundColor',
-// 'red');
-// baidu.dom.drag(div, {
-// ondragstart : function(ele, op) {
-// equal(parseInt($(ele).css('left')), 0, 'start left');
-// equal(parseInt($(ele).css('top')), 0, 'start top');
-// },
-// ondragend : function(ele, op) {
-// setTimeout(function() {
-// equal(parseInt($(ele).css('left')), 80, 'stop left');
-// equal(parseInt($(ele).css('top')), 80, 'stop top');
-// document.body.removeChild(div);
-// start();
-// }, 1);
-// },
-// range : [ 0, 130, 130, 0 ]//上右下左
-// });
-// setTimeout(function() {
-// ua.mousemove(document, {
-// clientX : 80,
-// clientY : 80
-// });
-// }, 50);
-// setTimeout(function() {
-// ua.mouseup(div);
-// }, 100);
-// });
-//
-// test('drag within range from inside to outside', function() {
-// stop();
-// expect(4);
-// var div = document.createElement('div');
-// document.body.appendChild(div);
-// ua.mousemove(document, {
-// clientX : 0,
-// clientY : 0
-// });
-// $(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-// 'height', '50px').css('width', '50px').css('backgroundColor',
-// 'red');
-// baidu.dom.drag(div, {
-// ondragstart : function(ele, op) {
-// equal(parseInt($(ele).css('left')), 0, 'start left');
-// equal(parseInt($(ele).css('top')), 0, 'start top');
-// },
-// ondragend : function(ele, op) {
-// setTimeout(function() {
-// equal(parseInt($(ele).css('left')), 80, 'stop left');
-// equal(parseInt($(ele).css('top')), 80, 'stop top');
-// document.body.removeChild(div);
-// start();
-// }, 1);
-// },
-// range : [ 0, 130, 130, 0 ]//上右下左
-// });
-// setTimeout(function() {
-// ua.mousemove(document, {
-// clientX : 150,
-// clientY : 150
-// });
-// }, 50);
-// setTimeout(function() {
-// ua.mouseup(div);
-// }, 100);
-// });
+// [TODO] 20100625 添加cursorAt属性，absolute定位的定位的元素在不设置top|left值时，初始值有问题，得动态计算
+// [TODO] 20101101 在drag方法的返回对象中添加 dispose() 方法析构drag

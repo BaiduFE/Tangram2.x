@@ -1,73 +1,45 @@
-module('baidu.lang.toArray')
+/*
+ * Tangram
+ * Copyright 2010 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/lang/toArray.js
+ * author: berg
+ * version: 1.0
+ * date: 2010-07-05
+ */
+
+///import pack.baidu.lang;
+///import pack.baidu.lang.isArray;
+///import pack.baidu.lang.isFunction;
 
 /**
  * 将一个变量转换成array
- * 
- *TODO 是否需要考虑提供类似切分功能产出array
+ * @name baidu.lang.toArray
+ * @function
+ * @grammar baidu.lang.toArray(source)
+ * @param {mix} source 需要转换成array的变量
+ * @version 1.3
+ * @meta standard
+ * @returns {array} 转换后的array
  */
-test('array to array', function(){
-	expect(1);
-	var array = [1,2,4,];
-	var array_after = baidu.lang.toArray(array);
-	equal(array,array_after,"convert array to array");
-})
+baidu.lang.toArray = function (source) {
+    if (source === null || source === undefined)
+        return [];
+    if (baidu.lang.isArray(source))
+        return source;
 
-/**
- * dom
- * string 
- */
-test('obj,string to array', function(){
-	expect(2);
-	var div = document.createElement('div');
-	var str = "str_toArray";
-	document.body.appendChild(div);
-	if(baidu.lang.isArray(str))//string
-		equal(baidu.lang.toArray(str),str,"convert string to array");
-	else
-		ok(true,"fail to convert string to array");
-	
-	var div_toArray = baidu.lang.toArray(div);
-	if(baidu.lang.isArray(div_toArray)){//dom obj
-		equal(div_toArray[0],div,"convert obj to array success");
-	}else{
-		ok(true,"fail to convert obj to array");
-	}
-	document.body.removeChild(div);
-})
+    // The strings and functions also have 'length'
+    if (typeof source.length !== 'number' || typeof source === 'string' || baidu.lang.isFunction(source)) {
+        return [source];
+    }
 
-test('support obj with items', function(){
-	expect(2);
-	var div = document.createElement('div');
-	var div2 = document.createElement('div');
-	document.body.appendChild(div);
-	document.body.appendChild(div2);
-	var divList = document.getElementsByTagName('div');//dom
-	var divList_toArray = baidu.lang.toArray(divList);
-	ok(baidu.lang.isArray(divList_toArray),"convert obj with items to array success");
-	for(var i in divList_toArray){
-		if(divList_toArray[i]!=divList[i]){
-			ok(false,"fail to convert obj with items to array");
-			break;
-		}
-		if(i==(divList_toArray.length-1))
-			ok(true,"convert obj with items to array");
-	}
-	document.body.removeChild(div);
-	document.body.removeChild(div2);
-})
+    //nodeList, IE 下调用 [].slice.call(nodeList) 会报错
+    if (source.item) {
+        var l = source.length, array = new Array(l);
+        while (l--)
+            array[l] = source[l];
+        return array;
+    }
 
-test('function to array',function(){
-	var handle = function(){
-//		alert("function convert to array");
-	}
-	equal(baidu.lang.toArray(handle)[0],[handle][0],"convert function to array");
-})
-
-test('null and undefine to array', function(){
-	expect(2);
-	var nullPara = null;//null
-	var undefinedPara;//undefined
-	equal(baidu.lang.toArray(nullPara),"","convert null to array");
-	equal(baidu.lang.toArray(undefinedPara),"","convert undefined to array");
-})
-
+    return [].slice.call(source);
+};

@@ -1,46 +1,29 @@
-module("baidu.page.loadJsFile");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/page/loadJsFile.js
+ * author: allstar
+ * version: 1.1.0
+ * date: 2009/11/20
+ */
 
+///import pack.baidu.page;
 
-test("load两个存在的JS", function() {
-//expect(2);
-stop();
-baidu.page.loadJsFile(upath + 'jsfile1.js');
-baidu.page.loadJsFile(upath + 'jsfile2.js');
-var num = 0;
-var isLoaded = function(){
-	if(num>20){
-		ok(true,"load is fail")
-		start();
-	}
-    setTimeout(function() {
-		var flag1 = false,flag2 = false;
-		var k1 = typeof loadedTest1 == 'function' && loadedTest1();
-		var k2 = typeof loadedTest2 == 'function' && loadedTest2();
-		if(k1&&k1==1 ){
-        	flag1 = true;
-		}
-		if(k2&&k2==2 ){
-			flag2 = true;
-		}
-		if(flag1&&flag2){
-			start();
-		}
-		else {
-			num++;
-			isLoaded();
-		}
-	}, 30);
+/**
+ * 动态在页面上加载一个外部js文件
+ * @name baidu.page.loadJsFile
+ * @function
+ * @grammar baidu.page.loadJsFile(path)
+ * @param {string} path js文件路径
+ * @see baidu.page.loadCssFile
+ */
+baidu.page.loadJsFile = function (path) {
+    var element = document.createElement('script');
+
+    element.setAttribute('type', 'text/javascript');
+    element.setAttribute('src', path);
+    element.setAttribute('defer', 'defer');
+
+    document.getElementsByTagName("head")[0].appendChild(element);    
 };
-isLoaded();
-
-});
-
-test("load不存在的JS", function() {
-	expect(0);
-	stop();
-	baidu.page.loadJsFile(upath+'jsfileNotExsist.js');
-	baidu.page.loadJsFile(upath+'baidu.com');
-	setTimeout(function() {
-		start();
-	}, baidu.ie ? 300 : 50);
-});

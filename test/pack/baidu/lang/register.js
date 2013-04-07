@@ -1,53 +1,34 @@
-module("baidu.lang.register");
+/*
+ * Tangram
+ * Copyright 2011 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/lang/register.js
+ * author: meizz, dron
+ * version: 1.6.0
+ * date: 2011/11/29
+ */
 
-function myClass(option) {
-	this.name = "myclass";
-	this.givenName = option.givenName;
-	this.getInfo = option.getInfo;
-}
+///import pack.baidu.lang;
 
-test("constructorHook", function(){
-	expect(4);
-	stop();
-	ua.importsrc("baidu.lang.createClass", function(){
-		var getInfo = function(){
-			ok(true, "The getInfo() is apply");
-			return this.givenName;
-		}
-		var NewClass = baidu.lang.createClass(myClass);
-		baidu.lang.register(NewClass, getInfo);
-		var sObject = new NewClass({
-			givenName: 'Jim',
-			getInfo: getInfo
-		});
-		
-		equals(sObject.getInfo(), "Jim", "getInfo");
-		equals(sObject.givenName, "Jim", 'givenName');
-		start();
-	}, "baidu.lang.createClass", "baidu.lang.register");
-});
+/**
+ * 向某个类注册插件
+ * @name baidu.lang.register
+ * @function
+ * @grammar baidu.lang.register(Class, constructorHook, methods)
+ * @param   {Class}     Class   		接受注册的载体 类
+ * @param   {Function}  constructorHook 运行在载体类构造器里钩子函数
+ * @param	{JSON}		methods			挂载到载体类原型链上的方法集，可选
+ * @meta standard
+ *             
+ */
+baidu.lang.register = function (Class, constructorHook, methods) {
+    var reg = Class["\x06r"] || (Class["\x06r"] = []);
+    reg[reg.length] = constructorHook;
 
-test("methods", function(){
-	expect(3);
-	stop();
-	ua.importsrc("baidu.lang.createClass", function(){
-		var getInfo = function(){
-			return this.givenName;
-		}
-		var NewClass = baidu.lang.createClass(myClass);
-		baidu.lang.register(NewClass, getInfo, {
-			testmethod : function(){
-				return this.givenName;
-			}
-		});
-		var sObject = new NewClass({
-			givenName: 'Jim',
-			getInfo: getInfo
-		});
+    for (var method in methods) {
+    	Class.prototype[method] = methods[method];
+    }
+};
 
-		equals(sObject.getInfo(), "Jim", "getInfo");
-		equals(sObject.givenName, "Jim", 'givenName');
-		equals(sObject.testmethod(), "Jim", "testmethod");
-		start();
-	}, "baidu.lang.createClass", "baidu.lang.register");
-});
+// 20111221 meizz   修改插件函数的存放地，重新放回类构造器静态属性上
+// 20111129	meizz	添加第三个参数，可以直接挂载方法到目标类原型链上
