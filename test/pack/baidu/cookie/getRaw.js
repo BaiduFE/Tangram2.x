@@ -1,24 +1,35 @@
-module("baidu.cookie.getRaw");
-function remove(key) {
-	document.cookie = key + '=;expires=' + new Date().toGMTString();
-}
-test("输入合法的key", function() {
-	var key = 'gr11';
-	document.cookie = key + '=' + encodeURIComponent("百度");
-	var res = baidu.cookie.getRaw(key);
-	equals(res, '%E7%99%BE%E5%BA%A6', 'raw');
-	equals(decodeURIComponent(res), "百度", "decode");
-	remove(key);
-});
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/cookie/getRaw.js
+ * author: erik
+ * version: 1.1.0
+ * date: 2009/11/15
+ */
 
-test("输入非法的key", function() {
-	equals(baidu.cookie.getRaw("TANGRAM_Cookie;baidu"), null, "非法key success");
-	equals(baidu.cookie.getRaw("TANGRAM_Cookie,baidu"), null, "非法key success");
-	equals(baidu.cookie.getRaw("TANGRAM_Cookie baidu"), null, "非法key success");
-	equals(baidu.cookie.getRaw("TANGRAM_Cookie@baidu"), null, "非法key success");
-});
+///import pack.baidu.cookie._isValidKey;
 
-//test("輸入不存在的key", function() {
-//	equals(baidu.cookie.getRaw("TANGRAM_Cookie_notexisist"), null,
-//			"不存在的key success");
-//});
+/**
+ * 获取cookie的值，不对值进行解码
+ * @name baidu.cookie.getRaw
+ * @function
+ * @grammar baidu.cookie.getRaw(key)
+ * @param {string} key 需要获取Cookie的键名
+ * @meta standard
+ * @see baidu.cookie.get,baidu.cookie.setRaw
+ *             
+ * @returns {string|null} 获取的Cookie值，获取不到时返回null
+ */
+baidu.cookie.getRaw = function (key) {
+    if (baidu.cookie._isValidKey(key)) {
+        var reg = new RegExp("(^| )" + key + "=([^;]*)(;|\x24)"),
+            result = reg.exec(document.cookie);
+            
+        if (result) {
+            return result[2] || null;
+        }
+    }
+
+    return null;
+};

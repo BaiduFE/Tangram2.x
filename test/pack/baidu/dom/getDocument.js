@@ -1,25 +1,27 @@
-module("baidu.dom.getDocument");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/getDocument.js
+ * author: allstar
+ * version: 1.1.0
+ * date: 2009/11/17
+ */
 
-test("正常用例",function(){
-	expect(4);
-	var div = document.createElement('div');
-	var img = document.createElement('img');
-	document.body.appendChild(div);
-	div.appendChild(img);
-	div.id = 'div_id';
-	equal(baidu.dom.getDocument(div),document,"div get document");
-	equal(baidu.dom.getDocument('div_id'),document,"div get document by id");
-	equal(baidu.dom.getDocument(img),document,"img get document");
-	equal(baidu.dom.getDocument(document),document,"document get document");
-	document.body.removeChild(div);
-});
+///import pack.baidu.dom.g;
 
-test("iframe",function(){
-	ua.frameExt(function(w){
-		var wd = w.baidu.dom.getDocument,
-			pwd = w.parent.baidu.dom.getDocument;
-		equals(wd(w.parent.document.body), w.parent.document);
-		equals(pwd(w.document.body), w.document);
-		this.finish();
-	});
-});
+/**
+ * 获取目标元素所属的document对象
+ * @name baidu.dom.getDocument
+ * @function
+ * @grammar baidu.dom.getDocument(element)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @meta standard
+ * @see baidu.dom.getWindow
+ *             
+ * @returns {HTMLDocument} 目标元素所属的document对象
+ */
+baidu.dom.getDocument = function (element) {
+    element = baidu.dom.g(element);
+    return element.nodeType == 9 ? element : element.ownerDocument || element.document;
+};

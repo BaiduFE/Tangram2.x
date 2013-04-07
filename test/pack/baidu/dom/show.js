@@ -1,77 +1,38 @@
-module("baidu.dom.show")
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ */
 
-test('Element',function(){
-	expect(4);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_id';
-	equal(div.style.display,"","div display is show");
-	baidu.dom.show(div);
-	equal(div.style.display,"",'after show');
-	div.style.display = "none";
-	equal(div.style.display,"none",'change display of div');
-	baidu.dom.show(div);
-	equal(div.style.display,"",'show again');
-	document.body.removeChild(div);
-})
+///import pack.baidu.dom.g;
 
-test('id',function(){
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_id';
-	equal(div.style.display,"","div display is show");
-	baidu.dom.show('div_id');
-	equal(div.style.display,"","div display after show");
-	div.style.display ='none';
-	baidu.dom.show('div_id');
-	equal(div.style.display,"",'after show');
-	document.body.removeChild(div);
-})
+/**
+ * 显示目标元素，即将目标元素的display属性还原成默认值。默认值可能在stylesheet中定义，或者是继承了浏览器的默认样式值
+ * @author allstar, berg
+ * @name baidu.dom.show
+ * @function
+ * @grammar baidu.dom.show(element)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @remark
+ * 注意1：如果在CSS中定义此元素的样式为display:none
+ * 在调用本函数以后，会将display属性仍然还原成none，元素仍然无法显示。
+ * 注意2：如果这个元素的display属性被设置成inline
+ * （由element.style.display或者HTML中的style属性设置）
+ * 调用本方法将清除此inline属性，导致元素的display属性变成继承值
+ * 因此，针对上面两种情况，建议使用dom.setStyle("display", "something")
+ * 来明确指定要设置的display属性值。
+ * 
+ * @shortcut show
+ * @meta standard
+ * @see baidu.dom.hide,baidu.dom.toggle
+ *             
+ * @returns {HTMLElement} 目标元素
+ */
+baidu.dom.show = function (element) {
+    element = baidu.dom.g(element);
+    element.style.display = "";
 
-test('shortcut',function(){
-	expect(3);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_id';
-	baidu.show('div_id');
-	
-	equal(div.style.display,"",'after hide');
-	div.style.display = "none";
-	equal(div.style.display,"none",'back to hide');
-	baidu.show(div);
-	equal(div.style.display,"",'show again');
-	document.body.removeChild(div);
-})
+    return element;
+};
 
-
-//describe('baidu.dom.show测试', {
-//    '将隐藏的元素显示': function() {
-//        var oDiv2 = baidu.dom.g("div2_show");
-//        var oDiv3 = baidu.dom.g("div3_show");
-//
-//        //显示用style方式隐藏的元素
-//        value_of(oDiv2.style.display).should_be("none");
-//        baidu.dom.show("div2_show");
-//        value_of(oDiv2.style.display).should_be("");
-//
-//        //显示用css方式设置的隐藏元素
-//        /*
-//        value_of(oDiv3).should_not_be_null();
-//        var oCSSRules = document.styleSheets[0].cssRules || document.styleSheets[0].rules;
-//        value_of(oCSSRules).should_not_be_null();
-//        value_of(oCSSRules[0].selectorText).should_be(".class-show");
-//        value_of(oCSSRules[0].style.display).should_be("none");
-//        baidu.dom.show(oDiv3);
-//        value_of(oCSSRules[0].style.display).should_be("");
-//        */
-//    }/*,1.0.1版本中已不支持多个参数的情况
-//	'将多个隐藏元素同时显示': function() {
-//		var oDiv4 = baidu.dom.g("div4_show");
-//
-//		value_of(oDiv4.style.display).should_be("none");
-//		value_of(baidu.dom.g("div5_show").style.display).should_be("none");
-//		baidu.dom.show(oDiv4, "div5_show");
-//		value_of(oDiv4.style.display).should_be("");
-//		value_of(baidu.dom.g("div5_show").style.display).should_be("");
-//	}*/
-//});
+// 声明快捷方法
+baidu.show = baidu.dom.show;

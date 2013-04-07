@@ -1,863 +1,110 @@
-module("baidu.lang.Event");
-
-(function() {
-	
-	/* 引入_inherits */
-	var _inherits = function(subClass, superClass, className) {
-		var key, proto, selfProps = subClass.prototype, clazz = new Function();
-
-		clazz.prototype = superClass.prototype;
-		proto = subClass.prototype = new clazz();
-		for (key in selfProps) {
-			proto[key] = selfProps[key];
-		}
-		subClass.prototype.constructor = subClass;
-		subClass.superClass = superClass.prototype;
-
-		// 类名标识，兼容Class的toString，基本没用
-		if ("string" == typeof className) {
-			proto._className = className;
-		}
-	};
-	test("dispatchEvent", function() {
-		expect(2);
-		function myClass() {
-			this.name = "myclass";
-		}
-
-		_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-			var obj = new myClass();
-			obj.onMyEvent = function() {
-				ok(true, "myEvent is dispatched");
-			};
-
-			var myEventWithoutOn = new (baidu.lang.Event)("MyEvent", obj);// 自定义事件对象,不以on开头
-			var myEventWithOn = new (baidu.lang.Event)("onMyEvent")
-			obj.dispatchEvent(myEventWithoutOn);
-			obj.dispatchEvent(myEventWithOn);
-		
-		});
-
-	test("addEventListener", function() {
-		expect(2);
-		function myClass() {
-			this.name = "myclass";
-		}
-
-		_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-			var obj = new myClass();
-			function listner(){ok(true, "listner is added");}
-			
-			var myEventWithoutOn = new (baidu.lang.Event)("onMyEvent", obj);
-			obj.addEventListener("onMyEvent",listner,'onMyEvent');
-			var yourEventWithoutOn = new (baidu.lang.Event)("YourEvent", obj);
-			obj.addEventListener("YourEvent",listner,'YourEvent');
-			
-			obj.dispatchEvent("onMyEvent");
-			obj.dispatchEvent("YourEvent");
-		});
-	
-	test("addEventListener, more listeners", function() {
-		expect(2);
-		function myClass() {
-			this.name = "myclass";
-		}
-
-		_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-			var obj = new myClass();
-			var step = 0;
-			function listner1(){
-				step ++;
-				equals(step, 1,  "listner1 is added");
-			}
-			function listner2(){
-				step ++;
-				equals(step, 2,  "listner2 is added");
-			}
-			
-			var myEventWithoutOn = new (baidu.lang.Event)("onMyEvent", obj);
-			obj.addEventListener("onMyEvent",listner1);
-			obj.addEventListener("onMyEvent",listner1);
-			obj.addEventListener("onMyEvent",listner2);
-			
-			obj.dispatchEvent(myEventWithoutOn);
-		});
-
-})();
-
 /*
- * The following defines several event handlers and their tags
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/lang/Event.js
+ * author: meizz, erik, berg
+ * version: 1.6.0
+ * date: 2009/11/24
+ * modify: 2011/11/24 meizz
  */
-// Htag1 = 0;
-// Htag2 = 0;
-// Htag3 = 0;
-// Htag4 = 0;
-// Htag5 = 0;
-// Htag6 = 0;
-// Htag7 = 0;
-// Htag8 = 0;
-// Htag9 = 0;
-// Htag10 = 0;
-// Htag11 = 0;
-// Htag12 = 0;
-// eventType = '';
-// eventTarget = null;
-//
-// resetTag = function() {
-// Htag1 = 0;
-// Htag2 = 0;
-// Htag3 = 0;
-// Htag4 = 0;
-// Htag5 = 0;
-// Htag6 = 0;
-// Htag7 = 0;
-// Htag8 = 0;
-// Htag9 = 0;
-// Htag10 = 0;
-// Htag11 = 0;
-// Htag12 = 0;
-// eventType = '';
-// eventTarget = null;
-// };
-//
-// var handler1 = function(e) {
-// Htag1 = Htag1 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-//
-// // alert('handler1 '+'target:'+eventTarget.id);
-// };
-//
-// var handler2 = function(e) {
-// Htag2 = Htag2 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// // alert('handler2 '+'target:'+eventTarget.id);
-// };
-//
-// var handler3 = function(e) {
-// Htag3 = Htag3 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// // alert('handler3 '+'target:'+eventTarget.id);
-// };
-//
-// var handler4 = function(e) {
-// Htag4 = Htag4 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler5 = function(e) {
-// Htag5 = Htag5 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler6 = function(e) {
-// Htag6 = Htag6 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler7 = function(e) {
-// Htag7 = Htag7 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler8 = function(e) {
-// Htag8 = Htag8 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler9 = function(e) {
-// Htag9 = Htag9 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler10 = function(e) {
-// Htag10 = Htag10 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-//
-// var handler11 = function(e) {
-// Htag11 = Htag11 + 1;
-// oeve = e || window.event;
-// eventType = oeve.type;
-// eventTarget = oeve.target;
-// };
-// /*
-// * var handler12 = function(e){ Htag12 = Htag12+1; oeve = e||window.event;
-// * eventType = oeve.type; eventTarget = oeve.target; };
-// */
-// /*
-// * The following part is about adding event listener and removing event
-// listener
-// */
-// var myDom = function(domid) {
-// this.domElement = document.getElementById(domid);
-// baidu.lang.Class.call(this);
-// this.dispose = function() {
-// this.domElement = null;
-// baidu.lang.Class.prototype.dispose();
-// };
-// };
-// baidu.lang.inherits(myDom, baidu.lang.Class, 'myDom_class');
-//
-// /*
-// * The following codes check the results with JSSpec framework
-// */
-// describe('test baidu.lang.Class.addEventListener', {
-// 'given event type and handler function name' : function() {
-// resetTag();
-// Otest = new myDom('dom1');
-// // alert(Otest.domElement.id);
-//
-// Otest.addEventListener('onTestEvent1', handler1);
-// Otest.addEventListener('TestEvent1', handler2);
-// Otest.addEventListener('TestEvent1', handler3);
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-// }
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // Mock click event
-// uiut.MockEvents.click(document.getElementById('dom1'));
-//
-// value_of(eventTarget.id).should_be('dom1');
-// value_of(eventType).should_be('onTestEvent1');
-// value_of(Htag1).should_be(1);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-// value_of(Otest.toString()).should_be('[object myDom_class]');
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// },
-// 'given event type and anonymous handler function' : function() {
-// resetTag();
-// Otest = new myDom('dom2');
-// Otest.addEventListener('onmyEvent', function(e) {
-// Htag4 = Htag4 + 1;
-// eo = e || window.event;
-// eventTarget = eo.target;
-// eventType = eo.type;
-// });
-// Otest.addEventListener('onmyEvent', function(e) {
-// Htag5 = Htag5 + 1;
-// });
-// Otest.addEventListener('myEvent', function(e) {
-// Htag6 = Htag6 + 1;
-// });
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onmyEvent'));
-// }
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-// // Mock click event
-// uiut.MockEvents.click(Otest.domElement);
-//
-// value_of(eventTarget.guid).should_be(Otest.guid);
-// value_of(eventType).should_be('onmyEvent');
-// value_of(Htag4).should_be(1);
-// value_of(Htag5).should_be(1);
-// value_of(Htag6).should_be(1);
-//
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// },
-// 'given event type and handler function name and key' : function() {
-// resetTag();
-// Otest = new myDom('dom1');
-// Otest.addEventListener('onTestEvent2', handler1, 'key_H1');
-// Otest.addEventListener('onTestEvent2', handler2, 'key_H2');
-// Otest.addEventListener('onTestEvent2', handler3, 'key_H3');
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent2'));
-// }
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-// // Mock click event
-// uiut.MockEvents.click(document.getElementById('dom1'));
-//
-// value_of(eventTarget.guid).should_be(Otest.guid);
-// value_of(eventType).should_be('onTestEvent2');
-// value_of(Htag1).should_be(1);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// },
-// 'given event type, anonymous handler function and key' : function() {
-// resetTag();
-// Otest = new myDom('dom2');
-// Otest.addEventListener('onmyEvent', function(e) {
-// Htag4 = Htag4 + 1;
-// eo = e || window.event;
-// eventTarget = eo.target;
-// eventType = eo.type;
-// }, 'Holy');
-// Otest.addEventListener('onmyEvent', function(e) {
-// Htag5 = Htag5 + 1;
-// }, 'my');
-// Otest.addEventListener('onmyEvent', function(e) {
-// Htag6 = Htag6 + 1;
-// }, 'God');
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onmyEvent',
-// Otest.domElement));
-// }
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-// // Mock click event
-// uiut.MockEvents.click(Otest.domElement);
-//
-// value_of(eventTarget.id).should_be('dom2');
-// value_of(eventType).should_be('onmyEvent');
-// value_of(Htag4).should_be(1);
-// value_of(Htag5).should_be(1);
-// value_of(Htag6).should_be(1);
-//
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// }
-// });
-//
-// describe(
-// 'baidu.lang.Class.removeEventListener test',
-// {
-// 'remove the handlers which are already bound to some event' : function() {
-// resetTag();
-// Otest = new myDom('dom3');
-// Otest.addEventListener('onTestEvent1', handler1);
-// Otest.addEventListener('TestEvent1', handler2);
-// Otest.addEventListener('TestEvent1', handler3);
-// Otest.addEventListener('onTestEvent2', handler4);
-// Otest.addEventListener('onmyEvent', handler5);
-// Otest.addEventListener('onWontHappen', handler6);
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-// }
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // remove handler
-// Otest.removeEventListener('TestEvent1', handler1);
-// Otest.removeEventListener('onTestEvent1', handler2)
-//
-// // Mock click event
-// uiut.MockEvents.click(document.getElementById('dom3'));
-//
-// value_of(eventTarget.id).should_be('dom3');
-// value_of(eventType).should_be('onTestEvent1');
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// },
-// 'remove the handlers which are already bound to some event, given handler\'s
-// key' : function() {
-// resetTag();
-// Otest = new myDom('dom3');
-// Otest.addEventListener('onTestEvent1', handler1, 'Holy');
-// Otest.addEventListener('TestEvent1', function() {
-// alert('I am a handler!');
-// }, 'God');
-// Otest.addEventListener('onTestEvent1', handler3, 'tagKey');
-// Otest.addEventListener('onTestEvent1', handler4, 'key_H4');
-// Otest.addEventListener('onmyEvent', handler5, 'test_H5');
-// Otest.addEventListener('onWontHappen', handler6, 'ghost');
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // remove handler
-// Otest.removeEventListener('TestEvent1', 'Holy');
-// Otest.removeEventListener('onTestEvent1', 'God')
-//
-// // Mock click event
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-//
-// value_of(eventTarget.id).should_be('dom3');
-// value_of(eventType).should_be('onTestEvent1');
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(1);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.dispose();
-// Otest = null;
-// },
-// 'remove the handlers which are not bound to the given event, given handler\'s
-// key ' : function() {
-// resetTag();
-// Otest = new myDom('dom4');
-// Otest.addEventListener('onTestEvent1', handler1, 'Holy');
-// Otest.addEventListener('onTestEvent1', function() {
-// Htag2 = Htag2 + 1;
-// }, 'God');
-// Otest.addEventListener('onTestEvent1', handler3, 'tagKey');
-// Otest.addEventListener('onTestEvent1', handler4, 'key_H4');
-// Otest.addEventListener('onmyEvent', handler5, 'test_H5');
-// Otest.addEventListener('onWontHappen', handler6, 'ghost');
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // remove handler
-// Otest.removeEventListener('onTestEvent1', 'handler1_key');
-// Otest.removeEventListener('onTestEvent1', 'ghost');
-// Otest.removeEventListener('onWontHappen', 'Holy');
-//
-// // Mock click event
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-// Otest.dispatchEvent(new baidu.lang.Event('onWontHappen',
-// Otest.domElement));
-//
-// value_of(eventTarget.id).should_be('dom4');
-// value_of(eventType).should_be('onWontHappen');
-// value_of(Htag1).should_be(1);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(1);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(1);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.dispose();
-// Otest = null;
-// },
-// 'remove the handlers which are not bound to the given event, given handler\'s
-// function name ' : function() {
-// resetTag();
-// Otest = new myDom('dom3');
-// Otest.addEventListener('onTestEvent1', handler1);
-// Otest.addEventListener('onTestEvent1', handler2);
-// Otest.addEventListener('onTestEvent1', handler3);
-// Otest.addEventListener('onTestEvent2', handler4);
-// Otest.addEventListener('onmyEvent', handler5);
-// Otest.addEventListener('onWontHappen', handler6);
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent2',
-// Otest.domElement));
-// }
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // remove handler
-// Otest.removeEventListener('onTestEvent1', handler4);
-// Otest.removeEventListener('TestEvent1', handler1);
-// Otest.removeEventListener('onTestEvent2', handler2);
-// Otest.removeEventListener('onmyEvent', handler3);
-//
-// // Mock click event
-// uiut.MockEvents.click(document.getElementById('dom3'));
-//
-// value_of(eventTarget.id).should_be('dom3');
-// value_of(eventType).should_be('onTestEvent2');
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(1);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// },
-// 'remove the handlers which are not bound to any event, given handler\'s
-// function name or key ' : function() {
-// resetTag();
-// Otest = new myDom('dom3');
-// Otest.addEventListener('onTestEvent1', handler1);
-// Otest.addEventListener('onTestEvent1', handler2);
-// Otest.addEventListener('onTestEvent1', handler3);
-// Otest.addEventListener('onTestEvent2', handler4);
-// Otest.addEventListener('onmyEvent', handler5);
-// Otest.addEventListener('onWontHappen', handler6);
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-// }
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // remove handler
-// Otest.removeEventListener('onTestEvent1', handler10);
-// Otest.removeEventListener('TestEvent1', 'wrongHandler');
-// Otest.removeEventListener('badEvent', handler1);
-// Otest.removeEventListener('badEvent', 'wrongKey');
-//
-// // Mock click event
-// uiut.MockEvents.click(document.getElementById('dom3'));
-//
-// value_of(eventTarget.id).should_be('dom3');
-// value_of(eventType).should_be('onTestEvent1');
-// value_of(Htag1).should_be(1);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// }
-// });
-//
-// describe(
-// 'baidu.lang.Class.dispatchEvent test',
-// {
-// 'use addEventListener to add event handler' : function() {
-// resetTag();
-// Otest = new myDom('dom1');
-// Otest.addEventListener('onTestEvent1', handler1);
-// Otest.addEventListener('onTestEvent1', handler2);
-// Otest.addEventListener('onTestEvent1', handler3);
-// Otest.domElement.onclick = function() {
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent1',
-// Otest.domElement));
-// }
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // Mock click event
-// uiut.MockEvents.click(document.getElementById('dom1'));
-//
-// value_of(eventTarget.id).should_be('dom1');
-// value_of(eventType).should_be('onTestEvent1');
-// value_of(Htag1).should_be(1);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.domElement.onclick = function() {
-// };
-// Otest.dispose();
-// Otest = null;
-// },
-// 'directly bind event handler' : function() {
-// resetTag();
-// Otest = new myDom('dom4');
-// Otest.onTestEvent = handler1;
-// Otest.onTestEvent = handler2;
-// Otest.onTestEvent = handler3;
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // Mock click event
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent',
-// Otest.domElement));
-//
-// value_of(eventTarget.id).should_be('dom4');
-// value_of(eventType).should_be('onTestEvent');
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.dispose();
-// Otest = null;
-// },
-// 'both directly bind event handler and use addEventListener to bind handler' :
-// function() {
-// resetTag();
-// Otest = new myDom('dom2');
-// Otest.onTestEvent = handler1;
-// Otest.addEventListener('onTestEvent', handler2);
-// Otest.addEventListener('TestEvent', handler3);
-// Otest.onTestEvent = handler4;
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // Mock click event
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent',
-// Otest.domElement));
-//
-// value_of(eventTarget.id).should_be('dom2');
-// value_of(eventType).should_be('onTestEvent');
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(1);
-// value_of(Htag3).should_be(1);
-// value_of(Htag4).should_be(1);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.dispose();
-// Otest = null;
-// },
-// 'the event has no handlers' : function() {
-// resetTag();
-// Otest = new myDom('dom3');
-// Otest.onTestEvent = handler1;
-// Otest.addEventListener('onTestEvent', handler2);
-// Otest.addEventListener('onTestEvent', handler3);
-// Otest.onTestEvent = handler4;
-//
-// // Mock click event
-// Otest.dispatchEvent(new baidu.lang.Event('onbadEvent',
-// Otest.domElement));
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(0);
-// value_of(Htag4).should_be(0);
-// value_of(Htag5).should_be(0);
-// value_of(Htag6).should_be(0);
-// value_of(eventTarget).should_be_null();
-// value_of(eventType).should_be('');
-//
-// // Reset tags and release Object
-// resetTag();
-// Otest.dispose();
-// Otest = null;
-// },
-// 'new api - options' : function() {
-// function myClass() {
-// this.name = "myclass";
-// }
-//
-// baidu.lang.inherits(myClass, baidu.lang.Class);
-// // 通过继承baidu.lang.Class来获取dispatchEvent方法
-//
-// var obj = new myClass();
-// var num = 0;
-//
-// obj.onMyEvent = function(e) {
-// if (e && e.a && e.a == "a")
-// num = 1;
-// else if (e && e.b && e.b == "b")
-// num = 2;
-// else
-// num = 3;
-// }
-//
-// obj.dispatchEvent("onMyEvent", {
-// "a" : "a"
-// });
-// value_of(num).should_be(1);
-// obj.dispatchEvent("onMyEvent", {
-// "b" : "b"
-// });
-// value_of(num).should_be(2);
-// obj.dispatchEvent("onMyEvent");
-// value_of(num).should_be(3);
-//
-// obj.addEventListener("onMyEvent", function(e) {
-// if (e && e.a && e.a == "a")
-// num = 1;
-// else if (e && e.b && e.b == "b")
-// num = 2;
-// else
-// num = 3;
-// });
-//
-// obj.dispatchEvent("onMyEvent", {
-// "a" : "a"
-// });
-// value_of(num).should_be(1);
-// obj.dispatchEvent("onMyEvent", {
-// "b" : "b"
-// });
-// value_of(num).should_be(2);
-// obj.dispatchEvent("onMyEvent");
-// value_of(num).should_be(3);
-//
-// obj.dispatchEvent("onMyEvent", {
-// "a" : "b",
-// "b" : "c"
-// });
-// value_of(num).should_be(3);
-//			
-//
-// obj.dispatchEvent("onMyEvent", void(0));
-// value_of(num).should_be(3);
-//			
-// obj.dispatchEvent("onMyEvent", null);
-// value_of(num).should_be(3);
-// }
-// });
-//
-// describe('baidu.lang.Event constructor test', {
-// 'change different event type and event target' : function() {
-// resetTag();
-// Otest = new myDom('dom1');
-// Otest.onTestEvent = handler1;
-//
-// Otest.dispatchEvent(new baidu.lang.Event('onTestEvent',
-// Otest.domElement));
-//
-// value_of(Htag1).should_be(1);
-// value_of(eventTarget.id).should_be('dom1');
-// value_of(eventType).should_be('onTestEvent');
-// resetTag();
-//
-// Otest.onmyEvent = handler2;
-// Otest.dispatchEvent(new baidu.lang.Event('onmyEvent', document
-// .getElementById('dom2')));
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(1);
-// value_of(eventTarget.id).should_be('dom2');
-// value_of(eventType).should_be('onmyEvent');
-// resetTag();
-//
-// Otest.addEventListener('onLast', handler3);
-// Otest.dispatchEvent(new baidu.lang.Event('onLast', document
-// .getElementById('dom4')));
-//
-// value_of(Htag1).should_be(0);
-// value_of(Htag2).should_be(0);
-// value_of(Htag3).should_be(1);
-// value_of(eventTarget.id).should_be('dom4');
-// value_of(eventType).should_be('onLast');
-// resetTag();
-//
-// Otest.dispose();
-// Otest = null;
-// }
-// });
-// describe('dispatchEvent时候传入字符串做为事件名', {
-// 'dispatchEvent时候传入字符串做为事件名' : function() {
-// resetTag();
-// Otest = new myDom('dom1');
-// Otest.onTestEvent = handler1;
-//
-// Otest.dispatchEvent('onTestEvent');
-//
-// value_of(Htag1).should_be(1);
-// value_of(eventType).should_be('onTestEvent');
-// resetTag();
-// }
-// });
+
+///import pack.baidu.lang.Class;
+///import pack.baidu.lang.guid;
+///import pack.baidu.lang.isString;
+
+/**
+ * 自定义的事件对象。
+ * @class
+ * @name 	baidu.lang.Event
+ * @grammar baidu.lang.Event(type[, target])
+ * @param 	{string} type	 事件类型名称。为了方便区分事件和一个普通的方法，事件类型名称必须以"on"(小写)开头。
+ * @param 	{Object} [target]触发事件的对象
+ * @meta standard
+ * @remark 引入该模块，会自动为Class引入3个事件扩展方法：addEventListener、removeEventListener和dispatchEvent。
+ * @meta standard
+ * @see baidu.lang.Class
+ */
+baidu.lang.Event = function (type, target) {
+    this.type = type;
+    this.returnValue = true;
+    this.target = target || null;
+    this.currentTarget = null;
+};
+ 
+/**
+ * 派发自定义事件，使得绑定到自定义事件上面的函数都会被执行。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+ * @grammar obj.dispatchEvent(event, options)
+ * @param {baidu.lang.Event|String} event 	Event对象，或事件名称(1.1.1起支持)
+ * @param {Object} 					options 扩展参数,所含属性键值会扩展到Event对象上(1.2起支持)
+ * @remark 处理会调用通过addEventListenr绑定的自定义事件回调函数之外，还会调用直接绑定到对象上面的自定义事件。例如：<br>
+myobj.onMyEvent = function(){}<br>
+myobj.addEventListener("onMyEvent", function(){});
+ */
+baidu.lang.Class.prototype.fire =
+baidu.lang.Class.prototype.dispatchEvent = function (event, options) {
+    baidu.lang.isString(event) && (event = new baidu.lang.Event(event));
+
+    !this.__listeners && (this.__listeners = {});
+
+    // 20100603 添加本方法的第二个参数，将 options extend到event中去传递
+    options = options || {};
+    for (var i in options) {
+        event[i] = options[i];
+    }
+
+    var i, n, me = this, t = me.__listeners, p = event.type;
+    event.target = event.target || (event.currentTarget = me);
+
+    // 支持非 on 开头的事件名
+    p.indexOf("on") && (p = "on" + p);
+
+    typeof me[p] == "function" && me[p].apply(me, arguments);
+
+    if (typeof t[p] == "object") {
+        for (i=0, n=t[p].length; i<n; i++) {
+            t[p][i] && t[p][i].apply(me, arguments);
+        }
+    }
+    return event.returnValue;
+};
+
+/**
+ * 注册对象的事件监听器。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+ * @grammar obj.addEventListener(type, handler[, key])
+ * @param   {string}   type         自定义事件的名称
+ * @param   {Function} handler      自定义事件被触发时应该调用的回调函数
+ * @return  {Function}              将用户注入的监听函数返回，以便移除事件监听，特别适用于匿名函数。
+ * @remark  事件类型区分大小写。如果自定义事件名称不是以小写"on"开头，该方法会给它加上"on"再进行判断，即"click"和"onclick"会被认为是同一种事件。 
+ */
+baidu.lang.Class.prototype.on =
+baidu.lang.Class.prototype.addEventListener = function (type, handler, key) {
+    if (typeof handler != "function") {
+        return;
+    }
+
+    !this.__listeners && (this.__listeners = {});
+
+    var i, t = this.__listeners;
+
+    type.indexOf("on") && (type = "on" + type);
+
+    typeof t[type] != "object" && (t[type] = []);
+
+    // 避免函数重复注册
+    for (i = t[type].length - 1; i >= 0; i--) {
+        if (t[type][i] === handler) return handler;
+    };
+
+    t[type].push(handler);
+
+    // [TODO delete 2013] 2011.12.19 兼容老版本，2013删除此行
+    key && typeof key == "string" && (t[type][key] = handler);
+
+    return handler;
+};
+
+//  2011.12.19  meizz   很悲剧，第三个参数 key 还需要支持一段时间，以兼容老版本脚本
+//  2011.11.24  meizz   事件添加监听方法 addEventListener 移除第三个参数 key，添加返回值 handler
+//  2011.11.23  meizz   事件handler的存储对象由json改成array，以保证注册函数的执行顺序
+//  2011.11.22  meizz   将 removeEventListener 方法分拆到 baidu.lang.Class.removeEventListener 中，以节约主程序代码

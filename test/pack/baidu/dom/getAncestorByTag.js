@@ -1,36 +1,35 @@
-module("baidu.dom.getAncestorByTag")
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/dom/getAncestorByTag.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/02
+ */
 
-test("Element or id",function(){
-	expect(2);
-	var div = document.createElement('div');
-	var a = document.createElement('div');
-	var div1 = document.createElement('div');
-	var img = document.createElement('img');
-	document.body.appendChild(div);
-	div.appendChild(div1);
-	div.appendChild(img);
-	div1.appendChild(a);
-	a.id = "a_id";
-	equal(baidu.dom.getAncestorByTag(a,'div'),div1,"get nearest ancestor by tag");
-	equal(baidu.dom.getAncestorByTag('a_id','div'),div1,"get by id"); 
-	document.body.removeChild(div);
-})
+///import pack.baidu.dom.g;
 
+/**
+ * 获取目标元素指定标签的最近的祖先元素
+ * @name baidu.dom.getAncestorByTag
+ * @function
+ * @grammar baidu.dom.getAncestorByTag(element, tagName)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @param {string} tagName 祖先元素的标签名
+ * @see baidu.dom.getAncestorBy,baidu.dom.getAncestorByClass
+ *             
+ * @returns {HTMLElement|null} 指定标签的最近的祖先元素，查找不到时返回null
+ */
+baidu.dom.getAncestorByTag = function (element, tagName) {
+    element = baidu.dom.g(element);
+    tagName = tagName.toUpperCase();
 
-test("html or body", function() {
-	expect(3);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	equal(baidu.dom.getAncestorByTag(document.body,'html'),document.documentElement,'get html ancestor');
-	equal(baidu.dom.getAncestorByTag(div,'body'),document.body,'get body ancestor');
-	equal(baidu.dom.getAncestorByTag(div,'html'),document.documentElement,'get html ancestor of div');
-	document.body.removeChild(div);
-})
+    while ((element = element.parentNode) && element.nodeType == 1) {
+        if (element.tagName == tagName) {
+            return element;
+        }
+    }
 
-
-test("no ancestor",function(){
-	
-	var div = document.createElement('div');
-	equal(baidu.dom.getAncestorByTag(div,'body'),null,"no ancestor");
-})
-
+    return null;
+};

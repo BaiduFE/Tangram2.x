@@ -1,231 +1,112 @@
-module('baidu.ajax.form');
-function createForm() {
-	var div, form, text1, text2, hid, cb1, cb2, rb1, rb2, pass, textArea, sel, selmul, button;
-	div = document.createElement('div');
-	div.id = 'test_div';
-	form = document.createElement('form');
-	form.id = 'test_form';
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/ajax/form.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/02
+ */
 
-	text1 = document.createElement('input');
-	text2 = document.createElement('input');
-	hid = document.createElement('input');
-	rb1 = document.createElement('input');
-	rb2 = document.createElement('input');
-	cb1 = document.createElement('input');
-	cb2 = document.createElement('input');
-	pass = document.createElement('input');
-	textArea = document.createElement('textarea');
-	sel = document.createElement('select');
-	selmul = document.createElement('select');
-	button = document.createElement('button');
+///import pack.baidu.ajax;
+///import pack.baidu.ajax.request;
+///import pack.baidu.url.escapeSymbol;
 
-	div.appendChild(form);
-	document.body.appendChild(div);
-
-	text1.type = "text";
-	text1.disabled = "disabled";
-	text1.value = "disable";
-
-	text2.type = "text";
-	text2.value = "param&1";
-	text2.name = "param1";
-
-	hid.type = "hidden";
-	hid.name = "param2";
-	hid.value = "param2";
-
-	form.appendChild(text1);
-	form.appendChild(text2);
-	form.appendChild(hid);
-
-	rb1.type = "radio";
-	rb1.value = "rb1";
-	rb1.name = "rb";
-	rb2.type = "radio";
-	rb2.value = "rb2";
-	rb2.name = "rb";
-	cb1.name = "cb";
-	cb1.type = "checkbox";
-	cb1.value = "cb1";
-	cb2.name = "cb";
-	cb2.type = "checkbox";
-	cb2.value = "cb2";
-
-	form.appendChild(cb1);
-	form.appendChild(cb2);
-	form.appendChild(rb1);
-	form.appendChild(rb2);
-
-	rb2.checked = true;
-	cb1.checked = true;
-
-	pass.type = "password";
-	pass.value = "pwd";
-	pass.name = "pwd";
-
-	textArea.name = "ta";
-	textArea.value = "textarea";
-
-	sel.name = "sel";
-	sel.options[sel.options.length] = new Option('1', '1');
-	sel.options[sel.options.length] = new Option('2', '2');
-	sel.options[sel.options.length] = new Option('3', '3');
-	sel.options[2].selected = "selected";
-
-	selmul.name = "selmul";
-	selmul.multiple = "multiple";
-	selmul.options[selmul.options.length] = new Option('1', '1');
-	selmul.options[selmul.options.length] = new Option('2', '2');
-	selmul.options[selmul.options.length] = new Option('3', '3');
-	selmul.options[selmul.options.length] = new Option('4', '4');
-	selmul.options[0].selected = "selected";
-	selmul.options[1].selected = "selected";
-	selmul.options[2].selected = "selected";
-
-	button.id = "sub";
-	button.value = "提交";
-
-	form.appendChild(pass);
-	form.appendChild(textArea);
-	form.appendChild(sel);
-	form.appendChild(selmul);
-	form.appendChild(button);
-	return form;
-}
-
-function check(method, sync, ajax_options, result) {
-	var f = createForm();
-	f.action = (upath || '') + 'form.php';
-	f.method = method || 'get';
-	var result = result
-			|| ('param1=param&1&param2=param2&cb=cb1&'
-					+ 'rb=rb2&pwd=pwd&ta=textarea&sel=3&selmul=3');
-	!sync && QUnit.stop();
-
-	var options = {
-		onsuccess : function(xhr, text) {
-			equals(text, result, 'check result');
-			$('div#test_div').remove();
-			!sync && QUnit.start();
-		},
-		onfailure : function(xhr) {
-			ok(false, 'failure : ' + xhr.status);
-			!sync && QUnit.start();
-		}
-	};
-	if (typeof sync !== 'undefine')
-		options.async = !sync;
-
-	if (ajax_options) {
-		$.each(ajax_options, function(i, o) {
-			options[i] = o;
-		});
-	}
-	baidu.ajax.form(f, options);
-}
-
-test("get", function() {
-	check();
-});
-
-test("post", function() {
-	check('post');
-});
-
-test("get sync", function() {
-	check(0, true);
-});
-
-test("post sync", function() {
-	check('post', true);
-});
-
-test("get async options", function() {
-	var options = {
-		headers : "text/xml",
-		username : "tester",
-		password : '123',
-		onbeforerequest : function(xhr) {
-			ok(true, "onbeforerequest is called");
-			// start();
-		}
-	};
-	check(0, false, options);
-});
-
-test("get sync options", function() {
-
-	var options = {
-		headers : "text/xml",
-		username : "tester",
-		password : '123',
-		onbeforerequest : function(xhr) {
-			ok(true, "onbeforerequest is called");
-		}
-	};
-	check(0, true, options);
-});
-
-test("post async options", function() {
-	var options = {
-		headers : "text/xml",
-		username : "tester",
-		password : '123',
-		onbeforerequest : function(xhr) {
-			ok(true, "onbeforerequest is called");
-		}
-	};
-	check('post', false, options);
-});
-
-test("post sync options", function() {
-	var options = {
-		headers : "text/xml",
-		username : "tester",
-		password : '123',
-		onbeforerequest : function(xhr) {
-			ok(true, "onbeforerequest is called");
-		}
-	};
-	check('post', true, options);
-});
-
-test("get async replacer", function() {
-	var options = {
-		replacer : function(value, key) {
-			return 0;
-		}
-	};
-	var result = 'param1=0&param2=0&cb=0&rb=0&pwd=0&ta=0&sel=0&selmul=0';
-	check(0, false, options, result);
-});
-
-test("get sync options", function() {
-	var options = {
-		replacer : function(value, key) {
-			return 0;
-		}
-	};
-	var result = 'param1=0&param2=0&cb=0&rb=0&pwd=0&ta=0&sel=0&selmul=0';
-	check(0, true, options, result);
-});
-
-test("post async options", function() {
-	var options = {
-		replacer : function(value, key) {
-			return 0;
-		}
-	};
-	var result = 'param1=0&param2=0&cb=0&rb=0&pwd=0&ta=0&sel=0&selmul=0';
-	check('post', false, options, result);
-});
-
-test("post sync options", function() {
-	var options = {
-		replacer : function(value, key) {
-			return 0;
-		}
-	};
-	var result = 'param1=0&param2=0&cb=0&rb=0&pwd=0&ta=0&sel=0&selmul=0';
-	check('post', true, options, result);
-});
+/**
+ * 将一个表单用ajax方式提交
+ * @name baidu.ajax.form
+ * @function
+ * @grammar baidu.ajax.form(form[, options])
+ * @param {HTMLFormElement} form             需要提交的表单元素
+ * @param {Object} 	[options] 					发送请求的选项参数
+ * @config {Boolean} [async] 			是否异步请求。默认为true（异步）
+ * @config {String} 	[username] 			用户名
+ * @config {String} 	[password] 			密码
+ * @config {Object} 	[headers] 			要设置的http request header
+ * @config {Function} [replacer] 			对参数值特殊处理的函数,replacer(string value, string key)
+ * @config {Function} [onbeforerequest] 	发送请求之前触发，function(XMLHttpRequest xhr)。
+ * @config {Function} [onsuccess] 		请求成功时触发，function(XMLHttpRequest xhr, string responseText)。
+ * @config {Function} [onfailure] 		请求失败时触发，function(XMLHttpRequest xhr)。
+ * @config {Function} [on{STATUS_CODE}] 	当请求为相应状态码时触发的事件，如on302、on404、on500，function(XMLHttpRequest xhr)。3XX的状态码浏览器无法获取，4xx的，可能因为未知问题导致获取失败。
+	
+ * @see baidu.ajax.request
+ *             
+ * @returns {XMLHttpRequest} 发送请求的XMLHttpRequest对象
+ */
+baidu.ajax.form = function (form, options) {
+    options = options || {};
+    var elements    = form.elements,
+        len         = elements.length,
+        method      = form.getAttribute('method'),
+        url         = form.getAttribute('action'),
+        replacer    = options.replacer || function (value, name) {
+            return value;
+        },
+        sendOptions = {},
+        data = [],
+        i, item, itemType, itemName, itemValue, 
+        opts, oi, oLen, oItem;
+        
+    /**
+     * 向缓冲区添加参数数据
+     * @private
+     */
+    function addData(name, value) {
+        data.push(name + '=' + value);
+    }
+    
+    // 复制发送参数选项对象
+    for (i in options) {
+        if (options.hasOwnProperty(i)) {
+            sendOptions[i] = options[i];
+        }
+    }
+    
+    for (i = 0; i < len; i++) {
+        item = elements[i];
+        itemName = item.name;
+        
+        // 处理：可用并包含表单name的表单项
+        if (!item.disabled && itemName) {
+            itemType = item.type;
+            itemValue = baidu.url.escapeSymbol(item.value);
+        
+            switch (itemType) {
+            // radio和checkbox被选中时，拼装queryString数据
+            case 'radio':
+            case 'checkbox':
+                if (!item.checked) {
+                    break;
+                }
+                
+            // 默认类型，拼装queryString数据
+            case 'textarea':
+            case 'text':
+            case 'password':
+            case 'hidden':
+            case 'select-one':
+                addData(itemName, replacer(itemValue, itemName));
+                break;
+                
+            // 多行选中select，拼装所有选中的数据
+            case 'select-multiple':
+                opts = item.options;
+                oLen = opts.length;
+                for (oi = 0; oi < oLen; oi++) {
+                    oItem = opts[oi];
+                    if (oItem.selected) {
+                        addData(itemName, replacer(oItem.value, itemName));
+                    }
+                }
+                break;
+            }
+        }
+    }
+    
+    // 完善发送请求的参数选项
+    sendOptions.data = data.join('&');
+    sendOptions.method = form.getAttribute('method') || 'GET';
+    
+    // 发送请求
+    return baidu.ajax.request(url, sendOptions);
+};

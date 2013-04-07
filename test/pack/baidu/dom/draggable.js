@@ -1,254 +1,106 @@
-module('baidu.dom.draggable');
+/*
+ * Tangram
+ * Copyright 2010 Baidu Inc. All rights reserved.
+ */
 
-var clear = function(element, dd, needstart) {
-	if (element)
-		$(element).remove();
-	if (dd && dd.dispose && typeof dd.dispose == 'function')
-		dd.dispose();
-	if (needstart)
-		start();
+///import pack.baidu.dom.g;
+///import pack.baidu.dom.drag;
+///import pack.baidu.dom.getStyle;
+///import pack.baidu.dom.setStyle;
+///import pack.baidu.event.on;
+///import pack.baidu.event.un;
+///import pack.baidu.event.preventDefault;
+///import pack.baidu.object.extend;
+
+///import pack.baidu.lang.isFunction;
+///import pack.baidu.lang.Class;
+
+
+/**
+ * 让一个DOM元素可拖拽
+ * @name baidu.dom.draggable
+ * @function
+ * @grammar baidu.dom.draggable(element[, options])
+ * @param  {string|HTMLElement}   element 		        元素或者元素的ID.
+ * @param  {Object} 		      [options] 			选项.
+ * @config {Array} 		          [range] 		        限制drag的拖拽范围，数组中必须包含四个值，分别是上、右、下、左边缘相对上方或左方的像素距离。默认无限制.
+ * @config {Number} 	          [interval] 	        拖曳行为的触发频度（时间：毫秒）.
+ * @config {Boolean} 	          [capture] 	        鼠标拖曳粘滞.
+ * @config {Object} 	          [mouseEvent] 	        键名为clientX和clientY的object，若不设置此项，默认会获取当前鼠标位置.
+ * @config {Function} 	          [onbeforedragstart]   drag开始前触发（即鼠标按下时）.
+ * @config {Function} 	          [ondragstart]         drag开始时触发.
+ * @config {Function} 	          [ondrag] 		        drag进行中触发.
+ * @config {Function} 	          [ondragend] 	        drag结束时触发.
+ * @config {HTMLElement}          [handler] 	        用于拖拽的手柄，比如dialog的title.
+ * @config {Function} 	          [toggle] 		        在每次ondrag的时候，会调用这个方法判断是否应该停止拖拽。如果此函数返回值为false，则停止拖拽.
+ * @version 1.2
+ * @remark    要拖拽的元素必须事先设定样式的postion值，如果postion为absloute，并且没有设定top和left，拖拽开始时，无法取得元素的top和left值，这时会从[0,0]点开始拖拽.
+ * @see baidu.dom.drag
+ * @returns {Draggable Instance} 拖拽实例，包含cancel方法，可以停止拖拽.
+ */
+
+baidu.dom.draggable = function(element, options) {
+    options = baidu.object.extend({toggle: function() {return true}}, options);
+    options.autoStop = true;
+    element = baidu.dom.g(element);
+    options.handler = options.handler || element;
+    var manager,
+        events = ['ondragstart', 'ondrag', 'ondragend'],
+        i = events.length - 1,
+        eventName,
+        dragSingle,
+        draggableSingle = {
+            dispose: function() {
+                dragSingle && dragSingle.stop();
+                baidu.event.un(options.handler, 'onmousedown', handlerMouseDown);
+                baidu.lang.Class.prototype.dispose.call(draggableSingle);
+            }
+        },
+        me = this;
+    //如果存在ddManager, 将事件转发到ddManager中
+    if (manager = baidu.dom.ddManager) {
+        for (; i >= 0; i--) {
+            eventName = events[i];
+            options[eventName] = (function(eventName) {
+                var fn = options[eventName];
+                return function() {
+                    baidu.lang.isFunction(fn) && fn.apply(me, arguments);
+                    manager.dispatchEvent(eventName, {DOM: element});
+                }
+            })(eventName);
+        }
+    }
+
+
+    // 拖曳只针对有 position 定位的元素
+    if (element) {
+        function handlerMouseDown(e) {
+            var event = options.mouseEvent = window.event || e;
+            options.mouseEvent = {clientX: event.clientX, clientY: event.clientY};
+            if (event.button > 1 //只支持鼠标左键拖拽; 左键代码: IE为1,W3C为0
+                // 可以通过配置项里的这个开关函数暂停或启用拖曳功能
+                || (baidu.lang.isFunction(options.toggle) && !options.toggle())) {
+                return;
+            }
+//            if (baidu.dom.getStyle(element, 'position') == 'static') {
+//                baidu.dom.setStyle(element, 'position', 'relative');
+//            }
+            if (baidu.lang.isFunction(options.onbeforedragstart)) {
+                options.onbeforedragstart(element);
+            }
+            dragSingle = baidu.dom.drag(element, options);
+            draggableSingle.stop = dragSingle.stop;
+            draggableSingle.update = dragSingle.update;
+            //防止ff下出现禁止拖拽的图标
+            baidu.event.preventDefault(event);
+        }
+
+        // 对拖曳的扳机元素监听 onmousedown 事件，以便进行拖曳行为
+        baidu.event.on(options.handler, 'onmousedown', handlerMouseDown);
+    }
+    return {
+        cancel: function() {
+            draggableSingle.dispose();
+        }
+    };
 };
-
-/* need move mouse before testing */
-test('check return value', function() {
-	stop();
-	expect(1);
-	ua.importsrc("baidu.dom.getPosition", function(){
-		var div = document.createElement('div');
-		document.body.appendChild(div);
-		var div1 = baidu.dom.draggable(div);
-		ok(baidu.lang.isFunction(div1.cancel), "check return function");
-		clear(div, div1);
-		start();
-	}, "baidu.dom.getPosition", "baidu.dom.drag");
-});
-
-test('drag,no options', function() {
-	stop();
-	expect(2);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	$(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-			'backgroundColor', 'red').css('width', '100px').css('height',
-			'100px');
-	var div1 = baidu.dom.draggable(div);// 注册onmousedown事件
-	ua.mousemove(div, {
-		clientX : 0,
-		clientY : 0
-	});
-	ua.mousedown(div, {
-		clientX : 0,
-		clientY : 0
-	});
-
-	var move = function(ele, x, y) {
-		if (x >= 100) {
-			ua.mouseup(ele);
-			equal(baidu.dom.getPosition(div).left, 100, "stop left");
-			equal(baidu.dom.getPosition(div).top, 50, "stop top");
-			clear(div, div1, true);
-		} else {
-			ua.mousemove(document, {
-				clientX : x + 10,
-				clientY : y + 5
-			});
-			setTimeout(function() {
-				move(ele, x + 10, y + 5);
-			}, 20);
-		}
-	};
-	move(div, 0, 0);
-});
-
-test('drag, static', function() {
-	stop();
-	expect(3);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	$(div).css('position', 'static').css('left', '0').css('top', '0').css(
-			'backgroundColor', 'red').css('width', '100px').css('height',
-			'100px');
-	var oleft = baidu.dom.getPosition(div).left;
-	var otop = baidu.dom.getPosition(div).top;
-	var div1 = baidu.dom.draggable(div);// 注册onmousedown事件
-	ua.mousemove(div, {
-		clientX : 0,
-		clientY : 0
-	});
-	ua.mousedown(div, {
-		clientX : 0,
-		clientY : 0
-	});
-
-	var move = function(ele, x, y) {
-		if (x >= 100) {
-			ua.mouseup(ele);
-			equal(baidu.dom.getPosition(div).left, oleft, "stop left, the ele is not dragged");
-			equal(baidu.dom.getPosition(div).top, otop, "stop top, the ele is not dragged");
-			equal($(div).css('position'), 'static', "The ele is still static");
-			clear(div, div1, true);
-		} else {
-			ua.mousemove(document, {
-				clientX : x + 10,
-				clientY : y + 5
-			});
-			setTimeout(function() {
-				move(ele, x + 10, y + 5);
-			}, 20);
-		}
-	};
-	move(div, 0, 0);
-});
-
-test('options', function() {
-	stop();
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_test';
-
-	$(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-			'height', '100px').css('width', '100px').css('backgroundColor',
-			'red');
-	var div1 = baidu.dom.draggable('div_test', {
-		ondragstart : function(ele, op) {
-			equal(baidu.dom.getPosition(div).left, 0, 'start left');
-			equal(baidu.dom.getPosition(div).top, 0, 'start top');
-		},
-		ondrag : function(ele, op) {
-			ok(true, 'drag');
-		},
-		ondragend : function(ele, op) {
-			setTimeout(function() {
-				equal(parseInt($(ele).css('left')), 30, 'stop left');
-				equal(parseInt($(ele).css('top')), 20, 'stop top');
-				clear(div, div1, true);
-			}, 1);
-		},
-		range : [ 20, 130, 120, 30 ]
-	});
-	ua.mousemove(document, {
-		clientX : 0,
-		clientY : 0
-	});
-
-	ua.mousedown(div, {
-		clientX : 0,
-		clientY : 0
-	});
-	setTimeout(function() {
-		ua.mousemove(document, {
-			clientX : 50,
-			clientY : 50
-		});
-	}, 50);
-	setTimeout(function() {
-		ua.mouseup(div);
-	}, 100);
-});
-
-test('undraggble', function() {
-	stop();
-	var check = function() {
-		var div = document.body.appendChild(document.createElement("div"));
-		$(div).css('width', 10).css('height', 10).css('backgroundColor', 'red')
-				.css('position', 'absolute').css('top', 0).css('left', 0);
-		var div1 = baidu.dom.draggable(div, {
-			ondragstart : function() {
-				ok(false, '方法不应该被触发');
-			},
-			ondrag : function() {
-				ok(false, '方法不应该被触发');
-			},
-			ondragend : function() {
-				ok(false, '方法不应该被触发');
-			}
-		});
-		div1.cancel();
-		setTimeout(function() {
-			ua.dragto(div, {
-				startX : 2,
-				startY : 2,
-				endX : 12,
-				endY : 12,
-				callback : function() {
-					equals(baidu.dom.getPosition(div).left, 0);
-					equals(baidu.dom.getPosition(div).top, 0);
-					clear(div, div1, true);
-				}
-			});
-		}, 50);
-	};
-
-	ua.importsrc('baidu.dom.ddManager', check, 'baidu.dom.ddManager',
-			'baidu.dom.draggable');
-});
-
-test('ddManager', function() {
-	stop();
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	$(div).css('position', 'absolute').css('left', '0').css('top', '0').css(
-			'backgroundColor', 'red').css('width', '100px').css('height',
-			'100px');
-	var div1 = baidu.dom.draggable(div);
-
-	var manager = baidu.dom.ddManager;
-	dragstart = function() {
-		ok(true, "dragstart from manager");
-	};
-	dragging = function() {
-		ok(true, "ondrag from manager");
-	};
-	dragend = function() {
-		ok(true, "ondragend from manager");
-	};
-	manager.addEventListener("ondragstart", dragstart);
-	manager.addEventListener("ondrag", dragging);
-	manager.addEventListener("ondragend", dragend);
-
-	ua.mousemove(document, {
-		clientX : 0,
-		clientY : 0
-	});
-	ua.mousedown(div, {
-		clientX : 0,
-		clientY : 0
-	});
-	setTimeout(function() {
-		ua.mousemove(div, {
-			clientX : 100,
-			clientY : 50
-		});
-	}, 20);
-	setTimeout(function() {
-		ua.mouseup(div);
-		clear(div, div1, true);
-	}, 60);
-});
-
-//
-//// 测试非static元素是否可以正确移动，为便于定位，元素追加至某有特殊定位的父元素中
-//test('element none static', function() {
-//	var div = document.body.appendChild(document.createElement('div'));
-//	div.id = 'test_div1';
-//	$(div).css('position', 'fixed').css('width', 20).css('height', 20).css(
-//			'backgroundColor', 'red');
-//	var div1 = baidu.dom.draggable(div);
-////	equals($(div).css('position'), 'relative',
-////			'position应该更新为relative');
-//	/* 尝试拖动确认可以正确工作 */
-//	stop();
-//	setTimeout(function() {
-//		ua.dragto(div, {// 鼠标从2移动到12，元素应该也同步移动10
-//			startX : 2,
-//			startY : 2,
-//			endX : 12,
-//			endY : 12,
-//			callback : function() {
-//				equals($(div).css('position'), 'fixed');
-////				equals(parseInt($(div).css('top')), 10);
-////				clear(div, div1, true);
-//			}
-//		});
-//	}, 50);
-//});

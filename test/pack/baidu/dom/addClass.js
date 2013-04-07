@@ -1,39 +1,49 @@
-module("baidu.dom.addClass");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All right reserved.
+ * 
+ * path: baidu/dom/addClass.js
+ * author: allstar, erik
+ * version: 1.1.0
+ * date: 2009/12/2
+ */
 
-test("给没有className的元素添加", function() {
-	expect(7);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	equal(div.className, "", "div no class");
-	baidu.dom.addClass(div, "div_class1");
-	equal((div.className), "div_class1", "div class1");
-	var addDiv = baidu.dom.addClass(div, "div_class2 div_class3");// 添加多个class
-	equal((div.className), "div_class1 div_class2 div_class3");
-	equal((div), addDiv, "equal div");// 返回值
-	var scDiv = baidu.addClass(div, "div_class4");// 快捷方式
-	equal((div.className), "div_class1 div_class2 div_class3 div_class4");
-	equal(scDiv, div, "equal div using shortcut");
-	// console.log("hi");
-	baidu.addClass(div, "div_class1 div_class4");// 重名
-	// console.log("hi");
-	equal((div.className), "div_class1 div_class2 div_class3 div_class4");
-	document.body.removeChild(div);
-});
+///import pack.baidu.dom.g;
+///import pack.baidu.string.trim;
 
-test("给有className的元素添加", function() {
-	expect(5);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.className = "orig_class";
-	equal(div.className, "orig_class", "original class");
-	baidu.dom.addClass(div, "class1");
-	equal(div.className, "orig_class class1", "add new class");// 添加1个class
-	var scDiv = baidu.dom.addClass(div, "class2 class3");
-	equal((div.className), "orig_class class1 class2 class3",
-			"add 2 new classes");// 添加2个class
-	equal(scDiv, div, "equal div using short cut");
-	baidu.addClass(div, "orig_class class2 class3");// 添加3个class orig_class
-													// class2 class3
-	equal((div.className), "orig_class class1 class2 class3");
-	document.body.removeChild(div);
-});
+/**
+ * 为目标元素添加className
+ * @name baidu.dom.addClass
+ * @function
+ * @grammar baidu.dom.addClass(element, className)
+ * @param {HTMLElement|string} element 目标元素或目标元素的id
+ * @param {string} className 要添加的className，允许同时添加多个class，中间使用空白符分隔
+ * @remark
+ * 使用者应保证提供的className合法性，不应包含不合法字符，className合法字符参考：http://www.w3.org/TR/CSS2/syndata.html。
+ * @shortcut addClass
+ * @meta standard
+ * @see baidu.dom.removeClass
+ * 	
+ * 	            
+ * @returns {HTMLElement} 目标元素
+ */
+baidu.dom.addClass = function (element, className) {
+    element = baidu.dom.g(element);
+    var classArray = className.split(/\s+/),
+        result = element.className,
+        classMatch = " " + result + " ",
+        i = 0,
+        l = classArray.length;
+
+    for (; i < l; i++){
+         if ( classMatch.indexOf( " " + classArray[i] + " " ) < 0 ) {
+             result += (result ? ' ' : '') + classArray[i];
+         }
+    }
+
+    element.className = result;
+    return element;
+};
+
+// 声明快捷方法
+baidu.addClass = baidu.dom.addClass;

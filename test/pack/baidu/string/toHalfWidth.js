@@ -1,99 +1,126 @@
-module("baidu.String.toHalfWidth测试");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/string/toHalfWidth.js
+ * author: erik
+ * version: 1.1.0
+ * date: 2009/11/15
+ */
 
-test("输入为纯全角字符串", function(){
-	strin = "ｑｕａｎ　ＪＩＡＯ％８６５＠　？＄";
-	strout = "quan JIAO%865@ ?$";
-	equals(baidu.string.toHalfWidth(strin), strout);
-	
-	//遍历所有的全角字符
-	strin = "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０｀";
-	strout = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`";
-	equals(baidu.string.toHalfWidth(strin), strout);
-	
-	strin = "～！＠＃＄％＾＆＊（）－＿＝＋［］｛｝＼｜；：＇＂，．＜＞／？";
-	strout = "~!@#$%^&*()-_=+[]{}\\|;:'\",.<>/?";
-	equals(baidu.string.toHalfWidth(strin), strout);
-}); // 1
+///import pack.baidu.string;
+/**
+ * 将目标字符串中常见全角字符转换成半角字符
+ * @name baidu.string.toHalfWidth
+ * @function
+ * @grammar baidu.string.toHalfWidth(source)
+ * @param {string} source 目标字符串
+ * @remark
+ * 
+将全角的字符转成半角, 将“&amp;#xFF01;”至“&amp;#xFF5E;”范围的全角转成“&amp;#33;”至“&amp;#126;”, 还包括全角空格包括常见的全角数字/空格/字母, 用于需要同时支持全半角的转换, 具体转换列表如下("空格"未列出)：<br><br>
 
-test("输入为全角和半角混合串", function(){
-	strin = "strｉｎｇ　ＣＬＡSS@baidu{．｝ｃｏｍ＃";
-	strout = "string CLASS@baidu{.}com#";
-	equals(baidu.string.toHalfWidth(strin), strout);
-}); // 2
+！ => !<br>
+＂ => "<br>
+＃ => #<br>
+＄ => $<br>
+％ => %<br>
+＆ => &<br>
+＇ => '<br>
+（ => (<br>
+） => )<br>
+＊ => *<br>
+＋ => +<br>
+， => ,<br>
+－ => -<br>
+． => .<br>
+／ => /<br>
+０ => 0<br>
+１ => 1<br>
+２ => 2<br>
+３ => 3<br>
+４ => 4<br>
+５ => 5<br>
+６ => 6<br>
+７ => 7<br>
+８ => 8<br>
+９ => 9<br>
+： => :<br>
+； => ;<br>
+＜ => <<br>
+＝ => =<br>
+＞ => ><br>
+？ => ?<br>
+＠ => @<br>
+Ａ => A<br>
+Ｂ => B<br>
+Ｃ => C<br>
+Ｄ => D<br>
+Ｅ => E<br>
+Ｆ => F<br>
+Ｇ => G<br>
+Ｈ => H<br>
+Ｉ => I<br>
+Ｊ => J<br>
+Ｋ => K<br>
+Ｌ => L<br>
+Ｍ => M<br>
+Ｎ => N<br>
+Ｏ => O<br>
+Ｐ => P<br>
+Ｑ => Q<br>
+Ｒ => R<br>
+Ｓ => S<br>
+Ｔ => T<br>
+Ｕ => U<br>
+Ｖ => V<br>
+Ｗ => W<br>
+Ｘ => X<br>
+Ｙ => Y<br>
+Ｚ => Z<br>
+［ => [<br>
+＼ => \<br>
+］ => ]<br>
+＾ => ^<br>
+＿ => _<br>
+｀ => `<br>
+ａ => a<br>
+ｂ => b<br>
+ｃ => c<br>
+ｄ => d<br>
+ｅ => e<br>
+ｆ => f<br>
+ｇ => g<br>
+ｈ => h<br>
+ｉ => i<br>
+ｊ => j<br>
+ｋ => k<br>
+ｌ => l<br>
+ｍ => m<br>
+ｎ => n<br>
+ｏ => o<br>
+ｐ => p<br>
+ｑ => q<br>
+ｒ => r<br>
+ｓ => s<br>
+ｔ => t<br>
+ｕ => u<br>
+ｖ => v<br>
+ｗ => w<br>
+ｘ => x<br>
+ｙ => y<br>
+ｚ => z<br>
+｛ => {<br>
+｜ => |<br>
+｝ => }<br>
+～ => ~<br>
+		
+ *             
+ * @returns {string} 转换后的字符串
+ */
 
-test("输入空串", function(){
-	equals(baidu.string.toHalfWidth(""), "");
-}); // 3
-
-test("输入串包括中文和全角字符", function(){
-	strin = "中－国Ｌｏ３7８ｖｅ百～度";
-	strout = "中-国Lo378ve百~度";
-	equals(baidu.string.toHalfWidth(strin), strout);
-}); // 4
-
-test("输入不包含全角的字符串", function(){
-	equals(baidu.string.toHalfWidth("normal en glish"), "normal en glish");
-	equals(baidu.string.toHalfWidth("正常字符 串 百度"), "正常字符 串 百度");
-	equals(baidu.string.toHalfWidth("百度 n o rmal"), "百度 n o rmal");
-}); // 5
-
-test("输入包含转义字符的字符串", function(){
-	equals(baidu.string.toHalfWidth("n\ten\\gli\nsh\s"), "n\ten\\gli\nsh\s");
-}); // 6
-
-test("异常case", function(){
-	var nullStr = null;
-	equals(baidu.string.toHalfWidth(nullStr), "null");
-	
-	var undefinedStr;
-	equals(baidu.string.toHalfWidth(undefinedStr), "undefined");
-});
-
-////toHalfWidth的测试
-//describe("baidu.String.toHalfWidth测试",{
-//    "输入为纯全角字符串":function (){
-//        strin = "ｑｕａｎ　ＪＩＡＯ％８６５＠　？＄";
-//        strout = "quan JIAO%865@ ?$";
-//        value_of(baidu.string.toHalfWidth(strin)).should_be(strout);
-//        //遍历所有的全角字符
-//        strin = "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０｀";
-//        strout = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`";
-//        value_of(baidu.string.toHalfWidth(strin)).should_be(strout);
-//        strin = "～！＠＃＄％＾＆＊（）－＿＝＋［］｛｝＼｜；：＇＂，．＜＞／？";
-//        strout = "~!@#$%^&*()-_=+[]{}\\|;:'\",.<>/?";
-//        value_of(baidu.string.toHalfWidth(strin)).should_be(strout);
-//    },
-//
-//    "输入为全角和半角混合串":function (){
-//        strin = "strｉｎｇ　ＣＬＡSS@baidu{．｝ｃｏｍ＃";
-//        strout = "string CLASS@baidu{.}com#";
-//        value_of(baidu.string.toHalfWidth(strin)).should_be(strout);
-//    },
-//
-//    "输入空串":function (){
-//        value_of(baidu.string.toHalfWidth("")).should_be("");
-//    },
-//
-//    "输入串包括中文和全角字符":function (){
-//        strin = "中－国Ｌｏ３7８ｖｅ百～度";
-//        strout = "中-国Lo378ve百~度";
-//        value_of(baidu.string.toHalfWidth(strin)).should_be(strout);
-//    },
-//
-//    "输入不包含全角的字符串":function (){
-//        value_of(baidu.string.toHalfWidth("normal en glish")).should_be("normal en glish");
-//        value_of(baidu.string.toHalfWidth("正常字符 串 百度")).should_be("正常字符 串 百度");
-//        value_of(baidu.string.toHalfWidth("百度 n o rmal")).should_be("百度 n o rmal");
-//    },
-//
-//    "输入包含转义字符的字符串":function (){
-//        value_of(baidu.string.toHalfWidth("n\ten\\gli\nsh\s")).should_be("n\ten\\gli\nsh\s");
-//    },
-//
-//    "异常case":function (){
-//        var nullStr = null;
-//        value_of(baidu.string.toHalfWidth(nullStr)).should_be("null");
-//        var undefinedStr;
-//        value_of(baidu.string.toHalfWidth(undefinedStr)).should_be("undefined");
-//    }
-//});
+baidu.string.toHalfWidth = function (source) {
+    return String(source).replace(/[\uFF01-\uFF5E]/g, 
+        function(c){
+            return String.fromCharCode(c.charCodeAt(0) - 65248);
+        }).replace(/\u3000/g," ");
+};

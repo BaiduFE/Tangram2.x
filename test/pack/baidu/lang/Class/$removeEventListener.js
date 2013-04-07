@@ -1,113 +1,56 @@
-module("baidu.lang.Class.$removeEventListener");
+/*
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/lang/Class/removeEventListener.js
+ * author: meizz
+ * version: 1.6.0
+ * date: 2011/11/23
+ * modify: 2011/11/23
+ */
 
-(function() {
-	
-	/* 引入_inherits */
-	_inherits = function(subClass, superClass, className) {
-		var key, proto, selfProps = subClass.prototype, clazz = new Function();
+///import pack.baidu.lang.Class;
 
-		clazz.prototype = superClass.prototype;
-		proto = subClass.prototype = new clazz();
-		for (key in selfProps) {
-			proto[key] = selfProps[key];
-		}
-		subClass.prototype.constructor = subClass;
-		subClass.superClass = superClass.prototype;
+ 
+/**
+ * 移除对象的事件监听器。引入baidu.lang.Event后，Class的子类实例才会获得该方法。
+ * 事件移除操作是一个不常用的方法，如果你有需求再import调入，可以节约代码
+ * 可能通过参数走不同的分支：不传handler会移除某类事件监听；如果连type都不传那就移除当前实例的全部事件监听
+ *
+ * @grammar obj.removeEventListener(type, handler)
+ * @param {string}   type     事件类型
+ * @param {Function} handler  要移除的事件监听函数或者监听函数的key
+ * @remark 	如果第二个参数handler没有被绑定到对应的自定义事件中，什么也不做。
+ */
+baidu.lang.Class.prototype.un =
+baidu.lang.Class.prototype.removeEventListener = function (type, handler) {
+    var i,
+        t = this.__listeners;
+    if (!t) return;
 
-		// 类名标识，兼容Class的toString，基本没用
-		if ("string" == typeof className) {
-			proto._className = className;
-		}
-	};
-})();
+    // remove all event listener
+    if (typeof type == "undefined") {
+        for (i in t) {
+            delete t[i];
+        }
+        return;
+    }
 
-test("removeEventListener", function() {
-	stop();
-	ua.importsrc("baidu.lang.Event", function(){
-		function myClass() {
-			this.name = "myclass";
-		}
+    type.indexOf("on") && (type = "on" + type);
 
-		_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-		   expect(2);
-			var obj = new myClass();
-			function listner(){ok(true, "listner is added");}
-			
-			var myEventWithoutOn = new (baidu.lang.Event)("onMyEvent", obj);
-			obj.addEventListener("onMyEvent",listner,'pointMyEvent');
-			obj.dispatchEvent(myEventWithoutOn);
-			obj.removeEventListener("onMyEvent",'pointMyEvent');
-			obj.dispatchEvent(myEventWithoutOn);
-			ok(true,"listner is removed");
-			start();
-	}, "baidu.lang.Event", "baidu.lang.Class.$removeEventListener");
-});
+    // 移除某类事件监听
+    if (typeof handler == "undefined") {
+        delete t[type];
+    } else if (t[type]) {
+        // [TODO delete 2013] 支持按 key 删除注册的函数
+        typeof handler=="string" && (handler=t[type][handler]) && delete t[type][handler];
 
-test("removeEventListener - no key", function() {
-	function myClass() {
-		this.name = "myclass";
-	}
+        for (i = t[type].length - 1; i >= 0; i--) {
+            if (t[type][i] === handler) {
+                t[type].splice(i, 1);
+            }
+        }
+    }
+};
 
-	_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-	   expect(2);
-		var obj = new myClass();
-		function listner(){
-			ok(true, "listner is added");
-		}
-		
-		var myEventWithoutOn = new (baidu.lang.Event)("onMyEvent", obj);
-		obj.addEventListener("onMyEvent", listner);
-		obj.dispatchEvent(myEventWithoutOn);
-		obj.removeEventListener("onMyEvent", listner);
-		obj.dispatchEvent(myEventWithoutOn);
-		ok(true, "listner is removed");
-
-	});
-
-test("removeEventListener - no handler", function () {  // 2011-2-26, 无handler参数时移除所有事件
-	function myClass() {
-		this.name = "myclass";
-	}
-
-	_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-	   expect(5);
-		var obj = new myClass();
-		function listner1(){ok(true, "listner1 is added");}
-		function listner2(){ok(true, "listner2 is added");}
-
-		var myEventWithoutOn = new baidu.lang.Event("onMyEvent", obj);
-		obj.addEventListener("onMyEvent", listner1);
-		obj.addEventListener("onMyEvent", listner2);
-		obj.dispatchEvent(myEventWithoutOn);
-		obj.removeEventListener("onMyEvent", function(){});
-		obj.dispatchEvent(myEventWithoutOn);
-		obj.removeEventListener("onMyEvent");
-		obj.dispatchEvent(myEventWithoutOn);
-		ok(true, "listner is removed");   
-});
-
-test("removeEventListener - default params", function () {
-	function myClass() {
-		this.name = "myclass";
-	}
-
-	_inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
-	   expect(4);
-		var obj = new myClass();
-		function listner1(){ok(true, "listner1 is added");}
-		function listner2(){ok(true, "listner2 is added");}
-
-		var myEventWithoutOn = new baidu.lang.Event("onMyEvent", obj);
-		var yourEventWithoutOn = new baidu.lang.Event("YourEvent", obj);
-		obj.addEventListener("onMyEvent", listner1);
-		obj.addEventListener("onMyEvent", listner2);
-		obj.addEventListener("YourEvent", listner1);
-		obj.dispatchEvent(myEventWithoutOn);
-		obj.dispatchEvent(yourEventWithoutOn);  
-		obj.removeEventListener("onMyEvent");
-		obj.dispatchEvent(myEventWithoutOn);  
-		obj.dispatchEvent(yourEventWithoutOn);  
-		obj.removeEventListener();
-		obj.dispatchEvent(myEventWithoutOn);  
-		obj.dispatchEvent(yourEventWithoutOn);  
-});
+// 2011.12.19 meizz 为兼容老版本的按 key 删除，添加了一行代码

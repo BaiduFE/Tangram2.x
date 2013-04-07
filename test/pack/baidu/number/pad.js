@@ -1,95 +1,33 @@
-module("baidu.number.pad测试");
-
 /*
- * <li> n : number
- * <li> L : length of number
- * <li> r : baidu.number.pad(n, L)
+ * Tangram
+ * Copyright 2009 Baidu Inc. All rights reserved.
+ * 
+ * path: baidu/number/pad.js
+ * author: dron, erik, berg
+ * version: 1.1.0
+ * date: 20100412
  */
 
-test("pad函数输入数字和期望长度Length,输入number为整数", function(){
-	n = 315;
-    L = 5;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "00315");
-});
+///import pack.baidu.number;
 
-test("pad函数输入数字和期望长度Length,输入number为小数", function(){
-	n = 3.15;    
-    L = 7;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "0003.15");
-});
+/**
+ * 对目标数字进行0补齐处理
+ * @name baidu.number.pad
+ * @function
+ * @grammar baidu.number.pad(source, length)
+ * @param {number} source 需要处理的数字
+ * @param {number} length 需要输出的长度
+ *             
+ * @returns {string} 对目标数字进行0补齐处理后的结果
+ */
+baidu.number.pad = function (source, length) {
+    var pre = "",
+        negative = (source < 0),
+        string = String(Math.abs(source));
 
-test("pad函数输入数字和期望长度Length,输入Length小于number的长度", function(){
-	n = 315;    
-    L = 1;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "315");
-});
+    if (string.length < length) {
+        pre = (new Array(length - string.length + 1)).join('0');
+    }
 
-test("pad函数输入数字和期望长度Length,输入Length等于number的长度", function(){
-	n = 3.15;    
-    L = 4;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "3.15");
-});
-
-test("pad函数输入数字和期望长度Length，输入Length为负数", function(){
-	n = 3.15;    
-    L = -1;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "3.15");
-});
-
-test("pad函数输入数字和期望长度Length，输入Length不是整数(字符串)", function(){
-	n = 3.15;    
-    L = "string";
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "3.15");
-});
-
-test("pad函数输入数字和期望长度Length，输入Length不是整数（小数）", function(){
-	n = 3.15;    
-	L = 3.56;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "3.15");
-});
-
-test("pad函数输入数字为负数，Length小于number长度", function(){
-	n = -23;    
-	L = 1;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "-23");
-});
-
-test("pad函数输入数字为负数，Length等于number长度", function(){
-	n = -23456;    
-	L = 5;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "-23456");
-});
-
-test("pad函数输入数字为负数，Length大于number长度", function(){
-	n = -23;    
-	L = 5;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "-00023");
-});
-
-test("pad函数输入数字为0", function(){
-	n = 0;    
-	L = 5;
-    r = baidu.number.pad(n,L);
-    
-    equals(r, "00000");
-});
+    return (negative ?  "-" : "") + pre + string;
+};
