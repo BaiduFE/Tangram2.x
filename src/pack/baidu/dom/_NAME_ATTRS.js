@@ -16,9 +16,8 @@
  * ie6,7下class要转换成className
  * @meta standard
  */
-
-baidu.dom._NAME_ATTRS = (function () {
-    var result = {
+baidu.dom._NAME_ATTRS = function(){
+    var ret = {
         'cellpadding': 'cellPadding',
         'cellspacing': 'cellSpacing',
         'colspan': 'colSpan',
@@ -27,14 +26,12 @@ baidu.dom._NAME_ATTRS = (function () {
         'usemap': 'useMap',
         'frameborder': 'frameBorder'
     };
-    
-    if (baidu.browser.ie < 8) {
-        result['for'] = 'htmlFor';
-        result['class'] = 'className';
-    } else {
-        result['htmlFor'] = 'for';
-        result['className'] = 'class';
+    if(baidu.browser.ie < 8){
+        ret['for'] = 'htmlFor';
+        ret['class'] = 'className';
+    }else{
+        ret['htmlFor'] = 'for';
+        ret['className'] = 'class';
     }
-    
-    return result;
-})();
+    return ret;
+}();
