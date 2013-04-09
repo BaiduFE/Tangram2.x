@@ -18,9 +18,8 @@
 
 baidu.array = baidu.array || function(array){
     var  pro = baidu.array,
-         ap = Array.prototype,
          key;
-    baidu.type( array ) != "array" && ( array = [] );
+    baidu.type( array ) !== 'array' && (array = []);
     for ( key in pro ) {
         //ap[key] || (array[key] = pro[key]);
         array[key] = pro[key];

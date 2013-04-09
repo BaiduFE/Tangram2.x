@@ -1,4 +1,3 @@
-///import baidu;
 ///import baidu.merge;
 ///import baidu.selector;
 ///import baidu.createChain;

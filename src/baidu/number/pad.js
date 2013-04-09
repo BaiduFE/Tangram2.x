@@ -5,8 +5,6 @@
 
 ///import baidu.number;
 
-
-
 /**
  * @description 对目标数字进行0补齐处理
  * @function 
@@ -25,18 +23,16 @@
  * @param {Number} len 需要输出的长度
  * @return {String} 对目标数字进行0补齐处理后的结果
  */
-
-baidu.number.extend({
-    pad : function (length) {
-        var source = this;
-        var pre = "",
-            negative = (source < 0),
-            string = String(Math.abs(source));
-    
-        if (string.length < length) {
-            pre = (new Array(length - string.length + 1)).join('0');
-        }
-    
-        return (negative ?  "-" : "") + pre + string;
+baidu.number.pad = baidu.number.pad || function(len){
+    var source = this, pre = '', negative, str;
+    if(typeof(this) === 'function'){
+        source = len;
+        len = arguments[1];
     }
-});
+    negative = source < 0;
+    str = String(Math.abs(source));
+    if(str.length < len){
+        pre = new Array(len - str.length + 1).join('0');
+    }
+    return (negative ? '-' : '') + pre + str;
+}

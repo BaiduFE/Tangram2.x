@@ -1,9 +1,4 @@
-/*
- * @author wangxiao
- * @email  1988wangxiao@gmail.com
- */
-///import baidu.createChain;
-///import baidu.forEach;
+///import baidu;
 /**
  * @description number对象链式语法的链头
  * @name baidu.number()
@@ -13,14 +8,14 @@
  * @return  {TangramNumber}   返回Number对象，该对象被注入链式方法。
  */
 
-baidu.createChain('number', function(number){
+baidu.number = baidu.number || function(number){
     var nan = parseFloat(number),
         val = isNaN(nan) ? nan : number,
         clazz = typeof val === 'number' ? Number : String,
-        pro = clazz.prototype;
+        prot = baidu.number;
     val = new clazz(val);
-    baidu.forEach(baidu.number.$Number.prototype, function(value, key){
-        pro[key] || (val[key] = value);
-    });
+    for(var key in prot){
+        val[key] = prot[key];
+    }
     return val;
-});
+};

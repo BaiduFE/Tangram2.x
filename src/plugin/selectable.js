@@ -285,7 +285,6 @@
 */
 
 ///import baidu.type;
-///import baidu.setBack;
 ///import baidu.createSingle;
 ///import baidu.dom.hasClass;
 ///import baidu.dom.addClass;
@@ -438,8 +437,8 @@ baidu.dom.extend({
 
             doc = baidu.dom(document),
 
-            //当前的selectable实例，自动挂载getBack方法，直接返回之前的链头
-            selectable = baidu.setBack(baidu.createSingle(funs),me),
+            //当前的selectable实例
+            selectable = baidu.createSingle(funs),
 
             opt = selectable.options,
 
