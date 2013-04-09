@@ -256,7 +256,6 @@
 */
 
 ///import baidu.createSingle;
-///import baidu.setBack;
 ///import baidu.type;
 ///import baidu.dom.find;
 ///import baidu.dom.children;
@@ -412,8 +411,8 @@ baidu.dom.extend({
 
             doc = baidu.dom(document),
 
-            //当前的sortable实例，自动挂载getBack方法，直接返回之前的链头
-            sortable = baidu.setBack(baidu.createSingle(funs),me),
+            //当前的sortable实例，
+            sortable = baidu.createSingle(funs),
 
             opt = sortable.options,
 

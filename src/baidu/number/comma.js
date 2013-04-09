@@ -23,16 +23,17 @@
  * @param {Number} len 两次逗号之间的数字位数，默认为3位
  * @return {String} 添加逗号分隔后的字符串
  */
-
-baidu.number.extend({
-    comma : function (length) {
-        var source = this;
-        if (!length || length < 1) {
-            length = 3;
-        }
-    
-        source = String(source).split(".");
-        source[0] = source[0].replace(new RegExp('(\\d)(?=(\\d{'+length+'})+$)','ig'),"$1,");
-        return source.join(".");
-    }    
-});
+ 
+baidu.number.comma = baidu.number.comm || function(len){
+    var source = this;
+    if(typeof(this) === 'function'){
+        source = len;
+        len = arguments[1];
+    }
+    if(!len || len < 1){
+        len = 3;
+    }
+    source = String(source).split('.');
+    source[0] = source[0].replace(new RegExp('(\\d)(?=(\\d{'+ len +'})+$)','ig'), '$1,');
+    return source.join('.');
+}

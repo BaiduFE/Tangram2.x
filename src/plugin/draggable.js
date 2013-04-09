@@ -258,7 +258,6 @@
 
 ///import baidu.id;
 ///import baidu.type;
-///import baidu.setBack;
 ///import baidu.createSingle;
 ///import baidu.dom.not;
 ///import baidu.dom.css;
@@ -447,8 +446,8 @@ baidu.dom.extend({
             },
             doc = baidu.dom(document),
 
-            //当前的draggable实例，自动挂载getBack方法，直接返回之前的链头
-            draggable = baidu.setBack(baidu.createSingle(funs),me),
+            //当前的draggable实例
+            draggable = baidu.createSingle(funs),
 
             opt = draggable.options,
 
