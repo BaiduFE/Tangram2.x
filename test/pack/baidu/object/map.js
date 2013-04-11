@@ -1,32 +1,24 @@
+module("baidu.object.map");
 
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/object/map.js
- * author: berg
- * version: 1.1.0
- * date: 2010/12/14
- */
-
-///import pack.baidu.object;
-
-/**
- * 遍历object中所有元素，将每一个元素应用方法进行转换，返回转换后的新object。
- * @name baidu.object.map
- * @function
- * @grammar baidu.object.map(source, iterator)
- * 
- * @param 	{Array}    source   需要遍历的object
- * @param 	{Function} iterator 对每个object元素进行处理的函数
- * @return 	{Array} 			map后的object
- */
-baidu.object.map = function (source, iterator) {
-    var results = {};
-    for (var key in source) {
-        if (source.hasOwnProperty(key)) {
-            results[key] = iterator(source[key], key);
-        }
-    }
-    return results;
-};
+test("base", function() {
+	expect(4);
+	var check = function(o, fn, expects) {
+		var actuals = baidu.object.map(o, fn);
+		for ( var name in o) {
+			if (name == 'd')
+				continue;
+			equals(actuals[name], "_" + o[name], "check value " + name);
+		}
+	}
+	check({
+		a : "a",
+		b : "b",
+		d : function() {
+		}
+	}, function(value, key) {
+		if (key == "d")
+			return "";
+		equals(value, key, "check key " + key);
+		return "_" + value;
+	});
+});

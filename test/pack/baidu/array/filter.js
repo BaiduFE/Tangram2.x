@@ -1,42 +1,76 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+//filter的测试
+module("baidu.array.filter");
 
-///import pack.baidu.array;
+test("返回数组不为空", function() {
+	{
+		expect(1);
+		var arraytest = [ 1, 2, 3, 4, 6, 7, 8, 9, 11 ];
+		var fn = function(x) {
+			return x % 2 == 0;
+		};
+		var rArr = baidu.array.filter(arraytest, fn);
+		equal(rArr.toString(), "2,4,6,8", "filter return value is not null");
+	}
+});
 
-/**
- * 从数组中筛选符合条件的元素
- * @name baidu.array.filter
- * @function
- * @grammar baidu.array.filter(source, iterator[, thisObject])
- * @param {Array} source 需要筛选的数组
- * @param {Function} iterator 对每个数组元素进行筛选的函数，该函数有两个参数，第一个为数组元素，第二个为数组索引值，function (item, index)，函数需要返回true或false
- * @param {Object} [thisObject] 函数调用时的this指针，如果没有此参数，默认是当前遍历的数组
- * @meta standard
- * @see baidu.array.find
- *             
- * @returns {Array} 符合条件的数组项集合
- */
+test("测试this指针", function() {
+	var aArray = [ 1, 2, 3 ], thisObject = {
+		a : 'b'
+	};
+	baidu.array.filter(aArray, function(iVal, iIndex) {
+		equal(this.a, 'b', '传了this指针的情况');
+	}, thisObject);
 
-baidu.array.filter = function (source, iterator, thisObject) {
-    var result = [],
-        resultIndex = 0,
-        len = source.length,
-        item,
-        i;
-    
-    if ('function' == typeof iterator) {
-        for (i = 0; i < len; i++) {
-            item = source[i];
-            //TODO
-            //和标准不符，see array.each
-            if (true === iterator.call(thisObject || source, item, i)) {
-                // resultIndex用于优化对result.length的多次读取
-                result[resultIndex++] = item;
-            }
-        }
-    }
-    
-    return result;
-};
+	var aArray = [ 1, 2, 3 ];
+	baidu.array.filter(aArray, function(iVal, iIndex) {
+		equal(this[0], 1, '没传this指针的情况');
+	});
+});
+
+test("返回空数组", function() {
+	{
+		expect(1);
+		var arraytest = [ 1, 2, 3, 4, 6, 7, 8, 9, 11 ];
+		var fn = function(x) {
+			return x % 5 == 0;
+		};
+		var rArr = baidu.array.filter(arraytest, fn);
+		equal(rArr.toString(), "", "filter return value is null");
+	}
+});
+
+test("第二个参数不是函数", function() {
+	expect(1);
+	var aArray = [ 1, 2, 3 ];
+	var fn = "function";
+	var rArr = baidu.array.filter(aArray, fn);
+	equal(rArr.toString(), "", "第二个参数不是函数");
+});
+
+test("第二个参数是空json", function() {
+	expect(1);
+	var aArray = [ 1, 2, 3 ];
+	var fn = {};
+	var rArr = baidu.array.filter(aArray, fn);
+	equal(rArr.toString(), "", "第二个参数不是函数");
+});
+
+test("数组中有未定义的元素", function() {
+	expect(1);
+	var aArray = [ 1, 2, 3 ];
+	var fn = function(x) {
+		return x % 2 == 0;
+	};
+	var fArray = baidu.array.filter(aArray, fn);
+	equal(fArray, "2", "数组中有未定义的元素");
+});
+
+test("第一个参数不是数组", function() {
+	expect(1);
+	var iNumber = 10;
+	var fn = function() {
+		aArray[iIndex] += iIndex;
+	};
+	var fArray = baidu.array.filter(iNumber, fn);
+	equal(fArray, "", "对number调用filter");
+});

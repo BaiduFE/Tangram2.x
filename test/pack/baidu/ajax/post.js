@@ -1,36 +1,32 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/ajax/post.js
- * author: allstar, erik
- * version: 1.1.0
- * date: 2009/12/02
- */
+module("baidu.ajax.post");
 
-///import pack.baidu.ajax;
-///import pack.baidu.ajax.request;
+test("onsuccess", function() {
+	stop();
+	expect(2);
+	var asyncDelay = 200;
+	var urlstring = upath + "post.php";
+	var arg = "var1=baidu&var2=tangram";
+	function successAction(xhr, text) {
+		equals(text, "baidutangram", "check text");
+		equals(xhr.responseText, "baidutangram", "check xhr response text");
+		start();
+	}
+	var xhr = baidu.ajax.post(urlstring, arg, successAction);
+});
 
-/**
- * 发送一个post请求
- * @name baidu.ajax.post
- * @function
- * @grammar baidu.ajax.post(url, data[, onsuccess])
- * @param {string} 	url 		发送请求的url地址
- * @param {string} 	data 		发送的数据
- * @param {Function} [onsuccess] 请求成功之后的回调函数，function(XMLHttpRequest xhr, string responseText)
- * @meta standard
- * @see baidu.ajax.get,baidu.ajax.request
- *             
- * @returns {XMLHttpRequest} 	发送请求的XMLHttpRequest对象
- */
-baidu.ajax.post = function (url, data, onsuccess) {
-    return baidu.ajax.request(
-        url, 
-        {
-            'onsuccess': onsuccess,
-            'method': 'POST',
-            'data': data
-        }
-    );
-};
+test("输入不存在url以及设定onsuccess事件", function() {
+	stop();
+	var urlstring = upath + "notexsistpage.php";
+	var arg = "var1=baidu&var2=tangram";
+	baidu.ajax.onfailure = function() {
+		ok(true, '失败时应该调用这个函数');
+		start();
+	};
+	var xhr = baidu.ajax.post(urlstring, arg, function() {
+		fail('success should not be call');
+		start();
+	});
+});
+
+//TODO 大数据量提交校验
+//TODO 关于xml类型数据的交互

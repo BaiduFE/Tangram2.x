@@ -1,27 +1,25 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/fn/methodize.js
- * author: berg
- * version: 1.0.0
- * date: 2010/11/02 
- */
 
-///import pack.baidu.fn;
+module('baidu.fn.methodize');
 
 /**
- * 将一个静态函数变换成一个对象的方法，使其的第一个参数为this，或this[attr]
- * @name baidu.fn.methodize
- * @function
- * @grammar baidu.fn.methodize(func[, attr])
- * @param {Function}	func	要方法化的函数
- * @param {string}		[attr]	属性
- * @version 1.3
- * @returns {Function} 已方法化的函数
+ * 用例设计点
+ * <li>对象自身作为第一参数
+ * <li>对象属性作为第一参数
  */
-baidu.fn.methodize = function (func, attr) {
-    return function(){
-        return func.apply(this, [(attr ? this[attr] : this)].concat([].slice.call(arguments)));
-    };
-};
+test('base', function() {
+	var fn1 = function(a){
+		return a.t; 
+	},
+	fn2 = function(a){
+		return a;
+	};
+	
+	var o = {
+		t : 1,
+		f1 : baidu.fn.methodize(fn1),
+		f2 : baidu.fn.methodize(fn2, 't')
+	};
+	
+	equals(o.f1(), 1, '对象校验');
+	equals(o.f2(), 1, '对象属性校验');
+});

@@ -1,25 +1,47 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/first.js
- * author: allstar, erik
- * version: 1.1.0
- * date: 2009/11/18
- */
+module("baidu.dom.first")
 
-///import pack.baidu.dom._matchNode;
 
-/**
- * 获取目标元素的第一个元素节点
- * @name baidu.dom.first
- * @function
- * @grammar baidu.dom.first(element)
- * @param {HTMLElement|String} element 目标元素或目标元素的id
- * @see baidu.dom.last,baidu.dom.prev,baidu.dom.next
- * @meta standard
- * @returns {HTMLElement|null} 目标元素的第一个元素节点，查找不到时返回null
- */
-baidu.dom.first = function (element) {
-    return baidu.dom._matchNode(element, 'nextSibling', 'firstChild');
-};
+test("第一个子节点为空节点",function(){
+	expect(2);
+	var div = document.createElement('div');
+	var text = document.createTextNode('textnode');
+	var img = document.createElement('img');
+	var table = document.createElement('table');
+	document.body.appendChild(div);
+	div.id = "div";
+	div.appendChild(text);
+	div.appendChild(img);
+	div.appendChild(table);
+	equal(baidu.dom.first(div),img,"first child is not textNode");
+	equal(baidu.dom.first('div'),img,"first child is not textNode--by id");
+	document.body.removeChild(div);
+})
+
+
+test("第一个子节点不是空节点",function(){
+	expect(2);
+	var div = document.createElement('div');
+	var img = document.createElement('img');
+	var table = document.createElement('table');
+	document.body.appendChild(div);
+	div.appendChild(img);
+	div.appendChild(table);
+	div.id = "div_id";
+	equal(baidu.dom.first(div),img,"first child is img");
+	equal(baidu.dom.first('div_id'),img,"first child is img--by id");
+	document.body.removeChild(div);
+})
+
+test("html",function(){
+//	alert(baidu.dom.first(document));
+	expect(2);
+	equal(baidu.dom.first(document),document.documentElement,"first child is html");
+	equal(baidu.dom.first(document.documentElement),document.documentElement.firstChild,"first child of html is head ");
+})
+
+test("没有子节点",function(){
+	expect(1);
+	var div = document.createElement('div');
+	equal(baidu.dom.first(div),null,"no child");
+})
+

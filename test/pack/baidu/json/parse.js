@@ -1,29 +1,128 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/json/parse.js
- * author: erik, berg
- * version: 1.2
- * date: 2009/11/23
- */
+module("baidu.json.parse测试");
 
-///import pack.baidu.json;
+test("parse函数输入合法的Json字符串", function(){
+	var obj = "{\"a\":1,\"b\":\"test\",\"c\":true,\"d\":3.12345,\"e\":false,\"f\":null,\"g\":[1,2,3],\"h\":{\"aa\":1,\"bb\":2}}";
+	var testobj = baidu.json.parse(obj);
+	
+	equals(testobj.a, 1, '');
+	equals(testobj.b, "test");
+	equals(testobj.c, true);
+	equals(testobj.d, 3.12345);
+	equals(testobj.e, false);
+	equals(testobj.f, null);
+	//equals(testobj.g, [1,2,3]);
+	equals(typeof testobj.g, "object");
+	equals(testobj.g.length, 3);
+	equals(testobj.g[0], 1);
+	equals(testobj.g[1], 2);
+	equals(testobj.g[2], 3);
+	//equals(testobj.h, {aa:1,bb:2});
+	equals(testobj.h.aa, 1);
+	equals(testobj.h.bb, 2);
+	
+	var array = "[{\"location1\":\"beijing\",\"company\":\"baidu\",\"money\":10.012,\"people\":10},{\"location1\":\"shanghai\",\"company\":\"baidu\",\"money\":10.51,\"people\":2}]"; // 输入为Json数组
+	var jsarr = baidu.json.parse(array);
+	
+	equals(jsarr[0].location1, "beijing");
+	equals(jsarr[0].company, "baidu");
+	equals(jsarr[0].money, 10.012);
+	equals(jsarr[0].people, 10);
+	equals(jsarr[1].location1, "shanghai");
+	equals(jsarr[1].company, "baidu");
+	equals(jsarr[1].money, 10.51);
+	equals(jsarr[1].people, 2);
+}); // 1
 
-/**
- * 将字符串解析成json对象。注：不会自动祛除空格
- * @name baidu.json.parse
- * @function
- * @grammar baidu.json.parse(data)
- * @param {string} source 需要解析的字符串
- * @remark
- * 该方法的实现与ecma-262第五版中规定的JSON.parse不同，暂时只支持传入一个参数。后续会进行功能丰富。
- * @meta standard
- * @see baidu.json.stringify,baidu.json.decode
- *             
- * @returns {JSON} 解析结果json对象
- */
-baidu.json.parse = function (data) {
-    //2010/12/09：更新至不使用原生parse，不检测用户输入是否正确
-    return (new Function("return (" + data + ")"))();
-};
+test("输入为number", function(){
+	var n = "3.14";
+	var s = baidu.json.parse(n);
+	equals(s, 3.14);
+}); // 2
+
+test("输入为string", function(){
+	var n = "\"baidu Online\"";
+	var s = baidu.json.parse(n);
+	equals(s, "baidu Online");
+}); // 3
+
+test("输入为null", function(){
+	var n = "null";
+	var s = baidu.json.parse(n);
+	equals(s, null);
+}); // 4
+
+test("json前面有换行", function(){
+	var n = "\r{a:'b'}";
+	var s = baidu.json.parse(n);
+	equals(s.a, 'b');
+}); // 4
+
+//test("输入为undefined", function(){
+//	var n = "undefined";
+//	var s = baidu.json.parse(n);
+//	equals(s, null);
+//}); // 5
+
+test("输入为boolean", function(){
+	var n = "true";
+	var s = baidu.json.parse(n);
+	equals(s, true);
+	
+	n = "false";
+	equals(baidu.json.parse(n), false);
+}); // 6
+
+//describe('baidu.json.parse测试',{
+//    "parse函数输入合法的Json字符串":function (){
+//		var obj = "{\"a\":1,\"b\":\"test\",\"c\":true,\"d\":3.12345,\"e\":false,\"f\":null,\"g\":[1,2,3],\"h\":{\"aa\":1,\"bb\":2}}";  //输入为Json对象
+//		var testobj = baidu.json.parse(obj);
+//		value_of(testobj.a).should_be(1);
+//		value_of(testobj.b).should_be("test");
+//		value_of(testobj.c).should_be_true();
+//		value_of(testobj.d).should_be(3.12345);
+//		value_of(testobj.e).should_be_false();
+//		value_of(testobj.f).should_be_null();
+//		value_of(testobj.g).should_be([1,2,3]);
+//		value_of(testobj.h).should_be({aa:1,bb:2});
+//		
+//		var array = "[{\"location1\":\"beijing\",\"company\":\"baidu\",\"money\":10.012,\"people\":10},{\"location1\":\"shanghai\",\"company\":\"baidu\",\"money\":10.51,\"people\":2}]";//输入为Json数组
+//		var jsarr = baidu.json.parse(array);
+//		value_of(jsarr[0].location1).should_be("beijing");
+//		value_of(jsarr[0].company).should_be("baidu");
+//		value_of(jsarr[0].money).should_be(10.012);
+//		value_of(jsarr[0].people).should_be(10);
+//		value_of(jsarr[1].location1).should_be("shanghai");
+//		value_of(jsarr[1].company).should_be("baidu");
+//		value_of(jsarr[1].money).should_be(10.51);
+//		value_of(jsarr[1].people).should_be(2);
+//	},
+//	"输入为number":function (){		
+//		var n = "3.14";  //输入为number
+//		var s = baidu.json.parse(n);
+//		value_of(s).should_be(3.14);
+//	},
+//	"输入为string":function (){
+//		var n = "\"baidu Online\"";  //输入为string
+//		var s = baidu.json.parse(n);
+//		value_of(s).should_be("baidu Online");
+//	},
+//	"输入为null":function (){
+//		var n = "null";  //输入为null
+//		var s = baidu.json.parse(n);
+//		value_of(s).should_be_null();
+//	},
+//	"输入为undefined":function (){
+//		var n = "undefined";  //输入为undefined
+//		var s= baidu.json.parse(n);
+//		value_of(s).should_be_null();
+//	},
+//	"输入为boolean":function (){
+//		var n = "true";  //输入为boolean
+//		var s= baidu.json.parse(n);
+//		value_of(s).should_be_true();
+//				
+//		n = "false";  //输入为boolean
+//		value_of(baidu.json.parse(n)).should_be_false();
+//	}
+//});
+

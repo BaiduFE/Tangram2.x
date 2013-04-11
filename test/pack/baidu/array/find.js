@@ -1,37 +1,50 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/array/find.js
- * author: erik
- * version: 1.1.0
- * date: 2009/12/02
- */
+//baidu.array.find测试
+module("baidu.array.find");
 
-///import pack.baidu.array;
+test("只有一个元素满足", function() {
+	expect(1);
+	var arraytest = [ 2, 3, 5, 6, 7, 'odd', 8, 9, 'even', 10 ]; // 检测只有一个元素使得iterator为true
+	r = baidu.array.find(arraytest, function(x) {
+		return x == 'odd';
+	});
+	equal(r, "odd", "只有一个元素满足条件");
+});
 
-/**
- * 从数组中寻找符合条件的第一个元素
- * @name baidu.array.find
- * @function
- * @grammar baidu.array.find(source, iterator)
- * @param {Array} source 需要查找的数组
- * @param {Function} iterator 对每个数组元素进行查找的函数，该函数有两个参数，第一个为数组元素，第二个为数组索引值，function (item, index)，函数需要返回true或false
- * @see baidu.array.filter,baidu.array.indexOf
- *             
- * @returns {Any|null} 符合条件的第一个元素，找不到时返回null
- */
-baidu.array.find = function (source, iterator) {
-    var item, i, len = source.length;
-    
-    if ('function' == typeof iterator) {
-        for (i = 0; i < len; i++) {
-            item = source[i];
-            if (true === iterator.call(source, item, i)) {
-                return item;
-            }
-        }
-    }
-    
-    return null;
-};
+test("回调函数中途返回", function() {
+	expect(1);
+	var arraytest = [ 2, 3, 5, 6, 7, 'odd', 8, 9, 'even', 10 ]; // 检测有多个元素满足使得iterator为true
+	var fn = function(x) {
+		if (typeof (x) == 'string')
+			return false;
+		return x % 3 == 0;
+	};
+	r = baidu.array.find(arraytest, fn);
+	equal(r, 3, "回调函数中途返回");
+});
+
+test("返回结果为空", function() {
+	expect(1);
+	var arraytest = [ 2, 3, 5, 6, 7, 'odd', 8, 9, 'even', 10 ]; // 检测没有元素使得iterator为true
+	var r = baidu.array.find(arraytest, function(x) {
+		if (typeof (x) == 'string')
+			return false;
+		return x > 15;
+	});
+	equal(r, null, "find no result");
+});
+test("空数组", function() {
+	expect(1);
+	r = baidu.array.find([], function(x) {
+		return x > 2;
+	});
+	equal(r, null, "empty array find nothing");
+});
+
+test("异常case", function() {
+	expect(2);
+	var r = baidu.array.find([ 1, 2, 3 ], "find function");
+	equal(r, null, "not a function");
+	var scope = 10;
+	r = baidu.array.find([ 1, 2, 3 ], 100, scope);
+	equal(r, null, "wrong parameters");
+});

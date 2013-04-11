@@ -1,29 +1,55 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/toggle.js
- * author: allstar
- * version: 1.1.0
- * date: 2009/11/17
- */
+module('baidu.dom.toggle')
 
-///import pack.baidu.dom.g;
+test('element',function(){
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	equal(div.style.display,"","default to display;")
+	baidu.dom.toggle(div);
+	equal(div.style.display,"none","not to display");
+	baidu.dom.toggle(div);
+	equal(div.style.display,"","change to display");
+	document.body.removeChild(div);
+})
 
-/**
- * 改变目标元素的显示/隐藏状态
- * @name baidu.dom.toggle
- * @function
- * @grammar baidu.dom.toggle(element)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @meta standard
- * @see baidu.dom.show,baidu.dom.hide
- *             
- * @returns {HTMLElement} 目标元素
- */
-baidu.dom.toggle = function (element) {
-    element = baidu.dom.g(element);
-    element.style.display = element.style.display == "none" ? "" : "none";
+test('id',function(){
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	div.id = 'div_id';
+	equal(div.style.display,"","default to display;")
+	baidu.dom.toggle('div_id');
+	equal(div.style.display,"none","not to display");
+	baidu.dom.toggle('div_id');
+	equal(div.style.display,"","change to display");
+	document.body.removeChild(div);
+})
 
-    return element;
-};
+
+//describe('baidu.dom.toggle测试', {
+//    '将显示/隐藏的元素切换状态': function(){
+//        var oDiv1 = baidu.dom.g("div1_toggle");
+//
+//        value_of(oDiv1.style.display).should_be("");
+//        baidu.dom.toggle(oDiv1);
+//        value_of(oDiv1.style.display).should_be("none");
+//        baidu.dom.toggle(oDiv1);
+//        value_of(oDiv1.style.display).should_be("");
+//
+//        value_of(baidu.dom.g("div2_toggle").style.display).should_be("none");
+//        baidu.dom.toggle("div2_toggle");
+//        value_of(baidu.dom.g("div2_toggle").style.display).should_be("");
+//        baidu.dom.toggle("div2_toggle");
+//        value_of(baidu.dom.g("div2_toggle").style.display).should_be("none");
+//    }/*,1.0.1版本中已不支持多个参数的情况
+//	'同时切换多个元素的状态': function() {
+//		var oDiv3 = baidu.dom.g("div3_toggle");
+//		
+//		value_of(oDiv3.style.display).should_be("");
+//		value_of(baidu.G("div4_toggle").style.display).should_be("none");
+//		baidu.dom.toggle("div3_toggle", baidu.G("div4_toggle"));
+//		value_of(oDiv3.style.display).should_be("none");
+//		value_of(baidu.G("div4_toggle").style.display).should_be("");
+//		baidu.dom.toggle(oDiv3, "div4_toggle");
+//		value_of(oDiv3.style.display).should_be("");
+//		value_of(baidu.G("div4_toggle").style.display).should_be("none");
+//	}*/
+//});

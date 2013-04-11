@@ -1,43 +1,153 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/string/subByte.js
- * author: dron, erik, berg
- * version: 1.2
- * date: 2010-06-30
- */
+module("baidu.String.subByte测试");
 
-///import pack.baidu.string.getByteLength;
+test('中间有\n', function() {
+	basestr = "\n\n编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，\n亦或是任何写在行程前的话编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，亦或是任何写在行程前的话编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，亦或是任何写在行程前的话编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，亦或是任何写在行程前的话编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，亦或是任何写在行程前的话编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，亦或是任何写在行程前的话编辑游记前序您可以在这里记录下行前的准备，"
+			+ "或是旅行总体感受，亦或是任何写在行程前的话 ";
 
-/**
- * 对目标字符串按gbk编码截取字节长度
- * @name baidu.string.subByte
- * @function
- * @grammar baidu.string.subByte(source, length)
- * @param {string} source 目标字符串
- * @param {number} length 需要截取的字节长度
- * @param {string} [tail] 追加字符串,可选.
- * @remark
- * 截取过程中，遇到半个汉字时，向下取整。
- * @see baidu.string.getByteLength
- *             
- * @returns {string} 字符串截取结果
- */
-baidu.string.subByte = function (source, length, tail) {
-    source = String(source);
-    tail = tail || '';
-    
-    
-    if (length < 0 || baidu.string.getByteLength(source) <= length) {
-        return source + tail;
-    }
-    
-    //thanks 加宽提供优化方法
-    source = source.substr(0,length).replace(/([^\x00-\xff])/g,"\x241 ")//双字节字符替换成两个
-        .substr(0,length)//截取长度
-        .replace(/[^\x00-\xff]$/,"")//去掉临界双字节字符
-        .replace(/([^\x00-\xff]) /g,"\x241");//还原
-    return source + tail;
+	equals(baidu.string.subByte(basestr, 100, '...'),
+			"\n\n编辑游记前序您可以在这里记录下行前的准备，或是旅行总体感受，\n亦或是任何写在行程前的话编辑游记前序...");
+})
 
-};
+test("输入英文字符串", function() {
+	basestr = "english string for test";
+
+	equals(baidu.string.subByte(basestr, 0), "");
+	equals(baidu.string.subByte(basestr, 1), "e");
+	equals(baidu.string.subByte(basestr, 5), "engli");
+	equals(baidu.string.subByte(basestr, 23), "english string for test");
+	equals(baidu.string.subByte(basestr, 25), "english string for test"); // 超过 length
+	equals(baidu.string.subByte(basestr, -1), "english string for test"); // 负数
+}); // 1
+
+test("输入中文字符串", function() {
+	basestr = "百度字符串测试";
+
+	equals(baidu.string.subByte(basestr, 0), "");
+	equals(baidu.string.subByte(basestr, 1), "");
+	equals(baidu.string.subByte(basestr, 6), "百度字");
+	equals(baidu.string.subByte(basestr, 7), "百度字");
+	equals(baidu.string.subByte(basestr, 14), "百度字符串测试");
+	equals(baidu.string.subByte(basestr, 15), "百度字符串测试");
+	equals(baidu.string.subByte(basestr, 30), "百度字符串测试");
+	equals(baidu.string.subByte(basestr, -10), "百度字符串测试");
+}); // 2
+
+test("输入中英文混合字符串", function() {
+	basestr = "百度China";
+
+	equals(baidu.string.subByte(basestr, 0), "");
+	equals(baidu.string.subByte(basestr, 1), "");
+	equals(baidu.string.subByte(basestr, 4), "百度");
+	equals(baidu.string.subByte(basestr, 5), "百度C");
+	equals(baidu.string.subByte(basestr, 3), "百");
+	equals(baidu.string.subByte(basestr, 9), "百度China");
+	equals(baidu.string.subByte(basestr, 12), "百度China");
+
+	basestr = "bai百 du度";
+	equals(baidu.string.subByte(basestr, 0), "");
+	equals(baidu.string.subByte(basestr, 2), "ba");
+	equals(baidu.string.subByte(basestr, 4), "bai");
+	equals(baidu.string.subByte(basestr, 9), "bai百 du");
+	equals(baidu.string.subByte(basestr, 10), "bai百 du度");
+	equals(baidu.string.subByte(basestr, -3), "bai百 du度");
+}); // 3
+
+test("输入字符串包括了全角字符，空格和转义字符等特殊字符", function() {
+	basestr = "百 \(度\)ｃｈｉｎａ\.";
+
+	equals(baidu.string.subByte(basestr, 0), "");
+	equals(baidu.string.subByte(basestr, 1), "");
+	equals(baidu.string.subByte(basestr, 3), "百 ");
+	equals(baidu.string.subByte(basestr, 4), "百 \(");
+	equals(baidu.string.subByte(basestr, 5), "百 \(");
+	equals(baidu.string.subByte(basestr, 8), "百 \(度\)"); // 差一个字符
+	equals(baidu.string.subByte(basestr, 9), "百 \(度\)ｃ"); // 正好相等
+	equals(baidu.string.subByte(basestr, 10), "百 \(度\)ｃ");// 差一个字符（比前ｃ又多一个字符）
+	equals(baidu.string.subByte(basestr, 11), "百 \(度\)ｃｈ");
+	equals(baidu.string.subByte(basestr, 18), "百 \(度\)ｃｈｉｎａ\.");
+	equals(baidu.string.subByte(basestr, 22), "百 \(度\)ｃｈｉｎａ\.");
+}); // 4
+
+test("异常case", function() {
+	var nullstr = null;
+	var undefstr;
+	equals(baidu.string.subByte(nullstr, 2), "nu");
+	equals(baidu.string.subByte(undefstr, 5), "undef"); // undefined is 9 characters
+});
+
+test("尾部追加字符串功能", function() {
+	var str1 = "appending";
+	equals(baidu.string.subByte(str1, 6, '...'), "append...");
+	equals(baidu.string.subByte(str1, 100, '...'), "appending..."); // undefined is 9 characters
+});
+
+////subByte的测试
+//describe("baidu.String.subByte测试",{
+//    /*
+//     *"输入英文字符串":function (){
+//     *    basestr = "english string for test";
+//     *    value_of(baidu.string.subByte(basestr,0)).should_be("");
+//     *    value_of(baidu.string.subByte(basestr,1)).should_be("e");
+//     *    value_of(baidu.string.subByte(basestr,5)).should_be("engli");
+//     *    value_of(baidu.string.subByte(basestr,23)).should_be("english string for test");
+//     *    value_of(baidu.string.subByte(basestr,25)).should_be("english string for test");
+//     *    value_of(baidu.string.subByte(basestr,-1)).should_be("english string for test");
+//     *},
+//     */
+//
+//    "输入中文字符串":function (){
+//        basestr = "百度字符串测试";
+//        value_of(baidu.string.subByte(basestr,0)).should_be("");
+//        value_of(baidu.string.subByte(basestr,1)).should_be("");
+//        value_of(baidu.string.subByte(basestr,6)).should_be("百度字");
+//        value_of(baidu.string.subByte(basestr,7)).should_be("百度字");
+//        value_of(baidu.string.subByte(basestr,14)).should_be("百度字符串测试");
+//        value_of(baidu.string.subByte(basestr,15)).should_be("百度字符串测试");
+//        value_of(baidu.string.subByte(basestr,30)).should_be("百度字符串测试");
+//        value_of(baidu.string.subByte(basestr,-10)).should_be("百度字符串测试");
+//    },
+
+//    "输入中英文混合字符串":function (){
+//        basestr = "百度China";
+//        value_of(baidu.string.subByte(basestr,0)).should_be("");
+//        value_of(baidu.string.subByte(basestr,1)).should_be("");
+//        value_of(baidu.string.subByte(basestr,4)).should_be("百度");
+//        value_of(baidu.string.subByte(basestr,5)).should_be("百度C");
+//        value_of(baidu.string.subByte(basestr,3)).should_be("百");
+//        value_of(baidu.string.subByte(basestr,9)).should_be("百度China");
+//        value_of(baidu.string.subByte(basestr,12)).should_be("百度China");
+//        
+//        basestr = "bai百 du度";
+//        value_of(baidu.string.subByte(basestr,0)).should_be("");
+//        value_of(baidu.string.subByte(basestr,2)).should_be("ba");
+//        value_of(baidu.string.subByte(basestr,4)).should_be("bai");
+//        value_of(baidu.string.subByte(basestr,9)).should_be("bai百 du");
+//        value_of(baidu.string.subByte(basestr,-3)).should_be("bai百 du度");
+//    },
+//
+//    "输入字符串包括了全角字符，空格和转义字符等特殊字符":function (){
+//        basestr = "百 \(度\)ｃｈｉｎａ\.";
+//        value_of(baidu.string.subByte(basestr,0)).should_be("");
+//        value_of(baidu.string.subByte(basestr,1)).should_be("");
+//        value_of(baidu.string.subByte(basestr,3)).should_be("百 ");
+//        value_of(baidu.string.subByte(basestr,4)).should_be("百 \(");
+//        value_of(baidu.string.subByte(basestr,5)).should_be("百 \(");
+//        value_of(baidu.string.subByte(basestr,10)).should_be("百 \(度\)ｃ");
+//        value_of(baidu.string.subByte(basestr,11)).should_be("百 \(度\)ｃｈ");
+//        value_of(baidu.string.subByte(basestr,18)).should_be("百 \(度\)ｃｈｉｎａ\.");
+//        value_of(baidu.string.subByte(basestr,22)).should_be("百 \(度\)ｃｈｉｎａ\.");
+//    },
+//
+//    "异常case": function (){
+//        var nullstr = null;
+//        var undefstr;
+//        value_of(baidu.string.subByte(nullstr,2)).should_be("nu");
+//        value_of(baidu.string.subByte(undefstr,5)).should_be("undef");
+//    }
+//});

@@ -1,54 +1,83 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/setStyle.js
- * author: allstar
- * version: 1.1.0
- * date: 2009/11/18
- */
+module("baidu.dom.setStyle");
+test("set style",function(){
+	baidu.dom._styleFixer["float"] = ua.browser.ie ? "styleFloat" : "cssFloat";
+	expect(3);
+	var div = document.createElement('div');
+	var img = document.createElement('img');
+	document.body.appendChild(div);
+	div.appendChild(img);
+	img.id = 'img_id';
+	baidu.dom.setStyle(img,'width','20px');
+	baidu.dom.setStyle(img,'height','10px');
+	baidu.dom.setStyle('img_id','float','left');
+	
+	equal(img.style.height,'10px',"get img height style");
+	equal(img.style.width,'20px','get img width style');
+	equal($(img).css('float'),'left','get img float');
+	document.body.removeChild(div);
+});
 
-///import pack.baidu.dom.g;
-///import pack.baidu.dom._styleFixer;
-///import pack.baidu.dom._styleFilter.filter;
-///import pack.baidu.string.toCamelCase;
+test('short cut',function(){
+	expect(3);
+	var div = document.createElement('div');
+	var img = document.createElement('img');
+	document.body.appendChild(div);
+	div.appendChild(img);
+	img.id = 'img_id';
+	baidu.setStyle(img,'width','20px');
+	baidu.setStyle(img,'height','10px');
+	baidu.setStyle('img_id','float','left');
+	
+	equal(img.style.height,'10px',"get img height style by shortcut");
+	equal(img.style.width,'20px','get img width style by shortcut');
+	equal($(img).css('float'),'left','get img float by shortcut');
+	document.body.removeChild(div);
+});
 
-/**
- * 设置目标元素的style样式值
- * @name baidu.dom.setStyle
- * @function
- * @grammar baidu.dom.setStyle(element, key, value)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {string} key 要设置的样式名
- * @param {string} value 要设置的样式值
- * @remark
- * 
-            为了精简代码，本模块默认不对任何浏览器返回值进行归一化处理（如使用getStyle时，不同浏览器下可能返回rgb颜色或hex颜色），也不会修复浏览器的bug和差异性（如设置IE的float属性叫styleFloat，firefox则是cssFloat）。<br />
-baidu.dom._styleFixer和baidu.dom._styleFilter可以为本模块提供支持。<br />
-其中_styleFilter能对颜色和px进行归一化处理，_styleFixer能对display，float，opacity，textOverflow的浏览器兼容性bug进行处理。
-		
- * @shortcut setStyle
- * @meta standard
- * @see baidu.dom.getStyle,baidu.dom.setStyles
- *             
- * @returns {HTMLElement} 目标元素
- */
-baidu.dom.setStyle = function (element, key, value) {
-    var dom = baidu.dom, fixer;
-    
-    // 放弃了对firefox 0.9的opacity的支持
-    element = dom.g(element);
-    key = baidu.string.toCamelCase(key);
+//describe('baidu.dom.setStyle测试', {
+//    '通过key/value方式设置样式值': function() {
+//        var oP1 = baidu.dom.g("p1_ss");
+//
+//        //在style里设置样式
+//        value_of(oP1.style.width).should_be("");
+//        baidu.dom.setStyle(oP1, "width", 50);
+//        value_of(oP1.style.width).should_be("50px");
+//		//function &快捷方式
+//        baidu.setStyle(oP1, "width", "90%");
+//        value_of(oP1.style.width).should_be("90%");
+//
+//        value_of(oP1.style.backgroundColor).should_be("");
+//        baidu.dom.setStyle(oP1, "background-color", "#ff0000");
+//        value_of(oP1.style.backgroundColor).should_match(/(#ff0000|rgb\(255, 0, 0\))/i);
+//
+//        //覆盖css里设置的样式
+//        value_of(baidu.dom.getStyle("div1_ss", "backgroundColor")).
+//            should_match(/(#00ff00|rgb\(0, 255, 0\))/i);
+//        baidu.dom.setStyle("div1_ss", "background-color", "#ff0000");
+//        value_of(baidu.dom.getStyle("div1_ss", "backgroundColor")).
+//            should_match(/(#ff0000|rgb\(255, 0, 0\))/i);
+//
+//        //filter样式,为IE特有的
+//        if (baidu.browser.ie){
+//            if("filter" in baidu.dom.g("tb1_ss").style) {
+//                var sFilter = "shadow(color=#ff0000,direction=90)";
+//                baidu.dom.setStyle("tb1_ss", "filter", sFilter);
+//                value_of(baidu.dom.getStyle("tb1_ss", "filter")).should_be(sFilter);
+//                //value_of(baidu.dom.g("tb1_ss").style.filter).should_be(sFilter);
+//                sFilter = "filter:alpha(opacity=20,finishopacity=100,style=1,startx=0, starty=0,finishx=140,finishy=270)";
+//                baidu.dom.setStyle("tb1_ss", "filter", sFilter);
+//                //value_of(baidu.dom.g("tb1_ss").style.filter).should_be(sFilter);
+//                value_of(baidu.dom.getStyle("tb1_ss", "filter")).should_be(sFilter);
+//            }
+//        }
+//    },
+//    
+//    '异常case': function() {
+//        var oP3 = baidu.dom.g("p3_ss");
+//
+//        //添加的样式值不存在
+//        baidu.dom.setStyle(oP3, "style-error", "test");
+//        value_of(baidu.dom.getStyle(oP3, "style-error")).should_be("test");
+//    }
+//});
 
-    if (fixer = dom._styleFilter) {
-        value = fixer.filter(key, value, 'set');
-    }
-
-    fixer = dom._styleFixer[key];
-    (fixer && fixer.set) ? fixer.set(element, value, key) : (element.style[fixer || key] = value);
-
-    return element;
-};
-
-// 声明快捷方法
-baidu.setStyle = baidu.dom.setStyle;
