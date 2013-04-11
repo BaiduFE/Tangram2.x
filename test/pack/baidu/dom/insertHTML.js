@@ -1,56 +1,85 @@
+module('baidu.dom.insertHTML测试')
+
 /*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
+ *  create div
+ *  create p in div
+ *  Test insertHTML in beforeBegin、afterBegin、beforeEnd、afterEnd
  */
 
-///import pack.baidu.dom.g;
-///import pack.baidu.browser.opera;
+function insertHtmlCreate(type, id, parent) {
+	var ele = document.createElement(type);
+	ele.id = id;
+	(parent || document.body).appendChild(ele);
+	return ele;
+}
 
-/**
- * 在目标元素的指定位置插入HTML代码
- * @name baidu.dom.insertHTML
- * @function
- * @grammar baidu.dom.insertHTML(element, position, html)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {string} position 插入html的位置信息，取值为beforeBegin,afterBegin,beforeEnd,afterEnd
- * @param {string} html 要插入的html
- * @remark
- * 
- * 对于position参数，大小写不敏感<br>
- * 参数的意思：beforeBegin&lt;span&gt;afterBegin   this is span! beforeEnd&lt;/span&gt; afterEnd <br />
- * 此外，如果使用本函数插入带有script标签的HTML字符串，script标签对应的脚本将不会被执行。
- * 
- * @shortcut insertHTML
- * @meta standard
- *             
- * @returns {HTMLElement} 目标元素
- */
-baidu.dom.insertHTML = function (element, position, html) {
-    element = baidu.dom.g(element);
-    var range,begin;
+function insertHtmlRemove(ele1, ele2) {
+	var r = function(ele) {
+		ele.parentNode.removeChild(ele);
+	}
+	if (ele1)
+		r(ele1);
+	if (ele2)
+		r(ele2);
+}
 
-    //在opera中insertAdjacentHTML方法实现不标准，如果DOMNodeInserted方法被监听则无法一次插入多element
-    //by lixiaopeng @ 2011-8-19
-    if (element.insertAdjacentHTML && !baidu.browser.opera) {
-        element.insertAdjacentHTML(position, html);
-    } else {
-        // 这里不做"undefined" != typeof(HTMLElement) && !window.opera判断，其它浏览器将出错？！
-        // 但是其实做了判断，其它浏览器下等于这个函数就不能执行了
-        range = element.ownerDocument.createRange();
-        // FF下range的位置设置错误可能导致创建出来的fragment在插入dom树之后html结构乱掉
-        // 改用range.insertNode来插入html, by wenyuxiang @ 2010-12-14.
-        position = position.toUpperCase();
-        if (position == 'AFTERBEGIN' || position == 'BEFOREEND') {
-            range.selectNodeContents(element);
-            range.collapse(position == 'AFTERBEGIN');
-        } else {
-            begin = position == 'BEFOREBEGIN';
-            range[begin ? 'setStartBefore' : 'setEndAfter'](element);
-            range.collapse(begin);
-        }
-        range.insertNode(range.createContextualFragment(html));
-    }
-    return element;
-};
+test('在元素的开始标签前插入html', function() {
+	var oDiv = insertHtmlCreate('div', "div1_ih");
+	var oP = insertHtmlCreate('p', "p1_ih", oDiv);
+	equals(oDiv.childNodes.length, 1);
+	equals(oDiv.childNodes[0].tagName, "P");
+	var op1 = baidu.dom.insertHTML(oP, "beforeBegin", "<br>");
+	equals(oDiv.childNodes.length, 2);
+	equals(oDiv.childNodes[0].tagName, "BR");
+	equals(oDiv.childNodes[1].tagName, "P");
+	equals(op1, oP);
+	insertHtmlRemove(oDiv, oP);
+})
 
-baidu.insertHTML = baidu.dom.insertHTML;
+test('在元素的开始标签后插入html', function() {
+	var oDiv = insertHtmlCreate('div', "div1_ih");
+	var oP = insertHtmlCreate('p', "p1_ih", oDiv);
+	oP.innerHTML = 'p2_ih';
+	baidu.dom.insertHTML(oP, "afterBegin", "文本信息");
+	equals(oP.innerHTML, "文本信息p2_ih");
+	insertHtmlRemove(oDiv, oP);
+	
+})
+
+test('在元素的结束标签前插入html', function() {
+	var oDiv = insertHtmlCreate('div', "div1_ih");
+	var oP = insertHtmlCreate('p', "p1_ih", oDiv);
+	oP.innerHTML = 'p2_ih';
+	baidu.insertHTML(oP, "beforeEnd", "END");
+	equals(oP.innerHTML, "p2_ihEND");
+	insertHtmlRemove(oDiv, oP);
+})
+
+test('在元素的结束标签后插入html', function() {
+	var oDiv = insertHtmlCreate('div', "div1_ih");
+	var oP = insertHtmlCreate('p', "p1_ih", oDiv);
+	equals(oDiv.childNodes.length, 1);
+	equals(oDiv.childNodes[0].tagName, "P");
+	var op1 = baidu.dom.insertHTML(oP, "afterEnd",
+			"<input type='text' value='data'/>");
+	equals(oDiv.childNodes.length, 2);
+	equals(oDiv.childNodes[0].tagName, "P");
+	equals(oDiv.childNodes[1].tagName, "INPUT");
+	equals(op1, oP);
+	insertHtmlRemove(oDiv, oP);
+})
+
+test('FF下的特殊情况',function(){
+	var table = insertHtmlCreate('table', 'id_table'),
+		td = insertHtmlCreate('td', 'id_td', insertHtmlCreate('tr', 'id_tr', table));
+	
+	baidu.dom.insertHTML(td, 'beforeEnd', '<div id="test2"><div><table id="table2"><tr><td></td></tr></table></div></div>');
+	baidu.dom.insertHTML(td, 'afterBegin', '<div id="test1"><div><table id="table1"><tr><td></td></tr></table></div></div>');
+	
+	equals(td.childNodes.length, 2, '两个节点插入后，子节点数应该时2');
+	equals(td.childNodes[0].id, 'test1', '第一个子节点的校验');
+	equals(td.childNodes[1].id, 'test2', '第二个子节点的校验');
+	equals($("#table2")[0].parentNode.parentNode.id, 'test2', '确认table位置');
+	equals($("#table1")[0].parentNode.parentNode.id, 'test1', '确认table位置');
+	insertHtmlRemove(table);
+})

@@ -1,35 +1,60 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- *
- * path: baidu/event/getEvent.js
- * author: xiadengping
- * version: 1.6.0
- * date: 2011/12/08
- */
+module('baidu.event.getEvent');
 
-///import pack.baidu.event;
+test('mouse event', function(){
+	expect(1);
+	$(document.body).append('<div id="div_test"></div>');
+	$('div#div_test').click(function (){
+		function test(){
+			var targetId = ua.browser.ie && ua.browser.ie < 9 ? baidu.event.getEvent().srcElement.id : baidu.event.getEvent().target.id
+			equals(targetId, "div_test", "ok");
+		}
+		test();
+	});
+	ua.click($('div#div_test')[0]);
+});
 
-/**
- * 获取事件对象
- * @name baidu.event.getEvent
- * @function
- * @param {Event} event event对象，目前没有使用这个参数，只是保留接口。by dengping.
- * @grammar baidu.event.getEvent()
- * @meta standard
- * @return {Event} event对象.
- */
+test('key event', function(){
+	expect(1);
+	$(document.body).append('<div id="div_test"></div>');
+	$('div#div_test').keydown(function(){
+		function test(){
+			var targetId = ua.browser.ie && ua.browser.ie < 9 ? baidu.event.getEvent().srcElement.id : baidu.event.getEvent().target.id
+			equals(targetId, "div_test", "ok");
+		}
+		test();
+	});
+	ua.keydown($('div#div_test')[0]);
+});
 
-baidu.event.getEvent = function(event) {
-    if (window.event) {
-        return window.event;
-    } else {
-        var f = arguments.callee;
-        do { //此处参考Qwrap框架 see http://www.qwrap.com/ by dengping
-            if (/Event/.test(f.arguments[0])) {
-                return f.arguments[0];
-            }
-        } while (f = f.caller);
-        return null;
-    }
-};
+test('html event', function(){
+	expect(1);
+	$(document.body).append('<div id="div_test"></div>');
+	$("#div_test").resize(function(){
+		function test(){
+			equals(baidu.event.getEvent(), null, "should be null");
+		}
+		test();
+	});
+	$("#div_test").resize()
+});
+
+test('other event', function(){
+	expect(4);
+	$(document.body).append('<div id="div_test"></div>');
+	(function (){
+		(function(){
+			//这儿应该什么都不是
+			equals(baidu.event.getEvent(), null, "should be null");
+		})();
+		function test(){ 
+			equals(baidu.event.getEvent(), null, "should be null");
+		}; test();
+		equals(baidu.event.getEvent(), null, "should be null");
+	})();
+	function test1(){
+		function test2(){
+			equals(baidu.event.getEvent(), null, "should be null");
+		};
+		test2();
+	};test1();
+});

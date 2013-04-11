@@ -1,162 +1,135 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/json/stringify.js
- * author: erik
- * version: 1.1.0
- * date: 2010/01/11
- */
+module("baidu.json.stringify测试");
 
-///import pack.baidu.json;
+test(
+		"stringify函数输入符合Json要求的对象",
+		function() {
+			var obj = {
+				a : 1,
+				b : 'test',
+				c : true,
+				d : 3.12345,
+				e : false,
+				f : null,
+				g : [ 1, 2, 3 ],
+				h : {
+					aa : 1,
+					bb : 2
+				}
+			}; // 输入为Json对象
+			var s = baidu.json.stringify(obj);
+			equals(
+					s,
+					"{\"a\":1,\"b\":\"test\",\"c\":true,\"d\":3.12345,\"e\":false,\"f\":null,\"g\":[1,2,3],\"h\":{\"aa\":1,\"bb\":2}}");
 
-/**
- * 将json对象序列化
- * @name baidu.json.stringify
- * @function
- * @grammar baidu.json.stringify(value)
- * @param {JSON} value 需要序列化的json对象
- * @remark
- * 该方法的实现与ecma-262第五版中规定的JSON.stringify不同，暂时只支持传入一个参数。后续会进行功能丰富。
- * @meta standard
- * @see baidu.json.parse,baidu.json.encode
- *             
- * @returns {string} 序列化后的字符串
- */
-baidu.json.stringify = (function () {
-    /**
-     * 字符串处理时需要转义的字符表
-     * @private
-     */
-    var escapeMap = {
-        "\b": '\\b',
-        "\t": '\\t',
-        "\n": '\\n',
-        "\f": '\\f',
-        "\r": '\\r',
-        '"' : '\\"',
-        "\\": '\\\\'
-    };
-    
-    /**
-     * 字符串序列化
-     * @private
-     */
-    function encodeString(source) {
-        if (/["\\\x00-\x1f]/.test(source)) {
-            source = source.replace(
-                /["\\\x00-\x1f]/g, 
-                function (match) {
-                    var c = escapeMap[match];
-                    if (c) {
-                        return c;
-                    }
-                    c = match.charCodeAt();
-                    return "\\u00" 
-                            + Math.floor(c / 16).toString(16) 
-                            + (c % 16).toString(16);
-                });
-        }
-        return '"' + source + '"';
-    }
-    
-    /**
-     * 数组序列化
-     * @private
-     */
-    function encodeArray(source) {
-        var result = ["["], 
-            l = source.length,
-            preComma, i, item;
-            
-        for (i = 0; i < l; i++) {
-            item = source[i];
-            
-            switch (typeof item) {
-            case "undefined":
-            case "function":
-            case "unknown":
-                break;
-            default:
-                if(preComma) {
-                    result.push(',');
-                }
-                result.push(baidu.json.stringify(item));
-                preComma = 1;
-            }
-        }
-        result.push("]");
-        return result.join("");
-    }
-    
-    /**
-     * 处理日期序列化时的补零
-     * @private
-     */
-    function pad(source) {
-        return source < 10 ? '0' + source : source;
-    }
-    
-    /**
-     * 日期序列化
-     * @private
-     */
-    function encodeDate(source){
-        return '"' + source.getFullYear() + "-" 
-                + pad(source.getMonth() + 1) + "-" 
-                + pad(source.getDate()) + "T" 
-                + pad(source.getHours()) + ":" 
-                + pad(source.getMinutes()) + ":" 
-                + pad(source.getSeconds()) + '"';
-    }
-    
-    return function (value) {
-        switch (typeof value) {
-        case 'undefined':
-            return 'undefined';
-            
-        case 'number':
-            return isFinite(value) ? String(value) : "null";
-            
-        case 'string':
-            return encodeString(value);
-            
-        case 'boolean':
-            return String(value);
-            
-        default:
-            if (value === null) {
-                return 'null';
-            } else if (value instanceof Array) {
-                return encodeArray(value);
-            } else if (value instanceof Date) {
-                return encodeDate(value);
-            } else {
-                var result = ['{'],
-                    encode = baidu.json.stringify,
-                    preComma,
-                    item;
-                    
-                for (var key in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, key)) {
-                        item = value[key];
-                        switch (typeof item) {
-                        case 'undefined':
-                        case 'unknown':
-                        case 'function':
-                            break;
-                        default:
-                            if (preComma) {
-                                result.push(',');
-                            }
-                            preComma = 1;
-                            result.push(encode(key) + ':' + encode(item));
-                        }
-                    }
-                }
-                result.push('}');
-                return result.join('');
-            }
-        }
-    };
-})();
+			var arraytest = [ {
+				location : 'beijing',
+				company : 'baidu',
+				money : 10.012,
+				people : 10
+			}, {
+				location : 'shanghai',
+				company : 'baidu',
+				money : 10.51,
+				people : 2
+			} ]; // 输入为Json数组
+			s = baidu.json.stringify(arraytest);
+			equals(
+					s,
+					"[{\"location\":\"beijing\",\"company\":\"baidu\",\"money\":10.012,\"people\":10},{\"location\":\"shanghai\",\"company\":\"baidu\",\"money\":10.51,\"people\":2}]");
+		});
+
+test("输入为number", function() {
+	var n = 3.14;
+	var s = baidu.json.stringify(n);
+	equals(s, "3.14");
+});
+
+test("输入为Date", function() {
+	var date = "2010/12/01 12:34:45";
+	var myDate = new Date(date);
+	var s = baidu.json.stringify(myDate);
+	equals(s, "\"2010-12-01T12:34:45\"");
+});
+
+test("输入为string", function() {
+	var n = 'baidu Online';
+	var s = baidu.json.stringify(n);
+	equals(s, "\"baidu Online\"");
+	var k = '\x1c';
+	var s = baidu.json.stringify(k);
+	equals(s, "\"\\u001c\"");
+});
+
+test("输入为null", function() {
+	var n = null;
+	var s = baidu.json.stringify(n);
+	equals(s, "null");
+});
+
+test("输入为undefined", function() {
+	var n = void (0);
+	var s = baidu.json.stringify(n);
+	equals(s, "undefined");
+});
+
+test("输入为boolean", function() {
+	var n = true;
+	var s = baidu.json.stringify(n);
+	equals(s, "true");
+
+	n = false;
+	s = baidu.json.stringify(n);
+	equals(s, "false");
+});
+
+test(
+		"输入的对象当中包含了function",
+		function() {
+			var obj = {
+				a : 1,
+				b : 'test',
+				c : true,
+				d : 3.12345,
+				e : false,
+				f : null,
+				g : [ 1, 2, 3 ],
+				h : {
+					aa : 1,
+					bb : 2
+				}
+			}; // 输入的对象当中包含了function
+			obj.fn1 = function(x) {
+				alert(x);
+			}
+			obj.fn2 = function(x, y) {
+				if (x > y)
+					return 1;
+				return 2;
+			}
+
+			var s = baidu.json.stringify(obj);
+			equals(
+					s,
+					"{\"a\":1,\"b\":\"test\",\"c\":true,\"d\":3.12345,\"e\":false,\"f\":null,\"g\":[1,2,3],\"h\":{\"aa\":1,\"bb\":2}}");
+		});
+
+test("hasOwnProperty", function() {
+	var object = {
+		"hasOwnProperty" : null,
+		"constructor" : null,
+		"isPrototypeOf" : null,
+		"propertyIsEnumerable" : null,
+		"toLocaleString" : null,
+		"valueOf" : null,
+		"toString" : null
+	};
+
+	if (ua.browser.ie && ua.browser.ie <= 8) {
+		equals(baidu.json.stringify(object), '{}');
+	} else {
+		equals(baidu.json.stringify(object), '{"hasOwnProperty":null,'
+				+ '"constructor":null,"isPrototypeOf":null,'
+				+ '"propertyIsEnumerable":null,"toLocaleString":null,'
+				+ '"valueOf":null,"toString":null}');
+	}
+});

@@ -1,202 +1,140 @@
+module("baidu.page.load");
+var path = (upath || "");
 
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- *
- * path: baidu/page/load.js
- * author: rocy
- * version: 1.0.0
- * date: 2010/11/29
- */
+test("加载资源", function() {
+	stop();
+	var div = document.body.appendChild(document.createElement('div'));
+	div.id = "css";
+	var arr = [ 0, 0, 0 ];
+	baidu.page.load([ {
+		url : path + "css.css",
+		onload : function(w, n) {
+			setTimeout(function() {
+				ok($(div).css('display') == 'none', 'load css');
+				$(div).remove();
+				arr[0] = 1;
+			}, 100);
+		}
+	}, {
+		url : path + "jsfile1.js",
+		onload : function(w, n) {
+			ok(typeof loadedTest1 == 'function', 'load js');
+			ok(loadedTest1() == 1, 'load js and run ok');
+			arr[1] = 1;
+		}
+	}, {
+		url : path + "test.html",
+		onload : function(text) {
+			// load html by ajax
+			ok(text.indexOf('<title>test</title>') > 0, 'load html');
+			arr[2] = 1;
+		}
+	} ]);
+	var handle = setInterval(function() {
+		if (arr[0] && arr[1] && arr[2]) {
+			clearInterval(handle);
+			start();
+		}
+	}, 10);
+});
 
-///import pack.baidu.page;
-///import pack.baidu.array.each;
-///import pack.baidu.ajax.get;
-///import pack.baidu.event.on;
-///import pack.baidu.event.un;
-///import pack.baidu.lang.isFunction;
-///import pack.baidu.lang.isString;
+test("类型参数的有效性", function() {
+	stop();
+	expect(5);
+	var ops = [ {
+		url : path + "a.php?file=a.css&type=css&opt=0",
+		type : 'css',
+		onload : function() {
+			step++;
+			ok(true, 'css loaded');
+		}
+	}, {
+		url : path + "a.js?file=a.css&type=css&opt=0",// "a.php?file=a.js&type=js&opt=1",//opera支持的php下面js读取貌似有问题，改成js文件
+		onload : function() {
+			step++;
+			ok(true, 'js loaded');
+		}
+	}, {
+		url : path + "b.js",
+		onload : function() {
+			step++;
+			ok(true, 'js loaded, 2');
+		}
+	}, {
+		url : path + "a.php?file=a.html&type=html&opt=2",
+		type : 'html',
+		onload : function() {
+			step++;
+			ok(true, 'html loaded');
+		}
+	} ];
+	var old = {
+		onload : function() {
+			equals(step, 4, '最后调用这个步骤');
+			start();
+		}
+	};
+	var step = 0;
+	baidu.page.load(ops, old || {});
+});
 
-/**
- *
- * 加载一组资源，支持多种格式资源的串/并行加载，支持每个文件有单独回调函数。
- *
- * @name baidu.page.load
- * @function
- * @grammar baidu.page.load(resources[, options])
- *
- * @param {Array} resources               资源描述数组，单个resource含如下属性.
- * @param {String} resources.url           链接地址.
- * @param {String} [resources.type]        取值["css","js","html"]，默认参考文件后缀.
- * @param {String} [resources.requestType] 取值["dom","ajax"]，默认js和css用dom标签，html用ajax.
- * @param {Function} resources.onload        当前resource加载完成的回调函数，若requestType为ajax，参数为xhr(可能失效)，responseText；若requestType为dom，无参数，执行时this为相应dom标签。.
- *
- * @param {Object} [options]               可选参数.
- * @param {Function} [options.onload]        资源全部加载完成的回调函数，无参数。.
- * @param {Boolean} [options.parallel]      是否并行加载，默认为false，串行。.
- * @param {Boolean} [ignoreAllLoaded]       全部加载之后不触发回调事件.主要用于内部实现.
- *
- *
- * @remark
- *  //串行实例
- *  baidu.page.load([
- *      { url : "http://img.baidu.com/js/tangram-1.3.2.js" },
- *      {url : "http://xxx.baidu.com/xpath/logicRequire.js",
- *          onload : fnOnRequireLoaded
- *      },
- *      { url : "http://xxx.baidu.com/xpath/target.js" }
- *  ],{
- *      onload : fnWhenTargetOK
- *  });
- *  //并行实例
- *  baidu.page.load([
- *      {
- *          url : "http://xxx.baidu.com/xpath/template.html",
- *          onload : fnExtractTemplate
- *      },
- *      { url : "http://xxx.baidu.com/xpath/style.css"},
- *      {
- *          url : "http://xxx.baidu.com/xpath/import.php?f=baidu.*",
- *          type : "js"
- *      },
- *      {
- *          url : "http://xxx.baidu.com/xpath/target.js",
- *      },
- *      {
- *          url : "http://xxx.baidu.com/xpath/jsonData.js",
- *          requestType : "ajax",
- *          onload : fnExtractData
- *      }
- *  ],{
- *      parallel : true,
- *      onload : fnWhenEverythingIsOK
- * });
- */
-baidu.page.load = /**@function*/function(resources, options, ignoreAllLoaded) {
-    //TODO failure, 整体onload能不能每个都调用; resources.charset
-    options = options || {};
-    var self = baidu.page.load,
-        cache = self._cache = self._cache || {},
-        loadingCache = self._loadingCache = self._loadingCache || {},
-        parallel = options.parallel;
+test("js支持charset设置", function() {// opera下这个用例固定失败...
+	if (ua.browser.opera) {
+		ok(true, 'not support by opera');
+		return;
+	}
+	stop();
+	expect(1);
+	baidu.page.load([ {
+		url : path + 'jsgbk.js',
+		charset : 'gb2312',
+		onload : function() {
+			equals(testGBK(), '百度', '校验charset在js情况下');
+			start();
+		}
+	} ]);
+});
 
-    function allLoadedChecker() {
-        for (var i = 0, len = resources.length; i < len; ++i) {
-            if (! cache[resources[i].url]) {
-                setTimeout(arguments.callee, 10);
-                return;
-            }
-        }
-        options.onload();
-    };
+test("第一个参数是url", function() {
+	stop();
+	expect(2);
+	baidu.page.load(path + "jsfile2.js");
+	ua.delayhelper(function() {
+		return loadedTest2 && typeof loadedTest2 == 'function';
+	}, function() {
+		ok(loadedTest2() == 2, '一个参数的情况');
+		start();
+	});
+});
 
-    function loadByDom(res, callback) {
-        var node, loaded, onready;
-        switch (res.type.toLowerCase()) {
-            case 'css' :
-                node = document.createElement('link');
-                node.setAttribute('rel', 'stylesheet');
-                node.setAttribute('type', 'text/css');
-                break;
-            case 'js' :
-                node = document.createElement('script');
-                node.setAttribute('type', 'text/javascript');
-                node.setAttribute('charset', res.charset || self.charset);
-                break;
-            case 'html' :
-                node = document.createElement('iframe');
-                node.frameBorder = 'none';
-                break;
-            default :
-                return;
-        }
-
-        // HTML,JS works on all browsers, CSS works only on IE.
-        onready = function() {
-            if (!loaded && (!this.readyState ||
-                    this.readyState === 'loaded' ||
-                    this.readyState === 'complete')) {
-                loaded = true;
-                // 防止内存泄露
-                baidu.un(node, 'load', onready);
-                baidu.un(node, 'readystatechange', onready);
-                //node.onload = node.onreadystatechange = null;
-                callback.call(window, node);
-            }
-        };
-        baidu.on(node, 'load', onready);
-        baidu.on(node, 'readystatechange', onready);
-        //CSS has no onload event on firefox and webkit platform, so hack it.
-        if (res.type == 'css') {
-            (function() {
-                //避免重复加载
-                if (loaded) return;
-                try {
-                    node.sheet.cssRule;
-                } catch (e) {
-                    setTimeout(arguments.callee, 20);
-                    return;
-                }
-                loaded = true;
-                callback.call(window, node);
-            })();
-        }
-
-        node.href = node.src = res.url;
-        document.getElementsByTagName('head')[0].appendChild(node);
-    }
-
-    //兼容第一个参数直接是资源地址.
-    baidu.lang.isString(resources) && (resources = [{url: resources}]);
-
-    //避免递归出错,添加容错.
-    if (! (resources && resources.length)) return;
-
-    function loadResources(res) {
-        var url = res.url,
-            shouldContinue = !!parallel,
-            cacheData,
-            callback = function(textOrNode) {
-                //ajax存入responseText,dom存入节点,用于保证onload的正确执行.
-                cache[res.url] = textOrNode;
-                delete loadingCache[res.url];
-
-                if (baidu.lang.isFunction(res.onload)) {
-                    //若返回false, 则停止接下来的加载.
-                    if (false === res.onload.call(window, textOrNode)) {
-                        return;
-                    }
-                }
-                //串行时递归执行
-                !parallel && self(resources.slice(1), options, true);
-                if ((! ignoreAllLoaded) && baidu.lang.isFunction(options.onload)) {
-                    allLoadedChecker();
-                }
-            };
-        //默认用后缀名, 并防止后缀名大写
-        res.type = res.type || url.replace(/^[^\?#]+\.(css|js|html)(\?|#| |$)[^\?#]*/i, '$1'); //[bugfix]修改xxx.js?v这种情况下取不到js的问题。 
-        //默认html格式用ajax请求,其他都使用dom标签方式请求.
-        res.requestType = res.requestType || (res.type == 'html' ? 'ajax' : 'dom');
-
-        if (cacheData = cache[res.url]) {
-            callback(cacheData);
-            return shouldContinue;
-        }
-        if (!options.refresh && loadingCache[res.url]) {
-            setTimeout(function() {loadResources(res);}, 10);
-            return shouldContinue;
-        }
-        loadingCache[res.url] = true;
-        if (res.requestType.toLowerCase() == 'dom') {
-            loadByDom(res, callback);
-        }else {//ajax
-            baidu.ajax.get(res.url, function(xhr, responseText) {callback(responseText);});
-        }
-        //串行模式,通过callback方法执行后续
-        return shouldContinue;
-    };
-
-    baidu.each(resources, loadResources);
-};
-//默认编码设置为UTF8
-baidu.page.load.charset = 'UTF8';
+test("并行", function() {
+	stop();
+	var step = 0;
+	var ops = [ {
+		url : path + "b.css",
+		onload : function() {
+			ok(true, "css at " + step++);
+		}
+	}, {
+		url : path + "b.js",
+		onload : function() {
+			ok(true, "js at " + step++);
+		}
+	}, {
+		url : path + "b.html",
+		onload : function() {
+			ok(true, "html at " + step++);
+		}
+	} ];
+	baidu.page.load(ops, {
+		parallel : true,
+		onload : function() {
+			ok(step <= 3, '并行');
+		}
+	});
+	ua.delayhelper(function() {
+		return step == 3;
+	}, function() {
+		start();
+	});
+});

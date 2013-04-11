@@ -1,24 +1,32 @@
-///import pack.baidu.dom.g;
-///import pack.baidu.browser.ie;
+module("baidu.dom.opacity");
 
-/**
- * 设置HTML元素的不透明性，跨浏览器种类兼容处理
- * 
- * @author: meizz
- * @version: 2011-07-11
- * @namespace: baidu.dom.opacity
- * @grammar baidu.dom.opacity(element, opacity)
- * @param {String|HTMLElement}  element 定位插入的HTML的目标DOM元素
- * @param {Number}              opacity 不透明度
- */
-baidu.dom.opacity = function(element, opacity){
-    element = baidu.dom.g(element);
+test('set form null to 0.5',function(){
+	expect(1);
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+    $(div).css('left', '0').css('top', '0').css('height', '10px')
+    .css('width', '10px').css('backgroundColor','red');
+	baidu.dom.opacity(div, 0.5);
+	if(ua.browser.ie){
+		equals(div.style.filter, "progid:DXImageTransform.Microsoft.Alpha(opacity=50)", "from '' to 0.5");
+	} else{
+		equals(div.style.opacity, 0.5, "from '' to 0.5");
+	}
+	document.body.removeChild(div);
+});
 
-    if (!baidu.browser.ie) {
-        element.style.opacity = opacity;
-        element.style.KHTMLOpacity = opacity;
-    } else {
-        element.style.filter = "progid:DXImageTransform.Microsoft.Alpha(opacity="+
-            Math.floor(opacity * 100) +")";
-    }
-};
+test('set form 0.1 to 1',function(){
+	expect(1);
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+    $(div).css('left', '0').css('top', '0').css('height', '10px')
+    .css('width', '10px').css('backgroundColor','red').css('opacity', '0.1');
+	baidu.dom.opacity(div, 1);
+	if(ua.browser.ie){
+		equals(div.style.filter, "progid:DXImageTransform.Microsoft.Alpha(opacity=100)", "from 0.1 to 1");
+	} else{
+		equals(div.style.opacity, 1, "from 0.1 to 1");
+	}
+	document.body.removeChild(div);
+});
+

@@ -1,25 +1,45 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/page/getScrollTop.js
- * author: erik
- * version: 1.1.0
- * date: 2009/11/17
- */
+module("baidu.page.getScrollTop");
 
-///import pack.baidu.page;
+test("滚动条检测", function() {
+	ua.frameExt( {
+		ontest : function(w) {
+			var op = this;
+			equals(w.baidu.page.getScrollTop(), 0);
+			op.finish();
+		}
+	});
+});
 
-/**
- * 获取纵向滚动量
- * @name baidu.page.getScrollTop
- * @function
- * @grammar baidu.page.getScrollTop()
- * @see baidu.page.getScrollLeft
- * @meta standard
- * @returns {number} 纵向滚动量
- */
-baidu.page.getScrollTop = function () {
-    var d = document;
-    return window.pageYOffset || d.documentElement.scrollTop || d.body.scrollTop;
-};
+test("有滚动", function() {
+	ua.frameExt( {
+		onafterstart : function(f) {
+			$(f).css('height', 200);
+		},
+		ontest : function(w) {
+			var div = w.document.createElement('div');
+			w.document.body.appendChild(div);
+			w.$(div).css('height', 600);
+
+			var op = this;
+			equals(w.baidu.page.getScrollTop(), 0);
+			op.finish();
+		}
+	});
+});
+
+test("滚动200", function() {
+	ua.frameExt( {
+		onafterstart : function(f) {
+			$(f).css('height', 200);
+		},
+		ontest : function(w) {
+			var div = w.document.createElement('div');
+			w.document.body.appendChild(div);
+			w.$(div).css('height', 600);
+			w.scrollTo(0, 200);
+			var op = this;
+			equals(w.baidu.page.getScrollTop(), 200);
+			op.finish();
+		}
+	});
+});

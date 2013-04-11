@@ -1,31 +1,37 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/object/keys.js
- * author: erik
- * version: 1.1.0
- * date: 2009/11/15
- */
+module("baidu.object.keys测试");
 
-///import pack.baidu.object;
+test("keys函数输入对象实例", function(){
+	o = {a:1,b:"text",c:3.12345,d:[1,2,3],e:new Object()}; //对象当中没有函数作为value
+	k = baidu.object.keys(o);	
+	same(k, ["a","b","c","d","e"], 'k = ["a","b","c","d","e"]');
+	
+	o = {a:1,b:"test",c:3.12345,d:[1,2,3],e:new Object()};
+	o.fn = function(x){
+		alert(x);
+	};
+	k = baidu.object.keys(o);
+	same(k, ["a","b","c","d","e","fn"], 'k = ["a","b","c","d","e","fn"]');
+});
 
-/**
- * 获取目标对象的键名列表
- * @name baidu.object.keys
- * @function
- * @grammar baidu.object.keys(source)
- * @param {Object} source 目标对象
- * @see baidu.object.values
- *             
- * @returns {Array} 键名列表
- */
-baidu.object.keys = function (source) {
-    var result = [], resultLen = 0, k;
-    for (k in source) {
-        if (source.hasOwnProperty(k)) {
-            result[resultLen++] = k;
-        }
-    }
-    return result;
-};
+test("keys函数输入没有任何属性的对象实例", function(){
+	k = baidu.object.keys({});
+	equals(k[0], undefined, '{}: k[0] = "undefined"');
+});
+
+////baidu.object.keys测试
+//describe('baidu.object.keys测试',{
+//    "keys函数输入对象实例":function (){
+//        o = { a:1,b:'test',c:3.1415,d:[1,2,3],e:new Object()};  //对象当中没有函数作为value
+//        k = baidu.object.keys(o);
+//        value_of(k).should_be(['a','b','c','d','e']);
+//        
+//        o = { a:1,b:'test',c:3.1415,d:[1,2,3],e:new Object()};  //对象当中有函数作为value
+//        o.fn = function (x){alert(x);};
+//        k = baidu.object.keys(o);
+//        value_of(k).should_be(['a','b','c','d','e','fn']);
+//    },
+//    "keys函数输入没有任何属性的对象实例":function (){
+//        k = baidu.object.keys({});
+//        value_of(k).should_be([]);
+//    }
+//});

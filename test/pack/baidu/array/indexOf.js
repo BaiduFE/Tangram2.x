@@ -1,40 +1,92 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/array/indexOf.js
- * author: erik
- * version: 1.1.0
- * date: 2009/12/02
- */
+module("baidu.array.indexOf");
 
-///import pack.baidu.array;
+test("2个参数，查询数组项", function() {
+	expect(4);
+	var arraytest = [ 2, 5, 8, 19, 'name', '44', 56, 5, 'name' ];
+	var r = baidu.array.indexOf(arraytest, 'name');
+	equal(r, 4, "index of string");
+	arraytest = [ 2, 5, 8, 19, 'name', '44', 56, 5, 'name' ];
+	var i = 5;
+	r = baidu.array.indexOf(arraytest, i);
+	equal(r, 1, "2个参数");
+	r = baidu.array.indexOf(arraytest, 'lack');
+	equal(r, -1, "查询不存在的数组项");
+	r = baidu.array.indexOf(arraytest, 0);
+	equal(r, -1, "查询不存在的元素");
+});
 
-/**
- * 查询数组中指定元素的索引位置
- * @name baidu.array.indexOf
- * @function
- * @grammar baidu.array.indexOf(source, match[, fromIndex])
- * @param {Array} source 需要查询的数组
- * @param {Any} match 查询项
- * @param {number} [fromIndex] 查询的起始位索引位置，如果为负数，则从source.length+fromIndex往后开始查找
- * @see baidu.array.find,baidu.array.lastIndexOf
- *             
- * @returns {number} 指定元素的索引位置，查询不到时返回-1
- */
-baidu.array.indexOf = function (source, match, fromIndex) {
-    var len = source.length,
-        iterator = match;
-        
-    fromIndex = fromIndex | 0;
-    if(fromIndex < 0){//小于0
-        fromIndex = Math.max(0, len + fromIndex)
-    }
-    for ( ; fromIndex < len; fromIndex++) {
-        if(fromIndex in source && source[fromIndex] === match) {
-            return fromIndex;
-        }
-    }
-    
-    return -1;
-};
+test("3个参数,正常用例", function() {
+	expect(2);
+	var arraytest = [ 2, 3, 5, 6, 7, 'odd', 3, 1, 'even', 6 ];
+	var i = 6;
+	var start = 5;
+	r = baidu.array.indexOf(arraytest, i, start);
+	equal(r, 9, "查询数组项");
+	r = baidu.array.indexOf(arraytest, i, 2.5);// float
+	equal(r, 3, "start为小数");
+});
+
+test("3个参数，start为负数", function() {
+	expect(2);
+	var arraytest = [ 2, 3, 5, 6, 7, 'odd', 3, 1, 'even', 6 ];
+	var i = 6;
+	var start = -3;
+	var r = baidu.array.indexOf(arraytest, i, start);
+	equal(r, 9, "start 为-3");
+	start = -15.8;
+	r = baidu.array.indexOf(arraytest, i, start);
+	equal(r, 3, "start 为-15.8");
+});
+
+test("3个参数，start大于数组长度", function() {
+	expect(3);
+	var arraytest = [ 2, 3, 5, 6, 7, 'odd', 3, 1, 'even', 6 ];
+	var i = 6;
+	var start = -3;
+	var r = baidu.array.indexOf(arraytest, i, start);// start为负数时自动取为0
+	equal(r, 9, "start 为-3");
+	start = 15;
+	r = baidu.array.indexOf(arraytest, i, start);// start为负数时自动取为数组长度
+	equal(r, -1, "查询数组项：start 为15");
+	arraytest = [ 2, 3, 5, 6, 7, 3, 1, 6 ];
+	start = 20;
+	r = baidu.array.indexOf(arraytest, function(x) {
+		return x % 3 == 0;
+	}, start);
+	equal(r, -1, "查询函数：start 为20");
+
+});
+test("异常用例", function() {
+	expect(8);
+	var r = baidu.array.indexOf([], 1);
+	equal(r, -1, "空数组查询数组项");
+
+	r = baidu.array.indexOf([], function(x) {
+		return x == 1;
+	});
+	equal(r, -1, "空数组查询函数");
+
+	r = baidu.array.indexOf([], 1, 0);
+	equal(r, -1, "3个参数，start为0，空数组查询数组项");
+
+	r = baidu.array.indexOf([], 1, -1);
+	equal(r, -1, "3个参数，start为-1，空数组查询数组元素");
+
+	r = baidu.array.indexOf([], 1, 5);
+	equal(r, -1, "空数组查询数组项，start为5,空数组查询数组元素");
+
+	r = baidu.array.indexOf([], function(x) {
+		return x == 1;
+	}, 0);
+	equal(r, -1, "空数组查询函数，start为0");
+
+	r = baidu.array.indexOf([], function(x) {
+		return x == 1;
+	}, -1);
+	equal(r, -1, "空数组查询函数，start为-1");
+
+	r = baidu.array.indexOf([], function(x) {
+		return x == 1;
+	}, 5);
+	equal(r, -1, "空数组查询数组项，start为5");
+});

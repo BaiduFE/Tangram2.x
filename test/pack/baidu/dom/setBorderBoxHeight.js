@@ -1,27 +1,73 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module("baidu.dom.setBorderBoxHeight");
 
-///import pack.baidu.dom;
-///import pack.baidu.dom.setBorderBoxSize;
+test("base", function() {
+	var check = function(styles, expects) {
+		if (baidu.browser.isStrict) {
+			var div = document.body.appendChild(document.createElement("div"));
+			$(div).css("backgroundColor", "red");
+			for ( var style in styles) {
+				$(div).css(style, styles[style]);
+			}
+			baidu.dom.setBorderBoxHeight
+					&& baidu.dom.setBorderBoxHeight(div, styles['height']);
+			baidu.dom.setBorderBoxWidth
+					&& baidu.dom.setBorderBoxWidth(div, styles['width']);
+			for ( var expect in expects) {
+				equals(parseInt(div.style[expect]), expects[expect], "check "
+						+ expect);
+			}
+			$(div).remove();
+		}
+	};
 
-/**
- * 按照border-box模型设置元素的height值
- * 
- * @author berg
- * @name baidu.dom.setBorderBoxHeight
- * @function
- * @grammar baidu.dom.setBorderBoxHeight(element, height)
- * 
- * @param {HTMLElement|string} element DOM元素或元素的id
- * @param {number|string} height 要设置的height
- *
- * @return {HTMLElement}  设置好的元素
- * @see baidu.dom.setBorderBoxWidth, baidu.dom.setBorderBoxSize
- * @shortcut dom.setOuterHeight
- */
-baidu.dom.setOuterHeight = 
-baidu.dom.setBorderBoxHeight = function (element, height) {
-    return baidu.dom.setBorderBoxSize(element, {height : height});
-};
+	check({
+		height : 50,
+		padding : 0,
+		border : 0
+	}, {
+		height : 50
+	});
+
+	check({
+		height : 50,
+		padding : 10,
+		border : 10
+	}, {
+		height : 10
+	});
+
+	check({
+		height : 50,
+		padding : 10,
+		border : 0
+	}, {
+		height : 30
+	});
+
+	check({
+		height : 50,
+		margin : 0,
+		padding : 0,
+		border : 10
+	}, {
+		height : 30
+	});
+
+	check({
+		height : 50,
+		margin : 0,
+		paddingTop : 10,
+		border : 0
+	}, {
+		height : 40
+	});
+
+	check({
+		height : 50,
+		padding : 0,
+		margin : 0,
+		borderTopWidth : 10
+	}, {
+		height : 40
+	});
+});

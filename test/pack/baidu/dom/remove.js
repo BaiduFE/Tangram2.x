@@ -1,30 +1,44 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/remove.js
- * author: allstar,berg
- * version: 1.1.0
- * date: 2009/11/17
- */
+module("baidu.dom.remove");
 
-///import pack.baidu.browser.ie;
-///import pack.baidu.dom._g;
+test(
+		"删除所有已有标签的遍历",
+		function() {
+			ua
+					.frameExt(function(w) {
+						var typeNames = ('p,h1,h2,h3,h4,h5,h6,blockquote,ol,ul,dl,div,form,a' + ',table,fieldset,address,ins,del,em,strong,q,cite,dfn,abbr' + ',acronym,code,samp,kbd,var,img,object,hr' + ',input,button,label,select,iframe')
+								.split(',');
+						for ( var i = 0; i < typeNames.length; i++) {
+							var cnt = w.document.body.childNodes.length;
+							var tag = typeNames[i];
+							var ele = w.document.createElement(tag);
+							ele.id = "test_" + tag;
+							w.document.body.appendChild(ele);
+							w.baidu.dom.remove("test_" + tag);
+							equals(cnt, w.document.body.childNodes.length,
+									'check if node is removed : ' + tag);
+						}
 
-/**
- * 从DOM树上移除目标元素
- * @name baidu.dom.remove
- * @function
- * @grammar baidu.dom.remove(element)
- * @param {HTMLElement|string} element 需要移除的元素或元素的id
- * @remark
- * <b>注意：</b>对于移除的dom元素，IE下会释放该元素的空间，继续使用该元素的引用进行操作将会引发不可预料的问题。
- * @meta standard
- */
+						this.finish();
+					});
+		});
 
-baidu.dom.remove = function (element) {
-    element = baidu.dom._g(element);
-	var tmpEl = element.parentNode;
-    //去掉了对ie下的特殊处理：创建一个div，appendChild，然后div.innerHTML = ""
-    tmpEl && tmpEl.removeChild(element);
-};
+test('text node', function() {
+	var div = document.body.appendChild(document.createElement("div"));
+	var node = div.appendChild(document.createTextNode("test"));
+	baidu.dom.remove(node);
+	equals(div.innerHTML, '', 'text node is removed');
+	baidu.dom.remove(div);
+});
+
+test('异常用例', function() {
+	expect(1);
+	var div = document.createElement('div');
+	div.id = 'remove_test_div';
+	// alert(div && div.nodeName && (div.nodeType == 1 || id.nodeType == 9))
+		try {
+			baidu.dom.remove("remove_test_div");
+
+		} catch (e) {
+			ok(true, 'exception catched');
+		}
+	})

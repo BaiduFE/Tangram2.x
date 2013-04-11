@@ -1,27 +1,25 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/lang/isDate.js
- * author: berg
- * version: 1.0.0
- * date: 2010/10/12 
- */
+module("baidu.lang.isDate");
 
-///import pack.baidu.lang;
+test("日期校验",function(){
+	expect(1);
+	ok(baidu.lang.isDate(new Date()),"new Date is date");
+});
 
-/**
- * 判断目标参数是否为Date对象
- * @name baidu.lang.isDate
- * @function
- * @grammar baidu.lang.isDate(source)
- * @param {Any} source 目标参数
- * @version 1.3
- * @see baidu.lang.isString,baidu.lang.isObject,baidu.lang.isNumber,baidu.lang.isArray,baidu.lang.isBoolean,baidu.lang.isElement
- *             
- * @returns {boolean} 类型判断结果
- */
-baidu.lang.isDate = function(o) {
-    // return o instanceof Date;
-    return {}.toString.call(o) === "[object Date]" && o.toString() !== 'Invalid Date' && !isNaN(o);
-};
+test("类型覆盖校验",function(){
+	// 空对象
+    ok(!baidu.lang.isDate(),"empty obj is not boolean");
+    // 字符串
+    ok(!baidu.lang.isDate("test"),"string is not boolean");
+    // 数字
+    ok(!baidu.lang.isDate(123),"number is not boolean");
+    // 布尔
+    ok(!baidu.lang.isDate(true),"bool is boolean");
+    // 空
+    ok(!baidu.lang.isDate({}),"empty is not boolean");
+    // 数组
+    ok(!baidu.lang.isDate([]),"array is not boolean");
+    // undefine
+    ok(!baidu.lang.isDate(void(0)),"undefined is not boolean");
+    // 快捷方式
+   ok(!baidu.lang.isDate(baidu),"short cut is not boolean");
+})

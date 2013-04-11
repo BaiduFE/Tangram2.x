@@ -1,77 +1,95 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module('baidu.object.merge');
 
-///import pack.baidu.object;
-///import pack.baidu.lang.isObject;
-///import pack.baidu.lang.isFunction;
+test('基础测试', function() {
+	var oSrc = {id: 777, method: 'post', 'key': 'value'};
+	var oTarget = {id: 888};
 
-/*
- * 默认情况下，所有在源对象上的属性都会被非递归地合并到目标对象上
- * 并且如果目标对象上已有此属性，不会被覆盖
- */
-/**
- * 合并源对象的属性到目标对象。
- *
- * @name baidu.object.merge
- * @function
- * @grammar baidu.object.merge(target, source[, opt_options])
- *
- * @param {Function} target 目标对象.
- * @param {Function} source 源对象.
- * @param {Object} opt_options optional merge选项.
- * @config {boolean} overwrite optional 如果为真，源对象属性会覆盖掉目标对象上的已有属性，默认为假.
- * @config {string[]} whiteList optional 白名单，默认为空，如果存在，只有在这里的属性才会被处理.
- * @config {boolean} recursive optional 是否递归合并对象里面的object，默认为否.
- * @return {object} merge后的object.
- * @see baidu.object.extend
- * @author berg
- */
-(function() {
-var isPlainObject = function(source) {
-        return baidu.lang.isObject(source) && !baidu.lang.isFunction(source);
-    };
+	baidu.object.merge(oTarget, oSrc);
+	same(
+        oTarget,
+        {id: 888, 'method': 'post', 'key': 'value'},
+        '默认三个属性'
+    );
 
-function mergeItem(target, source, index, overwrite, recursive) {
-    if (source.hasOwnProperty(index)) {
-        if (recursive && isPlainObject(target[index])) {
-            // 如果需要递归覆盖，就递归调用merge
-            baidu.object.merge(
-                target[index],
-                source[index],
-                {
-                    'overwrite': overwrite,
-                    'recursive': recursive
-                }
-            );
-        } else if (overwrite || !(index in target)) {
-            // 否则只处理overwrite为true，或者在目标对象中没有此属性的情况
-            target[index] = source[index];
+	var oSrc = {id: 777, method: 'post', 'key': 'value'};
+	var oTarget = {id: 888};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'overwrite' : true
         }
-    }
-}
+    );
+	same(oTarget, {id: 777, 'method': 'post', 'key': 'value'}, '强制覆盖');
 
-baidu.object.merge = function(target, source, opt_options) {
-    var i = 0,
-        options = opt_options || {},
-        overwrite = options['overwrite'],
-        whiteList = options['whiteList'],
-        recursive = options['recursive'],
-        len;
-
-    // 只处理在白名单中的属性
-    if (whiteList && whiteList.length) {
-        len = whiteList.length;
-        for (; i < len; ++i) {
-            mergeItem(target, source, whiteList[i], overwrite, recursive);
+	var oSrc = {id: 777, method: 'post', 'key': 'value'};
+	var oTarget = {id: 888};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'whiteList' : ['id', 'method']
         }
-    } else {
-        for (i in source) {
-            mergeItem(target, source, i, overwrite, recursive);
-        }
-    }
+    );
+	same(oTarget, {id: 888, 'method': 'post'}, '指定白名单');
 
-    return target;
-};
-})();
+	var oSrc = {id: 777, method: 'post', obj: {a: 1, b: 2}};
+	var oTarget = {id: 888, obj: {b: 3, c: 3}};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'recursive' : true
+        }
+    );
+	same(oTarget, {id: 888, 'method': 'post', obj: {a: 1, b: 3, c: 3}}, '递归');
+
+	var oSrc = {id: 777, method: 'post', obj: {a: 1, b: 2}};
+	var oTarget = {id: 888, obj: {b: 3, c: 3}};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'whiteList' : ['method', 'obj'],
+            'recursive' : true
+        }
+    );
+	same(oTarget, {id: 888, 'method': 'post', obj: {a: 1, b: 3, c: 3}}, '递归+白名单');
+
+	var oSrc = {id: 777, method: 'post', obj: {a: 1, b: 2}};
+	var oTarget = {id: 888, obj: {b: 3, c: 3}};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'overwrite' : true,
+            'recursive' : true
+        }
+    );
+	same(oTarget, {id: 777, 'method': 'post', obj: {a: 1, b: 2, c: 3}}, '递归+覆盖');
+
+	var oSrc = {id: 777, method: 'post', obj: {a: 1, b: 2}};
+	var oTarget = {id: 888, obj: {b: 3, c: 3}};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'overwrite' : true,
+            'whiteList' : ['method', 'obj']
+        }
+    );
+	same(oTarget, {id: 888, 'method': 'post', obj: {a: 1, b: 2}}, '白名单+覆盖，不递归');
+
+	var oSrc = {id: 777, method: 'post', obj: {a: 1, b: 2}};
+	var oTarget = {id: 888, obj: {b: 3, c: 3}};
+	baidu.object.merge(
+        oTarget,
+        oSrc,
+        {
+            'recursive' : true,
+            'overwrite' : true,
+            'whiteList' : ['method', 'obj']
+        }
+    );
+	same(oTarget, {id: 888, 'method': 'post', obj: {a: 1, b: 2, c: 3}}, '白名单+覆盖，递归');
+});

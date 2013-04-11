@@ -1,26 +1,11 @@
+module("baidu.number.randomInt");
 
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/number/randomInt.js
- * author: berg
- * version: 1.0.0
- * date: 2010/12/14
- */
-
-///import pack.baidu.number;
-
-/**
- * 生成随机整数，范围是[min, max]
- * @name baidu.number.randomInt
- * @function
- * @grammar baidu.number.randomInt(min, max) 
- * 
- * @param 	{number} min 	随机整数的最小值
- * @param 	{number} max 	随机整数的最大值
- * @return 	{number} 		生成的随机整数
- */
-baidu.number.randomInt = function(min, max){
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
+test("base", function(){
+	equals(baidu.number.randomInt(0, 0), 0);
+	ok(baidu.number.randomInt(0, 10) <= 10, "check random int");
+	var arr = [];
+	for(var i = 0; i < 20; i++){
+		arr[i] = baidu.number.randomInt(0, 9);
+		ok(arr[i]<10, "check random int : " + arr[i]);
+	}
+});

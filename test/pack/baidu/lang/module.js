@@ -1,53 +1,86 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module("baidu.lang.module");
 
-///import pack.baidu.lang;
+var myModule = {};
+var myFun = function () {};
 
-/**
- * 增加自定义模块扩展,默认创建在当前作用域
- * @author erik, berg
- * @name baidu.lang.module
- * @function
- * @grammar baidu.lang.module(name, module[, owner])
- * @param {string} name 需要创建的模块名.
- * @param {Any} module 需要创建的模块对象.
- * @param {Object} [owner] 模块创建的目标环境，默认为window.
- * @remark
- *
-            从1.1.1开始，module方法会优先在当前作用域下寻找模块，如果无法找到，则寻找window下的模块
+test("扩展存在的Object类型的模块", function(){
+	baidu.lang.module("myModule.sum", function(a,b){return a+b;});
+	equals(myModule.sum(1,2), 3, 'extend exist Object module');
+});
 
- * @meta standard
- */
-baidu.lang.module = function(name, module, owner) {
-    var packages = name.split('.'),
-        len = packages.length - 1,
-        packageName,
-        i = 0;
+test("扩展存在的Function类型的模块", function(){
+	baidu.lang.module("myFun.sum", function(a,b){return a+b;});
+	equals(myFun.sum(1,2), 3, 'extend exist Function module');
+});
 
-    // 如果没有owner，找当前作用域，如果当前作用域没有此变量，在window创建
-    if (!owner) {
-        try {
-            if (!(new RegExp('^[a-zA-Z_\x24][a-zA-Z0-9_\x24]*\x24')).test(packages[0])) {
-                throw '';
-            }
-            owner = window['eval'](packages[0]);
-            i = 1;
-        }catch (e) {
-            owner = window;
-        }
+test("扩展不存在的模块", function(){
+	baidu.lang.module("noExist.sum", function(a,b){return a+b;});
+	equals(noExist.sum(1,2), 3, 'extend noExist module extend');
+});
+
+test("指定owner的模块扩展", function(){
+	baidu.lang.module("mod.sum", function(a,b){return a+b;}, myModule);
+	equals(myModule.mod.sum(1,2), 3, 'declare owner module extend');
+});
+
+test("指定owner不存在的模块扩展", function(){
+	baidu.lang.module("noex.sum", function(a,b){return a+b;}, null);
+	equals(noex.sum(1,2), 3, 'declare owner noExist module extend');
+});
+
+test("指定namespace下面进行扩展", function(){
+  var com = {
+    'leeight' : {
+      'package' : {
+      
+      },
+      'name' : 'leeight',
+      'age' : 25,
+      'height' : 0
     }
+  };
+  
+  baidu.lang.module("sum", function(a, b){ return a + b;}, com.leeight.package);
+  equals(com.leeight.package.sum(1, 2), 3, "exists");
 
-    for (; i < len; i++) {
-        packageName = packages[i];
-        if (!owner[packageName]) {
-            owner[packageName] = {};
-        }
-        owner = owner[packageName];
-    }
+  baidu.lang.module("sum", function(a, b){ return a + b + 1;}, com.leeight.package);
+  equals(com.leeight.package.sum(1, 2), 3, "can't be override");
 
-    if (!owner[packages[len]]) {
-        owner[packages[len]] = module;
-    }
-};
+  baidu.lang.module("sum", function(a, b){ return a + b;}, com.leeight.name);
+  equals(com.leeight.name.sum, undefined, "exists");
+
+  baidu.lang.module("sum", function(a, b){ return a + b;}, com.leeight.age);
+  equals(com.leeight.age.sum, undefined, "exists");
+  
+  baidu.lang.module("sum", function(a, b){ return a + b;}, com.leeight.height);
+  equals(com.leeight.height.sum, undefined, "exists");
+});
+
+
+
+
+//describe('baidu.lang.module测试',{
+//    '扩展存在的Object类型的模块': function () {
+//        baidu.lang.module('myModule.sum', function(a,b){return a+b;});
+//        value_of(myModule.sum(1,2)).should_be(3);
+//    },
+//
+//    '扩展存在的Function类型的模块': function () {
+//        baidu.lang.module('myFun.sum', function(a,b){return a+b;});
+//        value_of(myFun.sum(1,2)).should_be(3);
+//    },
+//
+//    '扩展不存在的模块': function () {
+//        baidu.lang.module('noExist.sum', function(a,b){return a+b;});
+//        value_of(noExist.sum(1,2)).should_be(3);
+//    },
+//
+//    '指定owner的模块扩展': function () {
+//        baidu.lang.module('mod.sum', function(a,b){return a+b;}, myModule);
+//        value_of(myModule.mod.sum(1,2)).should_be(3);
+//    },
+//	'指定owner不存在的模块扩展': function () {
+//        baidu.lang.module('noex.sum', function(a,b){return a+b;}, null);
+//        value_of(noex.sum(1,2)).should_be(3);
+//    }
+//});

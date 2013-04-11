@@ -1,82 +1,105 @@
-/*
- * Tangram
- * Copyright 2010 Baidu Inc. All rights reserved.
- * 
- * @author: meizz
- * @namespace: baidu.page.createStyleSheet
- * @version: 2010-06-12
- */
+module("baidu.page.createStyleSheet");
 
-///import pack.baidu.browser.ie;
-///import pack.baidu.dom.insertHTML;
-///import pack.baidu.page;
+test("create and add", function() {
+	var check = function(w) {
+		var op = this;
+		var div = w.document.createElement('div');
+		div.id = 'test1';
+		div.style.width = 20;
+		div.style.height = 20;
+		div.style.backgroundColor = 'red';
+		w.document.body.appendChild(div);
+		
+		var styleObj = w.baidu.page.createStyleSheet();
+		styleObj.addRule("#test1", "display:none");
+		equals(w.$(div).css('display'), 'none', 'check display');
+		/* 这条会被覆盖所以不生效 */
+		styleObj.addRule(".test1", "display:block", 0);
+		equals(w.$(div).css('display'), 'none', 'check display');
+		//暂时不修复ie浏览器原生的添加逗号分隔rule抛错的bug.
+		//styleObj.addRule("#test1,#test2","color:#0000ff",2);
+		//ok(w.$(div).css('color').match('255'), 'check color');
+	
+		/* 移除后生效 */
+		styleObj.removeRule(1);
+		equals(w.$(div).css('display'), 'block', 'check display');
+		op.finish();
+	};
+	ua.frameExt(check);
+});
+
+test("remove rule", function() {
+	var check = function(w) {
+		var div = w.document.createElement("div");
+		div.id = 'test2';
+		div.className = 'test2';
+		w.document.body.appendChild(div);
+		var styleObj = w.baidu.page.createStyleSheet();
+		styleObj.addRule("#test2", "display:none");
+		equals(w.$(div).css('display'), 'none', 'check display');
+		styleObj.removeRule(0);
+		equals(w.$(div).css('display'), 'block', 'check display');
+		this.finish();
+	};
+	ua.frameExt(check);
+});
 
 /**
- * 在页面中创建样式表对象
- * @name baidu.page.createStyleSheet
- * @function
- * @grammar baidu.page.createStyleSheet(options)
- * @param {Object} options 配置信息
-                
- * @param {Document} options.document 指定在哪个document下创建，默认是当前文档
- * @param {String} options.url css文件的URL
- * @param {Number} options.index 在文档里的排序索引（注意，仅IE下有效）
- * @version 1.2
- * @remark
- *  ie 下返回值styleSheet的addRule方法不支持添加逗号分隔的css rule.
- * 
- * @see baidu.page.createStyleSheet.StyleSheet
- *             
- * @returns {baidu.page.createStyleSheet.StyleSheet} styleSheet对象(注意: 仅IE下,其他浏览器均返回null)
+ * 跨frame创建css并生效
  */
-baidu.page.createStyleSheet = function(options){
-    var op = options || {},
-        doc = op.document || document,
-        s;
+test('another document', function() {
+	var check = function(w) {
+		var op = this;
+		var div = w.document.createElement('div');
+		div.id = 'test3';
+		div.style.width = 20;
+		div.style.height = 20;
+		div.style.backgroundColor = 'red';
+		w.document.body.appendChild(div);
+		var styleObj = baidu.page.createStyleSheet( {
+			document : w.document
+		});
+		// debugger;
+		styleObj.addRule("#test3", "display:none;");
+		equals(div.style.display, '', 'check display by style.display');
+		if (ua.browser.gecko > 0)/* firefox下，jquery 这个地方有个问题，取不到相应的值 */
+			equals(w.getComputedStyle(div, null)['display'], 'none', 'check style');
+		else
+			equals($(div).css('display'), 'none', 'check display by $.css');
+		op.finish();
+	};
+	ua.frameExt( {
+		ontest : check,
+		nojs : true
+	});
+});
 
-    if (baidu.browser.ie) {
-        //修复ie下会请求一个undefined的bug  berg 2010/08/27 
-        if(!op.url)
-            op.url = "";
-        return doc.createStyleSheet(op.url, op.index);
-    } else {
-        s = "<style type='text/css'></style>";
-        op.url && (s="<link type='text/css' rel='stylesheet' href='"+op.url+"'/>");
-        baidu.dom.insertHTML(doc.getElementsByTagName("HEAD")[0],"beforeEnd",s);
-        //如果用户传入了url参数，下面访问sheet.rules的时候会报错
-        if(op.url){
-            return null;
-        }
-
-        var sheet = doc.styleSheets[doc.styleSheets.length - 1],
-            rules = sheet.rules || sheet.cssRules;
-        return {
-            self : sheet
-            ,rules : sheet.rules || sheet.cssRules
-            ,addRule : function(selector, style, i) {
-                if (sheet.addRule) {
-                    return sheet.addRule(selector, style, i);
-                } else if (sheet.insertRule) {
-                    isNaN(i) && (i = rules.length);
-                    return sheet.insertRule(selector +"{"+ style +"}", i);
-                }
-            }
-            ,removeRule : function(i) {
-                if (sheet.removeRule) {
-                    sheet.removeRule(i);
-                } else if (sheet.deleteRule) {
-                    isNaN(i) && (i = 0);
-                    sheet.deleteRule(i);
-                }
-            }
-        }
-    }
-};
-/*
- * styleSheet对象 有两个方法 
- *  addRule(selector, style, i)
- *  removeRule(i)
- *  这两个方法已经做了浏览器兼容处理
- * 一个集合
- *  rules
- */
+test('url with add and remove', function() {
+	var check = function(w) {
+		var op = this;
+		var div = w.document.createElement('div');
+		div.id = 'css';
+		div.style.width = 20;
+		div.style.height = 20;
+		div.style.backgroundColor = 'red';
+		w.document.body.appendChild(div);
+		var styleObj = w.baidu.page.createStyleSheet( {
+			document : w.document,
+			url : upath + 'css.css'
+		});
+		ok(ua.browser.ie ? styleObj != null : styleObj == null,
+				'if not ie, return null with option url');
+		var ho = 0, hi = setInterval(function() {
+			if (w.$(div).css('display') == 'none') {
+				ok(true, 'load css success');
+			} else if (ho++ > 50) {
+				ok(false, 'timeout wait for loading css in 500ms');
+			} else {
+				return;
+			}
+			clearInterval(hi);
+			op.finish();
+		}, 20);
+	};
+	ua.frameExt(check);
+});
