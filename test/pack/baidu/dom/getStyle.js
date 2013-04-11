@@ -1,60 +1,175 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module("baidu.dom.getStyle");
 
-///import baidu.dom.g;
-///import baidu.dom.getComputedStyle;
-///import baidu.dom._styleFixer;
-///import baidu.dom._styleFilter.filter;
-///import baidu.string.toCamelCase;
+var check = function(dom, options) {
 
-/**
- * 获取目标元素的样式值
- * @name baidu.dom.getStyle
- * @function
- * @grammar baidu.dom.getStyle(element, key)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {string} key 要获取的样式名
- * @remark
- * 
- * 为了精简代码，本模块默认不对任何浏览器返回值进行归一化处理（如使用getStyle时，不同浏览器下可能返回rgb颜色或hex颜色），也不会修复浏览器的bug和差异性（如设置IE的float属性叫styleFloat，firefox则是cssFloat）。<br />
- * baidu.dom._styleFixer和baidu.dom._styleFilter可以为本模块提供支持。<br />
- * 其中_styleFilter能对颜色和px进行归一化处理，_styleFixer能对display，float，opacity，textOverflow的浏览器兼容性bug进行处理。	
- * @shortcut getStyle
- * @meta standard
- * @see baidu.dom.setStyle,baidu.dom.setStyles, baidu.dom.getComputedStyle
- *             
- * @returns {string} 目标元素的样式值
- */
-// TODO
-// 1. 无法解决px/em单位统一的问题（IE）
-// 2. 无法解决样式值为非数字值的情况（medium等 IE）
-baidu.dom.getStyle = function (element, key) {
-    var dom = baidu.dom;
+	options = options || {};
+	typeof options.beforestart == 'function' && options.beforestart();
+	if (baidu.lang.isString(dom)) {
+		dom = document.getElementById(dom);
+	} else
+		dom = dom||document.body.appendChild(document.createElement('div'));
+	var style = options.style;
+	var value = options.value || 0;
 
-    element = dom.g(element);
-    key = baidu.string.toCamelCase(key);
-    //computed style, then cascaded style, then explicitly set style.
-    var value = element.style[key] ||
-                (element.currentStyle ? element.currentStyle[key] : "") || 
-                dom.getComputedStyle(element, key);
-
-    // 在取不到值的时候，用fixer进行修正
-    if (!value || value == 'auto') {
-        var fixer = dom._styleFixer[key];
-        if(fixer){
-            value = fixer.get ? fixer.get(element, key, value) : baidu.dom.getStyle(element, fixer);
-        }
-    }
-    
-    /* 检查结果过滤器 */
-    if (fixer = dom._styleFilter) {
-        value = fixer.filter(key, value, 'get');
-    }
-
-    return value;
+	dom.style[style] = value;
+	equal(baidu.dom.getStyle(dom, style), value);
+	options.remove && document.body.removeChild(dom);
+	typeof options.callback == 'function' && options.callback();
 };
+test("null height ", function() {
+	var img = document.createElement('img');
+	document.body.appendChild(img);
+	check(null, {
+		style : 'height',
+		value : '10px'
+	});
 
-// 声明快捷方法
-baidu.getStyle = baidu.dom.getStyle;
+});
+// 1
+test("style src null", function() {
+	var img = document.createElement('img');
+	document.body.appendChild(img);
+	check(img, {
+		style : 'src',
+		value : ''
+	});
+
+});
+// 2
+test("img height、float", function() {
+	var img = document.createElement('img');
+	document.body.appendChild(img);
+	if (ua.browser['firefox'] || ua.browser['ie']) {
+		check(img, {
+			style : 'height',
+			value : 'auto'
+		});
+	} else
+		check(img, {
+			style : 'height',
+			value : '0px'
+		});
+	check(img, {
+		style : 'float',
+		value : 'none'
+	});
+});
+// 3
+test("img height,width by id", function() {
+	var img = document.createElement('img');
+	img.id = 'img_id';
+	document.body.appendChild(img);
+	check('img_id', {
+		style : 'height',
+		value : '10px'
+	});
+	check('img_id', {
+		style : 'width',
+		value : '20px'
+	});
+
+});
+// 4
+test("float,color,display", function() {
+	stop();
+	var div = document.createElement('div');
+	var a = document.createElement('a');
+	var img = document.createElement('img');
+	document.body.appendChild(div);
+	div.appendChild(a);
+	div.appendChild(img);
+	div.id = 'div_id';
+	a.id = 'a_id';
+	div.style.color = 'red';
+	check(div, {
+		style : 'float',
+		value : 'left'
+	});
+	var color = baidu.dom.getStyle(div, 'color').toLowerCase();
+	ok(color == '#ff0000' || color == 'red' || color == 'rgb(255,0,0)',
+			'color red');
+	check(img, {
+		style : 'display',
+		value : 'block'
+	});
+	start();
+	document.body.removeChild(div);
+});
+// 5
+/** css加载也需要时间 * */
+test("get style from css file", function() {
+	stop();
+	var div = document.createElement('div');
+	var div1 = document.createElement('div');
+	var img = document.createElement('img');
+	var p = document.createElement('p');
+	var link = document.createElement('link');
+	document.body.appendChild(div);
+	document.body.appendChild(div1);
+	var head = document.getElementsByTagName("head").item(0);
+	div.appendChild(p);
+	div.appendChild(img);
+	$(div).attr('class', "content");
+	$(div1).attr('class', 'content');
+	$(img).attr('class', 'content');
+	$(p).attr('class', 'pid');
+
+	var handle = function() {
+		/** IE的float属性叫styleFloat，firefox则是cssFloat * */
+		check(div, {
+			style : 'float',
+			value : 'left'
+		});
+		check(div, {
+			style : 'width',
+			value : '200px'
+		});
+		var color = baidu.dom.getStyle(div, 'color').toLowerCase();
+		ok(color == '#00ff00' || color == 'rgb(0,255,0)'
+				|| color == 'rgb(0, 255, 0)', 'color');
+		check(div, {
+			style : 'position',
+			value : 'relative'
+		});
+		/** IE的float属性叫styleFloat，firefox则是cssFloat */
+		check(img, {
+			style : 'float',
+			value : 'left'
+		});
+		check(img, {
+			style : 'display',
+			value : 'block'
+		});
+		check(img, {
+			style : 'left',
+			value : '50px'
+		});
+		check(img, {
+			style : 'width',
+			value : '200px'
+		});
+		check(p, {
+			style : 'font-size',
+			value : '14px'
+		});
+		document.body.removeChild(div);
+		document.body.removeChild(div1);
+		start();
+	};
+
+	ua.loadcss(upath + 'style.css', handle, 'content', 'width', '200px');
+});
+
+test("null style ", function() {
+	stop();
+	ua.importsrc("baidu.dom._styleFixer.size", function(){
+		var div = document.createElement('div');
+		document.body.appendChild(div);
+		var div1 = document.createElement('div');
+		$(div1).css("height", "10px").css("width", "10px");
+		div.appendChild(div1);
+		equals(baidu.dom.getStyle(div, "height"), div.offsetHeight + "px", "The height is right");//IE下不会返回auto
+		equals(baidu.dom.getStyle(div, "width"), document.body.offsetWidth + "px", "The width is right");//IE下不会返回auto
+		start();
+	}, "baidu.dom._styleFixer.width", "baidu.dom.getStyle")
+});

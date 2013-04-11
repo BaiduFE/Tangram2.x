@@ -1,21 +1,7 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/browser/isGecko.js
- * author: allstar
- * version: 1.1.0
- * date: 2009/11/23
- */
+module("baidu.browser.isGecko");
 
-///import pack.baidu.browser;
-
-/**
- * 判断是否为gecko内核
- * @property isGecko 
- * @grammar baidu.browser.isGecko
- * @meta standard
- * @see baidu.browser.isWebkit
- * @returns {Boolean} 布尔值
- */
-baidu.browser.isGecko = /gecko/i.test(navigator.userAgent) && !/like gecko/i.test(navigator.userAgent);
+test("isGecko", function() {
+	var b = 'Gecko';
+	ua.browser[b.toLowerCase()] ? ok(baidu.browser['is' + b], 'should be ' + b)
+			: ok(!baidu.browser['is' + b], 'should not be ' + b);
+});

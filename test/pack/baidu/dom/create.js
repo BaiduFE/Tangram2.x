@@ -1,23 +1,31 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All right reserved.
- */
-///import pack.baidu.dom.setAttrs;
+module('baidu.dom.create')
 
-/**
- * 创建 Element 对象。
- * @author berg
- * @name baidu.dom.create
- * @function
- * @grammar baidu.dom.create(tagName[, options])
- * @param {string} tagName 标签名称.
- * @param {Object} opt_attributes 元素创建时拥有的属性，如style和className.
- * @version 1.3
- * @meta standard
- * @returns {HTMLElement} 创建的 Element 对象
- */
-baidu.dom.create = function(tagName, opt_attributes) {
-    var el = document.createElement(tagName),
-        attributes = opt_attributes || {};
-    return baidu.dom.setAttrs(el, attributes);
-};
+test('create', function() {
+	var div = baidu.dom.create('div');
+	equals(div.tagName, 'DIV', 'create a div');
+})
+
+test('options', function() {
+	var div = baidu.dom.create('div', {
+		id : "test",
+		style : "height:20px;width:20px;border:solid"
+	});
+	equals(div.tagName, 'DIV', 'create a div');
+	equals(div.id, 'test', 'create a div');
+	equals(div.style.height, '20px', 'check style');
+	equals(div.style.width, '20px', 'check style');
+//	alert(div.style.cssText+'\n'+div.style.border.search(/solid/))
+	ok(div.style.cssText.search(/solid/) != -1, 'check border style');
+})
+
+test('cover all tag', function() {
+	var typeNames = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote',
+			'ol', 'ul', 'dl', 'div', 'form', 'a', 'table', 'fieldset',
+			'address', 'ins', 'del', 'em', 'strong', 'q', 'cite', 'dfn',
+			'abbr', 'acronym', 'code', 'samp', 'kbd', 'var', 'img', 'object',
+			'hr', 'input', 'button', 'label', 'select', 'iframe' ];
+	for ( var i = 0; i < typeNames.length; i++) {
+		var o = baidu.dom.create(typeNames[i]);
+		equals(o.tagName.toLowerCase(), typeNames[i], 'check tag');
+	}
+})

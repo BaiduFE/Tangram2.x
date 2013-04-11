@@ -1,68 +1,85 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module('baidu.sio.callByBrowser');
 
-///import pack.baidu.sio;
-///import pack.baidu.sio._createScriptTag;
-///import pack.baidu.sio._removeScriptTag;
+var check1 = function() {
+	equals(window.fromBrowser, '百度');
+	window.fromBrowser = '';
+	start();
+};
+
+test('callback is function', function() {
+	stop();
+	baidu.sio.callByBrowser(upath + "exist.js", check1);
+});
+
+test('charset utf-8', function() {
+	stop();
+	baidu.sio.callByBrowser(upath + "exist-utf.js", check1, {
+		charset : "UTF-8"
+	});
+});
+
+test('charset gbk', function() {
+	/**
+	 * opera下无法动态切换
+	 */
+	if (ua.browser.opera) {
+		ok(true, 'not work on opera');
+		return;
+	}
+	stop();
+	baidu.sio.callByBrowser(upath + "exist-gbk.js", check1, {
+		charset : "GBK"
+	});
+});
 
 /**
- * 通过script标签加载数据，加载完成由浏览器端触发回调
- * @name baidu.sio.callByBrowser
- * @function
- * @grammar baidu.sio.callByBrowser(url, opt_callback, opt_options)
- * @param {string} url 加载数据的url
- * @param {Function|string} opt_callback 数据加载结束时调用的函数或函数名
- * @param {Object} opt_options 其他可选项
- * @config {String} [charset] script的字符集
- * @config {Integer} [timeOut] 超时时间，超过这个时间将不再响应本请求，并触发onfailure函数
- * @config {Function} [onfailure] timeOut设定后才生效，到达超时时间时触发本函数
- * @remark
- * 1、与callByServer不同，callback参数只支持Function类型，不支持string。
- * 2、如果请求了一个不存在的页面，callback函数在IE/opera下也会被调用，因此使用者需要在onsuccess函数中判断数据是否正确加载。
- * @meta standard
- * @see baidu.sio.callByServer
+ * 由于不存在网页不会触发回调，设置半秒超时，用例可能会有问题…… FIXME:to QA:用例有啥问题？
  */
-baidu.sio.callByBrowser = function (url, opt_callback, opt_options) {
-    var scr = document.createElement("SCRIPT"),
-        scriptLoaded = 0,
-        options = opt_options || {},
-        charset = options['charset'],
-        callback = opt_callback || function(){},
-        timeOut = options['timeOut'] || 0,
-        timer;
-    
-    // IE和opera支持onreadystatechange
-    // safari、chrome、opera支持onload
-    scr.onload = scr.onreadystatechange = function () {
-        // 避免opera下的多次调用
-        if (scriptLoaded) {
-            return;
-        }
-        
-        var readyState = scr.readyState;
-        if ('undefined' == typeof readyState
-            || readyState == "loaded"
-            || readyState == "complete") {
-            scriptLoaded = 1;
-            try {
-                callback();
-                clearTimeout(timer);
-            } finally {
-                scr.onload = scr.onreadystatechange = null;
-                baidu.sio._removeScriptTag(scr);
-            }
-        }
-    };
+test('js not exist', function() {
+	stop();
+	var h, check1 = function() {
+		clearTimeout(h);
+		ok($.browser.msie || false, 'call back will not call');
+		start();
+	};
+	baidu.sio.callByBrowser("notexist.js", check1);
+	h = setTimeout(function() {
+		ok(true, 'call back not call');
+		start();
+	}, 500);
+});
 
-    if( timeOut ){
-        timer = setTimeout(function(){
-            scr.onload = scr.onreadystatechange = null;
-            baidu.sio._removeScriptTag(scr);
-            options.onfailure && options.onfailure();
-        }, timeOut);
-    }
-    
-    baidu.sio._createScriptTag(scr, url, charset);
-};
+test('page not exist with timeOut', function() {
+	if ($.browser.msie)
+		// || $.browser.opera) //更新by bell，opera下照样能call到onfailure
+		expect(1);
+	else
+		expect(2);
+
+	stop();
+	var h, check1 = function() {
+		clearTimeout(h);
+		ok($.browser.msie || false, 'call back will not call');
+		start();
+	};
+	baidu.sio.callByBrowser("notexist.js", check1, {
+		timeOut : 200,
+		onfailure : function() {
+			ok(true, 'onfailure will call @ !IE && !opera');
+		}
+	});
+	h = setTimeout(function() {
+		ok(true, 'call back not call');
+		start();
+	}, 500);
+});
+//
+//test('测试闭包', function() {
+//	stop();
+//	baidu.sio.callByBrowser(upath + 'tangram.js', function() {
+//		equals(window.TT.version, '1.3.0', 'check version in package');
+//		//当前版本已经提升至1.3.6，2011-04-17，bell
+//		equals(baidu.version, '1.3.6', 'check version normal');
+//		start();
+//	});
+//});

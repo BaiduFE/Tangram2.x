@@ -1,40 +1,28 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/swf/version.js
- * author: erik
- * version: 1.1.0
- * date: 2009/11/17
- */
+module("baidu.swf.version");
 
-///import pack.baidu.swf;
-
-/**
- * 浏览器支持的flash插件版本
- * @property version 浏览器支持的flash插件版本
- * @grammar baidu.swf.version
- * @return {String} 版本号
- * @meta standard
- */
-baidu.swf.version = (function () {
-    var n = navigator;
-    if (n.plugins && n.mimeTypes.length) {
-        var plugin = n.plugins["Shockwave Flash"];
-        if (plugin && plugin.description) {
-            return plugin.description
-                    .replace(/([a-zA-Z]|\s)+/, "")
-                    .replace(/(\s)+r/, ".") + ".0";
+var check=function(needVersion){
+	var version=baidu.swf.version,vUnit1,vUnit2,i;
+	var needVersion=needVersion;
+	if (version) {
+        version = version.split('.');
+        needVersion = needVersion.split('.');
+        for (i = 0; i < 3; i++) {
+            vUnit1 = parseInt(version[i], 10);
+            vUnit2 = parseInt(needVersion[i], 10);
+            if (vUnit2 < vUnit1) {
+                return "flash插件版本符合要求";
+            } else if (vUnit2 > vUnit1) {
+                return "flash插件版本太低"; // 需要更高的版本号
+            }
         }
-    } else if (window.ActiveXObject && !window.opera) {
-        for (var i = 12; i >= 2; i--) {
-            try {
-                var c = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.' + i);
-                if (c) {
-                    var version = c.GetVariable("$version");
-                    return version.replace(/WIN/g,'').replace(/,/g,'.');
-                }
-            } catch(e) {}
-        }
+    } else {
+        return '未安装flash 插件'; // 未安装flash插件
     }
-})();
+	
+};
+
+test("test version", function() {
+	equal(check('6.0.0'),"flash插件版本符合要求","flash插件版本符合要求");
+	equal(check('100.0.0'),"flash插件版本太低","flash插件版本太低");
+	//equal(check('6.0.0'),"未安装flash 插件","未安装flash 插件");//only work when there is no flash player
+});

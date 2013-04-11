@@ -1,77 +1,93 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/date/format.js
- * author: erik
- * version: 1.1.0
- * date: 2009/12/04
- */
+//baidu.date.format的测试
 
-///import pack.baidu.date;
-///import pack.baidu.number.pad;
+module("baidu.date.format")
 
-/**
- * 对目标日期对象进行格式化
- * @name baidu.date.format
- * @function
- * @grammar baidu.date.format(source, pattern)
- * @param {Date} source 目标日期对象
- * @param {string} pattern 日期格式化规则
- * @remark
- * 
-<b>格式表达式，变量含义：</b><br><br>
-hh: 带 0 补齐的两位 12 进制时表示<br>
-h: 不带 0 补齐的 12 进制时表示<br>
-HH: 带 0 补齐的两位 24 进制时表示<br>
-H: 不带 0 补齐的 24 进制时表示<br>
-mm: 带 0 补齐两位分表示<br>
-m: 不带 0 补齐分表示<br>
-ss: 带 0 补齐两位秒表示<br>
-s: 不带 0 补齐秒表示<br>
-yyyy: 带 0 补齐的四位年表示<br>
-yy: 带 0 补齐的两位年表示<br>
-MM: 带 0 补齐的两位月表示<br>
-M: 不带 0 补齐的月表示<br>
-dd: 带 0 补齐的两位日表示<br>
-d: 不带 0 补齐的日表示
-		
- *             
- * @returns {string} 格式化后的字符串
- */
+test("只有年月日",function(){
+	expect(11);
+	var date = new Date(2010,8,3);//月份日期为1位数
+	var dateFormat = baidu.date.format(date,"yyyy-M-d");//年用4位表示
+	equal(dateFormat,"2010-9-3");
+	dateFormat = baidu.date.format(date,"yyyy-MM-d");
+	equal(dateFormat,"2010-09-3");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd");
+	equal(dateFormat,"2010-09-03");
+	dateFormat = baidu.date.format(date,"yy-MM-d");//年用2位表示
+	equal(dateFormat,"10-09-3");
+	
+	date = new Date(2009,11,20);//月份日期为2位数
+	dateFormat = baidu.date.format(date,"yyyy-M-d");
+	equal(dateFormat,"2009-12-20");
+	dateFormat = baidu.date.format(date,"yy-MM-d");
+	equal(dateFormat,"09-12-20");
+	dateFormat = baidu.date.format(date,"yy-MM-dd");
+	equal(dateFormat,"09-12-20");
+	dateFormat = baidu.date.format(date,"yy-M-d");
+	equal(dateFormat,"09-12-20");
+	dateFormat = baidu.date.format(date,"M-d");
+	equal(dateFormat,"12-20");
+	
+	dateFormat = baidu.date.format(date,"yyyy年MM月dd日");//中文格式
+	equal(dateFormat,"2009年12月20日");
+	dateFormat = baidu.date.format(date,"yyyy/MM/dd");//斜线
+	equal(dateFormat,"2009/12/20");
+	
+});
 
-baidu.date.format = function (source, pattern) {
-    if ('string' != typeof pattern) {
-        return source.toString();
-    }
+test("24小时制",function(){
+	expect(8);
+	var date = new Date(2010,9,3,2,2,9,568);//没有超过12点
+	var dateFormat = baidu.date.format(date,"yyyy-MM-dd HH:mm:ss");
+	equal(dateFormat,"2010-10-03 02:02:09","均采用2位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd H:mm:ss");
+	equal(dateFormat,"2010-10-03 2:02:09","时采用1位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd HH:m:ss");
+	equal(dateFormat,"2010-10-03 02:2:09","分采用1位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd HH:mm:s");
+	equal(dateFormat,"2010-10-03 02:02:9","秒采用1位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd H:m:s");
+	equal(dateFormat,"2010-10-03 2:2:9","均采用1位表示");
+	
+	date = new Date(2010,8,15,16,15,47,256);//超过12点
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd HH:mm:ss");
+	equal(dateFormat,"2010-09-15 16:15:47","超过12点，HH:mm:ss");
+	dateFormat = baidu.date.format(date,"yy-MM-dd H:m:s");
+	equal(dateFormat,"10-09-15 16:15:47","超过12点，H:m:s");
+	dateFormat = baidu.date.format(date,"M/dd H:m:s");//斜线
+	equal(dateFormat,"9/15 16:15:47");
+});
 
-    function replacer(patternPart, result) {
-        pattern = pattern.replace(patternPart, result);
-    }
-    
-    var pad     = baidu.number.pad,
-        year    = source.getFullYear(),
-        month   = source.getMonth() + 1,
-        date2   = source.getDate(),
-        hours   = source.getHours(),
-        minutes = source.getMinutes(),
-        seconds = source.getSeconds();
+test("12小时制",function(){
+	expect(9);
+	var date = new Date(2010,9,3,2,2,9,568);//没有超过12点
+	var dateFormat = baidu.date.format(date,"yyyy-MM-dd hh:mm:ss");
+	equal(dateFormat,"2010-10-03 02:02:09","均采用2位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd h:mm:ss");
+	equal(dateFormat,"2010-10-03 2:02:09","时采用1位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd hh:m:ss");
+	equal(dateFormat,"2010-10-03 02:2:09","分采用1位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd hh:mm:s");
+	equal(dateFormat,"2010-10-03 02:02:9","秒采用1位表示");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd h:m:s");
+	equal(dateFormat,"2010-10-03 2:2:9","均采用1位表示");
+	
+	date = new Date(2010,8,15,16,15,47,256);//超过12点,强制转换为12小时制
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd hh:mm:ss");
+	equal(dateFormat,"2010-09-15 04:15:47","超过12点，hh:mm:ss");
+	dateFormat = baidu.date.format(date,"yyyy-MM-dd h:m:s");
+	equal(dateFormat,"2010-09-15 4:15:47","超过12点，h:m:s");
+	
+	dateFormat = baidu.date.format(date,"yyyy/M/dd h:m:s");//斜线
+	equal(dateFormat,"2010/9/15 4:15:47");
+	
+	dateFormat = baidu.date.format(date,"M/dd hh:m:s");//斜线
+	equal(dateFormat,"9/15 04:15:47");
+});
 
-    replacer(/yyyy/g, pad(year, 4));
-    replacer(/yy/g, pad(parseInt(year.toString().slice(2), 10), 2));
-    replacer(/MM/g, pad(month, 2));
-    replacer(/M/g, month);
-    replacer(/dd/g, pad(date2, 2));
-    replacer(/d/g, date2);
+test("测试异常,返回date的toString",function(){
+	expect(1);
+	var date = new Date(2010,9,3,2,2,9,568);//没有超过12点
+	var dateFormat = baidu.date.format(date,new Object());
+	equal(dateFormat,date.toString());
+});
 
-    replacer(/HH/g, pad(hours, 2));
-    replacer(/H/g, hours);
-    replacer(/hh/g, pad(hours % 12, 2));
-    replacer(/h/g, hours % 12);
-    replacer(/mm/g, pad(minutes, 2));
-    replacer(/m/g, minutes);
-    replacer(/ss/g, pad(seconds, 2));
-    replacer(/s/g, seconds);
 
-    return pattern;
-};

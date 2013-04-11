@@ -1,37 +1,41 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/getAncestorByClass.js
- * author: allstar, erik
- * version: 1.1.0
- * date: 2009/12/02
- */
+module("baidu.dom.getAncestorByClass")
 
-///import pack.baidu.dom.g;
-///import pack.baidu.string.trim;
+test("Element or id",function(){
+	expect(2);
+	var div = document.createElement('div');
+	var a = document.createElement('div');
+	var div1 = document.createElement('div');
+	var img = document.createElement('img');
+	document.body.appendChild(div);
+	div.appendChild(div1);
+	div.appendChild(img);
+	div1.appendChild(a);
+	div1.id = "div1_id";
+	img.className = "test-class";
+	div1.className = 'test-class';
+	div.className = 'test-class';
+	equal(baidu.dom.getAncestorByClass(a,'test-class'),div1,"get nearest ancestor");
+	equal(baidu.dom.getAncestorByClass('div1_id','test-class'),div,"get by id"); 
+	document.body.removeChild(div);
+})
 
-/**
- * 获取目标元素指定元素className最近的祖先元素
- * @name baidu.dom.getAncestorByClass
- * @function
- * @grammar baidu.dom.getAncestorByClass(element, className)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {string} className 祖先元素的class，只支持单个class
- * @remark 使用者应保证提供的className合法性，不应包含不合法字符，className合法字符参考：http://www.w3.org/TR/CSS2/syndata.html。
- * @see baidu.dom.getAncestorBy,baidu.dom.getAncestorByTag
- *             
- * @returns {HTMLElement|null} 指定元素className最近的祖先元素，查找不到时返回null
- */
-baidu.dom.getAncestorByClass = function (element, className) {
-    element = baidu.dom.g(element);
-    className = new RegExp("(^|\\s)" + baidu.string.trim(className) + "(\\s|\x24)");
 
-    while ((element = element.parentNode) && element.nodeType == 1) {
-        if (className.test(element.className)) {
-            return element;
-        }
-    }
-
-    return null;
-};
+test("多个class",function(){
+	expect(2);
+	var div = document.createElement('div');
+	var a = document.createElement('div');
+	var div1 = document.createElement('div');
+	var img = document.createElement('img');
+	document.body.appendChild(div);
+	div.appendChild(div1);
+	div.appendChild(img);
+	div1.appendChild(a);
+	div1.id = "div1_id";
+	img.className = "test-class";
+	div1.className = 'test-class2 test-class test';
+	div.className = 'test-class';
+	equal(baidu.dom.getAncestorByClass(a,'test-class'),div1,"get nearest ancestor");
+	equal(baidu.dom.getAncestorByClass('div1_id','class'),null,"find no ancestor");//no ancestor
+	document.body.removeChild(div);
+})
+    

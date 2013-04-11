@@ -1,54 +1,51 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/fn/multize.js
- * author: berg
- * version: 1.0.0
- * date: 2010/11/02 
- */
-
-///import pack.baidu.fn;
-
 /**
- * 对函数进行集化，使其在第一个参数为array时，结果也返回一个数组
- * @name baidu.fn.multize
- * @function
- * @grammar baidu.fn.multize(func[, recursive])
- * @param {Function}	func 		需要包装的函数
- * @param {Boolean}		[recursive] 是否递归包装（如果数组里面一项仍然是数组，递归），可选
- * @param {Boolean}		[joinArray] 将操作的结果展平后返回（如果返回的结果是数组，则将多个数组合成一个），可选
- * @version 1.3
- *
- * @returns {Function} 已集化的函数
+ * 测试点设计：
+ * <li>函数被正确调用并返回结果正确
+ * <li>正确的循环次数
+ * <li>递归参数的校验
+ * <li>多参数函数的处理
  */
-baidu.fn.multize = /**@function*/function (func, recursive, joinArray) {
-    var newFunc = function(){
-        var list = arguments[0],
-            fn = recursive ? newFunc : func,
-            ret = [],
-            moreArgs = [].slice.call(arguments,0),
-            i = 0,
-            len,
-            r;
+module('baidu.fn.multize');
 
-        if(list instanceof Array){
-            for(len = list.length; i < len; i++){
-                moreArgs[0]=list[i];
-                r = fn.apply(this, moreArgs);
-                if (joinArray) {
-                    if (r) {
-                        //TODO: 需要去重吗？
-                        ret = ret.concat(r);
-                    }
-                } else {
-                    ret.push(r); 	
-                }
-            }
-            return ret;
-        }else{
-            return func.apply(this, arguments);
-        }
-    }
-    return newFunc;
-};
+test('base', function() {
+	var fn = baidu.fn.multize(function(a) {
+		if (a instanceof Array)
+			return a[0] + 1;
+		return a + 1;
+	});
+	var ret = fn( [ 1, 2 ]);
+	equals(ret.length, 2, 'length of return');
+	equals(ret[0], 2, 'first return');
+	equals(ret[1], 3, 'second return');
+	var ret = fn( [ 1, [ 1 ] ]);
+	equals(ret.length, 2, 'length of return');
+	equals(ret[0], 2, 'first return');
+	equals(ret[1], 2, 'second return');
+});
+
+test('recursive', function() {
+	var fn = baidu.fn.multize(function(a) {
+		return a + 1;
+	}, true);
+	var ret = fn( [ 1, 2, [ 3, 4 ] ]);
+	equals(ret.length, 3, 'length of return');
+	equals(ret[0], 2, '1');
+	equals(ret[1], 3, '2');
+	equals(ret[2][0], 4, '3-1');
+	equals(ret[2][1], 5, '3-2');
+
+	ret = fn( [ [ 1, 2 ] ]);
+	equals(ret.length, 1, 'length of return');
+	equals(ret[0][0], 2, '1-1');
+	equals(ret[0][1], 3, '1-2');
+});
+
+test('multi params', function() {
+	var fn = baidu.fn.multize(function(a, b) {
+		return a + b;
+	});
+	var ret = fn( [ 1, 2 ], 3);
+	equals(ret.length, 2, 'length of return');
+	equals(ret[0], 4);
+	equals(ret[1], 5);
+});

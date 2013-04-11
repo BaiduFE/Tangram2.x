@@ -1,28 +1,50 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/ajax/get.js
- * author: allstar, erik
- * version: 1.1.0
- * date: 2009/12/02
- */
+module("baidu.ajax.get");
 
-///import pack.baidu.ajax;
-///import pack.baidu.ajax.request;
+test("输入正确的url", function() {
+	stop();
+	var urlstring = upath + "hello.php";
+	var xhr = baidu.ajax.get(urlstring);
+	ua.delayhelper( {
+		oncheck : function() {
+			return xhr.readyState != 1 && xhr.responseText.length > 0;
+		},
+		onsuccess : function() {
+			equals(xhr.responseText, "Hello World!", "xhr return");
+			start();
+		}
+	});
+});
 
-/**
- * 发送一个get请求
- * @name baidu.ajax.get
- * @function
- * @grammar baidu.ajax.get(url[, onsuccess])
- * @param {string} 	url 		发送请求的url地址
- * @param {Function} [onsuccess] 请求成功之后的回调函数，function(XMLHttpRequest xhr, string responseText)
- * @meta standard
- * @see baidu.ajax.post,baidu.ajax.request
- *             
- * @returns {XMLHttpRequest} 	发送请求的XMLHttpRequest对象
- */
-baidu.ajax.get = function (url, onsuccess) {
-    return baidu.ajax.request(url, {'onsuccess': onsuccess});
-};
+test("输入正确的url，设定onseccess", function() {
+	stop();
+	var urlstring = upath + "hello.php";
+	var xhr = baidu.ajax.get(urlstring, function(xhr, text){
+		equals(xhr.responseText, "Hello World!", "xhr return");
+		equals(text, "Hello World!", "xhr return");
+	});
+	ua.delayhelper( {
+		oncheck : function() {
+			return xhr.readyState != 1 && xhr.responseText.length > 0;
+		},
+		onsuccess : function() {
+			start();
+		}
+	});
+});
+
+test("输入不存在url以及设定onsuccess事件", function() {
+	stop();
+	var urlstring = upath + "notexsistpage.php";
+	var xhr = baidu.ajax.get(urlstring, function(xhr, text){
+		fail('onsuccess should not exec');
+	});
+	ua.delayhelper( {
+		oncheck : function() {
+			return xhr.readyState != 1 && xhr.responseText.length > 0;
+		},
+		onsuccess : function() {
+			ok(xhr.responseText.indexOf('404')>=0, 'responseText should contain 404');
+			start();
+		}
+	});
+});

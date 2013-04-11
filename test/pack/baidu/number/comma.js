@@ -1,31 +1,63 @@
+
+module("baidu.number.comma测试");
+
 /*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/number/comma.js
- * author: dron, erik, berg
- * version: 1.2.0
- * date: 2010/09/07 
+ * <li> n : number
+ * <li> L : length of number
+ * <li> r : baidu.number.comma(n, L), L can be omitted
+ * <li> default : 3 integer numbers for each array
  */
 
-///import pack.baidu.number;
+test("comma函数输入数字number和length=1", function(){
+	n = 3421.002547;
+	L = 1;
+	r = baidu.number.comma(n, L);
+	
+	equals(r, "3,4,2,1.002547");
+}); // 1
 
-/**
- * 为目标数字添加逗号分隔
- * @name baidu.number.comma
- * @function
- * @grammar baidu.number.comma(source[, length])
- * @param {number} source 需要处理的数字
- * @param {number} [length] 两次逗号之间的数字位数，默认为3位
- *             
- * @returns {string} 添加逗号分隔后的字符串
- */
-baidu.number.comma = function (source, length) {
-    if (!length || length < 1) {
-        length = 3;
-    }
+test("comma函数输入数字number和length=4", function(){
+	n = 3421.002547;
+	L = 4;
+	r = baidu.number.comma(n, L);
+	
+	equals(r, "3421.002547");
+}); // 2
 
-    source = String(source).split(".");
-    source[0] = source[0].replace(new RegExp('(\\d)(?=(\\d{'+length+'})+$)','ig'),"$1,");
-    return source.join(".");
-};
+test("comma函数输入数字number和length=0", function(){
+	n = 3421.002547;
+	L = 0; //输入0，则默认用3为分割
+	r = baidu.number.comma(n, L);
+	
+	equals(r, "3,421.002547");
+}); // 3
+
+test("comma函数输入数字number和length=-1", function(){
+	n = 3421.002547;
+	L = -1; //输入负数，默认用三位分
+	r = baidu.number.comma(n, L);
+	
+	equals(r, "3,421.002547");
+}); // 4
+
+test("comma函数输入长整数", function(){
+	n = 198554649981.315  //检查长整数
+	L = 5;
+	r = baidu.number.comma(n, L);
+	
+	equals(r, "19,85546,49981.315");
+}); // 5
+
+test("comma函数输入数字number，省略Length", function(){
+	n = 31245897  //检查长整数
+	r = baidu.number.comma(n);
+	
+	equals(r, "31,245,897");
+}); // 6
+
+test("comma函数输入数字number，省略Length", function(){
+	n = 32.698547256  //检查长整数
+	r = baidu.number.comma(n);
+	
+	equals(r, "32.698547256");
+}); // 7

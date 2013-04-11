@@ -1,66 +1,62 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/event/un.js
- * author: erik
- * version: 1.1.0
- * date: 2009/12/16
- */
-
-///import pack.baidu.event._listeners;
-///import pack.baidu.dom._g;
+module("baidu.event.unload");
+test("取消注册unload事件", function() {
+	stop();
+	ua.importsrc('baidu.event.on', function() {
+		expect(1);
+		var handle_a = function() {
+			ok(true, "check unload");
+		};
+		var div = document.body.appendChild(document.createElement('div'));
+		baidu.on(div, "onclick", handle_a);
+		/* 直接调用ua提供的接口跨浏览器接口，屏蔽浏览器之间的差异 */
+		ua.click(div);
+		baidu.un(div, "click", handle_a);
+		ua.click(div);
+		document.body.removeChild(div);
+		start();
+	}, 'baidu.event.on', 'baidu.event.un');
+});
 
 /**
- * 为目标元素移除事件监听器
- * @name baidu.event.un
- * @function
- * @grammar baidu.event.un(element, type, listener)
- * @param {HTMLElement|string|window} element 目标元素或目标元素id
- * @param {string} type 事件类型
- * @param {Function} listener 需要移除的监听器
- * @shortcut un
- * @meta standard
- * @see baidu.event.on
- *             
- * @returns {HTMLElement|window} 目标元素
+ * 跨frame on然后un
  */
-baidu.event.un = function (element, type, listener) {
-    element = baidu.dom._g(element);
-    type = type.replace(/^on/i, '').toLowerCase();
-    
-    var lis = baidu.event._listeners, 
-        len = lis.length,
-        isRemoveAll = !listener,
-        item,
-        realType, realListener;
-    
-    //如果将listener的结构改成json
-    //可以节省掉这个循环，优化性能
-    //但是由于un的使用频率并不高，同时在listener不多的时候
-    //遍历数组的性能消耗不会对代码产生影响
-    //暂不考虑此优化
-    while (len--) {
-        item = lis[len];
-        
-        // listener存在时，移除element的所有以listener监听的type类型事件
-        // listener不存在时，移除element的所有type类型事件
-        if (item[1] === type
-            && item[0] === element
-            && (isRemoveAll || item[2] === listener)) {
-           	realType = item[4];
-           	realListener = item[3];
-            if (element.removeEventListener) {
-                element.removeEventListener(realType, realListener, false);
-            } else if (element.detachEvent) {
-                element.detachEvent('on' + realType, realListener);
-            }
-            lis.splice(len, 1);
-        }
-    }
-    
-    return element;
-};
+test("window resize", function() {
+	expect(1);
+	ua.frameExt({
+		onafterstart : function(f) {
+			$(f).css('width', 200);
+		},
+		ontest : function(w, f) {
+			var op = this;
+			var fn = function() {
+				ok(true);
+			};
+			baidu.on(w, 'resize', fn);
+			$(f).css('width', 220);
+			/* 貌似通过jquery触发窗体变化会存在延时 */
+			setTimeout(function() {
+				baidu.un(w, 'resize', fn);
+				$(f).css('width', 240);
+				setTimeout(op.finish, 100);
+			}, 500);
+		}
+	});
+});
 
-// 声明快捷方法
-baidu.un = baidu.event.un;
+//测试大小写在on中一并做了
+//test("test case sensitive", function() {
+//	// ok(false, 'TODO: 添加大小写敏感事件的on绑定和un取消用例,比如DOMMouseScroll');
+//	expect(1);
+//	var div = document.createElement('div');
+//	document.body.appendChild(div);
+//	var listener = function() {
+//		ok(true, '用DOMNodeInserted测试大小写敏感事件的un取消');
+//	};
+//	baidu.on(div, 'DOMNodeInserted', listener);
+//	var div1 = document.createElement('div');
+//	div.appendChild(div1);
+//	baidu.un(div, 'DOMNodeInserted', listener);
+//	var div2 = document.createElement('div');
+//	div.appendChild(div2);
+//	$(div).remove();
+//});

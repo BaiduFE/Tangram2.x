@@ -1,26 +1,20 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/lang/isBoolean.js
- * author: berg
- * version: 1.0.0
- * date: 2010/10/12
- */
+module("baidu.lang.isBoolean");
 
-///import pack.baidu.lang;
-
-/**
- * 判断目标参数是否Boolean对象
- * @name baidu.lang.isBoolean
- * @function
- * @grammar baidu.lang.isBoolean(source)
- * @param {Any} source 目标参数
- * @version 1.3
- * @see baidu.lang.isString,baidu.lang.isObject,baidu.lang.isNumber,baidu.lang.isElement,baidu.lang.isArray,baidu.lang.isDate
- *             
- * @returns {boolean} 类型判断结果
- */
-baidu.lang.isBoolean = function(val) {
-    return '[object Boolean]' === Object.prototype.toString.call(val);
-};
+test("类型覆盖校验",function(){
+	// 空对象
+    ok(!baidu.lang.isBoolean(),"empty obj is not boolean");
+    // 字符串
+    ok(!baidu.lang.isBoolean("test"),"string is not boolean");
+    // 数字
+    ok(!baidu.lang.isBoolean(123),"number is not boolean");
+    // 布尔
+    ok(baidu.lang.isBoolean(true),"bool is boolean");
+    // 空
+    ok(!baidu.lang.isBoolean({}),"empty is not boolean");
+    // 数组
+    ok(!baidu.lang.isBoolean([]),"array is not boolean");
+    // undefine
+    ok(!baidu.lang.isBoolean(void(0)),"undefined is not boolean");
+    // 快捷方式
+   ok(!baidu.lang.isBoolean(baidu),"short cut is not boolean");
+});

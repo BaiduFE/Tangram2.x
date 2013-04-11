@@ -1,27 +1,67 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module("baidu.dom.setBorderBoxWidth");
 
-///import pack.baidu.dom;
-///import pack.baidu.dom.setBorderBoxSize;
+test("base", function() {
+	var check = function(styles, expects) {
+		if (baidu.browser.isStrict) {
+			var div = document.body.appendChild(document.createElement("div"));
+			$(div).css("backgroundColor", "red");
+			for ( var style in styles) {
+				$(div).css(style, styles[style]);
+			}
+			baidu.dom.setBorderBoxWidth(div, styles["width"]);
+			for ( var expect in expects) {
+				equals(parseInt(div.style[expect]), expects[expect], "check "
+						+ expect);
+			}
+			$(div).remove();
+		}
+	};
 
-/**
- * 按照border-box模型设置元素的width值
- * 
- * @author berg
- * @name baidu.dom.setBorderBoxWidth
- * @function
- * @grammar baidu.dom.setBorderBoxWidth(element, width)
- * 
- * @param {HTMLElement|string} 	element DOM元素或元素的id
- * @param {number|string} 		width 	要设置的width
- *
- * @return {HTMLElement}  设置好的元素
- * @see baidu.dom.setBorderBoxHeight, baidu.dom.setBorderBoxSize
- * @shortcut dom.setOuterWidth
- */
-baidu.dom.setOuterWidth = 
-baidu.dom.setBorderBoxWidth = function (element, width) {
-    return baidu.dom.setBorderBoxSize(element, {width : width});
-};
+	check({
+		width : 50,
+		padding : 0,
+		borderWidth : 0
+	}, {
+		width : 50
+	});
+
+	check({
+		width : 50,
+		padding : 10,
+		borderWidth : 10
+	}, {
+		width : 10
+	});
+
+	check({
+		width : 50,
+		padding : 10,
+		borderWidth : 0
+	}, {
+		width : 30
+	});
+
+	check({
+		width : 50,
+		padding : 0,
+		borderWidth : 10
+	}, {
+		width : 30
+	});
+
+	check({
+		width : 50,
+		paddingLeft : 10,
+		borderWidth : 0
+	}, {
+		width : 40
+	});
+	
+	check({
+		width : 50,
+		padding : 0,
+		borderLeftWidth : 10
+	}, {
+		width : 40
+	});
+});

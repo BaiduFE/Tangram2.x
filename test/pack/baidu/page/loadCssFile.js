@@ -1,30 +1,54 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/page/loadCssFile.js
- * author: allstar
- * version: 1.1.0
- * date: 2009/11/20
- */
+module("baidu.page.loadCssFile");
 
-///import pack.baidu.page;
+test("load存在的Css", function() {
+	var check = function(w, f) {
+		var op, doc, body, div;
+		op = this;
+		doc = w.document;
+		body = doc.body;
+		div = doc.createElement('div');
+		body.appendChild(div);
+		div.id = 'css';
+		w.baidu.page.loadCssFile(upath + 'css.css');
+		if (w.$(div).css('display') == 'none') {
+			ok(true, 'css load success');
+			op.finish();
+		} else {
+			/**
+			 * 超时1秒，IE下的加载在无缓存情况下会出现异步
+			 */
+			var count = 0, h = setInterval(function() {
+				if (count++ == 50) {
+					ok(false, 'timeout for load css in 1 sec!');
+				} else if (w.$(div).css('display') == 'none') {
+					ok(true, 'css load success');
+				} else {
+					return;
+				}
+				clearInterval(h);
+				op.finish();
+			}, 20);
+		}
+	};
+	ua.frameExt(check);
+});
 
 /**
- * 动态在页面上加载一个外部css文件
- * @name baidu.page.loadCssFile
- * @function
- * @grammar baidu.page.loadCssFile(path)
- * @param {string} path css文件路径
- * @see baidu.page.loadJsFile
+ * 这个用例只校验是否会抛异常
  */
-
-baidu.page.loadCssFile = function (path) {
-    var element = document.createElement("link");
-    
-    element.setAttribute("rel", "stylesheet");
-    element.setAttribute("type", "text/css");
-    element.setAttribute("href", path);
-
-    document.getElementsByTagName("head")[0].appendChild(element);        
-};
+test("load不存在的JS", function() {
+	var check = function(w, f) {
+		var op, doc, body, div;
+		op = this;
+		doc = w.document;
+		body = doc.body;
+		div = doc.createElement('div');
+		body.appendChild(div);
+		div.id = 'css';
+		w.baidu.page.loadCssFile(upath + 'noexit.css');
+		setTimeout(function() {
+			op.finish();
+		}, 200);
+	};
+	ua.frameExt(check);
+});

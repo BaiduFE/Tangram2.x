@@ -1,36 +1,53 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/string/encodeHTML.js
- * author: erik
- * version: 1.1.0
- * date: 2009/11/15
- */
-
-///import pack.baidu.string;
+module("baidu.string.encodeHTML测试");
 
 /**
- * 对目标字符串进行html编码
- * @name baidu.string.encodeHTML
- * @function
- * @grammar baidu.string.encodeHTML(source)
- * @param {string} source 目标字符串
- * @remark
- * 编码字符有5个：&<>"'
- * @shortcut encodeHTML
- * @meta standard
- * @see baidu.string.decodeHTML
- *             
- * @returns {string} html编码后的字符串
+ * transfer entity to html code, "<" for "&lt;" or """ for "&quot;" and so on
+ * use two function(baidu.string.decodeHTML() and baidu.decodeHTML())
  */
-baidu.string.encodeHTML = function (source) {
-    return String(source)
-                .replace(/&/g,'&amp;')
-                .replace(/</g,'&lt;')
-                .replace(/>/g,'&gt;')
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#39;");
-};
 
-baidu.encodeHTML = baidu.string.encodeHTML;
+test('将字符<>"&转成实体字符', function(){
+	var strEncodeHTML="";
+	
+	strEncodeHTML = baidu.string.encodeHTML('<>"&');
+	equals(strEncodeHTML, "&lt;&gt;&quot;&amp;");
+	
+	strEncodeHTML = baidu.string.encodeHTML('<input type="text" value="data"/>');
+	equals(strEncodeHTML, "&lt;input type=&quot;text&quot; value=&quot;data&quot;/&gt;");
+	
+	strEncodeHTML = baidu.string.encodeHTML('&amp;&<<<>>');
+	equals(strEncodeHTML, "&amp;amp;&amp;&lt;&lt;&lt;&gt;&gt;");
+	
+});
+
+test("快捷方式测试", function(){
+	var strEncodeHTML="";
+	
+	strEncodeHTML = baidu.encodeHTML('<>"&');
+	equals(strEncodeHTML, "&lt;&gt;&quot;&amp;");
+	
+	strEncodeHTML = baidu.encodeHTML('<input type="text" value="data"/>');
+	equals(strEncodeHTML, "&lt;input type=&quot;text&quot; value=&quot;data&quot;/&gt;");
+	
+	strEncodeHTML = baidu.encodeHTML('&amp;&<<<>>');
+	equals(strEncodeHTML, "&amp;amp;&amp;&lt;&lt;&lt;&gt;&gt;");
+});
+
+//describe('baidu.encodeHTML测试', {
+//	'将字符<>"&转成实体字符': function() {
+//		value_of(baidu.string.encodeHTML('<>"&')).
+//			should_be("&lt;&gt;&quot;&amp;");
+//		value_of(baidu.string.encodeHTML('<input type="text" value="data"/>')).
+//			should_be('&lt;input type=&quot;text&quot; value=&quot;data&quot;/&gt;');
+//		value_of(baidu.string.encodeHTML('&amp;&<<<>>')).
+//			should_be('&amp;amp;&amp;&lt;&lt;&lt;&gt;&gt;');
+//	},
+//
+//    '快捷方式测试': function () {
+//        value_of(baidu.encodeHTML('<>"&')).
+//			should_be("&lt;&gt;&quot;&amp;");
+//        value_of(baidu.encodeHTML('<input type="text" value="data"/>')).
+//			should_be('&lt;input type=&quot;text&quot; value=&quot;data&quot;/&gt;');
+//		value_of(baidu.encodeHTML('&amp;&<<<>>')).
+//			should_be('&amp;amp;&amp;&lt;&lt;&lt;&gt;&gt;');
+//    }
+//});

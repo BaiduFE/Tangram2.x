@@ -1,25 +1,50 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/next.js
- * author: allstar
- * version: 1.1.0
- * date: 2009/11/18
- */
+module('baidu.dom.next')
 
-///import pack.baidu.dom._matchNode;
+test('兄弟节点有空节点',function(){
+	expect(3);
+	var div = document.createElement('div');
+	var a = document.createElement('a');
+	var img = document.createElement('img');
+	var text = document.createTextNode('text');
+	document.body.appendChild(div);
+	document.body.appendChild(text);
+	document.body.appendChild(img);
+	document.body.appendChild(a);
+	div.id = "div_id";
+	equal(baidu.dom.next(div),img,"next node is not textNode");
+	equal(baidu.dom.next('div_id'),img,"get next node by id");
+	equal(baidu.dom.next(img),a,'img next node is a');
+	document.body.removeChild(div);
+	document.body.removeChild(img);
+	document.body.removeChild(text);
+	document.body.removeChild(a);
+})
 
-/**
- * 获取目标元素的下一个兄弟元素节点
- * @name baidu.dom.next
- * @function
- * @grammar baidu.dom.next(element)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @see baidu.dom.first,baidu.dom.last,baidu.dom.prev
- * @meta standard
- * @returns {HTMLElement|null} 目标元素的下一个兄弟元素节点，查找不到时返回null
- */
-baidu.dom.next = function (element) {
-    return baidu.dom._matchNode(element, 'nextSibling', 'nextSibling');
-};
+test('兄弟节点没有空节点',function(){
+	expect(2);
+	var div = document.createElement('div');
+	var a = document.createElement('a');
+	var img = document.createElement('img');
+	var p = document.createElement('p');
+	document.body.appendChild(div);
+	div.appendChild(img);
+	div.appendChild(a);
+	div.appendChild(p);
+	equal(baidu.dom.next(img),a,"next node is a");
+	equal(baidu.dom.next(a),p,"a next node is p");
+	document.body.removeChild(div);
+})
+
+test('不在dom树上',function(){
+	expect(1);
+	var div = document.createElement('div');
+	equal(baidu.dom.next(div),null,"no child");
+})
+
+test('没有兄弟',function(){
+	expect(1);
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	equal(baidu.dom.next(div),null,"no child");
+	document.body.removeChild(div);
+})

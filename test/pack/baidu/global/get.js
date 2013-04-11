@@ -1,24 +1,49 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * version: 1.4.0
- * date: 2011/07/05
- */
+module("baidu.global.get");
 
-///import pack.baidu.global;
 
-/**
- * @namespace baidu.global.get 取得global全局对象里存储的信息。
- * @author meizz
- *
- * @param   {string}    key     信息对应的 key 值
- * @return  {object}            信息
- */
-(function(){
-    var global = window[baidu.guid].global;
+test("common",function(){
+	expect(4);
+	stop();
+	ua.importsrc("baidu.global.set", function(){
+		baidu.global.set('id', 'value1');
+		var a = baidu.global.get('id');
+		equals(a, 'value1', 'common');
+		baidu.global.set('id', 'value2', true);
+		a = baidu.global.get('id');
+		equals(a, 'value1', 'protected_=true');
+		baidu.global.set('id', 'value3');
+		a = baidu.global.get('id');
+		equals(a, 'value3', 'protected_=default');
+		baidu.global.set('id', 'value4', false);
+		a = baidu.global.get('id');
+		equals(a, 'value4', 'protected_=false');
+		start();
+	}, "baidu.global.set", "baidu.global.get");
+});
 
-    baidu.global.get = function(key) {
-        return global[key];
-    };
-})();
+test("''",function(){
+	expect(1);
+	baidu.global.set('id1', '');
+	var a = baidu.global.get('id1');
+	equals(a, '', 'common');
+});
+
+test("iframe",function(){
+	expect(3);
+	stop();
+	ua.frameExt(function(w, f) {
+		var me = this;
+		ua.importsrc("baidu.global.set,baidu.global.get", function(){
+			setTimeout(function(){
+				w.baidu.global.set('id2', 'value1');
+				var a = w.baidu.global.get('id2');
+				equals(a, 'value1', 'iframe');
+				a = baidu.global.get('id2');
+				equals(a, undefined, 'iframe');
+				a = baidu.global.get('id');
+				equals(a, 'value4', 'iframe');
+				me.finish();
+			}, 200);
+		}, "baidu.global.get", "", w);
+	});
+});

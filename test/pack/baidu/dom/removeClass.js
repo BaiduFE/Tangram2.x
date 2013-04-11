@@ -1,53 +1,50 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/removeClass.js
- * author: allstar, erik
- * version: 1.1.0
- * date: 2009/12/02
- */
+module('baidu.dom.removeClss')
 
-///import pack.baidu.string.trim;
-///import pack.baidu.dom.g;
+test('正常用例',function(){
+	expect(4);
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	div.className = 'div_class1';
+	equal(div.className,'div_class1','div className')
+	baidu.dom.removeClass(div,'div_class1');//remove 1 class
+	equal(div.className,'','div has no className');
+	
+	div.className = 'div_class1 div_class2 div_class3 div_class4';
+	baidu.dom.removeClass(div,'div_class2 div_class3    ');//remove 2 classes
+	equal(div.className,'div_class1 div_class4','remove 2 classes');
+	baidu.dom.removeClass(div,'div_class1 div_class2 div_class3');
+	equal(div.className,'div_class4','remove not existed classes');
+	document.body.removeChild(div);
+})
 
-/**
- * 移除目标元素的className
- * @name baidu.dom.removeClass
- * @function
- * @grammar baidu.dom.removeClass(element, className)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {string} className 要移除的className，允许同时移除多个class，中间使用空白符分隔
- * @remark
- * 使用者应保证提供的className合法性，不应包含不合法字符，className合法字符参考：http://www.w3.org/TR/CSS2/syndata.html。
- * @shortcut removeClass
- * @meta standard
- * @see baidu.dom.addClass
- *             
- * @returns {HTMLElement} 目标元素
- */
-baidu.dom.removeClass = function (element, className) {
-    element = baidu.dom.g(element);
+test('shortcut',function(){
+	expect(3);
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	div.className = 'div_class1';
+	baidu.removeClass(div,'div_class1');//remove 1 class
+	equal(div.className,'','div has no className--shortcut');
+	
+	div.className = 'div_class1 div_class2 div_class3 div_class4';
+	baidu.removeClass(div,'div_class2 div_class3    ');//remove 2 classes
+	equal(div.className,'div_class1 div_class4','remove 2 classes--shortcut');
+	baidu.removeClass(div,'div_class1 div_class2 div_class3');
+	equal(div.className,'div_class4','remove not existed classes--shortcut');
+	document.body.removeChild(div);
+})
 
-    var oldClasses = element.className.split(/\s+/),
-        newClasses = className.split(/\s+/),
-        lenOld,
-        lenDel = newClasses.length,
-        j,
-        i = 0;
-    //考虑到同时删除多个className的应用场景概率较低,故放弃进一步性能优化 
-    // by rocy @1.3.4
-    for (; i < lenDel; ++i){
-        for(j = 0, lenOld = oldClasses.length; j < lenOld; ++j){
-            if(oldClasses[j] == newClasses[i]){
-            	oldClasses.splice(j, 1);
-            	break;
-            }
-        }
-    }
-    element.className = oldClasses.join(' ');
-    return element;
-};
+test('异常用例', function(){
+	expect(3);
+	var html = document.getElementsByTagName('html')[0];
+	var head = document.getElementsByTagName('head')[0];
+	html.className = "html_name";
+	head.className = "head_name";
+	baidu.dom.removeClass(html,"html_class1");//not existed class
+	baidu.dom.removeClass(head,"head_name");
+	equal(html.className,"html_name","html fails to removes classname");
+	equal(head.className,"","head removes classname");
+	
+	baidu.dom.removeClass(html,'not_exited_class');
+	equal(html.className,'html_name','remove not existed class of html');
+})
 
-// 声明快捷方法
-baidu.removeClass = baidu.dom.removeClass;

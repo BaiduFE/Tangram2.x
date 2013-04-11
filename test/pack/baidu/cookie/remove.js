@@ -1,26 +1,30 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/cookie/remove.js
- * author: erik
- * version: 1.1.0
- * date: 2009/11/15
- */
+module("baidu.cookie.remove");
+test("valid key", function() {
+	document.cookie = "testCookieR11=11";
+	baidu.cookie.remove("testCookieR11");
+	ok(document.cookie.match('testCookieR11=') == null, 'delete success');
+	document.cookie = "testCookieR12=1%201";
+	baidu.cookie.remove("testCookieR12");
+	ok(document.cookie.match('testCookieR12=') == null, 'delete success');
+});
 
-///import pack.baidu.cookie.setRaw;
+test("delete key with option", function() {
+	document.cookie = "testCookieR21=21;path=/tangram/";
+	baidu.cookie.remove("testCookieR21");
+	ok(document.cookie.match('testCookieR21=') == null, 'delete fail without options');
+	baidu.cookie.remove("testCookieR21", {
+		path : '/tangram/'
+	});
+	ok(document.cookie.match('testCookieR21=') == null, 'delete success with options');
+});
 
-/**
- * 删除cookie的值
- * @name baidu.cookie.remove
- * @function
- * @grammar baidu.cookie.remove(key, options)
- * @param {string} key 需要删除Cookie的键名
- * @param {Object} options 需要删除的cookie对应的 path domain 等值
- * @meta standard
- */
-baidu.cookie.remove = function (key, options) {
-    options = options || {};
-    options.expires = new Date(0);
-    baidu.cookie.setRaw(key, '', options);
-};
+test('key not exist', function() {
+	var len = document.cookie.indexOf('=');
+	ok(!document.cookie.match('testCookieR31='), 'key not exist');
+	baidu.cookie.remove('testCookieR31');
+	equals(document.cookie.indexOf('='), len, 'cookie not changed');
+});
+//
+// test("输入不存在的key", function() {
+// baidu.cookie.remove("testCookieR31");
+// });

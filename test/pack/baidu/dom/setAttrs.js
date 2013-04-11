@@ -1,38 +1,21 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/dom/setAttrs.js
- * author: allstar
- * version: 1.1.0
- * date: 2009/11/17
- */
+module('baidu.dom.setAttrs')
 
-///import pack.baidu.dom.g;
-///import pack.baidu.dom.setAttr;
+test('基础测试', function() {
+	expect(3);
+	var img = document.createElement('img');
+	var attrs = {"align":"right", "width":30, "height":20};
+	baidu.dom.setAttrs(img,attrs);
+	equal(img.getAttribute('align'),'right',"img gets align");
+	equal(img.getAttribute('width'),30,"img gets width attribute");
+	equal(img.getAttribute('height'),20,"img gets height attribute");
+});
 
-/**
- * 批量设置目标元素的attribute值
- * @name baidu.dom.setAttrs
- * @function
- * @grammar baidu.dom.setAttrs(element, attributes)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {Object} attributes 要设置的attribute集合
- * @shortcut setAttrs
- * @meta standard
- * @see baidu.dom.setAttr,baidu.dom.getAttr
- *             
- * @returns {HTMLElement} 目标元素
- */
-baidu.dom.setAttrs = function (element, attributes) {
-    element = baidu.dom.g(element);
-
-    for (var key in attributes) {
-        baidu.dom.setAttr(element, key, attributes[key]);
-    }
-
-    return element;
-};
-
-// 声明快捷方法
-baidu.setAttrs = baidu.dom.setAttrs;
+test('shortcut',function(){
+	expect(3);
+	var img = document.createElement('img');
+	var attrs = {"align":"right", "width":30, "height":20};
+	baidu.setAttrs(img,attrs);
+	equal(img.getAttribute('align'),'right',"img gets align");
+	equal(img.getAttribute('width'),30,"img gets width attribute");
+	equal(img.getAttribute('height'),20,"img gets height attribute");
+})

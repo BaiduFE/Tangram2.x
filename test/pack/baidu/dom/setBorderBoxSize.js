@@ -1,54 +1,77 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- */
+module("baidu.dom.setBorderBoxSize");
 
-///import pack.baidu.dom.setStyles;
-///import pack.baidu.dom.getStyle;
-///import pack.baidu.dom._styleFilter.px;
+test("base", function() {
+	var id = 0;
+	var check = function(styles, expects) {
+		if (baidu.browser.isStrict) {
+			var div = document.body.appendChild(document.createElement("div"));
+			div.id = "div_" + id++;
+			$(div).css("backgroundColor", "red");
+			for ( var style in styles) {
+				$(div).css(style, styles[style]);
+			}
+			baidu.dom.setBorderBoxSize(div, styles);
+			for ( var expect in expects) {
+				equals(parseInt(div.style[expect]), expects[expect], "check "
+						+ expect);
+			}
+			$(div).remove();
+		}
+	};
 
-///import pack.baidu.browser.isStrict;
-///import pack.baidu.browser.ie;
+	check({
+		height : 50,
+		width : 50,
+		padding : 0,
+		borderWidth : 0
+	}, {
+		height : 50,
+		width : 50
+	});
 
-/**
- * 按照border-box模型设置元素的height和width值。只支持元素的padding/border/height/width使用同一种计量单位的情况。<br/> 不支持：<br/> 1. 非数字值(medium)<br/> 2. em/px在不同的属性中混用
- * @name baidu.dom.setBorderBoxSize
- * @author berg
- * @function
- * @grammar baidu.dom.setBorderBoxSize(element, size)
- * @param {HTMLElement|string} element 元素或DOM元素的id
- * @param {object} size 包含height和width键名的对象
- *
- * @see baidu.dom.setBorderBoxWidth, baidu.dom.setBorderBoxHeight
- *
- * @return {HTMLElement}  设置好的元素
- */
-baidu.dom.setBorderBoxSize = /**@function*/function (element, size) {
-    var result = {};
-    size.width && (result.width = parseFloat(size.width));
-    size.height && (result.height = parseFloat(size.height));
+	check({
+		height : 50,
+		width : 50,
+		padding : 10,
+		borderWidth : 10
+	}, {
+		height : 10,
+		width : 10
+	});
 
-    function getNumericalStyle(element, name){
-        return parseFloat(baidu.getStyle(element, name)) || 0;
-    }
-    
-    if(baidu.browser.isStrict){
-        if(size.width){
-            result.width = parseFloat(size.width)  -
-                           getNumericalStyle(element, 'paddingLeft') - 
-                           getNumericalStyle(element, 'paddingRight') - 
-                           getNumericalStyle(element, 'borderLeftWidth') -
-                           getNumericalStyle(element, 'borderRightWidth');
-            result.width < 0 && (result.width = 0);
-        }
-        if(size.height){
-            result.height = parseFloat(size.height) -
-                            getNumericalStyle(element, 'paddingTop') - 
-                            getNumericalStyle(element, 'paddingBottom') - 
-                            getNumericalStyle(element, 'borderTopWidth') - 
-                            getNumericalStyle(element, 'borderBottomWidth');
-            result.height < 0 && (result.height = 0);
-        }
-    }
-    return baidu.dom.setStyles(element, result);
-};
+	check({
+		height : 50,
+		width : 50,
+		padding : 0,
+		borderWidth : 10
+	}, {
+		height : 30,
+		width : 30
+	});
+
+	check({
+		height : 50,
+		width : 50,
+		paddingTop : 10,
+		paddingBottom : 0,
+		paddingLeft : 10,
+		paddingRight : 0,
+		borderWidth : 0
+	}, {
+		height : 40,
+		width : 40
+	});
+	
+	check({
+		height : 50,
+		width : 50,
+		padding : 0,
+		borderLeftWidth : 10,
+		borderRightWidth : 0,
+		borderTopWidth : 10,
+		borderBottomWidth : 0
+	}, {
+		height : 40,
+		width : 40
+	});
+});
