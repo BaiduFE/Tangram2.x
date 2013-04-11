@@ -84,7 +84,6 @@ test("get style from fixer", function() {
     document.body.removeChild(div);
 });
 
-//老接口
 test("get style from style", function() {
 	expect(7);
 	var currStyle = document.documentElement.currentStyle;
@@ -101,15 +100,15 @@ test("get style from style", function() {
 	img.style.display = 'block';
 	img.style.width = '10%';
 	img.style.height = '10%';
-	equal(baidu.query.getCurrentStyle(div, 'float'), 'left');
-	equal(baidu.query.getCurrentStyle(div, 'width'), '100px');
-	equal(baidu.query.getCurrentStyle(div, 'height'), '150px');
-	var color = baidu.query.getCurrentStyle(div, 'color').toLowerCase();
+	equal(baidu.query(div).getCurrentStyle('float'), 'left');
+	equal(baidu.query(div).getCurrentStyle('width'), '100px');
+	equal(baidu.query(div).getCurrentStyle('height'), '150px');
+	var color = baidu.query(div).getCurrentStyle('color').toLowerCase();
 	ok(color == '#ff0000' || color == 'red'
 			|| (/rgb\(255,\s?0,\s?0\)/.test(color)), 'color red');
-	equal(baidu.query.getCurrentStyle(img, 'display'), 'block');
-	equal(baidu.query.getCurrentStyle(img, 'width'), currStyle ? '10%' : '10px');
-	equal(baidu.query.getCurrentStyle(img, 'height'), currStyle ? '10%' : '15px');
+	equal(baidu.query(img).getCurrentStyle('display'), 'block');
+	equal(baidu.query(img).getCurrentStyle('width'), currStyle ? '10%' : '10px');
+	equal(baidu.query(img).getCurrentStyle('height'), currStyle ? '10%' : '15px');
 
 	document.body.removeChild(div);
 });
@@ -136,18 +135,18 @@ test("get style from css file", function() {
 		/** IE的float属性叫styleFloat，firefox则是cssFloat * */
 		var a = ua.browser.ie ? 'styleFloat' : 'float';
 		var b = ua.browser.ie ? 'fontSize' : 'font-size';
-		equal(baidu.query.getCurrentStyle(div, a), 'left');
-		equal(baidu.query.getCurrentStyle(div, 'width'), '200px');
-		var color = baidu.query.getCurrentStyle(div, 'color').toLowerCase();
+		equal(baidu.query(div).getCurrentStyle(a), 'left');
+		equal(baidu.query(div).getCurrentStyle('width'), '200px');
+		var color = baidu.query(div).getCurrentStyle('color').toLowerCase();
 		ok(color == '#00ff00' || color == 'rgb(0,255,0)'
 				|| color == 'rgb(0, 255, 0)', 'color');
-		equal(baidu.query.getCurrentStyle(div, 'position'), 'relative');
+		equal(baidu.query(div).getCurrentStyle('position'), 'relative');
 		/** IE的float属性叫styleFloat，firefox则是cssFloat */
-		equal(baidu.query.getCurrentStyle(img, a), 'left');
-		equal(baidu.query.getCurrentStyle(img, 'display'), 'block');
-		equal(baidu.query.getCurrentStyle(img, 'left'), '50px');
-		equal(baidu.query.getCurrentStyle(img, 'width'), '200px');
-		equal(baidu.query.getCurrentStyle(p, b), '14px');
+		equal(baidu.query(img).getCurrentStyle(a), 'left');
+		equal(baidu.query(img).getCurrentStyle('display'), 'block');
+		equal(baidu.query(img).getCurrentStyle('left'), '50px');
+		equal(baidu.query(img).getCurrentStyle('width'), '200px');
+		equal(baidu.query(p).getCurrentStyle(b), '14px');
 
 		document.body.removeChild(div);
 		document.body.removeChild(div1);
@@ -160,6 +159,6 @@ test("get style from fixer", function() {
     document.body.appendChild(div);
     var img = document.createElement('img');
     div.appendChild(img);
-    equal(baidu.query.getCurrentStyle(img, 'display'), $(img).css('display'));
+    equal(baidu.query(img).getCurrentStyle('display'), $(img).css('display'));
     document.body.removeChild(div);
 });

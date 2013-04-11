@@ -26,13 +26,13 @@ test('当前页元素window', function() {
 
 test('iframe', function() {
 	ua.frameExt(function(w){
-		var gw = w.parent.baidu.query.getWindow;
+		var gw = function(c){return w.parent.baidu.query(c).getWindow();}
 
 		w.$(w.document.body).append('<div id="test_div"></div>');
 
 		equals(gw(w.$('div#test_div')[0]), w);
 		equals(gw(w.document), w);
-		equals(w.baidu.query.getWindow(w.parent.document), w.parent);
+		equals(w.baidu.query(w.parent.document).getWindow(), w.parent);
 		this.finish();
 	});
 });
@@ -41,31 +41,4 @@ test('iframe', function() {
 test("dom为空的情况",function(){
     var result = baidu("#baidujsxiaozu").getWindow("wangxiao");
     equal(result,undefined);
-});
-
-// 老接口
-
-test('当前页元素window', function() {
-	expect(5);
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_id';
-	equal(baidu.query.getWindow(div), window);
-	equal(baidu.query.getWindow(document), window);// document
-	equal(baidu.query.getWindow(document.body), window);// body
-	equal(baidu.query.getWindow(document.documentElement), window);
-	equal(baidu.query.getWindow('div_id'), window);
-
-	document.body.removeChild(div);
-});
-
-test('iframe', function() {
-	ua.frameExt(function(w){
-		var gw = w.parent.baidu.query.getWindow;
-		w.$(w.document.body).append('<div id="test_div"></div>');
-		equals(gw(w.$('div#test_div')[0]), w);
-		equals(gw(w.document), w);
-		equals(w.baidu.query.getWindow(w.parent.document), w.parent);
-		this.finish();
-	});
 });
