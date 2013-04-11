@@ -1,5 +1,4 @@
-module("baidu.query.attr",{});
-
+module("baidu.query.attr");
 var bareObj = function(value) { return value; };
 var functionReturningObj = function(value) { return (function() { return value; }); };
 //
@@ -10,7 +9,7 @@ test('prepareTest',function(){
         start();
         prepareTest();
         ok(true,'ok');
-    }, "baidu.query.appendTo");
+    }, 'baidu.query.appendTo', 'baidu.query.attr');
 });
 
 //start

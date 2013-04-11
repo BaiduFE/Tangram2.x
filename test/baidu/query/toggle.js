@@ -42,30 +42,6 @@ test('新接口：显示或隐藏',function(){
 	div.remove();
 });
 
-//兼容1.x接口
-test('兼容1.x接口：element',function(){
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	equal(div.style.display,"","default to display;")
-	baidu.query.toggle(div);
-	equal(div.style.display,"none","not to display");
-	baidu.query.toggle(div);
-	equal(div.style.display,"","change to display");
-	document.body.removeChild(div);
-})
-
-test('兼容1.x接口：id',function(){
-	var div = document.createElement('div');
-	document.body.appendChild(div);
-	div.id = 'div_id';
-	equal(div.style.display,"","default to display;")
-	baidu.query.toggle('div_id');
-	equal(div.style.display,"none","not to display");
-	baidu.query.toggle('div_id');
-	equal(div.style.display,"","change to display");
-	document.body.removeChild(div);
-})
-
 
 //describe('baidu.query.toggle测试', {
 //    '将显示/隐藏的元素切换状态': function(){
