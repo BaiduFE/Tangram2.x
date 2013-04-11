@@ -5,6 +5,9 @@
  * @author bell
  */
 class Kiss{
+
+    private $folder_name = 'tangram2';
+    
 	public $projroot;
 	/**
 	 * case name
@@ -43,7 +46,7 @@ class Kiss{
 	 * @param string $name namespace of case
 	 */
 	function __construct($projroot = '../../../../', $name = 'baidu.dom.g', $ext=''){
-		$this->projroot = $_SERVER['DOCUMENT_ROOT'].'/'; //$projroot;
+		$this->projroot = $_SERVER['DOCUMENT_ROOT']."/$this->folder_name/"; //$projroot;
         
         
         
@@ -59,7 +62,7 @@ class Kiss{
 		}
 
 		$this->abspath = $this->projroot.'test/pack/'.$path.'.js';
-        $this->path = '/test/pack/'.$path.'.js';
+        $this->path = "/$this->folder_name/test/pack/".$path.'.js';
 		if(filesize($this->abspath)<20){
 			$this->empty = true;
 			return;
@@ -100,7 +103,7 @@ class Kiss{
 
 		if($release == 0){
 			/* load case source*/
-			$importurl = "/test/pack/tools/br/import.php?f=$this->name";
+			$importurl = "/$this->folder_name/test/pack/tools/br/import.php?f=$this->name";
 			if($cov) $importurl.='&cov=true';
 			print "<script type='text/javascript' src='$importurl' ></script>\n";
 		}else{
