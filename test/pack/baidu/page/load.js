@@ -99,6 +99,7 @@ test("第一个参数是url", function() {
 	stop();
 	expect(2);
 	baidu.page.load(path + "jsfile2.js");
+	
 	ua.delayhelper(function() {
 		return loadedTest2 && typeof loadedTest2 == 'function';
 	}, function() {
