@@ -20,5 +20,5 @@ test("onsuccess", function() {
 		}, 1000);
 
 	};
-	ua.importsrc('baidu.ajax.post', check, 'baidu.ajax.post', 'baidu.sio.log');
+	ua.importsrc('pack.baidu.ajax.post', check, 'baidu.ajax.post', 'pack.baidu.sio.log');
 });

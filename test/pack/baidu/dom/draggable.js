@@ -13,7 +13,7 @@ var clear = function(element, dd, needstart) {
 test('check return value', function() {
 	stop();
 	expect(1);
-	ua.importsrc("baidu.dom.getPosition", function(){
+	ua.importsrc("pack.baidu.dom.getPosition", function(){
 		var div = document.createElement('div');
 		document.body.appendChild(div);
 		var div1 = baidu.dom.draggable(div);

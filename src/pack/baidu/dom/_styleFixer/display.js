@@ -8,9 +8,8 @@
  * date: 2009/11/24
  */
 
-///import baidu.dom._styleFixer;
-///import baidu.browser.ie;
-///import baidu.browser.firefox;
+///import pack.baidu.dom._styleFixer;
+///import baidu.browser;
 
 /**
  * @private

@@ -7,7 +7,7 @@ test("get style from style", function() {
 	document.body.appendChild(div);
 	div.appendChild(img);
 	div.id = 'div_id';
-	div.style.cssFloat = div.style.float = 'left';// opera下cssFloat生效
+	div.style.cssFloat = div.style['float'] = 'left';// opera下cssFloat生效
 	div.style.width = '100px';
 	div.style.height = '150px';
 	div.style.background = "#FFCC80";
@@ -72,7 +72,8 @@ test("get style from css file", function() {
 
 test("get style from fixer", function() {
 	stop();
-	ua.importsrc('baidu.dom._styleFixer.display', function() {
+	ua.importsrc('pack.baidu.dom._styleFixer.display', function() {
+	    start();
 		var div = document.createElement('div');
 		document.body.appendChild(div);
 		var img = document.createElement('img');
@@ -80,5 +81,5 @@ test("get style from fixer", function() {
 		equal(baidu.dom.getCurrentStyle(img, 'display'), 'inline');
 		document.body.removeChild(div);
 		start();
-	}, 'baidu.dom._styleFixer.display', 'baidu.dom.getCurrentStyle');
+	}, 'baidu.dom._styleFixer.display', 'pack.baidu.dom.getCurrentStyle');
 });

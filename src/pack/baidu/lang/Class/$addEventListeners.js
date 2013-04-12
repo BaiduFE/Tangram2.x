@@ -7,9 +7,8 @@
  * version: 1.0
  * date: 2010-07-05
  */
-
-///import pack.baidu.lang.Event;
-///import pack.baidu.string.trim;
+///import pack.baidu.lang.Class;
+///import baidu.string.trim;
 
 /**
  * @description 添加多个自定义事件。
@@ -36,7 +35,7 @@ baidu.lang.Class.prototype.addEventListeners = function (events, fn) {
         events = events.split(',');
         var i = 0, len = events.length, event;
         for(; i < len; i++){
-            this.addEventListener(baidu.trim(events[i]), fn);
+            this.addEventListener(baidu.string.trim(events[i]), fn);
         }
     }
 };

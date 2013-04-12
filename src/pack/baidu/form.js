@@ -8,7 +8,7 @@
  * date: 2011/12/23
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 对form的操作，解决表单数据问题
  * @namespace

@@ -63,7 +63,7 @@ module('baidu.dom.drag');
 test('base and events', function() {
 	expect(5);
 	QUnit.stop();
-	ua.importsrc("baidu.dom.getPosition", function(){
+	ua.importsrc("pack.baidu.dom.getPosition", function(){
 		var noDragging = true;
 		var dc = window.drag_check({
 			ondragstart : function() {
@@ -252,33 +252,31 @@ test('no margin', function() {
 });
 
 test('border', function() {
-	stop();
-	ua.importsrc("baidu.dom.getPosition", function(){
-		var div = document.createElement("div");
-		div.id = 'test_margin_div';
-		document.body.appendChild(div);
-		$("#test_margin_div").css('position', 'absolute').css(
-				'height', 10).css('width', 10).css("top", 0).css("left", 0).
-				css('background-color', 'green').css('border', '5px');
-		ua.mousemove(document.body, {
-			clientX : 0,
-			clientY : 0
-		});
-		var d = baidu.dom.drag(div);
-		setTimeout(function(){
-			ua.mousemove(document.body, {
-				clientX : 50,
-				clientY : 50
-			});
-			setTimeout(function(){
-				d.stop();
-				equals(baidu.dom.getPosition(div).left, "50", "left right");
-				equals(baidu.dom.getPosition(div).top, "50", "top right");
-				document.body.removeChild(div);
-				start();
-			}, 20);
-		}, 20);
-	}, "baidu.dom.getPosition", "baidu.dom.drag");
+    var div = document.createElement("div");
+        div.id = 'test_margin_div';
+    document.body.appendChild(div);
+    $("#test_margin_div").css('position', 'absolute').css(
+            'height', 10).css('width', 10).css("top", 0).css("left", 0).
+            css('background-color', 'green').css('border', '5px');
+    ua.mousemove(document.body, {
+        clientX : 0,
+        clientY : 0
+    });
+    var d = baidu.dom.drag(div);
+    stop();
+    setTimeout(function(){
+        ua.mousemove(document.body, {
+            clientX : 50,
+            clientY : 50
+        });
+        setTimeout(function(){
+            d.stop();
+            equals(baidu.dom.getPosition(div).left, "50", "left right");
+            equals(baidu.dom.getPosition(div).top, "50", "top right");
+            document.body.removeChild(div);
+            start();
+        }, 20);
+    }, 20);
 });
 
 // test('drag with update', function() {

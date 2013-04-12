@@ -930,16 +930,19 @@ var UserAction =
 					}		
 				}
 				else{
-					if (typeof (p[mm[i]]) == 'undefined') {
-						return;
-					}
+				    if(p[mm[i]] !== undefined //链式判断
+				        || (i === mm.length - 1 && p.fn && p.fn[mm[i]] !== undefined)){//静态判断
+				        
+				    }else{
+				        return;
+				    }
 				}
 				p = p[mm[i]];
 			}
 			clearInterval(h);
 			if (callback && 'function' == typeof callback)
 				callback();
-		}, 20);
+		}, 16);
 	},
 
 	/* 用于加载css文件，如果没有加载完毕则不执行回调函数 */

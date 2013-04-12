@@ -119,11 +119,11 @@ module("baidu.lang.Class");
 	// Start test ...
 
 	test("dispose", function() {
-		expect(3);
+		expect(2);
 		function myClass() {
 			this.name = "myclass";
 			this.method = function() {
-				ok(true, "method is called");
+				ok(false, "method is called");
 			}
 		}
 		_inherits(myClass, baidu.lang.Class);
@@ -137,237 +137,175 @@ module("baidu.lang.Class");
 
 		});
 	
-	test("toString", function() {
-		function myClass() {
-			this.name = "myclass";
-		}
-		_inherits(myClass, baidu.lang.Class,"myclass");
-		// 通过继承baidu.lang.Class来获取dispose方法
-			var obj = new myClass();
-			equal(obj.toString(),"[object myclass]", "check toString : ");// name返回:undefined
-		});
+	
+	
+	
+	test("基类 调用与声明", function(){
+        var Class = function(){
+            baidu.base.Class.call(this);
+            this.name = "mm";
+        }
+        var b = new Class()
+    
+        var a = new baidu.base.Class();
+        a.show = function(){
+            if (this.fire("onshow")) {
+                this.showed = true;
+            }
+        };
+        ok(true, '过程正确');
+    });
+
+    test('事件注册，派发和删除', function(){
+        expect(2);
+        var instance = new baidu.base.Class();
+        instance.on('defaultEvent', function(evt){
+            ok(evt.target === instance, 'fire event');
+        });
+        instance.fire('defaultEvent');
+        instance.off('defaultEvent');
+        instance.fire('defaultEvent');
+        ok(baiduInstance(instance.guid) === instance, 'It is same instance');
+        instance.dispose();
+    });
+    
+    test('事件删除', function(){
+        expect(6);
+        var c = new baidu.base.Class(),
+            handler = function(evt){
+                ok(true, 'fire event: ' + evt.type);
+            };
+        ok(c.on('defaultEvent') === c, 'return instance');
+        c.on('defaultEvent-1', handler);
+        c.on('defaultEvent-2', handler);
+        c.on('defaultEvent-3', handler);
+        c.fire('defaultEvent-1');
+        c.fire('defaultEvent-2');
+        c.fire('defaultEvent-3');
+        c.off('defaultEvent-1', handler);
+        c.fire('defaultEvent-1');
+        c.fire('defaultEvent-2');
+        c.fire('defaultEvent-3');
+        c.off();
+        c.fire('defaultEvent-1');
+        c.fire('defaultEvent-2');
+        c.fire('defaultEvent-3');
+    });
+    
+    test('调用一次的事件', function(){
+        expect(2);
+        var c = new baidu.base.Class();
+        c.one('oneevent', function(){
+            ok(true, 'fire default event');
+        });
+        c.fire('oneevent');
+        c.fire('oneevent');
+        c.once('onceevent', function(){
+            ok(true, 'fire default event');
+        });
+        c.fire('onceevent');
+        c.fire('onceevent');
+    });
+    
+    test('析构', function(){
+        var instance = new baidu.base.Class();
+        instance.on('defaultEvent', function(){
+            ok(false, 'fire event');
+        });
+        instance.dispose();
+        instance.fire('defaultEvent');
+        ok(true, 'instance dispose');
+    });
+    
+    test("removeEventListener", function() {
+        stop();
+        ua.importsrc("baidu.lang.Event", function(){
+            function myClass() {
+                this.name = "myclass";
+            }
+    
+            _inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
+               expect(2);
+                var obj = new myClass();
+                function listner(){ok(true, "listner is added");}
+                
+                var myEventWithoutOn = new (baidu.lang.Event)("onMyEvent", obj);
+                obj.addEventListener("onMyEvent",listner,'pointMyEvent');
+                obj.dispatchEvent(myEventWithoutOn);
+                obj.removeEventListener("onMyEvent",'pointMyEvent');
+                obj.dispatchEvent(myEventWithoutOn);
+                ok(true,"listner is removed");
+                start();
+        }, "baidu.lang.Event", "baidu.lang.Class.$removeEventListener");
+    });
+    
+    test("removeEventListener - no key", function() {
+        function myClass() {
+            this.name = "myclass";
+        }
+    
+        _inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
+           expect(2);
+            var obj = new myClass();
+            function listner(){
+                ok(true, "listner is added");
+            }
+            
+            var myEventWithoutOn = new (baidu.lang.Event)("onMyEvent", obj);
+            obj.addEventListener("onMyEvent", listner);
+            obj.dispatchEvent(myEventWithoutOn);
+            obj.removeEventListener("onMyEvent", listner);
+            obj.dispatchEvent(myEventWithoutOn);
+            ok(true, "listner is removed");
+    
+        });
+    
+    test("removeEventListener - no handler", function () {  // 2011-2-26, 无handler参数时移除所有事件
+        function myClass() {
+            this.name = "myclass";
+        }
+    
+        _inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
+           expect(5);
+            var obj = new myClass();
+            function listner1(){ok(true, "listner1 is added");}
+            function listner2(){ok(true, "listner2 is added");}
+    
+            var myEventWithoutOn = new baidu.lang.Event("onMyEvent", obj);
+            obj.addEventListener("onMyEvent", listner1);
+            obj.addEventListener("onMyEvent", listner2);
+            obj.dispatchEvent(myEventWithoutOn);
+            obj.removeEventListener("onMyEvent", function(){});
+            obj.dispatchEvent(myEventWithoutOn);
+            obj.removeEventListener("onMyEvent");
+            obj.dispatchEvent(myEventWithoutOn);
+            ok(true, "listner is removed");   
+    });
+    
+    test("removeEventListener - default params", function () {
+        function myClass() {
+            this.name = "myclass";
+        }
+    
+        _inherits(myClass, baidu.lang.Class);// 通过继承baidu.lang.Class来获取它的dispatchEvent方法
+           expect(4);
+            var obj = new myClass();
+            function listner1(){ok(true, "listner1 is added");}
+            function listner2(){ok(true, "listner2 is added");}
+    
+            var myEventWithoutOn = new baidu.lang.Event("onMyEvent", obj);
+            var yourEventWithoutOn = new baidu.lang.Event("YourEvent", obj);
+            obj.addEventListener("onMyEvent", listner1);
+            obj.addEventListener("onMyEvent", listner2);
+            obj.addEventListener("YourEvent", listner1);
+            obj.dispatchEvent(myEventWithoutOn);
+            obj.dispatchEvent(yourEventWithoutOn);  
+            obj.removeEventListener("onMyEvent");
+            obj.dispatchEvent(myEventWithoutOn);  
+            obj.dispatchEvent(yourEventWithoutOn);  
+            obj.removeEventListener();
+            obj.dispatchEvent(myEventWithoutOn);  
+            obj.dispatchEvent(yourEventWithoutOn);  
+    });
 	
 })();
-
-//
-//
-// describe('test baidu.lang.Class.create', {
-// 'create single instance': function(){
-// var SObject = baidu.lang.createSingle({
-// givenName: 'Jim',
-// company: 'baidu',
-// salary: 10000,
-// getInfo: function(){
-// return this.company + ' employee ' + this.givenName + ' can get money ' +
-// this.salary;
-// }
-// });
-// value_of(arrayContain(guidArray, SObject.guid)).should_be_false();
-//        
-// value_of(SObject.getInfo()).should_be('baidu employee Jim can get money
-// 10000');
-// value_of(SObject.givenName).should_be('Jim');
-// value_of(SObject.salary).should_be(10000);
-// value_of(SObject.owner).should_be('baidu');
-//        
-// value_of(window[baidu.guid]._instances[SObject.guid].givenName).should_be('Jim');
-// value_of(window[baidu.guid]._instances[SObject.guid].salary).should_be(10000);
-//        
-// i = SObject.guid;
-// SObject.dispose();
-// value_of(window[baidu.guid]._instances[i]).should_be(undefined);
-// },
-// // Skip this case, since create does not support json which contains guid
-// attribute
-// 'create single instance, json contais guid':function(){
-// S = baidu.lang.createSingle(
-// {guid:'testid001',
-// school:'pku',
-// year:2004,
-// single:true,
-// marry:function(){
-// this.single = false;
-// }});
-// value_of(S.guid).should_be('testid001');
-// value_of(arrayContain(guidArray,S.guid)).should_be_false();
-// guidArray.push(S.guid);
-// value_of(S.single).should_be_true();
-// value_of(S.school).should_be('pku');
-// value_of(S.year).should_be(2004);
-// S.marry();
-// value_of(S.single).should_be_false();
-// value_of(S.owner).should_be('baidu');
-//     
-// value_of(baidu.lang.instance(S.guid).school).should_be('pku');
-// value_of(baidu.lang.instance(S.guid).year).should_be(2004);
-// },
-// 'create single instance, json={}': function(){
-// S = baidu.lang.createSingle({});
-// value_of(arrayContain(guidArray, S.guid)).should_be_false();
-// guidArray.push(S.guid);
-// value_of(S.owner).should_be('baidu');
-// },
-// 'create single instance after several Objects are created': function(){
-// o = new simpleDevice();
-// value_of(arrayContain(guidArray, o.guid)).should_be_false();
-// guidArray.push(o.guid);
-//        
-// o = new Monitor('HP');
-// value_of(arrayContain(guidArray, o.guid)).should_be_false();
-// guidArray.push(o.guid);
-//        
-// S = baidu.lang.createSingle({
-// gender: 'male',
-// hobby: 'PC games'
-// });
-// value_of(arrayContain(guidArray, S.guid)).should_be_false();
-// guidArray.push(S.guid);
-// value_of(S.gender).should_be('male');
-// value_of(S.hobby).should_be('PC games');
-// value_of(S.owner).should_be('baidu');
-// },
-// 'create several single instance': function(){
-// S = baidu.lang.createSingle({
-// gender: 'female',
-// hobby: 'swim'
-// });
-// value_of(arrayContain(guidArray, S.guid)).should_be_false();
-// guidArray.push(S.guid);
-// value_of(S.hobby).should_be('swim');
-//        
-// S = baidu.lang.createSingle({
-// level: 4,
-// tech: 'Java'
-// });
-// value_of(arrayContain(guidArray, S.guid)).should_be_false();
-// guidArray.push(S.guid);
-// value_of(S.level).should_be(4);
-//        
-// S = baidu.lang.createSingle({
-// site: 'free',
-// id: 'DL'
-// });
-// value_of(arrayContain(guidArray, S.guid)).should_be_false();
-// guidArray.push(S.guid);
-// value_of(S.id).should_be('DL');
-//        
-// }
-// });
-//
-//
-// describe('baidu.lang.Class constructor test', {
-// 'check children class contians all the attributes of father Class':
-// function(){
-// s = new simpleDevice();
-// value_of(arrayContain(guidArray, s.guid)).should_be_false();
-// guidArray.push(s.guid);
-// value_of(s.tag).should_be('i am a simple device!');
-// value_of(s.guid.length > 0).should_be_true();
-// value_of(s.owner).should_be('baidu');
-// },
-// 'check instances have different guids': function(){
-// s = new Monitor('Dell');
-// value_of(s.guid.length > 0).should_be_true();
-// value_of(arrayContain(guidArray, s.guid)).should_be_false();
-// guidArray.push(s.guid);
-//        
-// s = new InputDevice(2);
-// value_of(s.guid.length > 0).should_be_true();
-// value_of(arrayContain(guidArray, s.guid)).should_be_false();
-// guidArray.push(s.guid);
-//        
-// s = new MotherBoard('MSI');
-// value_of(s.guid.length > 0).should_be_true();
-// value_of(arrayContain(guidArray, s.guid)).should_be_false();
-// guidArray.push(s.guid);
-//        
-// s = new Device();
-// value_of(s.guid.length > 0).should_be_true();
-// value_of(arrayContain(guidArray, s.guid)).should_be_false();
-// guidArray.push(s.guid);
-// },
-// 'children class inherits BaseClass and has no more attributes ': function(){
-// d = new Device();
-// value_of(d.guid.length > 0).should_be_true();
-// value_of(d.owner).should_be('baidu');
-// value_of(arrayContain(guidArray, d.guid)).should_be_false();
-// guidArray.push(d.guid);
-//        
-// d1 = new Device();
-// value_of(d1.guid.length > 0).should_be_true();
-// value_of(d1.owner).should_be('baidu');
-// value_of(arrayContain(guidArray, d1.guid)).should_be_false();
-// guidArray.push(d1.guid);
-//        
-// d2 = new Device();
-// value_of(d2.guid.length > 0).should_be_true();
-// value_of(d2.owner).should_be('baidu');
-// value_of(arrayContain(guidArray, d2.guid)).should_be_false();
-// guidArray.push(d2.guid);
-//        
-// d3 = new Device();
-// value_of(d3.guid.length > 0).should_be_true();
-// value_of(d3.owner).should_be('baidu');
-// value_of(arrayContain(guidArray, d3.guid)).should_be_false();
-// guidArray.push(d3.guid);
-// }
-// });
-//
-// describe('baidu.lang.Class.dispose test', {
-// 'new an object and call its dispose function': function(){
-// c = new Computer('Dell', 'Sony Monitor', 'Dell China');
-// value_of(c.guid.length > 0).should_be_true();
-// value_of(arrayContain(guidArray, c.guid)).should_be_false();
-// value_of(window[baidu.guid]._instances[c.guid]).should_be(c);
-//        
-// k = c.guid;
-// c.dispose();
-// value_of(window[baidu.guid]._instances[k]).should_be(undefined);
-// //check all the Objects we have~~
-// var i = 0;
-// var tmpArray = [];
-// while (i < guidArray.length) {
-// k = guidArray[i];
-// tmpArray.push(window[baidu.guid]._instances[k].guid);
-// i = i + 1;
-// }
-// value_of(tmpArray).should_be(guidArray);
-// },
-// 'call an existing object\'s dispose function': function(){
-// k = guidArray.pop();
-// i = window[baidu.guid]._instances[k];
-// i.dispose();
-// value_of(window[baidu.guid]._instances[k]).should_be(undefined);
-//        
-// //check all the Objects we have~~
-// var i = 0;
-// var tmpArray = [];
-// while (i < guidArray.length) {
-// k = guidArray[i];
-// tmpArray.push(window[baidu.guid]._instances[k].guid);
-// i = i + 1;
-// }
-// value_of(tmpArray).should_be(guidArray);
-// }
-// })
-//
-// describe('baidu.lang.Class.toString test', {
-// 'set inherits interface argument classname': function(){
-// c = new Computer('Dell', 'Sony Monitor', 'Dell China');
-// value_of(c.toString()).should_be('[object Computer_Class]');
-//        
-// o = new Monitor('sonic');
-// value_of(o.toString()).should_be('[object Monitor_Class]');
-//        
-// j = new MotherBoard('ASUS');
-// value_of(j.toString()).should_be('[object MotherBoard_Class]');
-//        
-// },
-// 'Do not set inherits interface argument classname': function(){
-// c = new Device();
-// value_of(c.toString()).should_be('[object Object]');
-//        
-// o = new simpleDevice('sonic');
-// value_of(o.toString()).should_be('[object Object]');
-// }
-// });

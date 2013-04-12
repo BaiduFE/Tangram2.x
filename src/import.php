@@ -90,6 +90,10 @@ function importTangram($files, $returnFile = true){
             $IMPORTED[] = $file;
             $file = str_replace(".", '/', $file) . ".js";
 
+            //if( !realpath($file) ){
+            //    $file = str_replace("pack/baidu", 'baidu', $file);
+            //}
+            
             if($DEBUG)
                 echo "Importing: " . $file . ", returnFile $returnFile\n";
             if(!in_array($file, $MATCHED)){

@@ -10,7 +10,7 @@
  */
 
 ///import pack.baidu.page;
-///import pack.baidu.array.each;
+///import baidu.each;
 ///import pack.baidu.ajax.get;
 ///import pack.baidu.event.on;
 ///import pack.baidu.event.un;
@@ -152,7 +152,7 @@ baidu.page.load = function(resources, options, ignoreAllLoaded) {
     //避免递归出错,添加容错.
     if (! (resources && resources.length)) return;
 
-    function loadResources(res) {
+    function loadResources(index, res) {
         var url = res.url,
             shouldContinue = !!parallel,
             cacheData,

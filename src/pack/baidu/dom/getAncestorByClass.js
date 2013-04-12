@@ -9,7 +9,7 @@
  */
 
 ///import pack.baidu.dom.g;
-///import pack.baidu.string.trim;
+///import baidu.string.trim;
 
 /**
  * @description 获取目标元素指定元素className最近的祖先元素

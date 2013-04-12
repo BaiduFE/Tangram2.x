@@ -8,7 +8,7 @@
  * date: 2009/12/02
  */
 
-///import baidu.dom._styleFilter;
+///import pack.baidu.dom._styleFilter;
 
 /**
  * @description 为获取和设置样式的过滤器

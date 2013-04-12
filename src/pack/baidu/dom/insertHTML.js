@@ -4,7 +4,7 @@
  */
 
 ///import pack.baidu.dom.g;
-///import pack.baidu.browser.opera;
+///import baidu.browser;
 
 /**
  * @description 在目标元素的指定位置插入HTML代码

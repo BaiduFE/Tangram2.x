@@ -8,7 +8,7 @@
  * date: 2009/12/02
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 对语言层面的封装，包括类型判断、模块扩展、继承基类以及对象自定义事件的支持。
  * @namespace

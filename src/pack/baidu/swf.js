@@ -8,7 +8,7 @@
  * date: 2009/11/16
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 操作flash对象的方法，包括创建flash对象、获取flash对象以及判断flash插件的版本号
  * @namespace

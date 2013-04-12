@@ -8,7 +8,7 @@
  * date: 2012/03/16
  */
 
-///import baidu.dom._styleFixer;
+///import pack.baidu.dom._styleFixer;
 
 /**
  * @private

@@ -4,7 +4,7 @@ module("baidu.global.get");
 test("common",function(){
 	expect(4);
 	stop();
-	ua.importsrc("baidu.global.set", function(){
+	ua.importsrc("pack.baidu.global.set,pack.baidu.lang.isObject", function(){
 		baidu.global.set('id', 'value1');
 		var a = baidu.global.get('id');
 		equals(a, 'value1', 'common');
@@ -18,10 +18,10 @@ test("common",function(){
 		a = baidu.global.get('id');
 		equals(a, 'value4', 'protected_=false');
 		start();
-	}, "baidu.global.set", "baidu.global.get");
+	}, "baidu.global.set", "pack.baidu.global.get");
 });
 
-test("''",function(){
+test("set a empty value",function(){
 	expect(1);
 	baidu.global.set('id1', '');
 	var a = baidu.global.get('id1');
@@ -33,17 +33,17 @@ test("iframe",function(){
 	stop();
 	ua.frameExt(function(w, f) {
 		var me = this;
-		ua.importsrc("baidu.global.set,baidu.global.get", function(){
+		ua.importsrc("pack.baidu.global.set,pack.baidu.global.get", function(){
 			setTimeout(function(){
 				w.baidu.global.set('id2', 'value1');
 				var a = w.baidu.global.get('id2');
 				equals(a, 'value1', 'iframe');
 				a = baidu.global.get('id2');
-				equals(a, undefined, 'iframe');
+				ok(baidu.lang.isObject(a), 'It\'s plain object');
 				a = baidu.global.get('id');
 				equals(a, 'value4', 'iframe');
 				me.finish();
 			}, 200);
-		}, "baidu.global.get", "", w);
+		}, "baidu.global.set", "", w);
 	});
 });
