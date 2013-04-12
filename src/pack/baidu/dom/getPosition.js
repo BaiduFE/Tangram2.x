@@ -14,11 +14,7 @@
 ///import pack.baidu.dom.getDocument;
 ///import pack.baidu.dom.g;
 ///import pack.baidu.dom.getStyle;
-///import pack.baidu.browser.ie;
-///import pack.baidu.browser.opera;
-///import pack.baidu.browser.isWebkit;
-///import pack.baidu.browser.isGecko;
-///import pack.baidu.browser.isStrict;
+///import baidu.browser;
 
 /**
  * @description 获取目标元素相对于整个文档左上角的位置

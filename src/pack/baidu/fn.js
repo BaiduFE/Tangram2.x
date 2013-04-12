@@ -8,7 +8,7 @@
  * date: 2010/11/02
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 对方法的操作，解决内存泄露问题
  * @namespace

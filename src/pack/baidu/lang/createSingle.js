@@ -1,35 +1,16 @@
-/*
- * Tangram
- * Copyright 2009 Baidu Inc. All rights reserved.
- * 
- * path: baidu/lang/createSingle.js
- * author: meizz, berg
- * version: 1.1.2
- * date: 2010-05-13
- */
-
-///import pack.baidu.lang;
+///import baidu.createSingle;
 ///import pack.baidu.lang.Class;
-///import pack.baidu.lang.Class.$removeEventListener;
-///import pack.baidu.lang.Event;
+
 
 /**
- * @description 创建一个baidu.lang.Class的单例实例
- * @name baidu.lang.createSingle
+ * @description 创建一个baidu.base.Class的单例实例，主要用于创建 EventCenter DataCenter等全局唯一对象
+ * @author meizz
+ * @create 2010-05-13
+ * @name baidu.createSingle
  * @function
- * @grammar baidu.lang.createSingle(json)
- * @param {Object} json 直接挂载到这个单例里的预定属性/方法
- * @version 1.2
- * @see baidu.lang.Class
- *             
+ * @grammar baidu.createSingle(methods[, type])
+ * @param {Object} methods 直接挂载到这个单例里的预定属性/方法
+ * @param {String} type [可选]指定实例类名
  * @return {Object} 一个实例
  */
-baidu.lang.createSingle = function (json) {
-    var c = new baidu.lang.Class();
-
-    for (var key in json) {
-        c[key] = json[key];
-    }
-    return c;
-};
-
+baidu.lang.createSingle = baidu.createSingle;

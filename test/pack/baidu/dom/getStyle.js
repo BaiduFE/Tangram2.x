@@ -162,7 +162,7 @@ test("get style from css file", function() {
 
 test("null style ", function() {
 	stop();
-	ua.importsrc("baidu.dom._styleFixer.size", function(){
+	ua.importsrc("pack.baidu.dom._styleFixer.size", function(){
 		var div = document.createElement('div');
 		document.body.appendChild(div);
 		var div1 = document.createElement('div');
@@ -171,5 +171,5 @@ test("null style ", function() {
 		equals(baidu.dom.getStyle(div, "height"), div.offsetHeight + "px", "The height is right");//IE下不会返回auto
 		equals(baidu.dom.getStyle(div, "width"), document.body.offsetWidth + "px", "The width is right");//IE下不会返回auto
 		start();
-	}, "baidu.dom._styleFixer.width", "baidu.dom.getStyle")
+	}, "baidu.dom._styleFixer.width", "pack.baidu.dom.getStyle")
 });

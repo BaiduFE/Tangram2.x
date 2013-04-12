@@ -3,7 +3,6 @@
  * Copyright 2009 Baidu Inc. All rights reserved.
  */
 
-///import pack.baidu.dom;
 ///import pack.baidu.dom.setBorderBoxSize;
 
 /**

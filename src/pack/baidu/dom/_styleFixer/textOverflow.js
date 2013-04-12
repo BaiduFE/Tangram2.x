@@ -8,10 +8,9 @@
  * date: 2009/11/17
  */
 
-///import baidu.dom._styleFixer;
-///import baidu.dom.getStyle;
-///import baidu.browser.firefox;
-///import baidu.browser.opera;
+///import pack.baidu.dom._styleFixer;
+///import pack.baidu.dom.getStyle;
+///import baidu.browser;
 
 /*
  * 提供给setStyle与getStyle使用，在做textOverflow时会向element对象中添加,_baiduOverflow, _baiduHTML两个属性保存原始的innerHTML信息

@@ -9,8 +9,8 @@
  */
 
 ///import pack.baidu.swf;
-///import pack.baidu.browser.ie;
-///import pack.baidu.array.remove;
+///import baidu.browser;
+///import baidu.array.remove;
 ///import pack.baidu.lang.toArray;
 /**
  * @description 获得flash对象的实例

@@ -1,7 +1,7 @@
 module("baidu.event.unload");
 test("取消注册unload事件", function() {
 	stop();
-	ua.importsrc('baidu.event.on', function() {
+	ua.importsrc('pack.baidu.event.on', function() {
 		expect(1);
 		var handle_a = function() {
 			ok(true, "check unload");
@@ -14,7 +14,7 @@ test("取消注册unload事件", function() {
 		ua.click(div);
 		document.body.removeChild(div);
 		start();
-	}, 'baidu.event.on', 'baidu.event.un');
+	}, 'baidu.event.on', 'pack.baidu.event.un');
 });
 
 /**

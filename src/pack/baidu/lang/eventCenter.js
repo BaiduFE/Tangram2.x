@@ -2,8 +2,9 @@
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
  */
-///import pack.baidu.lang;
+
 ///import pack.baidu.lang.createSingle;
+///import pack.baidu.lang.Event;
 
 /**
  * @description 事件中心

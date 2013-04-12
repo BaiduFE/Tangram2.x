@@ -17,7 +17,7 @@ test("test case sensitive", function() {
 	// ok(false, 'TODO: 添加大小写敏感事件的on绑定和un取消用例,比如DOMMouseScroll');
 	expect(1);
 	stop();
-	ua.importsrc('baidu.event.un', function() {
+	ua.importsrc('pack.baidu.event.un', function() {
 		var div = document.createElement('div');
 		document.body.appendChild(div);
 		baidu.on(div, 'DOMNodeInserted', function() {
@@ -27,5 +27,5 @@ test("test case sensitive", function() {
 		div.appendChild(document.createElement('div'));
 		div.appendChild(document.createElement('div'));
 		start();
-	}, 0, 'baidu.event.on');
+	}, 'baidu.event.un', 'pack.baidu.event.on');
 });

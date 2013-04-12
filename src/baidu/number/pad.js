@@ -25,7 +25,7 @@
  */
 baidu.number.pad = baidu.number.pad || function(len){
     var source = this, pre = '', negative, str;
-    if(typeof(this) === 'function'){
+    if(source.pad !== baidu.number.pad){
         source = len;
         len = arguments[1];
     }

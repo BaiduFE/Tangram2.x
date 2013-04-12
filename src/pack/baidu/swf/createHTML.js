@@ -9,7 +9,7 @@
  */
 
 ///import pack.baidu.swf.version;
-///import pack.baidu.string.encodeHTML;
+///import baidu.string.encodeHTML;
 
 /**
  * @description 创建flash对象的html字符串

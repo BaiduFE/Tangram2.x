@@ -9,7 +9,7 @@
  */
 
 ///import pack.baidu.url;
-///import pack.baidu.string.escapeReg;
+///import baidu.string.escapeReg;
 
 /**
  * @description 根据参数名从目标URL中获取参数值

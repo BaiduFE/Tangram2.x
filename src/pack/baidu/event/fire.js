@@ -9,7 +9,7 @@
  */
 ///import pack.baidu.event;
 ///import pack.baidu.dom._g;
-///import pack.baidu.browser.ie;
+///import baidu.browser;
 ///import pack.baidu.object.extend;
 ///import pack.baidu.object.values;
 ///import pack.baidu.lang.isNumber;

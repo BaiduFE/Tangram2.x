@@ -11,7 +11,7 @@ test("get style from style", function() {
 	document.body.appendChild(div);
 	div.appendChild(img);
 	div.id = 'div_id';
-	div.style.cssFloat = div.style.float = 'left';// opera下cssFloat生效
+	div.style.cssFloat = div.style['float'] = 'left';// opera下cssFloat生效
 	div.style.width = '100px';
 	div.style.height = '150px';
 	div.style.background = "#FFCC80";
@@ -82,7 +82,7 @@ test("get style from fixer", function() {
 		return;
 	}
 	stop();
-	ua.importsrc('baidu.dom._styleFixer.opacity', function() {
+	ua.importsrc('pack.baidu.dom._styleFixer.opacity', function() {
 		var div = document.createElement('div');
 		document.body.appendChild(div);
 		var img = document.createElement('img');
@@ -90,7 +90,7 @@ test("get style from fixer", function() {
 		equal(baidu.dom.getComputedStyle(img, 'opacity'), '1');
 		document.body.removeChild(div);
 		start();
-	}, 'baidu.dom._styleFixer.opacity', 'baidu.dom.getComputedStyle');
+	}, 'baidu.dom._styleFixer.opacity', 'pack.baidu.dom.getComputedStyle');
 });
 test("get empty style in IE", function() {
 	if (ua.browser.ie) {

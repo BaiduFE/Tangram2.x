@@ -43,8 +43,8 @@ var flyCar = function(cName,cBrand){
     car.call(this,cName,cBrand);
     flyMachine.call(this);
 };
-//快捷键
-baidu.inherits(flyCar,car);
+
+baidu.lang.inherits(flyCar,car);
 baidu.lang.inherits(flyCar,flyMachine);
 
 

@@ -3,10 +3,10 @@
  * Copyright 2009 Baidu Inc. All rights reserved.
  */
 
-///import baidu.dom.g;
-///import baidu.dom.getComputedStyle;
-///import baidu.dom._styleFixer;
-///import baidu.dom._styleFilter.filter;
+///import pack.baidu.dom.g;
+///import pack.baidu.dom.getComputedStyle;
+///import pack.baidu.dom._styleFixer;
+///import pack.baidu.dom._styleFilter.filter;
 ///import baidu.string.toCamelCase;
 
 /**

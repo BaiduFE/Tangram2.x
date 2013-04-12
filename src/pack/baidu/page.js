@@ -8,7 +8,7 @@
  * date: 2009/11/17
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 对页面层面的封装，包括页面的高宽属性、以及外部css和js的动态添加
  * @namespace
