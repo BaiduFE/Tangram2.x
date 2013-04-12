@@ -273,7 +273,7 @@ test("验证构造函数,feildRule 错误消息队列", function() {
 test("验证构造函数,feildRule eventName校验keyup", function() {
 	valid.init();
 	expect(2);
-	ua.importsrc("baidu.event.fire", function(){
+	ua.importsrc("pack.baidu.event.fire", function(){
 		$("#name").attr('value', '123456789');
 		var validator = new baidu.form.Validator('testform', {
 			name : {
@@ -300,7 +300,7 @@ test("验证构造函数,feildRule eventName校验keyup", function() {
 		// setTimeout(function() {
 		baidu.event.fire('name', 'keyup');
 		// }, 50);
-	}, "baidu.event.fire", "baidu.form.Validator");
+	}, "baidu.event.fire", "pack.baidu.form.Validator");
 });
 //
 test("验证构造函数,feildRule eventName校验默认blur", function() {
@@ -486,10 +486,8 @@ test("dispose方法", function() {
 		valid.down();
 	};
 	// 校验默认 name blur
-	try {
-		validator.validateField('email', callback);
-	} catch (e) {
-		QUnit.ok(true, 'can\'t validate email');
-		valid.down();
-	}
+	//dispose以后validateField是空函数
+	validator.validateField('email', callback);
+	valid.down();
+	QUnit.ok(true, 'can\'t validate email');
 });

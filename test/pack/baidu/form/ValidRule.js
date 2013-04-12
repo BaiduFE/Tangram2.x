@@ -240,7 +240,6 @@ test("默认类型校验number", function(){
 });
 test("默认类型校验remote 404", function(){
 	stop();
-	debugger;
 	var vr = new baidu.form.ValidRule();
 	vr.match('remote', '',function(opt) {
 		equal(opt ,false ,'undefined');
