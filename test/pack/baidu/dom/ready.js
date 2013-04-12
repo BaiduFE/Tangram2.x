@@ -26,7 +26,7 @@ test('ready before onload', function() {
 //			equals(step++, 1, 'onload after ready');
 //		});
 	};
-	f.src = upath + 'readyFrame.php?f=baidu.dom.ready';// 空页面
+	f.src = upath + 'readyFrame.php?f=pack.baidu.dom.ready';// 空页面
 	setTimeout(function(){
 		$(f).remove();
 		start();

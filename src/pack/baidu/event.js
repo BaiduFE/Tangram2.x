@@ -8,7 +8,7 @@
  * date: 2009/12/02
  */
 
-///import pack.baidu;
+///import baidu;
 
 /**
  * @description 屏蔽浏览器差异性的事件封装

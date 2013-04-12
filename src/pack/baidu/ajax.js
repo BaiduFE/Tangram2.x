@@ -8,7 +8,7 @@
  * date: 2009/11/13
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 对XMLHttpRequest请求的封装
  * @name baidu.ajax

@@ -8,7 +8,7 @@
  * date: 2009/12/02
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 操作cookie的方法
  * @namespace

@@ -9,9 +9,8 @@
  */
 
 
-///import pack.baidu.dom;
 ///import pack.baidu.dom.g;
-///import pack.baidu.string.trim;
+///import baidu.string.trim;
 
 /**
  * @description 判断元素是否拥有指定的className

@@ -3,7 +3,7 @@ module("baidu.swf.create");
 test('test', function() {
 	expect(1);
 	stop();
-	ua.importsrc("baidu.swf.getMovie", function(){
+	ua.importsrc("pack.baidu.swf.getMovie", function(){
 		var div = document.body.appendChild(document.createElement('div'));
 		baidu.swf.create({
 			id : 'test0',
@@ -28,7 +28,7 @@ test('test', function() {
 			$(div).remove();
 			start();
 		}, 100);
-	}, "baidu.swf.getMovie", "baidu.swf.create");
+	}, "baidu.swf.getMovie", "pack.baidu.swf.create");
 });
 
 test('test, no target', function() {

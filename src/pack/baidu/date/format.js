@@ -9,7 +9,7 @@
  */
 
 ///import pack.baidu.date;
-///import pack.baidu.number.pad;
+///import baidu.number.pad;
 
 /**
  * @description 对目标日期对象进行格式化

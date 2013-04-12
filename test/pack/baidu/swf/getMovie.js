@@ -2,7 +2,7 @@ module("测试getMovie");
 
 test("输入文件中存在的flash的name", function() {
 	stop();
-	ua.importsrc('baidu.swf.create', function() {
+	ua.importsrc('pack.baidu.swf.create', function() {
 		var div = document.body.appendChild(document.createElement('div'));
 		var div1 = document.body.appendChild(document.createElement('div'));
 		setTimeout(function() {
@@ -24,7 +24,7 @@ test("输入文件中存在的flash的name", function() {
 			equals(baidu.swf.getMovie('test1').length , 2);
 			start();
 		}, 500);
-	}, 'baidu.swf.create', 'baidu.swf.getMovie');
+	}, 'baidu.swf.create', 'pack.baidu.swf.getMovie');
 });
 
 test("输入文件中不存在的flash的name", function() {

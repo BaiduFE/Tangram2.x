@@ -8,7 +8,7 @@
  * date: 2009/11/15
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 操作原生对象的方法
  * @namespace

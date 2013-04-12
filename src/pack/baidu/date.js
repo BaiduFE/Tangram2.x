@@ -8,7 +8,7 @@
  * date: 2009/12/04
  */
 
-///import pack.baidu;
+///import baidu;
 /**
  * @description 操作日期的方法
  * @namespace

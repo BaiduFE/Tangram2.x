@@ -9,8 +9,8 @@
  */
 
 ///import pack.baidu.dom.g;
-///import pack.baidu.string.trim;
-///import pack.baidu.string.escapeReg;
+///import baidu.string.trim;
+///import baidu.string.escapeReg;
 
 /**
  * @description 通过className获取元素

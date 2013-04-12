@@ -7,8 +7,7 @@
 ///import pack.baidu.dom.getStyle;
 ///import pack.baidu.dom._styleFilter.px;
 
-///import pack.baidu.browser.isStrict;
-///import pack.baidu.browser.ie;
+///import baidu.browser;
 
 /**
  * @description 按照border-box模型设置元素的height和width值。只支持元素的padding/border/height/width使用同一种计量单位的情况。<br/> 不支持：<br/> 1. 非数字值(medium)<br/> 2. em/px在不同的属性中混用

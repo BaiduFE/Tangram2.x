@@ -11,7 +11,7 @@
 ///import pack.baidu.dom.g;
 ///import pack.baidu.dom._styleFixer;
 ///import pack.baidu.dom._styleFilter.filter;
-///import pack.baidu.string.toCamelCase;
+///import baidu.string.toCamelCase;
 
 /**
  * @description 设置目标元素的style样式值
