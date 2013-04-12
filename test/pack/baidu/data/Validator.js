@@ -55,12 +55,12 @@ module("baidu.data.Validator");
 test("create", function(){
 	expect(2);
 	stop();
-	ua.importsrc("baidu.data.Validator.validatorRules", function(){
+	ua.importsrc("pack.baidu.data.Validator.validatorRules", function(){
 		var validator = new baidu.data.Validator(te.validations);
 		ok(te.isEmpty(validator._rules), "The _rules is right");
 		equals(validator._validations, te.validations , "The _validations is right");
 		start();
-	}, "baidu.data.Validator.validatorRules", "baidu.data.Validator");
+	}, "baidu.data.Validator.validatorRules", "pack.baidu.data.Validator");
 });
 
 test("validate, no params", function(){
@@ -72,6 +72,7 @@ test("validate, no params", function(){
 
 test("validate, success", function(){
 	expect(2);
+	debugger;
 	var validator = new baidu.data.Validator(te.validations);
 	var feedback = validator.validate([
 		                    ["chengyn", "isName"], 
