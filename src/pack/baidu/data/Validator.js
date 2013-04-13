@@ -4,7 +4,7 @@
  */
 
 ///import pack.baidu.ajax.request;
-///import baidu.array.each;
+///import baidu.each;
 ///import baidu.array.contains;
 ///import pack.baidu.data;
 ///import pack.baidu.fn.blank;
@@ -81,7 +81,7 @@ baidu.data.Validator = baidu.lang.createClass(function(options){
         }
        
        //逐个验证
-        baidu.array.each(values, function(item, index){
+        baidu.each(values, function(index, item){
             value = item[0];
             validation = item[1];
             itemResult = me._validations[validation] ? me._singleValidate(value, me._validations[validation]) : {'result': false};
@@ -127,7 +127,7 @@ baidu.data.Validator = baidu.lang.createClass(function(options){
     _singleValidate: function(value, validation){
         var me = this, ruleType, rule, itemResult = {'result': true}, remoteConf;//TODO 如果一个值同时使用多个remote方式验证，会出错
         
-        baidu.each(validation, function(val){
+        baidu.each(validation, function(index, val){
             ruleType = val.rule;
             if(ruleType == 'remote'){
                 remoteConf = val.conf;
@@ -173,7 +173,7 @@ baidu.data.Validator = baidu.lang.createClass(function(options){
             }];
         }else if(baidu.lang.isArray(rule)){
         	
-        	baidu.each(rule, function(name){
+        	baidu.each(rule, function(index, name){
         		if(me._validations[name.rule]){
         			tmpVal = tmpVal.concat(me._validations[name.rule]);
         		}else{

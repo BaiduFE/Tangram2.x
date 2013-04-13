@@ -46,7 +46,7 @@ module("baidu.data.DataStore");
 			            var year = parser.query('//book/year');
 			            var price = parser.query('//book/price');
 
-			            baidu.each(data, function(book, index){
+			            baidu.each(data, function(index, book){
 			                item = {};
 
 			                item.category = category[index].nodeValue;
@@ -58,7 +58,7 @@ module("baidu.data.DataStore");
 
 			                var authors = parser.query('//book[' + (index + 1) + ']/author');
 			                var name = [];
-			                baidu.each(authors, function(author){
+			                baidu.each(authors, function(index, author){
 			                    name.push(author.childNodes[0].nodeValue);
 			                });
 			                item.author = name.join(',');
@@ -90,7 +90,7 @@ module("baidu.data.DataStore");
 test("create", function() {
 	expect(12);
 	stop();
-	ua.importsrc('baidu.data.ModelManager,baidu.data.dataSource.ajax,baidu.parser.Xml,baidu.parser.Json', function(){
+	ua.importsrc('pack.baidu.data.ModelManager,pack.baidu.data.dataSource.ajax,pack.baidu.parser.Xml,pack.baidu.parser.Json', function(){
 		var DM = te.createDM();
 		var dataSource = te.createDataSource();
 		
@@ -120,7 +120,7 @@ test("create", function() {
 		equals(dataStore1._usingLocal, false, "The _usingLocal is right");
 		equals(dataStore1._sync, true, "The _sync is right");
 		start();
-	}, 'baidu.data.ModelManager','baidu.data.DataStore');
+	}, 'baidu.data.ModelManager','pack.baidu.data.DataStore');
 });
 
 test("setDataModel&getDataModel", function() {
@@ -648,7 +648,7 @@ test("Json", function() {
 test("validator, default validations", function() {
 	expect(9);
 	stop();
-	ua.importsrc("baidu.data.Validator.validatorRules", function(){
+	ua.importsrc("pack.baidu.data.Validator.validatorRules", function(){
 	    var bookDMDefine = {
 	            fields:[{
 	                name: 'title'
@@ -710,7 +710,7 @@ test("validator, default validations", function() {
 	        onfailture: function(data){
 	        }
 	    }, true);
-	}, "baidu.data.Validator", "baidu.data.DataStore");
+	}, "baidu.data.Validator", "pack.baidu.data.DataStore");
 });
 
 test("validator, validations and setValidator", function() {

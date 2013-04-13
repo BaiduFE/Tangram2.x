@@ -8,6 +8,7 @@
 ///import pack.baidu.fn.blank;
 ///import pack.baidu.lang.isFunction;
 ///import pack.baidu.parser.create;
+///import baidu.each;
 
 /**
  * 数据仓库类
@@ -199,10 +200,10 @@ baidu.data.DataStore = (function(){
                         case 'MERGE':
                        
                             //TODO: 看日后需求，如果需要将无冲突项进行append到dm中，在此处添加部分逻辑
-                            (me._mergeFields.length != 0) && baidu.each(data, function(item){
+                            (me._mergeFields.length != 0) && baidu.each(data, function(index, item){
                                 dataModel.update(item, function(dataLine){
                                     var result = true;
-                                    baidu.each(me._mergeFields, function(name){
+                                    baidu.each(me._mergeFields, function(index, name){
                                         result = (dataLine[name] == item[name]);
                                         return result;
                                     });

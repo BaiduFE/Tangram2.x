@@ -52,7 +52,9 @@ test("key和cache", function() {
 			}
 		});
 	});
-	check.start();
+//	check.start();
+    ok(false, '这个地方和jquery版本有些问题, 打开check.start()会造成死循环');
+    start();
 });
 
 // 测试ajaxOption对dataSource影响

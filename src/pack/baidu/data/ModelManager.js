@@ -3,8 +3,8 @@
  * Copyright 2010 Baidu Inc. All rights reserved.
  */
 
-///import pack.baidu.array.each;
 ///import pack.baidu.data.DataModel;
+///import baidu.each;
 
 /**
  * DataModel管理类
@@ -75,7 +75,7 @@ baidu.data.ModelManager = baidu.data.ModelManager || (function(){
                 fieldType = '',
                 defaultValue = null;
            
-            baidu.each(fields, function(field){
+            baidu.each(fields, function(index, field){
                 fieldName = field['name'];
                 fieldType = field['type'] || 'string';
                 defaultValue = typeof field.defaultValue != 'undefined' ? field.defaultValue : _getDefualtValue(fieldType);
@@ -89,7 +89,7 @@ baidu.data.ModelManager = baidu.data.ModelManager || (function(){
                 };
             });
 
-            baidu.each(validations, function(validation){
+            baidu.each(validations, function(index, validation){
                 fieldName = validation['field'];
                 delete(validation['field']);
                 result[fieldName]['validation'] = validation.val || [];

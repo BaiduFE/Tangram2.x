@@ -4,6 +4,7 @@
  */
 
 ///import pack.baidu.data;
+///import pack.baidu.lang.guid;
 ///import pack.baidu.lang.createSingle;
 ///import pack.baidu.dom.insertHTML;
 ///import baidu.string.format;
@@ -20,7 +21,7 @@
  * @grammar baidu.data.storage
  * @return {baidu.data.storage}
  */
-baidu.data.storage = (function() {
+baidu.data.storage = baidu.data.storage || function() {
     var _guid = baidu.lang.guid(),
         _status = {//状态说明
             SUCCESS: 0,
@@ -273,4 +274,4 @@ baidu.data.storage = (function() {
             me._storage.del.apply(me._storage, arguments);
         }
     };
-})();
+}();

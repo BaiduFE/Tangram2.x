@@ -73,10 +73,8 @@ test("define&create common", function() {
             defaultValue: false
         }]
     };
-
     baidu.data.ModelManager.defineDM('user', DMdefine);
     var DMInfo= baidu.data.ModelManager.createDM('user');
-    
     equals(DMInfo[0], 0, "The index is right");
     ok(DMInfo[1]._fields.firstName, "The fields are right");
     ok(DMInfo[1]._fields.lastName, "The fields are right");
@@ -275,7 +273,7 @@ test("getDMByType", function() {
 test("setValidator", function() {
 	expect(1);
 	stop();
-	ua.importsrc("baidu.data.Validator", function(){
+	ua.importsrc("pack.baidu.data.Validator", function(){
 		var DMdefine = {
 	        fields:[{
 	            name: 'firstName',
@@ -303,7 +301,7 @@ test("setValidator", function() {
 	    
 	    equals(DMInfo[1]._validator, validator, "The _validator is right");
 	    start();
-	}, "baidu.data.Validator", "baidu.data.ModelManager");
+	}, "baidu.data.Validator", "pack.baidu.data.ModelManager");
 });
 
 test("create with validator", function() {

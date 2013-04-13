@@ -3,7 +3,7 @@
  * Copyright 2010 Baidu Inc. All rights reserved.
  */
 
-///import baidu.array.each;
+///import baidu.each;
 
 ///import pack.baidu.object.extend;
 ///import pack.baidu.object.each;
@@ -31,7 +31,7 @@
 baidu.data.DataModel = baidu.data.DataModel || (function(){
 
     var CLONE = baidu.object.clone,
-        ARRAYEACH = baidu.array.each,
+        ARRAYEACH = baidu.each,
         OBJECTEACH = baidu.object.each;
 
     var dataAction = {
@@ -161,8 +161,8 @@ baidu.data.DataModel = baidu.data.DataModel || (function(){
             var result = {},
                 me = this;
 
-            ARRAYEACH(indexArr, function(index){
-                result[index] = me._getDataByName(where, me._data[index]);
+            ARRAYEACH(indexArr, function(index, item){
+                result[item] = me._getDataByName(where, me._data[item]);
             });
 
             return result;
@@ -205,7 +205,7 @@ baidu.data.DataModel = baidu.data.DataModel || (function(){
             }
 
             baidu.lang.isString(where) && (where = where.split(','));
-            ARRAYEACH(where, function(name){
+            ARRAYEACH(where, function(index, name){
                 result[name] = data[name];
             });
             return CLONE(result);
@@ -263,7 +263,7 @@ baidu.data.DataModel = baidu.data.DataModel || (function(){
 
             if(!baidu.lang.isArray(data)) data = [data];
             
-            baidu.each(data, function(eachData, index){
+            baidu.each(data, function(index, eachData){
 
                 tmpResult = true;
                 tmpNames = [];
@@ -359,7 +359,7 @@ baidu.data.DataModel = baidu.data.DataModel || (function(){
                result++;
             }
             
-            ARRAYEACH(resultId, function(dataIndex){
+            ARRAYEACH(resultId, function(index, dataIndex){
                 
                 lastData[dataIndex] = CLONE(me._data[dataIndex]);
                 
@@ -391,7 +391,7 @@ baidu.data.DataModel = baidu.data.DataModel || (function(){
                 return result;
             }
             
-            baidu.each(resultId, function(dataIndex){
+            baidu.each(resultId, function(index, dataIndex){
                
                 lastChange[dataIndex] = lastData[dataIndex] = CLONE(me._data[dataIndex]);
                 

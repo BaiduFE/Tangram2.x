@@ -117,7 +117,6 @@ test("_getDataByIndex", function(){
 		}, {
 			title : "女子有行"
 		}];
-	
 	var all = DM._getDataByIndex("*", [0,1,2]);
 	var author = DM._getDataByIndex("author", [0,1,2]);
 	var all1 = DM._getDataByIndex("title,author", [0,1,2]);
@@ -454,7 +453,6 @@ test("remove", function(){
 			return true;
 		else return false;
 	};
-	
 	var re1 = DM.remove([3,4]);
 	var re2 = DM.remove(fun);
 	var re3 = DM.remove(1);

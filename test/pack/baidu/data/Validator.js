@@ -72,7 +72,6 @@ test("validate, no params", function(){
 
 test("validate, success", function(){
 	expect(2);
-	debugger;
 	var validator = new baidu.data.Validator(te.validations);
 	var feedback = validator.validate([
 		                    ["chengyn", "isName"], 

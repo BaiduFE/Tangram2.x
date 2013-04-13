@@ -12,7 +12,7 @@
 ///import pack.baidu.dom.g;
 ///import pack.baidu.dom.show;
 ///import pack.baidu.object.extend;
-///import pack.baidu.array.each;
+///import baidu.each;
 ///import pack.baidu.dom.getStyle;
 ///import pack.baidu.lang.isNumber;
 
@@ -75,7 +75,7 @@ baidu.fx.expand = function(element, options) {
                 return result;
             }
             
-            baidu.each(attr.stylesValue, function(item){
+            baidu.each(attr.stylesValue, function(index, item){
                 value -= getStyleNum(e,item);
             });
             e.style.overflow = "hidden";
