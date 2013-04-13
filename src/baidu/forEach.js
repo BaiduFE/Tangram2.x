@@ -39,8 +39,9 @@ baidu.forEach = function( enumerable, iterator, context ) {
             }
 
             for ( i=0; i<n; i++ ) {
-
-                t = enumerable[ i ] || (enumerable.charAt && enumerable.charAt( i ));
+                
+                t = enumerable[ i ]
+                t === undefined && (t = enumerable.charAt && enumerable.charAt( i ));
 
                 // 被循环执行的函数，默认会传入三个参数(array[i], i, array)
                 iterator.call( context || null, t, i, enumerable );
