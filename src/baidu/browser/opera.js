@@ -1,7 +1,7 @@
 /*
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
- * 
+ *
  * path: baidu/browser/opera.js
  * author: allstar
  * version: 1.1.0
@@ -18,7 +18,7 @@
  * @grammar baidu.browser.opera
  * @meta standard
  * @see baidu.browser.ie,baidu.browser.firefox,baidu.browser.safari,baidu.browser.chrome
- * @return {Number} opera版本号
+ * @return {Number} opera版本号.
  */
 
 /*
