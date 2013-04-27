@@ -12,6 +12,6 @@
  * @name baidu.browser.ie
  * @function
  * @grammar baidu.browser.ie
- * @return {Number} IE版本号
+ * @return {Number} IE版本号.
  */
 //baidu.browser.ie = baidu.ie = /msie (\d+\.\d+)/i.test(navigator.userAgent) ? (document.documentMode || + RegExp['\x241']) : undefined;
