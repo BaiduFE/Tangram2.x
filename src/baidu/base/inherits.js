@@ -15,11 +15,11 @@
  * @param {string}      type        类名标识
  * @return {Function}               子类
   */
-baidu.base.inherits = function (subClass, superClass, type) {
-    var key, proto, 
-        selfProps = subClass.prototype, 
+baidu.base.inherits = function(subClass, superClass, type) {
+    var key, proto,
+        selfProps = subClass.prototype,
         clazz = new Function();
-        
+
     clazz.prototype = superClass.prototype;
     proto = subClass.prototype = new clazz();
 
@@ -30,13 +30,13 @@ baidu.base.inherits = function (subClass, superClass, type) {
     subClass.superClass = superClass.prototype;
 
     // 类名标识，兼容Class的toString，基本没用
-    typeof type == "string" && (proto._type_ = type);
+    typeof type == 'string' && (proto._type_ = type);
 
     subClass.extend = function(json) {
         for (var i in json) proto[i] = json[i];
         return subClass;
-    }
-    
+    };
+
     return subClass;
 };
 
