@@ -1,7 +1,7 @@
 /*
  * Tangram
  * Copyright 2009 Baidu Inc. All rights reserved.
- * 
+ *
  * path: baidu/browser/maxthon.js
  * author: allstar
  * version: 1.1.0
@@ -19,7 +19,7 @@
  * @name baidu.browser.maxthon
  * @grammar baidu.browser.maxthon
  * @see baidu.browser.ie
- * @return {Number} maxthon版本号
+ * @return {Number} maxthon版本号.
  */
 //        baidu.browser.maxthon = + RegExp['\x241'];
 //    }

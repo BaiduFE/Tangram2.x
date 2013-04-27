@@ -21,16 +21,15 @@
  * @grammar baidu.browser.isStrict
  * @grammar baidu.browser.isWebkit
  */
-baidu.browser = baidu.browser || function(){
-    var ua = navigator.userAgent;
-    
-    var result = {
-        isStrict : document.compatMode == "CSS1Compat"
-        ,isGecko : /gecko/i.test(ua) && !/like gecko/i.test(ua)
-        ,isWebkit: /webkit/i.test(ua)
-    };
+baidu.browser = baidu.browser || function() {
+    var ua = navigator.userAgent,
+        result = {
+            isStrict: document.compatMode == 'CSS1Compat',
+            isGecko: /gecko/i.test(ua) && !/like gecko/i.test(ua),
+            isWebkit: /webkit/i.test(ua)
+        };
 
-    try{/(\d+\.\d+)/.test(external.max_version) && (result.maxthon = + RegExp['\x241'])} catch (e){};
+    try {/(\d+\.\d+)/.test(external.max_version) && (result.maxthon = + RegExp['\x241'])} catch (e) {}
 
     // 蛋疼 你懂的
     switch (true) {
@@ -43,17 +42,15 @@ baidu.browser = baidu.browser || function(){
         case /(\d+\.\d)?(?:\.\d)?\s+safari\/?(\d+\.\d+)?/i.test(ua) && !/chrome/i.test(ua) :
             result.safari = + (RegExp['\x241'] || RegExp['\x242']);
             break;
-        case /firefox\/(\d+\.\d+)/i.test(ua) : 
+        case /firefox\/(\d+\.\d+)/i.test(ua) :
             result.firefox = + RegExp['\x241'];
             break;
-        
+
         case /opera(?:\/| )(\d+(?:\.\d+)?)(.+?(version\/(\d+(?:\.\d+)?)))?/i.test(ua) :
-            result.opera = + ( RegExp["\x244"] || RegExp["\x241"] );
+            result.opera = + (RegExp['\x244'] || RegExp['\x241']);
             break;
     }
-           
     baidu.extend(baidu, result);
-
     return result;
 }();
 /*
