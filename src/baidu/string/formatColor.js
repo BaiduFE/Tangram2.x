@@ -10,14 +10,14 @@
 
 /**
  * @description 将各种浏览器里的颜色值转换成#RRGGBB的格式
- * @function 
+ * @function
  * @name baidu.string.formatColor()
  * @grammar baidu.string.formatColor(color)
- * @param {String} color 浏览器中的颜色值字符串
- * @return {String} #RRGGBB格式的字符串或空
+ * @param {String} color 浏览器中的颜色值字符串.
+ * @return {String} #RRGGBB格式的字符串或空.
  */
 
-baidu.string.formatColor = baidu.string.formatColor || function(){
+baidu.string.formatColor = baidu.string.formatColor || function() {
     // 将正则表达式预创建，可提高效率
     var reg1 = /^\#[\da-f]{6}$/i,
         reg2 = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i,
@@ -39,39 +39,39 @@ baidu.string.formatColor = baidu.string.formatColor || function(){
             teal: '#008080',
             aqua: '#00ffff'
         };
-        
-    return function(){
-        var txt,color;
-    
-        (arguments.length > 0) ? 
-            
+
+    return function() {
+        var txt, color;
+
+        (arguments.length > 0) ?
+
             (
                 txt = arguments[0],
 
                 type = baidu.type(txt),
-                txt  = new String(~'string|number'.indexOf(type) ? txt : type)
-                
+                txt = new String(~'string|number'.indexOf(type) ? txt : type)
+
             ) : (txt = this);
         color = txt.valueOf();
-        if(reg1.test(color)) {
+        if (reg1.test(color)) {
             // #RRGGBB 直接返回
             return color;
-        } else if(reg2.test(color)) {
+        } else if (reg2.test(color)) {
             // 非IE中的 rgb(0, 0, 0)
-            for (var s, i=1, color="#"; i<4; i++) {
-                s = parseInt(RegExp["\x24"+ i]).toString(16);
-                color += ("00"+ s).substr(s.length);
+            for (var s, i = 1, color = '#'; i < 4; i++) {
+                s = parseInt(RegExp['\x24'+ i]).toString(16);
+                color += ('00'+ s).substr(s.length);
             }
             return color;
-        } else if(/^\#[\da-f]{3}$/.test(color)) {
+        } else if (/^\#[\da-f]{3}$/.test(color)) {
             // 简写的颜色值: #F00
             var s1 = color.charAt(1),
                 s2 = color.charAt(2),
                 s3 = color.charAt(3);
-            return "#"+ s1 + s1 + s2 + s2 + s3 + s3;
-        }else if(keyword[color])
+            return '#'+ s1 + s1 + s2 + s2 + s3 + s3;
+        }else if (keyword[color])
             return keyword[color];
-        
+
         return '';
     }
 }();

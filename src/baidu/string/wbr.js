@@ -9,11 +9,11 @@
 
 /**
  * @description 为目标字符串添加wbr软换行
- * @function 
+ * @function
  * @name baidu.string.wbr()
  * @grammar baidu.string.wbr(str)
- * @param {String} str 目标字符串
- * @return {String} 添加软换行后的字符串
+ * @param {String} str 目标字符串.
+ * @return {String} 添加软换行后的字符串.
  */
 
 /*
@@ -23,18 +23,18 @@
 */
 
 
-baidu.string.wbr = baidu.string.wbr || function(){
+baidu.string.wbr = baidu.string.wbr || function() {
     var txt;
-    
-    (arguments.length > 0) ? 
-        
+
+    (arguments.length > 0) ?
+
         (
             txt = arguments[0],
 
             type = baidu.type(txt),
-            txt  = new String(~'string|number'.indexOf(type) ? txt : type)
+            txt = new String(~'string|number'.indexOf(type) ? txt : type)
         ) : (txt = this);
-        
+
     return txt.replace(/(?:<[^>]+>)|(?:&#?[0-9a-z]{2,6};)|(.{1})/gi, '$&<wbr>')
             .replace(/><wbr>/g, '>');
 };
