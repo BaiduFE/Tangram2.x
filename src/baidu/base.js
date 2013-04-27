@@ -7,7 +7,7 @@
 
 /**
  * @description 将原baidu.lang里关于BaseClass和BaseEvent部分搬迁到此新命名空间下
- * @Object 
+ * @Object
  * @name baidu.base()
  */
-baidu.base = baidu.base || {blank: function(){}};
+baidu.base = baidu.base || {blank: function() {}};
