@@ -16,20 +16,20 @@
  * @function
  * @name baidu.query().children()
  * @grammar baidu.query(args).children(selector)
- * @param   {Object}            selector    选择器
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}            selector    选择器.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    children : function (selector) {
+    children: function(selector) {
         var result, a = [];
 
-        this.each(function(index){
-            baidu.forEach(this.children || this.childNodes, function(dom){
+        this.each(function(index) {
+            baidu.forEach(this.children || this.childNodes, function(dom) {
                 dom.nodeType == 1 && a.push(dom);
             });
         });
 
-        return baidu.query( baidu.query.match(a, selector) );
+        return baidu.query(baidu.query.match(a, selector));
     }
 });
 

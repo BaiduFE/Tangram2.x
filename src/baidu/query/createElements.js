@@ -16,21 +16,21 @@
  * @function
  * @name baidu.query.createElements()
  * @grammar baidu.query.createElements(HTMLString)
- * @param   {HTMLString}    htmlstring HTMLString
- * @return  {$DOM}          new TangramDom
+ * @param   {HTMLString}    htmlstring HTMLString.
+ * @return  {$DOM}          new TangramDom.
  */
 baidu.query.createElements = function() {
-    var tagReg  = /<(\w+)/i,
+    var tagReg = /<(\w+)/i,
         rhtml = /<|&#?\w+;/,
-        tagMap  = {
-            area    : [1, "<map>", "</map>"],
-            col     : [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"],
-            legend  : [1, "<fieldset>", "</fieldset>"],
-            option  : [1, "<select multiple='multiple'>", "</select>"],
-            td      : [3, "<table><tbody><tr>", "</tr></tbody></table>"],
-            thead   : [1, "<table>", "</table>"],
-            tr      : [2, "<table><tbody>", "</tbody></table>"],
-            _default: [0, "", ""]
+        tagMap = {
+            area: [1, '<map>', '</map>'],
+            col: [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
+            legend: [1, '<fieldset>', '</fieldset>'],
+            option: [1, "<select multiple='multiple'>", '</select>'],
+            td: [3, '<table><tbody><tr>', '</tr></tbody></table>'],
+            thead: [1, '<table>', '</table>'],
+            tr: [2, '<table><tbody>', '</tbody></table>'],
+            _default: [0, '', '']
         };
 
     // 建立映射
@@ -39,54 +39,54 @@ baidu.query.createElements = function() {
     tagMap.th = tagMap.td;
 
     // 将<script>解析成正常可执行代码
-    function parseScript ( box, doc ) {
-        var list = box.getElementsByTagName("SCRIPT"),
+    function parseScript(box, doc ) {
+        var list = box.getElementsByTagName('SCRIPT'),
             i, script, item;
 
-        for ( i=list.length-1; i>=0; i-- ) {
-            item = list[ i ];
-            script = doc.createElement( "SCRIPT" );
+        for (i = list.length - 1; i >= 0; i--) {
+            item = list[i];
+            script = doc.createElement('SCRIPT');
 
             item.id && (script.id = item.id);
             item.src && (script.src = item.src);
             item.type && (script.type = item.type);
-            script[ item.text ? "text" : "textContent" ] = item.text || item.textContent;
+            script[item.text ? 'text' : 'textContent'] = item.text || item.textContent;
 
-            item.parentNode.replaceChild( script, item );
+            item.parentNode.replaceChild(script, item);
         }
     }
 
-    return function( htmlstring, doc ) {
-        baidu.isNumber( htmlstring ) && ( htmlstring = htmlstring.toString() );
+    return function(htmlstring, doc ) {
+        baidu.isNumber(htmlstring) && (htmlstring = htmlstring.toString());
         doc = doc || document;
 
         var wrap, depth, box,
-            hs  = htmlstring,
-            n   = hs.length,
-            div = doc.createElement("div"),
-            df  = doc.createDocumentFragment(),
+            hs = htmlstring,
+            n = hs.length,
+            div = doc.createElement('div'),
+            df = doc.createDocumentFragment(),
             result = [];
 
-        if ( baidu.isString( hs ) ) {
-            if(!rhtml.test(hs)){// TextNode
-                result.push( doc.createTextNode( hs ) );
+        if (baidu.isString(hs)) {
+            if (!rhtml.test(hs)) {// TextNode
+                result.push(doc.createTextNode(hs));
             }else {//htmlString
-                wrap = tagMap[ hs.match( tagReg )[1].toLowerCase() ] || tagMap._default;
+                wrap = tagMap[hs.match(tagReg)[1].toLowerCase()] || tagMap._default;
 
-                div.innerHTML = "<i>mz</i>" + wrap[1] + hs + wrap[2];
-                div.removeChild( div.firstChild );  // for ie (<script> <style>)
+                div.innerHTML = '<i>mz</i>' + wrap[1] + hs + wrap[2];
+                div.removeChild(div.firstChild);  // for ie (<script> <style>)
                 parseScript(div, doc);
 
                 depth = wrap[0];
                 box = div;
-                while ( depth -- ) { box = box.firstChild; };
+                while (depth--) { box = box.firstChild; }
 
-                baidu.merge( result, box.childNodes );
+                baidu.merge(result, box.childNodes);
 
                 // 去除 item.parentNode
-                baidu.forEach( result, function (dom) {
-                    df.appendChild( dom );
-                } );
+                baidu.forEach(result, function(dom) {
+                    df.appendChild(dom);
+                });
 
                 div = box = null;
             }

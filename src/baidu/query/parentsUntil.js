@@ -16,16 +16,16 @@
  * @function
  * @name baidu.query().parentsUntil()
  * @grammar baidu.query(args).parentsUntil(selector[, filter])
- * @param   {Object}            selector    选择器
- * @param   {String|Function}   filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}            selector    选择器.
+ * @param   {String|Function}   filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    parentsUntil : function (selector, filter) {
-        baidu.check("(string|HTMLElement)(,.+)?","baidu.query.parentsUntil");
+    parentsUntil: function(selector, filter) {
+        baidu.check('(string|HTMLElement)(,.+)?', 'baidu.query.parentsUntil');
         var array = [];
 
-        baidu.forEach(this, function(dom){
+        baidu.forEach(this, function(dom) {
             var a = baidu.array();
 
             while ((dom = dom.parentNode) && dom.nodeType == 1) a.push(dom);
@@ -40,6 +40,6 @@ baidu.query.extend({
             baidu.merge(array, a);
         });
 
-        return baidu.query( baidu.query.match(array, filter) );
+        return baidu.query(baidu.query.match(array, filter));
     }
 });

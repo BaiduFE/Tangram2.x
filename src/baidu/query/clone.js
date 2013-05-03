@@ -10,16 +10,16 @@
 ///import baidu.support;
 /**
  * @description 对匹配元素进行深度克隆
- * @function 
+ * @function
  * @name baidu.query().clone()
  * @grammar baidu.query(args).clone([withDataAndEvents[,deepWithDataAndEvents]])
- * @param {Boolean} withDataAndEvents 一个可选的布尔值参数，当参数为true时，表示当次克隆需要将该匹配元素的数据和事件也做克隆
- * @param {Boolean} deepWithDataAndEvents 一个可选的布尔值参数，当参数为true时，表示当次克隆需要将该匹配元素的所有子元素的数据和事件也做克隆
- * @return {TangramDom} 接口最终返回一个TangramDom对象，该对象包装了克隆的节点
+ * @param {Boolean} withDataAndEvents 一个可选的布尔值参数，当参数为true时，表示当次克隆需要将该匹配元素的数据和事件也做克隆.
+ * @param {Boolean} deepWithDataAndEvents 一个可选的布尔值参数，当参数为true时，表示当次克隆需要将该匹配元素的所有子元素的数据和事件也做克隆.
+ * @return {TangramDom} 接口最终返回一个TangramDom对象，该对象包装了克隆的节点.
  * @example
  .clone()方法深度复制所有匹配的元素，包括所有匹配元素、匹配元素的下级元素、文字节点。
  当和插入方法联合使用时，.clone()对于复制页面上的元素很方便。
- 
+
  注意：如果也要克隆事件，需要传入参数。
 
  示例代码：
@@ -60,33 +60,33 @@
  */
 
 baidu.query.extend({
-    clone: function(){
+    clone: function() {
         var util = baidu.dom,
             eventCore = baidu.event._core,
             eventQueue = baidu.event._queue,
             div = baidu.support.dom.div,
             noCloneChecked = baidu.support.dom.input.cloneNode(true).checked,//用于判断ie是否支持clone属性
             noCloneEvent = true;
-        if (!div.addEventListener && div.attachEvent && div.fireEvent){
-            div.attachEvent('onclick', function(){noCloneEvent = false;});
+        if (!div.addEventListener && div.attachEvent && div.fireEvent) {
+            div.attachEvent('onclick', function() {noCloneEvent = false;});
             div.cloneNode(true).fireEvent('onclick');
         }
         //
-        function getAll(ele){
+        function getAll(ele) {
             return ele.getElementsByTagName ? ele.getElementsByTagName('*')
                 : (ele.querySelectorAll ? ele.querySelectorAll('*') : []);
         }
         //
-        function cloneFixAttributes(src, dest){
+        function cloneFixAttributes(src, dest) {
             dest.clearAttributes && dest.clearAttributes();
             dest.mergeAttributes && dest.mergeAttributes(src);
-            switch(dest.nodeName.toLowerCase()){
+            switch (dest.nodeName.toLowerCase()) {
                 case 'object':
                     dest.outerHTML = src.outerHTML;
                     break;
                 case 'textarea':
                 case 'input':
-                    if(~'checked|radio'.indexOf(src.type)){
+                    if (~'checked|radio'.indexOf(src.type)) {
                         src.checked && (dest.defaultChecked = dest.checked = src.checked);
                         dest.value !== src.value && (dest.value = src.value);
                     }
@@ -102,37 +102,37 @@ baidu.query.extend({
             dest[baidu.key] && dest.removeAttribute(baidu.key);
         }
         //
-        function cloneCopyEvent(src, dest){
-            if(dest.nodeType !== 1 || !baidu.id(src, 'get')){return;}
+        function cloneCopyEvent(src, dest) {
+            if (dest.nodeType !== 1 || !baidu.id(src, 'get')) {return;}
             var defaultEvents = eventQueue.get(src);
-            for(var i in defaultEvents){
-                for(var j = 0, handler; handler = defaultEvents[i][j]; j++){
+            for (var i in defaultEvents) {
+                for (var j = 0, handler; handler = defaultEvents[i][j]; j++) {
                     eventCore.add(dest, i, handler.orig, null, null, handler.one);
                 }
             }
         }
         //
-        function clone(ele, dataAndEvents, deepDataAndEvents){
+        function clone(ele, dataAndEvents, deepDataAndEvents) {
             var cloneNode = ele.cloneNode(true),
                 srcElements, destElements, len;
             //IE
-            if((!noCloneEvent || !noCloneChecked)
-                && (ele.nodeType === 1 || ele.nodeType === 11) && !baidu.dom._isXML(ele)){
+            if ((!noCloneEvent || !noCloneChecked)
+                && (ele.nodeType === 1 || ele.nodeType === 11) && !baidu.dom._isXML(ele)) {
                     cloneFixAttributes(ele, cloneNode);
-                    srcElements = getAll( ele );
-                    destElements = getAll( cloneNode );
+                    srcElements = getAll(ele);
+                    destElements = getAll(cloneNode);
                     len = srcElements.length;
-                    for(var i = 0; i < len; i++){
+                    for (var i = 0; i < len; i++) {
                         destElements[i] && cloneFixAttributes(srcElements[i], destElements[i]);
                     }
             }
-            if(dataAndEvents){
+            if (dataAndEvents) {
                 cloneCopyEvent(ele, cloneNode);
-                if(deepDataAndEvents){
-                    srcElements = getAll( ele );
-                    destElements = getAll( cloneNode );
+                if (deepDataAndEvents) {
+                    srcElements = getAll(ele);
+                    destElements = getAll(cloneNode);
                     len = srcElements.length;
-                    for(var i = 0; i < len; i++){
+                    for (var i = 0; i < len; i++) {
                         cloneCopyEvent(srcElements[i], destElements[i]);
                     }
                 }
@@ -140,10 +140,10 @@ baidu.query.extend({
             return cloneNode;
         }
         //
-        return function(dataAndEvents, deepDataAndEvents){
+        return function(dataAndEvents, deepDataAndEvents) {
             dataAndEvents = !!dataAndEvents;
             deepDataAndEvents = !!deepDataAndEvents;
-            return this.map(function(){
+            return this.map(function() {
                 return clone(this, dataAndEvents, deepDataAndEvents);
             });
         }

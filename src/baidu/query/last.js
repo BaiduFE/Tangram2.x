@@ -14,10 +14,10 @@
  * @function
  * @name baidu.query().last()
  * @grammar baidu.query(args).last()
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    last : function () {
+    last: function() {
         return baidu.query(this.get(-1));
     }
 });

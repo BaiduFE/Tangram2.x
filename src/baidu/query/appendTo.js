@@ -6,15 +6,15 @@
 
 /**
  * @description 将匹配到的DOM元素插入到参数指定的DOM元素内部的末端
- * @function 
+ * @function
  * @name baidu.query().appendTo()
  * @grammar baidu.query(args).appendTo(target)
- * @param {HTMLString|selector|Element|TangramDom} target 一个HTMLString或是选择器字符串或是DOM元素或是TangramDom对象
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象
+ * @param {HTMLString|selector|Element|TangramDom} target 一个HTMLString或是选择器字符串或是DOM元素或是TangramDom对象.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  * @example
- .appendTo()函数将特定内容插入到每个匹配元素里面的最后面，作为它的最后一个子元素（last child）, 
+ .appendTo()函数将特定内容插入到每个匹配元素里面的最后面，作为它的最后一个子元素（last child）,
  如果要作为第一个子元素 （first child），用.prepend()或.prependTo()
- 
+
  .append() 和.appendTo()实现同样的功能，主要的不同是语法——内容和目标的位置不同。
  对于.append()，选择表达式在函数的前面，参数是将要插入的内容。
  对于.appendTo()刚好相反，内容在方法前面，它将被放在参数里元素的末尾。
@@ -46,9 +46,9 @@
 
  */
 baidu.query.extend({
-    appendTo: function(target){
+    appendTo: function(target) {
         baidu.check('^(?:string|HTMLElement|\\$DOM)$', 'baidu.query.appendTo');
-        baidu.dom._smartInsertTo(this, target, function(child){
+        baidu.dom._smartInsertTo(this, target, function(child) {
             this.appendChild(child);
         });
         return this;

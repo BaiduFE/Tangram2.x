@@ -2,15 +2,15 @@
 ///import baidu.dom._propFixer;
 ///import baidu.support._getSetAttribute;
 
-baidu.dom._removeAttr = function(){
+baidu.dom._removeAttr = function() {
     var propFixer = baidu.dom._propFixer,
         core_rspace = /\s+/,
         _getSetAttribute = baidu.support._getSetAttribute;
-    return function(ele, key){
-        if(!key || ele.nodeType !==1){return;}
+    return function(ele, key) {
+        if (!key || ele.nodeType !== 1) {return;}
         var array = key.split(core_rspace),
             propName, isBool;
-        for(var i = 0, attrName; attrName = array[i]; i++){
+        for (var i = 0, attrName; attrName = array[i]; i++) {
             propName = propFixer[attrName] || attrName;
             isBool = propFixer.rboolean.test(attrName);
             !isBool && baidu.dom._attr(ele, attrName, '');

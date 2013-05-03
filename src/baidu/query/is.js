@@ -12,11 +12,11 @@
  * @function
  * @name baidu.query().is()
  * @grammar baidu.query(args).is(selector)
- * @param   {Object}            selector    选择器
- * @return  {Boolean}       是否符合条件
+ * @param   {Object}            selector    选择器.
+ * @return  {Boolean}       是否符合条件.
  */
 baidu.query.extend({
-    is : function (selector) {
+    is: function(selector) {
         return baidu.query.match(this, selector).length > 0;
     }
 });

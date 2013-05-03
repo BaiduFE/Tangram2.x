@@ -7,14 +7,14 @@
 ///import baidu.query.getCurrentStyle;
 /**
  * @description 取得第一个匹配元素相对于父元素的偏移量
- * @function 
+ * @function
  * @name baidu.query().position()
  * @grammar baidu.query(args).position()
- * @return {Object} 返回一个包含left和top键名的json来标示元素相对于父元素的偏移量
+ * @return {Object} 返回一个包含left和top键名的json来标示元素相对于父元素的偏移量.
  */
 baidu.query.extend({
-    position: function(){
-        if(this.size()<=0){return 0;}        
+    position: function() {
+        if (this.size() <= 0) {return 0;}
         var patrn = /^(?:body|html)$/i,
             coordinate = this.offset(),
             offsetParent = this.offsetParent(),
@@ -27,6 +27,6 @@ baidu.query.extend({
         return {
             left: coordinate.left - parentCoor.left,
             top: coordinate.top - parentCoor.top
-        }
+        };
     }
 });

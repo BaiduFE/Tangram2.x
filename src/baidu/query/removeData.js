@@ -17,30 +17,30 @@
  * @name baidu.query().removeData()
  * @grammar baidu.query().removeData(key)
  * @function
- * @param {String} key 数据的索引
- * @return {TangramDom} 返回之前的tangramDom对象
+ * @param {String} key 数据的索引.
+ * @return {TangramDom} 返回之前的tangramDom对象.
  */
 
 baidu.query.extend({
-    removeData : function () {
-        var   guid = baidu.key
-            , maps = baidu.global("_maps_HTMLElementData");
+    removeData: function() {
+        var guid = baidu.key
+, maps = baidu.global('_maps_HTMLElementData');
 
-        return function( key ) {
-            baidu.forEach( this, function( dom ) {
-                !dom[ guid ] && ( dom[ guid ] = baidu.id() );
+        return function(key ) {
+            baidu.forEach(this, function(dom ) {
+                !dom[guid] && (dom[guid] = baidu.id());
             });
 
             // set all
-            baidu.forEach(this, function(dom){
-                var map = maps[dom[ guid ]];
+            baidu.forEach(this, function(dom) {
+                var map = maps[dom[guid]];
 
-                if (typeof key == "string") {
-                    map && delete map[ key ];
+                if (typeof key == 'string') {
+                    map && delete map[key];
 
-                } else if (baidu.type( key) == "array") {
-                    baidu.forEach( key, function(i) {
-                        map && delete map[ i ];
+                } else if (baidu.type(key) == 'array') {
+                    baidu.forEach(key, function(i) {
+                        map && delete map[i];
                     });
                 }
             });

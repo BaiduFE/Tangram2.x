@@ -14,16 +14,16 @@
  * @function
  * @name baidu.query().next()
  * @grammar baidu.query(args).next([filter])
- * @param   {String|Function}   filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {String|Function}   filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    next : function (filter) {
+    next: function(filter) {
         var td = baidu.query();
 
-        baidu.forEach(this, function(dom){
-            while((dom = dom.nextSibling) && dom && dom.nodeType != 1);
-            dom && (td[td.length ++] = dom);
+        baidu.forEach(this, function(dom) {
+            while ((dom = dom.nextSibling) && dom && dom.nodeType != 1);
+            dom && (td[td.length++] = dom);
         });
 
         return filter ? td.filter(filter) : td;

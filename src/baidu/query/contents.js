@@ -5,15 +5,15 @@
 ///import baidu.makeArray;
 /**
  * @description 取得匹配元素内部第一级的子节点，包括文本节点等，如果匹配元素是一个iframe，并且同域，则可以返回iframe的文档
- * @function 
+ * @function
  * @name baidu.query().contents()
  * @grammar baidu.query(args).contents()
- * @return {TangramDom} 接口最终返回一个匹配元素的内部所有内容的TangramDom对象
+ * @return {TangramDom} 接口最终返回一个匹配元素的内部所有内容的TangramDom对象.
  */
 baidu.query.extend({
-    contents: function(){
+    contents: function() {
         var ret = [], nodeName;
-        for(var i = 0, ele; ele = this[i]; i++){
+        for (var i = 0, ele; ele = this[i]; i++) {
             nodeName = ele.nodeName;
             ret.push.apply(ret, baidu.makeArray(nodeName && nodeName.toLowerCase() === 'iframe' ?
                 ele.contentDocument || ele.contentWindow.document

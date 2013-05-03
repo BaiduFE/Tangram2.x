@@ -10,11 +10,11 @@
 
 /**
  * @description 显示或隐藏匹配的元素
- * @function 
+ * @function
  * @name baidu.query().toggle()
  * @grammar baidu.query(args).toggle()
- * @return {TangramDom} 之前匹配的TangramDom对象
- * @example 
+ * @return {TangramDom} 之前匹配的TangramDom对象.
+ * @example
  toggle方法是最简单的显示或者隐藏一个元素的方法，
  如果当前元素显示状态，则就会被隐藏；当前元素隐藏状态，则会被显示。
 
@@ -36,14 +36,14 @@
  */
 
 baidu.query.extend({
-    toggle: function(){
-        for(var i = 0 , num = this.size(); i < num ; i++ ){
+    toggle: function() {
+        for (var i = 0 , num = this.size(); i < num; i++) {
             var ele = this.eq(i);
-            if(ele.css('display') != 'none'){
+            if (ele.css('display') != 'none') {
                 ele.hide();
-            }else{
+            }else {
                 ele.show();
-            };
-        };
+            }
+        }
     }
 });

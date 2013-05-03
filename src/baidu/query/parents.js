@@ -16,11 +16,11 @@
  * @function
  * @name baidu.query().parents()
  * @grammar baidu.query(args).parents([filter])
- * @param   {String|Function}   filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {String|Function}   filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    parents : function (filter) {
+    parents: function(filter) {
         var array = [];
 
         baidu.forEach(this, function(dom) {
@@ -31,6 +31,6 @@ baidu.query.extend({
             baidu.merge(array, a);
         });
 
-        return baidu.query( baidu.query.match(array, filter) );
+        return baidu.query(baidu.query.match(array, filter));
     }
 });

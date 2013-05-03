@@ -6,11 +6,11 @@
 
 /**
  * @description 显示匹配的元素
- * @function 
+ * @function
  * @name baidu.query().show()
  * @grammar baidu.query(args).show()
- * @return {TangramDom} 之前匹配的TangramDom对象
- * @example 
+ * @return {TangramDom} 之前匹配的TangramDom对象.
+ * @example
  show和hide方法是最简单的显示或者隐藏一个元素的方法
 
  示例代码：
@@ -23,15 +23,15 @@
  */
 
 baidu.query.extend({
-    show: function(){
+    show: function() {
         var valMap = {};
-        function getDefaultDisplayValue(tagName){
-            if(valMap[tagName]){return valMap[tagName];}
+        function getDefaultDisplayValue(tagName) {
+            if (valMap[tagName]) {return valMap[tagName];}
             var ele = document.createElement(tagName), val, frame, ownDoc;
             document.body.appendChild(ele);
             val = baidu.query(ele).getCurrentStyle('display');
             document.body.removeChild(ele);
-            if(val === '' || val === 'none'){
+            if (val === '' || val === 'none') {
                 frame = document.body.appendChild(document.createElement('iframe'));
                 frame.frameBorder =
                 frame.width =
@@ -47,14 +47,14 @@ baidu.query.extend({
             ele = null;
             return valMap[tagName] = val;
         }
-        return function(){
+        return function() {
             var tang;
-            this.each(function(index, ele){
-                if(!ele.style){return;}
+            this.each(function(index, ele) {
+                if (!ele.style) {return;}
                 ele.style.display = '';
                 tang = baidu.query(ele);
-                if(tang.getCurrentStyle('display') === 'none'
-                    || !baidu.dom._contains(tang.getDocument(), ele)){
+                if (tang.getCurrentStyle('display') === 'none'
+                    || !baidu.dom._contains(tang.getDocument(), ele)) {
                     ele.style.display = valMap[ele.nodeName] || getDefaultDisplayValue(ele.nodeName);
                 }
             });

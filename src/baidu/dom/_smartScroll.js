@@ -5,27 +5,27 @@
 ///import baidu.type;
 ///import baidu.browser;
 
-baidu.dom._smartScroll = function(axis){
+baidu.dom._smartScroll = function(axis) {
     var orie = {scrollLeft: 'pageXOffset', scrollTop: 'pageYOffset'}[axis],
         is = axis === 'scrollLeft',
         ret = {};
-    function isDocument(ele){
+    function isDocument(ele) {
         return ele && ele.nodeType === 9;
     }
-    function getWindow(ele){
-        return baidu.type(ele) == "Window" ? ele
+    function getWindow(ele) {
+        return baidu.type(ele) == 'Window' ? ele
             : isDocument(ele) ? ele.defaultView || ele.parentWindow : false;
     }
     return {
-        get: function(ele){
+        get: function(ele) {
             var win = getWindow(ele);
             return win ? (orie in win) ? win[orie]
                 : baidu.browser.isStrict && win.document.documentElement[axis]
                     || win.document.body[axis] : ele[axis];
         },
-        
-        set: function(ele, val){
-            if(!ele){return;}
+
+        set: function(ele, val) {
+            if (!ele) {return;}
             var win = getWindow(ele);
             win ? win.scrollTo(is ? val : this.get(ele), !is ? val : this.get(ele))
                 : ele[axis] = val;

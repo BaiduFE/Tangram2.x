@@ -5,12 +5,12 @@
 
 /**
  * @description 为每个匹配的元素添加指定的className
- * @function 
+ * @function
  * @name baidu.query().addClass()
  * @grammar baidu.query(args).addClass(className)
- * @param {String} className 为每个匹配元素所要增加的一个或多个class属性名(多个用空格分隔)。
- * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
- * @example 
+ * @param {String} className 为每个匹配元素所要增加的一个或多个class属性名(多个用空格分隔)。.
+ * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象.
+ * @example
  该接口支持传入多个className，并且可以打乱顺序，会自动除重。
  示例代码：
  //HTML片段
@@ -18,22 +18,22 @@
 
  //单个className
  baidu('#test-div').addClass('class1');
- 
+
  //多个className
  baidu('#test-div').addClass('class1 class2');
 
  //这个方法通常和.removeClass()一起使用用来切换元素的样式, 像这样：
- baidu('#test-div').removeClass("class3").addClass('class1 class2'); 
+ baidu('#test-div').removeClass("class3").addClass('class1 class2');
 
  */
 
 /**
  * @description 为每个匹配的元素添加指定的className
- * @function 
+ * @function
  * @name baidu.query().addClass()
  * @grammar baidu.query(args).addClass(fn)
- * @param {Function} fn 这个函数返回一个或更多用空格隔开的要增加的样式名，接收元素的索引index和元素旧的样式名className作为参数。
- * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象
+ * @param {Function} fn 这个函数返回一个或更多用空格隔开的要增加的样式名，接收元素的索引index和元素旧的样式名className作为参数。.
+ * @return {TangramDom} 接口最终返回之前匹配元素的TangramDom对象.
  * @example
  该接口为迭代器方法，可以获取每个匹配元素的className和index（索引值），并且将函数返回值设置为对应的className；
  通过使用一个函数来设置className，我们可以根据元素的className来计算值。
@@ -63,29 +63,29 @@
 ///import baidu.string.trim;
 
 baidu.query.extend({
-    addClass: function( value ){
+    addClass: function(value ) {
 
-        if( !arguments.length )
+        if (!arguments.length)
             return this;
 
-        var t = typeof value, b = " ";
+        var t = typeof value, b = ' ';
 
-        if( t == "string" ){
+        if (t == 'string') {
             value = baidu.string.trim(value);
-            
-            var arr = value.split(" ");
 
-            baidu.forEach( this, function(item, index){
+            var arr = value.split(' ');
+
+            baidu.forEach(this, function(item, index) {
                 var str = item.className;
-                
-                for(var i = 0; i < arr.length; i ++)
-                    if(!~(b + str + b).indexOf(b + arr[i] + b))
-                        str += " " + arr[i];
-                
-                item.className = str.replace(/^\s+/g, "");
-            } );
-        }else if( t == "function" )
-            baidu.forEach(this, function(item, index){
+
+                for (var i = 0; i < arr.length; i++)
+                    if (!~(b + str + b).indexOf(b + arr[i] + b))
+                        str += ' ' + arr[i];
+
+                item.className = str.replace(/^\s+/g, '');
+            });
+        }else if (t == 'function')
+            baidu.forEach(this, function(item, index) {
                 baidu.query(item).addClass(value.call(item, index, item.className));
             });
 
