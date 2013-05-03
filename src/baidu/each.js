@@ -12,53 +12,53 @@
  * @function
  * @name baidu.each()
  * @grammar baidu.each( enumerable, iterator[, context] )
- * @param   {Object}        enumerable      被枚举的对象（Array|ArrayLike|NodeList|String|Number）
- * @param   {Function}      iterator        遍历操作的函数
- * @param   {Object}        context         [可选]作用域
- * @return  {ArrayLike}     arrayLike
+ * @param   {Object}        enumerable      被枚举的对象（Array|ArrayLike|NodeList|String|Number）.
+ * @param   {Function}      iterator        遍历操作的函数.
+ * @param   {Object}        context         [可选]作用域.
+ * @return  {ArrayLike}     arrayLike.
  */
-baidu.each = function( enumerable, iterator, context ) {
+baidu.each = function(enumerable, iterator, context ) {
     var i, n, t, result;
 
-    if ( typeof iterator == "function" && enumerable) {
+    if (typeof iterator == 'function' && enumerable) {
 
         // Array or ArrayLike or NodeList or String or ArrayBuffer
-        n = typeof enumerable.length == "number" ? enumerable.length : enumerable.byteLength;
-        if ( typeof n == "number" ) {
+        n = typeof enumerable.length == 'number' ? enumerable.length : enumerable.byteLength;
+        if (typeof n == 'number') {
 
             // 20121030 function.length
             //safari5.1.7 can not use typeof to check nodeList - linlingyu
-            if (Object.prototype.toString.call(enumerable) === "[object Function]") {
+            if (Object.prototype.toString.call(enumerable) === '[object Function]') {
                 return enumerable;
             }
 
-            for ( i=0; i<n; i++ ) {
+            for (i = 0; i < n; i++) {
                 //enumerable[ i ] 有可能会是0
-                t = enumerable[ i ];
-                t === undefined && (t = enumerable.charAt && enumerable.charAt( i ));
+                t = enumerable[i];
+                t === undefined && (t = enumerable.charAt && enumerable.charAt(i));
                 // 被循环执行的函数，默认会传入三个参数(i, array[i], array)
-                result = iterator.call( context || t, i, t, enumerable );
+                result = iterator.call(context || t, i, t, enumerable);
 
                 // 被循环执行的函数的返回值若为 false 和"break"时可以影响each方法的流程
-                if ( result === false || result == "break" ) {break;}
+                if (result === false || result == 'break') {break;}
             }
-        
-        // enumerable is number
-        } else if (typeof enumerable == "number") {
 
-            for (i=0; i<enumerable; i++) {
-                result = iterator.call( context || i, i, i, i);
-                if ( result === false || result == "break" ) { break;}
+        // enumerable is number
+        } else if (typeof enumerable == 'number') {
+
+            for (i = 0; i < enumerable; i++) {
+                result = iterator.call(context || i, i, i, i);
+                if (result === false || result == 'break') { break;}
             }
-        
+
         // enumerable is json
-        } else if (typeof enumerable == "object") {
+        } else if (typeof enumerable == 'object') {
 
             for (i in enumerable) {
-                if ( enumerable.hasOwnProperty(i) ) {
-                    result = iterator.call( context || enumerable[ i ], i, enumerable[ i ], enumerable );
+                if (enumerable.hasOwnProperty(i)) {
+                    result = iterator.call(context || enumerable[i], i, enumerable[i], enumerable);
 
-                    if ( result === false || result == "break" ) { break;}
+                    if (result === false || result == 'break') { break;}
                 }
             }
         }

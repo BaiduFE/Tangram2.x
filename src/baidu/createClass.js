@@ -10,18 +10,18 @@
  * @grammar baidu.createClass(constructor[, options])
  * @remark
             使用createClass能方便的创建一个带有继承关系的类。同时会为返回的类对象添加extend方法，使用obj.extend({});可以方便的扩展原型链上的方法和属性
- *             
+ *
  * @param {Function} constructor 类的构造器函数
  * @param {String}   type        [可选]类的名字
  * @param {Object}   options     [可选]配置{superClass: 父类, type:className: 类名, decontrolled: 不受控}
  * @return {Function}            类的最终构造器
  */
 baidu.createClass = function(constructor, type, options) {
-    constructor = baidu.isFunction(constructor) ? constructor : function(){};
-    options = typeof type == "object" ? type : options || {};
+    constructor = baidu.isFunction(constructor) ? constructor : function() {};
+    options = typeof type == 'object' ? type : options || {};
 
     // 创建新类的真构造器函数
-    var fn = function(){
+    var fn = function() {
         var me = this;
 
         // 20101030 某类在添加该属性控制时，guid将不在全局instances里控制
@@ -35,7 +35,7 @@ baidu.createClass = function(constructor, type, options) {
 
         constructor.apply(me, arguments);
 
-        for (var i=0, reg=fn._reg_; reg && i<reg.length; i++) {
+        for (var i = 0, reg = fn._reg_; reg && i < reg.length; i++) {
             reg[i].apply(me, arguments);
         }
     };
@@ -43,10 +43,10 @@ baidu.createClass = function(constructor, type, options) {
     baidu.extend(fn, {
         superClass: options.superClass || baidu.base.Class
 
-        ,inherits: function(superClass){
-            if (typeof superClass != "function") return fn;
+, inherits: function(superClass) {
+            if (typeof superClass != 'function') return fn;
 
-            var C = function(){};
+            var C = function() {};
             C.prototype = (fn.superClass = superClass).prototype;
 
             // 继承父类的原型（prototype)链
@@ -60,12 +60,12 @@ baidu.createClass = function(constructor, type, options) {
         }
 
         ,register: function(hook, methods) {
-            (fn._reg_ || (fn._reg_ = [])).push( hook );
+            (fn._reg_ || (fn._reg_ = [])).push(hook);
             methods && baidu.extend(fn.prototype, methods);
             return fn;
         }
-        
-        ,extend: function(json){baidu.extend(fn.prototype, json); return fn;}
+
+        ,extend: function(json) {baidu.extend(fn.prototype, json); return fn;}
     });
 
     type = baidu.isString(type) ? type : options.className || options.type;

@@ -14,14 +14,14 @@
  * @private
  * @name baidu.createChain()
  * @grammar baidu.createChain(chainName[, fn[, constructor]])
- * @param   {String}    chainName   链头方法名，一般小写
- * @param   {Function}  fn          链头方法函数体
- * @param   {Function}  constructor 内部类的构造器
- * @return  {Object}                链头函数
+ * @param   {String}    chainName   链头方法名，一般小写.
+ * @param   {Function}  fn          链头方法函数体.
+ * @param   {Function}  constructor 内部类的构造器.
+ * @return  {Object}                链头函数.
  */
 baidu.createChain = function(chainName, fn, constructor) {
     // 创建一个内部类名
-    var className = chainName == "query" ? "$DOM" : "$" + chainName.charAt(0).toUpperCase() + chainName.substr(1);
+    var className = chainName == 'query' ? '$DOM' : '$' + chainName.charAt(0).toUpperCase() + chainName.substr(1);
     var slice = Array.prototype.slice;
 
     // 构建链头执行方法
@@ -34,23 +34,7 @@ baidu.createChain = function(chainName, fn, constructor) {
         var method;
 
         // 直接构建静态接口方法，如 baidu.array.each() 指向到 baidu.array().each()
-//        for (method in extended) {
-//            // 20121128 这个if判断是防止console按鸭子判断规则将本方法识别成数组
-//            if (method != "splice") {
-//                chain[method] = function() {
-//                    var id = arguments[0];
-//
-//                    // 在新版接口中，ID选择器必须用 # 开头
-//                    chainName=="query" && baidu.type(id)=="string" && (id = "#"+ id);
-//
-//                    var object = chain(id);
-//                    var result = object[method].apply(object, slice.call(arguments, 1));
-//
-//                    // 老版接口返回实体对象 getFirst
-//                    return baidu.type(result) == "$DOM" ? result.get(0) : result;
-//                }
-//            }
-//        }
+        // 这里直接构建静态接口的方法已经不需要
         return baidu.extend(baidu[chainName].fn, extended);
     };
 
@@ -68,10 +52,10 @@ baidu.createChain = function(chainName, fn, constructor) {
  * @private
  * @function
  * @grammar baidu.overwrite(Class, list, fn)
- * @param   {Object}        Class   系统对象原型
- * @param   {Array}         list    需要重写的方法名列表
- * @param   {Function}      fn      被覆盖的函数
- * @return  {Function}              自定义的类
+ * @param   {Object}        Class   系统对象原型.
+ * @param   {Array}         list    需要重写的方法名列表.
+ * @param   {Function}      fn      被覆盖的函数.
+ * @return  {Function}              自定义的类.
  */
 baidu.overwrite = function(Class, list, fn) {
     for (var i = list.length - 1; i > -1; i--) {
