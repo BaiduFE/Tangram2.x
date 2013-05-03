@@ -26,7 +26,7 @@
  
 baidu.number.comma = baidu.number.comm || function(len){
     var source = this;
-    if(source.comma !== baidu.number.comma){
+    if(source._type_ !== '$Number'){
         source = len;
         len = arguments[1];
     }
