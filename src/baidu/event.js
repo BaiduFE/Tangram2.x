@@ -17,8 +17,8 @@
  * @function
  * @name baidu.event()
  * @grammar baidu.event([event])
- * @param   {Event}         event   系统 event 对象
- * @return  {TangramEvebt}          返回 new TangramEvent 对象
+ * @param   {Event}         event   系统 event 对象.
+ * @return  {TangramEvebt}          返回 new TangramEvent 对象.
  * @example
  如果你想阻止当前事件的冒泡，或者屏蔽默认事件的触发，可以使用stopPropagation和preventDefault方法：
 
@@ -30,25 +30,25 @@
  });
  */
 
-baidu.createChain("event",
+baidu.createChain('event',
 
     // method
-    function(){
+    function() {
         var lastEvt = {};
-        return function( event, json ){
-            switch( baidu.type( event ) ){
+        return function(event, json ) {
+            switch (baidu.type(event)) {
                 // event
-                case "object":
-                    return lastEvt.originalEvent === event ? 
-                        lastEvt : lastEvt = new baidu.event.$Event( event );
+                case 'object':
+                    return lastEvt.originalEvent === event ?
+                        lastEvt : lastEvt = new baidu.event.$Event(event);
 
-                case "$Event":
+                case '$Event':
                     return event;
 
                 // event type
 //                case "string" :
 //                    var e = new baidu.event.$Event( event );
-//                    if( typeof json == "object" ) 
+//                    if( typeof json == "object" )
 //                        baidu.forEach( e, json );
 //                    return e;
             }
@@ -56,36 +56,36 @@ baidu.createChain("event",
     }(),
 
     // constructor
-    function( event ){
+    function(event ) {
         var e, t, f;
         var me = this;
 
-        this._type_ = "$Event";
+        this._type_ = '$Event';
 
-        if( typeof event == "object" && event.type ){
+        if (typeof event == 'object' && event.type) {
 
             me.originalEvent = e = event;
 
-            for( var name in e )
-                if( typeof e[name] != "function" )
-                    me[ name ] = e[ name ];
+            for (var name in e)
+                if (typeof e[name] != 'function')
+                    me[name] = e[name];
 
-            if( e.extraData )
-                baidu.extend( me, e.extraData );
+            if (e.extraData)
+                baidu.extend(me, e.extraData);
 
             me.target = me.srcElement = e.srcElement || (
-                ( t = e.target ) && ( t.nodeType == 3 ? t.parentNode : t )
+                (t = e.target) && (t.nodeType == 3 ? t.parentNode : t)
             );
 
             me.relatedTarget = e.relatedTarget || (
-                ( t = e.fromElement ) && ( t === me.target ? e.toElement : t )
+                (t = e.fromElement) && (t === me.target ? e.toElement : t)
             );
 
             me.keyCode = me.which = e.keyCode || e.which;
 
             // Add which for click: 1 === left; 2 === middle; 3 === right
-            if( !me.which && e.button !== undefined )
-                me.which = e.button & 1 ? 1 : ( e.button & 2 ? 3 : ( e.button & 4 ? 2 : 0 ) );
+            if (!me.which && e.button !== undefined)
+                me.which = e.button & 1 ? 1 : (e.button & 2 ? 3 : (e.button & 4 ? 2 : 0));
 
             var doc = document.documentElement, body = document.body;
 
@@ -94,7 +94,7 @@ baidu.createChain("event",
             );
 
             me.pageY = e.pageY || (
-                e.clientY + (doc && doc.scrollTop  || body && body.scrollTop  || 0) - (doc && doc.clientTop  || body && body.clientTop  || 0)
+                e.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0)
             );
 
             me.data;
@@ -109,13 +109,13 @@ baidu.createChain("event",
     }
 
 ).extend({
-    stopPropagation : function() {
+    stopPropagation: function() {
         var e = this.originalEvent;
-        e && ( e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true );
+        e && (e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true);
     },
 
-    preventDefault : function() {
+    preventDefault: function() {
         var e = this.originalEvent;
-        e && ( e.preventDefault ? e.preventDefault() : e.returnValue = false );
+        e && (e.preventDefault ? e.preventDefault() : e.returnValue = false);
     }
 });
