@@ -7,7 +7,7 @@
  * @version: 2010-06-12
  */
 
-///import pack.baidu.browser.ie;
+///import baidu.browser;
 ///import pack.baidu.dom.insertHTML;
 ///import pack.baidu.page;
 

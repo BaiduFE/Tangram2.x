@@ -13,7 +13,7 @@
 ///import pack.baidu.dom.g;
 ///import pack.baidu.dom.getStyle;
 ///import pack.baidu.object.extend;
-///import pack.baidu.string.formatColor;
+///import baidu.string.formatColor;
 
  
 /**

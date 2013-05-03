@@ -9,7 +9,6 @@
  */
 
 ///import pack.baidu.dom.g;
-///import pack.baidu.string.trim;
 
 /**
  * @description 为目标元素添加className

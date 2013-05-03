@@ -10,7 +10,6 @@
 
 ///import pack.baidu.lang.createSingle;
 ///import pack.baidu.lang.Event;
-///import pack.baidu.lang.Class.$removeEventListener;
 /**
  * @description 拖曳管理器
  * @function

@@ -8,9 +8,8 @@
  * date: 2011.12.22
  */
 
-///import baidu.global;
-///import baidu.global.get;
-///import baidu.global.set;
+///import pack.baidu.global.get;
+///import pack.baidu.global.set;
 
 /**
  * @namespace baidu.global.getZIndex 全局统一管理 z-index。

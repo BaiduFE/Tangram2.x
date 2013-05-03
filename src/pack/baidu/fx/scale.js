@@ -9,7 +9,7 @@
 
 ///import pack.baidu.dom.g;
 ///import pack.baidu.dom.show;
-///import pack.baidu.browser.ie;
+///import baidu.browser;
 ///import pack.baidu.dom.getStyle;
 ///import pack.baidu.object.extend;
 

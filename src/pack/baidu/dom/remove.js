@@ -8,7 +8,7 @@
  * date: 2009/11/17
  */
 
-///import pack.baidu.browser.ie;
+///import baidu.browser;
 ///import pack.baidu.dom._g;
 
 /**

@@ -3,9 +3,7 @@
  * Copyright 2009 Baidu Inc. All rights reserved.
  */
 
-///import pack.baidu.browser.safari;
-///import pack.baidu.browser.ie;
-///import pack.baidu.browser.opera;
+///importbaidu.browser;
 ///import pack.baidu.dom;
 
 /**
