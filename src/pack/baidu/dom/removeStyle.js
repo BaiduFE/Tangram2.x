@@ -9,7 +9,7 @@
  */
 
 ///import pack.baidu.dom._g;
-///import pack.baidu.string.toCamelCase;
+///import baidu.string.toCamelCase;
 
 /**
  * @description 删除元素的某个样式

@@ -8,7 +8,6 @@
  * date: 2009/12/02
  */
 
-///import pack.baidu.string.trim;
 ///import pack.baidu.dom.g;
 
 /**
