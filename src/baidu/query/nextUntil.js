@@ -15,20 +15,20 @@
  * @function
  * @name baidu.query().nextUntil()
  * @grammar baidu.query(args).nextUntil(selector[, filter])
- * @param   {Object}            selector    选择器
- * @param   {String|Function}   filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}            selector    选择器.
+ * @param   {String|Function}   filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    nextUntil : function (selector, filter) {
+    nextUntil: function(selector, filter) {
         var array = baidu.array();
 
-        baidu.forEach(this, function(dom){
+        baidu.forEach(this, function(dom) {
             var a = baidu.array();
 
-            while(dom = dom.nextSibling) {
+            while (dom = dom.nextSibling) {
                 dom && (dom.nodeType == 1) && a.push(dom);
-            };
+            }
 
             if (selector && a.length) {
                 var b = baidu.query.match(a, selector);
@@ -40,6 +40,6 @@ baidu.query.extend({
             baidu.merge(array, a);
         });
 
-        return baidu.query( baidu.query.match(array, filter) );
+        return baidu.query(baidu.query.match(array, filter));
     }
 });

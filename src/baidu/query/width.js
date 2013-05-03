@@ -8,11 +8,11 @@
 ///import baidu.dom._getWindowOrDocumentWidthOrHeight;
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的宽度，该宽度忽略margin, border, padding的计算
- * @function 
+ * @function
  * @name baidu.query().width()
  * @grammar baidu.query(args).width()
- * @return {Number} 返回一个宽度数值
- * @example 
+ * @return {Number} 返回一个宽度数值.
+ * @example
  .width()和.css('width')之间的区别是.width()返回一个没有单位的数值（例如，400），
  .css('width')是返回带有完整单位的字符串（例如，400px）。
 
@@ -35,11 +35,11 @@
  */
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的宽度，该宽度忽略margin, border, padding的计算
- * @function 
+ * @function
  * @name baidu.query().width()
  * @grammar baidu.query(args).width(value)
- * @param {Number|String} value （参数支持整型数据，字符串数据，带单位的字符串数值），接口设置所有匹配元素的宽度
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象
+ * @param {Number|String} value （参数支持整型数据，字符串数据，带单位的字符串数值），接口设置所有匹配元素的宽度.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  * @example
  当调用.width(value)方法的时候，这个“value”参数可以是一个字符串（数字加单位）或者是一个数字。
  如果这个“value”参数只提供一个数字，会被自动加上单位px；
@@ -62,21 +62,21 @@
  */
 /**
  * @description 取得第一个匹配元素或是设置多个匹配元素的宽度，该宽度忽略margin, border, padding的计算
- * @function 
+ * @function
  * @name baidu.query().width()
  * @grammar baidu.query(args).width(fn)
- * @param {function} fn 接收两个参数，index参数表示匹配元素在集合中的索引，width表示匹配元素的宽度，fn最终需要返回合法的数值来设置宽度
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象
+ * @param {function} fn 接收两个参数，index参数表示匹配元素在集合中的索引，width表示匹配元素的宽度，fn最终需要返回合法的数值来设置宽度.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  * @example baidu.query("<div>").width(function(index, width){});
  */
 baidu.query.extend({
-    width: function(value){
-        return baidu.dom._access(this, 'width', value, function(ele, key, val){
+    width: function(value) {
+        return baidu.dom._access(this, 'width', value, function(ele, key, val) {
             var hasValue = val !== undefined,
                 parseValue = hasValue && parseFloat(val),
                 type = ele != null && ele == ele.window ? 'window'
                     : (ele.nodeType === 9 ? 'document' : false);
-            if(hasValue && parseValue < 0 || isNaN(parseValue)){return;}
+            if (hasValue && parseValue < 0 || isNaN(parseValue)) {return;}
             hasValue && /^(?:\d*\.)?\d+$/.test(val += '') && (val += 'px');
             return type ? baidu.dom._getWindowOrDocumentWidthOrHeight(ele, type, key)
                 : (hasValue ? ele.style.width = val : baidu.dom._getWidthOrHeight(ele, key));

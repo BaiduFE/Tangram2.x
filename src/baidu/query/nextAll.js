@@ -14,19 +14,19 @@
  * @function
  * @name baidu.query().nextAll()
  * @grammar baidu.query(args).nextAll([filter])
- * @param   {String|Function}   filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {String|Function}   filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    nextAll : function (selector) {
+    nextAll: function(selector) {
         var array = [];
 
-        baidu.forEach(this, function(dom){
-            while(dom = dom.nextSibling) {
+        baidu.forEach(this, function(dom) {
+            while (dom = dom.nextSibling) {
                 dom && (dom.nodeType == 1) && array.push(dom);
-            };
+            }
         });
 
-        return baidu.query( baidu.query.match(array, selector) );
+        return baidu.query(baidu.query.match(array, selector));
     }
 });

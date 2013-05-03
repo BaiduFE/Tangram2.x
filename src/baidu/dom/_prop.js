@@ -1,14 +1,14 @@
 ///import baidu.dom;
 ///import baidu.dom._propFixer;
 ///import baidu.dom._isXML;
-baidu.dom._prop = function(){
+baidu.dom._prop = function() {
     var rfocusable = /^(?:button|input|object|select|textarea)$/i,
         rclickable = /^a(?:rea|)$/i,
         select = document.createElement('select'),
         opt = select.appendChild(document.createElement('option')),
         propHooks = {
             tabIndex: {
-                get: function(ele){
+                get: function(ele) {
                     var attrNode = ele.getAttributeNode('tabindex');
                     return attrNode && attrNode.specified ? parseInt(attrNode.value, 10)
                         : rfocusable.test(ele.nodeName) || rclickable.test(ele.nodeName)
@@ -17,9 +17,9 @@ baidu.dom._prop = function(){
             }
         };
         !opt.selected && (propHooks.selected = {
-            get: function(ele){
+            get: function(ele) {
                 var par = ele.parentNode;
-                if(par){
+                if (par) {
                     par.selectedIndex;
                     par.parentNode && par.parentNode.selectedIndex;
                 }
@@ -27,25 +27,25 @@ baidu.dom._prop = function(){
             }
         });
         select = opt = null;
-    
-    return function(ele, key, val){
+
+    return function(ele, key, val) {
         var nType = ele.nodeType,
             hooks, ret;
-        if(!ele || ~'238'.indexOf(nType)){return;}
-        if(nType !== 1 || !baidu.dom._isXML(ele)){
+        if (!ele || ~'238'.indexOf(nType)) {return;}
+        if (nType !== 1 || !baidu.dom._isXML(ele)) {
             key = baidu.dom._propFixer[key] || key;
             hooks = propHooks[key] || {};
         }
-        if(val !== undefined){
-            if(hooks.set && (ret = hooks.set(ele, key, val)) !== undefined){
+        if (val !== undefined) {
+            if (hooks.set && (ret = hooks.set(ele, key, val)) !== undefined) {
                 return ret;
-            }else{
+            }else {
                 return (ele[key] = val);
             }
-        }else{
-            if(hooks.get && (ret = hooks.get(ele, key)) !== null){
+        }else {
+            if (hooks.get && (ret = hooks.get(ele, key)) !== null) {
                 return ret;
-            }else{
+            }else {
                 return ele[key];
             }
         }

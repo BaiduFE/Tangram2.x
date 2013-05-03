@@ -15,10 +15,10 @@
  * @function
  * @name baidu.query().first()
  * @grammar baidu.query(args).first()
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    first : function () {
+    first: function() {
         return baidu.query(this[0]);
     }
 });

@@ -9,24 +9,24 @@
 
 /**
  * @description 监听 documentDomReady 事件
- * @function 
+ * @function
  * @name baidu.query().ready()
  * @grammar baidu.query(args).ready(fn)
- * @param {Function} fn 事件回调函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象 
+ * @param {Function} fn 事件回调函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  */
 
 /**
  * @description 监听 documentDomReady 事件
- * @function 
+ * @function
  * @name baidu.query.ready()
  * @grammar baidu.query.ready(fn)
- * @param {Function} fn 事件回调函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象 
+ * @param {Function} fn 事件回调函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  */
 
 baidu.query.extend({
-    ready: function(){
+    ready: function() {
 
         var me = this,
 
@@ -44,83 +44,83 @@ baidu.query.extend({
         baidu.dom.__readyWait = 1;
 
         // Hold (or release) the ready event
-        baidu.query.holdReady = function( hold ) {
-            if ( hold ) {
+        baidu.query.holdReady = function(hold ) {
+            if (hold) {
                 baidu.dom._readyWait++;
             } else {
-                _ready( true );
+                _ready(true);
             }
         };
 
         // Handle when the DOM is ready
-        var _ready = function( wait ) {
+        var _ready = function(wait ) {
 
             // Abort if there are pending holds or we're already ready
-            if ( wait === true ? --baidu.dom._readyWait : baidu.dom._isDomReady ) {
+            if (wait === true ? --baidu.dom._readyWait : baidu.dom._isDomReady) {
                 return;
             }
 
             // Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
-            if ( !document.body ) {
-                return setTimeout( _ready, 1 );
+            if (!document.body) {
+                return setTimeout(_ready, 1);
             }
 
             // Remember that the DOM is ready
             baidu.dom._isReady = true;
 
             // If a normal DOM Ready event fired, decrement, and wait if need be
-            if ( wait !== true && --baidu.dom._readyWait > 0 ) {
+            if (wait !== true && --baidu.dom._readyWait > 0) {
                 return;
             }
 
             // If there are functions bound, to execute
-            readyList.resolveWith( document );
+            readyList.resolveWith(document);
 
             // Trigger any bound ready events
-            if ( baidu.query.trigger ) {
-                baidu.query( document ).trigger("ready").off("ready");
+            if (baidu.query.trigger) {
+                baidu.query(document).trigger('ready').off('ready');
             }
         };
 
         var DOMContentLoaded = function() {
-            if ( document.addEventListener ) {
-                document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+            if (document.addEventListener) {
+                document.removeEventListener('DOMContentLoaded', DOMContentLoaded, false);
                 _ready();
-            } else if ( document.readyState === "complete" ) {
+            } else if (document.readyState === 'complete') {
                 // we're here because readyState === "complete" in oldIE
                 // which is good enough for us to call the dom ready!
-                document.detachEvent( "onreadystatechange", DOMContentLoaded );
+                document.detachEvent('onreadystatechange', DOMContentLoaded);
                 _ready();
             }
         };
 
-        var readyPromise = function( obj ) {
-            if ( !readyList ) {
+        var readyPromise = function(obj ) {
+            if (!readyList) {
 
                 readyList = baidu.Deferred();
 
                 // Catch cases where $(document).ready() is called after the browser event has already occurred.
                 // we once tried to use readyState "interactive" here, but it caused issues like the one
                 // discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15
-                if ( document.readyState === "complete" ) {
+                if (document.readyState === 'complete') {
                     // Handle it asynchronously to allow scripts the opportunity to delay ready
-                    setTimeout( _ready, 1 );
+                    setTimeout(_ready, 1);
 
                 // Standards-based browsers support DOMContentLoaded
-                } else if ( document.addEventListener ) {
+                } else if (document.addEventListener) {
                     // Use the handy event callback
-                    document.addEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+                    document.addEventListener('DOMContentLoaded', DOMContentLoaded, false);
 
                     // A fallback to window.onload, that will always work
-                    window.addEventListener( "load", _ready, false );
+                    window.addEventListener('load', _ready, false);
 
                 // If IE event model is used
                 } else {
                     // Ensure firing before onload, maybe late but safe also for iframes
-                    document.attachEvent( "onreadystatechange", DOMContentLoaded );
+                    document.attachEvent('onreadystatechange', DOMContentLoaded);
 
                     // A fallback to window.onload, that will always work
-                    window.attachEvent( "onload", _ready );
+                    window.attachEvent('onload', _ready);
 
                     // If IE and not a frame
                     // continually check to see if the document is ready
@@ -128,18 +128,18 @@ baidu.query.extend({
 
                     try {
                         top = window.frameElement == null && document.documentElement;
-                    } catch(e) {}
+                    } catch (e) {}
 
-                    if ( top && top.doScroll ) {
+                    if (top && top.doScroll) {
                         (function doScrollCheck() {
-                            if ( !baidu.dom._isDomReady ) {
+                            if (!baidu.dom._isDomReady) {
 
                                 try {
                                     // Use the trick by Diego Perini
                                     // http://javascript.nwbox.com/IEContentLoaded/
-                                    top.doScroll("left");
-                                } catch(e) {
-                                    return setTimeout( doScrollCheck, 50 );
+                                    top.doScroll('left');
+                                } catch (e) {
+                                    return setTimeout(doScrollCheck, 50);
                                 }
 
                                 // and execute any waiting functions
@@ -149,13 +149,13 @@ baidu.query.extend({
                     }
                 }
             }
-            return readyList.promise( obj );
+            return readyList.promise(obj);
         };
 
-        return function( fn ) {
+        return function(fn ) {
 
             // Add the callback
-            readyPromise().done( fn );
+            readyPromise().done(fn);
 
             return me;
         }

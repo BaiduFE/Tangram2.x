@@ -14,11 +14,11 @@
  * @function
  * @name baidu.unique()
  * @grammar baidu.query(args).unique([fn])
- * @param   {Function}      fn   [可选] 过滤去重后的结果
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Function}      fn   [可选] 过滤去重后的结果.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    unique : function (fn) {
+    unique: function(fn) {
         return baidu.query(baidu.array(this.toArray()).unique(fn));
     }
 });

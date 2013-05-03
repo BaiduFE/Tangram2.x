@@ -16,36 +16,36 @@
  * @function
  * @name baidu.query().find()
  * @grammar baidu.query(args).find(selector)
- * @param   {Object}            selector    选择器
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}            selector    选择器.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    find : function (selector) {
-        var a=[],
+    find: function(selector) {
+        var a = [],
             expr,
-            id = "__tangram__find__",
+            id = '__tangram__find__',
             td = baidu.query();
 
         switch (baidu.type(selector)) {
-        case "string" :
-            this.each(function(){baidu.merge(td, baidu.selector(selector, this));});
+        case 'string' :
+            this.each(function() {baidu.merge(td, baidu.selector(selector, this));});
             break;
-        case "HTMLElement" :
-            expr = selector.tagName +"#"+ (selector.id ? selector.id : (selector.id = id));
-            this.each(function(){if(baidu.selector(expr, this).length > 0) a.push(selector);});
-            selector.id == id && (selector.id = "");
+        case 'HTMLElement' :
+            expr = selector.tagName + '#'+ (selector.id ? selector.id : (selector.id = id));
+            this.each(function() {if (baidu.selector(expr, this).length > 0) a.push(selector);});
+            selector.id == id && (selector.id = '');
             if (a.length > 0) baidu.merge(td, a);
             break;
-        case "$DOM" :
+        case '$DOM' :
             a = selector.get();
-            this.each(function(){
-                baidu.forEach(baidu.selector("*", this), function(dom){
-                    for (var i=0, n=a.length; i<n; i++) {
-                        dom === a[i] && (td[td.length ++] = a[i]);
+            this.each(function() {
+                baidu.forEach(baidu.selector('*', this), function(dom) {
+                    for (var i = 0, n = a.length; i < n; i++) {
+                        dom === a[i] && (td[td.length++] = a[i]);
                     }
                 });
             });
-            break;        
+            break;
         }
         return td;
     }

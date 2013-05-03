@@ -13,8 +13,8 @@ baidu.dom._propFixer = {
     usemap: 'useMap',
     frameborder: 'frameBorder',
     contenteditable: 'contentEditable',
-    
-    
+
+
     //rboolean在baidu.dom._removeAttr 和 baidu.dom._attr中需要被共同使用
     rboolean: /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i
 };

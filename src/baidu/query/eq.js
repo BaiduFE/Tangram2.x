@@ -12,12 +12,12 @@
  * @function
  * @name baidu.query().eq()
  * @grammar baidu.query(args).eq(index)
- * @param   {Number}        index    指定的元素下标，如果指定为负数，则从
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Number}        index    指定的元素下标，如果指定为负数，则从.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    eq : function (index) {
-        baidu.check("number","baidu.query.eq");
+    eq: function(index) {
+        baidu.check('number', 'baidu.query.eq');
         return baidu.query(this.get(index));
     }
 });
