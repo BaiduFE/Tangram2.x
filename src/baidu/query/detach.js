@@ -4,11 +4,11 @@
 ///import baidu.query.remove;
 /**
  * @description 将匹配到的DOM元素从文档中移除，并不移除对应的DOM元素的事件
- * @function 
+ * @function
  * @name baidu.query().detach()
  * @grammar baidu.query(args).detach([selector])
- * @param {String} selector 一个字符串的选择器，对前面匹配到的DOM元素再做进一步的过滤
- * @return {TangramDom} TangramDom 接口最终返回之前匹配元素的TangramDom对象
+ * @param {String} selector 一个字符串的选择器，对前面匹配到的DOM元素再做进一步的过滤.
+ * @return {TangramDom} TangramDom 接口最终返回之前匹配元素的TangramDom对象.
  * @example
  .detach()和.remove()都会移除匹配到的dom元素，但是.detach()不会移除dom上面匹配到的事件，
  当需要移走一个元素，不久又将该元素插入DOM时，这种方法很有用。
@@ -29,7 +29,7 @@
  */
 
 baidu.query.extend({
-    detach: function(selector){
+    detach: function(selector) {
         selector && baidu.check('^string$', 'baidu.query.detach');
         return this.remove(selector, true);
     }

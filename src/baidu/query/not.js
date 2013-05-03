@@ -15,12 +15,12 @@
  * @function
  * @name baidu.query().not()
  * @grammar baidu.query(args).not(selector)
- * @param   {Object}            selector    选择器
-  
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
- * @example 
+ * @param   {Object}            selector    选择器.
+
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
+ * @example
  去除当前集合中符合再次输入的选择器的项
- 
+
  示例代码：
  //HTML片段
  <div class="test">1</div>
@@ -37,14 +37,14 @@
 
  */
 baidu.query.extend({
-    not : function (selector) {
+    not: function(selector) {
         var i, j, n
-            ,all= this.get()
-            ,a  = baidu.isArray(selector) ? selector
+, all = this.get()
+            , a = baidu.isArray(selector) ? selector
                 : baidu.query.match(this, selector);
 
-        for (i=all.length - 1; i>-1; i--) {
-            for (j=0, n=a.length; j<n; j++) {
+        for (i = all.length - 1; i > -1; i--) {
+            for (j = 0, n = a.length; j < n; j++) {
                 a[j] === all[i] && all.splice(i, 1);
             }
         }

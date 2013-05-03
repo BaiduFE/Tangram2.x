@@ -15,21 +15,21 @@
  * @function
  * @name baidu.query().prevUntil()
  * @grammar baidu.query(args).prevUntil(selector[, filter])
- * @param   {Object}            selector    选择器
- * @param   {String|Function}   filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}            selector    选择器.
+ * @param   {String|Function}   filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    prevUntil : function (selector, filter) {
-        baidu.check("(string|HTMLElement)(,.+)?", "baidu.query.prevUntil");
+    prevUntil: function(selector, filter) {
+        baidu.check('(string|HTMLElement)(,.+)?', 'baidu.query.prevUntil');
         var array = [];
 
         baidu.forEach(this, function(dom) {
             var a = baidu.array();
 
-            while(dom = dom.previousSibling) {
+            while (dom = dom.previousSibling) {
                 dom && (dom.nodeType == 1) && a.push(dom);
-            };
+            }
 
             if (selector && a.length) {
                 var b = baidu.query.match(a, selector);
@@ -42,6 +42,6 @@ baidu.query.extend({
             baidu.merge(array, a);
         });
 
-        return baidu.query( baidu.query.match(array, filter) );
+        return baidu.query(baidu.query.match(array, filter));
     }
 });

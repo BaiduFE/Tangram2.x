@@ -7,11 +7,11 @@
 
 /**
  * @description 隐藏匹配的元素
- * @function 
+ * @function
  * @name baidu.query().hide()
  * @grammar baidu.query(args).hide()
- * @return {TangramDom} 之前匹配的TangramDom对象
- * @example 
+ * @return {TangramDom} 之前匹配的TangramDom对象.
+ * @example
  show和hide方法是最简单的显示或者隐藏一个元素的方法
 
  示例代码：
@@ -22,9 +22,9 @@
  baidu("div").hide();
  */
 baidu.query.extend({
-    hide: function(){
-        return this.each(function(index, ele){
-            if(!ele.style){return;}
+    hide: function() {
+        return this.each(function(index, ele) {
+            if (!ele.style) {return;}
             ele.style.display = 'none';
         });
     }

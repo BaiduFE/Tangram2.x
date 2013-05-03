@@ -5,14 +5,14 @@
 ///import baidu.dom._smartInsertTo;
 /**
  * @description 将匹配到的DOM元素插入到参数指定的DOM元素内部的开始
- * @function 
+ * @function
  * @name baidu.query().prependTo()
  * @grammar baidu.query(args).prependTo(target)
- * @param {HTMLString|selector|Element|TangramDom} target 一个HTMLString或是选择器字符串或是DOM元素或是TangramDom对象
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象
+ * @param {HTMLString|selector|Element|TangramDom} target 一个HTMLString或是选择器字符串或是DOM元素或是TangramDom对象.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  * @example
  .prependTo()方法将指定元素插入到匹配元素里面作为它的第一个子元素，如果要作为最后一个子元素插入用.append()。
- .prepend()和.prependTo()实现同样的功能，主要的不同时语法，插入的内容和目标的位置不同。 
+ .prepend()和.prependTo()实现同样的功能，主要的不同时语法，插入的内容和目标的位置不同。
  对于.prepend()，函数前面的是插入的容器，参数是内容；而.prependTo()函数前面的是内容，参数是容器。
 
  另，如果有多个目标元素，内容将被复制然后，被插入到每个目标后面；
@@ -39,9 +39,9 @@
  baidu('h1').appendTo('#body');  //结果同上
  */
 baidu.query.extend({
-    prependTo: function(target){
+    prependTo: function(target) {
         baidu.check('^(?:string|HTMLElement|\\$DOM)$', 'baidu.query.prependTo');
-        baidu.dom._smartInsertTo(this, target, function(child){
+        baidu.dom._smartInsertTo(this, target, function(child) {
             this.insertBefore(child, this.firstChild);
         });
         return this;

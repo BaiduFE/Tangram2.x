@@ -14,15 +14,15 @@
  * @function
  * @name baidu.query().has()
  * @grammar baidu.query(args).has(selector)
- * @param   {Object}            selector    选择器
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}            selector    选择器.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    has: function (selector) {
+    has: function(selector) {
         var a = []
-            ,td = baidu.query(document.body);
+            , td = baidu.query(document.body);
 
-        baidu.forEach(this, function(dom){
+        baidu.forEach(this, function(dom) {
             td[0] = dom;
             td.find(selector).length && a.push(dom);
         });

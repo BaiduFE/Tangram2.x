@@ -7,16 +7,16 @@
 
 /**
  * @description 在匹配的每个DOM元素内部的末端插入内容
- * @function 
+ * @function
  * @name baidu.query().append()
  * @grammar baidu.query(args).append(content1[,content2])
- * @param {HTMLString|Element|TangramDom} content1 支持一个DOM元素或是一段HTMLString或是一个TangramDom对象
- * @param {HTMLString|Array|Element|TangramDom} content2 支持一个或多个DOM元素或是DOM元素的数组或是一段HTMLString或是一个TangramDom对象
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象
+ * @param {HTMLString|Element|TangramDom} content1 支持一个DOM元素或是一段HTMLString或是一个TangramDom对象.
+ * @param {HTMLString|Array|Element|TangramDom} content2 支持一个或多个DOM元素或是DOM元素的数组或是一段HTMLString或是一个TangramDom对象.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  * @example
- .append()函数将特定内容插入到每个匹配元素里面的最后面，作为它的最后一个子元素（last child）, 
+ .append()函数将特定内容插入到每个匹配元素里面的最后面，作为它的最后一个子元素（last child）,
  如果要作为第一个子元素 （first child），用.prepend()或.prependTo()
- 
+
  .append() 和.appendTo()实现同样的功能，主要的不同是语法——内容和目标的位置不同。
  对于.append()，选择表达式在函数的前面，参数是将要插入的内容。
  对于.appendTo()刚好相反，内容在方法前面，它将被放在参数里元素的末尾。
@@ -50,18 +50,18 @@
 
 /**
  * @description 在匹配的每个DOM元素内部的末端插入内容
- * @function 
+ * @function
  * @name baidu.query().append()
  * @grammar baidu.query(args).append(fn)
- * @param {Function} fn 支持一个函数作为参数，函数最终需要返回一个HTMLString|Element|TangramDom
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象
+ * @param {Function} fn 支持一个函数作为参数，函数最终需要返回一个HTMLString|Element|TangramDom.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  * @example baidu.query(args).append(function(index,html){})
  */
 
 baidu.query.extend({
-    append: function(){
+    append: function() {
         baidu.check('^(?:string|function|HTMLElement|\\$DOM)(?:,(?:string|array|HTMLElement|\\$DOM))*$', 'baidu.query.append');
-        baidu.dom._smartInsert(this, arguments, function(child){
+        baidu.dom._smartInsert(this, arguments, function(child) {
             this.nodeType === 1 && this.appendChild(child);
         });
         return this;

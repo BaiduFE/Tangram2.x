@@ -14,17 +14,17 @@
  * @function
  * @name baidu.query().map()
  * @grammar baidu.query(args).map(iterator)
- * @param   {Function}            iterator    遍历函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象        old TangramDom
+ * @param   {Function}            iterator    遍历函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象        old TangramDom.
  */
 baidu.query.extend({
-    map : function (iterator) {
-        baidu.check("function","baidu.query.map");
+    map: function(iterator) {
+        baidu.check('function', 'baidu.query.map');
         var me = this,
             td = baidu.query();
 
-        baidu.forEach(this, function( dom, index ){
-            td[td.length ++] = iterator.call( dom, index, dom, dom );
+        baidu.forEach(this, function(dom, index ) {
+            td[td.length++] = iterator.call(dom, index, dom, dom);
         });
 
         return td;

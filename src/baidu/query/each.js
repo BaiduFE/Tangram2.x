@@ -14,30 +14,30 @@
  * @function
  * @name baidu.query().each()
  * @grammar baidu.query(args).each(iterator)
- * @param   {Function}      iterator    迭代器
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象                tangramDom(this)
- * @example 
- 
- 
+ * @param   {Function}      iterator    迭代器.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象                tangramDom(this).
+ * @example
+
+
  示例代码：
  //HTML片段
  <div>1</div>
  <div>2</div>
 
  //取得src属性
- baidu("div").size();  //2     
+ baidu("div").size();  //2
  */
 
 baidu.query.extend({
-    each : function (iterator) {
-        baidu.check("function", "baidu.query.each");
+    each: function(iterator) {
+        baidu.check('function', 'baidu.query.each');
         var i, result,
             n = this.length;
 
-        for (i=0; i<n; i++) {
-            result = iterator.call( this[i], i, this[i], this );
+        for (i = 0; i < n; i++) {
+            result = iterator.call(this[i], i, this[i], this);
 
-            if ( result === false || result == "break" ) { break;}
+            if (result === false || result == 'break') { break;}
         }
 
         return this;

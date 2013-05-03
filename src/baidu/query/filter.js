@@ -13,8 +13,8 @@
  * @function
  * @name baidu.query().filter()
  * @grammar baidu.query(args).filter(selector|tangramDom|HTMLElement|fn)
- * @param   {String}        selector    CSS选择器
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {String}        selector    CSS选择器.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 
 /**
@@ -22,8 +22,8 @@
  * @function
  * @name baidu.query().filter()
  * @grammar baidu.query(args).filter(selector|tangramDom|HTMLElement|fn)
- * @param   {TangramDom}    tangramDom 对象
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {TangramDom}    tangramDom 对象.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 
 /**
@@ -31,8 +31,8 @@
  * @function
  * @name baidu.query().filter()
  * @grammar baidu.query(args).filter(selector)
- * @param   {Selector} selector 选择器
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Selector} selector 选择器.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 
 /**
@@ -40,12 +40,12 @@
  * @function
  * @name baidu.query().filter()
  * @grammar baidu.query(args).filter(selector|tangramDom|HTMLElement|fn)
- * @param   {Function}   fn   筛选的指定方法
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Function}   fn   筛选的指定方法.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 
 baidu.query.extend({
-    filter : function (selector) {
+    filter: function(selector) {
         return baidu.query(baidu.query.match(this, selector));
     }
 });

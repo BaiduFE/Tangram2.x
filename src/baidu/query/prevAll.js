@@ -17,11 +17,11 @@
  * @function
  * @name baidu.query().prevAll()
  * @grammar baidu.query(args).prevAll(filter)
- * @param   {Object}        filter      [可选]过滤函数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom
+ * @param   {Object}        filter      [可选]过滤函数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象    new TangramDom.
  */
 baidu.query.extend({
-    prevAll : function (filter) {
+    prevAll: function(filter) {
         var array = baidu.array();
 
         baidu.forEach(this, function(dom) {
@@ -31,6 +31,6 @@ baidu.query.extend({
             baidu.merge(array, a.reverse());
         });
 
-        return baidu.query(typeof filter == "string" ? baidu.query.match(array, filter) : array.unique());
+        return baidu.query(typeof filter == 'string' ? baidu.query.match(array, filter) : array.unique());
     }
 });

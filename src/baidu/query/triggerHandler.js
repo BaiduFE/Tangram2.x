@@ -6,27 +6,27 @@
 
 /**
  * @description 对指定的 TangramDom 集合派发指定的事件函数，不触发事件默认行为
- * @function 
+ * @function
  * @name baidu.query().triggerHandler()
  * @grammar baidu.query(args).triggerHandler(type[,data])
- * @param {String} type 事件类型
- * @param {Array} data 触发事件函数时携带的参数
- * @return {TangramDom} 返回之前匹配元素的TangramDom对象 
+ * @param {String} type 事件类型.
+ * @param {Array} data 触发事件函数时携带的参数.
+ * @return {TangramDom} 返回之前匹配元素的TangramDom对象.
  */
 
-void function( base ){
+void function(base ) {
     var _queue = base._queue;
 
     baidu.query.extend({
-        triggerHandler: function( type, triggerData, _e ){
-            if( _e && !_e.triggerData )
+        triggerHandler: function(type, triggerData, _e ) {
+            if (_e && !_e.triggerData)
                 _e.triggerData = triggerData;
 
-            baidu.forEach(this, function(item){
-                _queue.call( item, type, undefined, _e );
+            baidu.forEach(this, function(item) {
+                _queue.call(item, type, undefined, _e);
             });
             return this;
         }
     });
 
-}( baidu.event );
+}(baidu.event);

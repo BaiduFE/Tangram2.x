@@ -17,9 +17,9 @@
  * @function
  * @name baidu.query().data()
  * @grammar baidu.query().data(key, value)
- * @param {String} key 数据的键值
- * @param {String|Number} value 数据的值 
- * @return {TangramDom} TangramDom 对象
+ * @param {String} key 数据的键值.
+ * @param {String|Number} value 数据的值.
+ * @return {TangramDom} TangramDom 对象.
  */
 
 /**
@@ -27,51 +27,51 @@
  * @function
  * @name baidu.query().data()
  * @grammar baidu.query().data(key)
- * @param {String} key 数据的键值
- * @return {String|Object} 取出的数据
+ * @param {String} key 数据的键值.
+ * @return {String|Object} 取出的数据.
  */
- 
-baidu.query.extend({
-    data : function () {
-        var   guid = baidu.key
-            , maps = baidu.global("_maps_HTMLElementData");
 
-        return function( key, value ) {
-            baidu.forEach( this, function( dom ) {
-                !dom[ guid ] && ( dom[ guid ] = baidu.id() );
+baidu.query.extend({
+    data: function() {
+        var guid = baidu.key
+, maps = baidu.global('_maps_HTMLElementData');
+
+        return function(key, value ) {
+            baidu.forEach(this, function(dom ) {
+                !dom[guid] && (dom[guid] = baidu.id());
             });
 
-            if ( baidu.isString(key) ) {
+            if (baidu.isString(key)) {
 
                 // get first
-                if ( typeof value == "undefined" ) {
-                    var data,result;
-                    result = this[0] && (data = maps[ this[0][guid] ]) && data[ key ];
-                    if(typeof result != 'undefined'){
+                if (typeof value == 'undefined') {
+                    var data, result;
+                    result = this[0] && (data = maps[this[0][guid]]) && data[key];
+                    if (typeof result != 'undefined') {
                         return result;
-                    }else{
+                    }else {
 
                         //取得自定义属性
-                        var attr = this[0].getAttribute('data-'+key);
-                        return !~String(attr).indexOf('{') ? attr:Function("return "+attr)();
+                        var attr = this[0].getAttribute('data-' + key);
+                        return !~String(attr).indexOf('{') ? attr : Function('return '+ attr)();
                     }
                 }
 
                 // set all
-                baidu.forEach(this, function(dom){
-                    var data = maps[ dom[ guid ] ] = maps[ dom[ guid ] ] || {};
-                    data[ key ] = value;
+                baidu.forEach(this, function(dom) {
+                    var data = maps[dom[guid]] = maps[dom[guid]] || {};
+                    data[key] = value;
                 });
-            
+
             // json
-            } else if ( baidu.type(key) == "object") {
+            } else if (baidu.type(key) == 'object') {
 
                 // set all
-                baidu.forEach(this, function(dom){
-                    var data = maps[ dom[ guid ] ] = maps[ dom[ guid ] ] || {};
+                baidu.forEach(this, function(dom) {
+                    var data = maps[dom[guid]] = maps[dom[guid]] || {};
 
-                    baidu.forEach( key , function(item,index) {
-                        data[ index ] = key[ index ];
+                    baidu.forEach(key, function(item,index) {
+                        data[index] = key[index];
                     });
                 });
             }

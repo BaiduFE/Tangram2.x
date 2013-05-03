@@ -12,9 +12,9 @@
  * @name baidu.query().insertHTML()
  * @function
  * @grammar baidu.query(args).insertHTML( position, html)
- * @param {string} position  插入html的位置信息，取值为beforeBegin,afterBegin,beforeEnd,afterEnd
- * @param {string} html 要插入的html
- * @return {HTMLElement} 目标元素
+ * @param {string} position  插入html的位置信息，取值为beforeBegin,afterBegin,beforeEnd,afterEnd.
+ * @param {string} html 要插入的html.
+ * @return {HTMLElement} 目标元素.
  */
 
 
@@ -23,25 +23,25 @@
  * @name baidu.query.insertHTML()
  * @function
  * @grammar baidu.query.insertHTML(element, position, html)
- * @param {HTMLElement|string} element 目标元素或目标元素的id
- * @param {string} position  插入html的位置信息，取值为beforeBegin,afterBegin,beforeEnd,afterEnd
- * @param {string} html 要插入的html
+ * @param {HTMLElement|string} element 目标元素或目标元素的id.
+ * @param {string} position  插入html的位置信息，取值为beforeBegin,afterBegin,beforeEnd,afterEnd.
+ * @param {string} html 要插入的html.
  * @remark
- * 
+ *
  * 对于position参数，大小写不敏感<br>
  * 参数的意思：beforeBegin&lt;span&gt;afterBegin   this is span! beforeEnd&lt;/span&gt; afterEnd <br />
  * 此外，如果使用本函数插入带有script标签的HTML字符串，script标签对应的脚本将不会被执行。
- * 
+ *
  * @shortcut insertHTML
  * @meta standard
- *             
- * @return {HTMLElement} 目标元素
+ *
+ * @return {HTMLElement} 目标元素.
  */
 
 baidu.query.extend({
-    insertHTML: function ( position, html) {
-        var range,begin,element = this[0];
-    
+    insertHTML: function(position, html) {
+        var range, begin, element = this[0];
+
         //在opera中insertAdjacentHTML方法实现不标准，如果DOMNodeInserted方法被监听则无法一次插入多element
         //by lixiaopeng @ 2011-8-19
         if (element.insertAdjacentHTML && !baidu.browser.opera) {
