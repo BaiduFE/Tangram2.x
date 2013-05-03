@@ -12,8 +12,8 @@
  * @param {String} type [可选]指定实例类名
  * @return {Object} 一个实例
  */
-baidu.createSingle = function (methods, type) {
+baidu.createSingle = function(methods, type) {
     var me = new baidu.base.Class();
-    baidu.isString(type) && ( me._type_ = type );
+    baidu.isString(type) && (me._type_ = type);
     return baidu.extend(me, methods);
 };

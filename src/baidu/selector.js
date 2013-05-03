@@ -19,20 +19,20 @@
  * @function
  * @name baidu.selector()
  * @grammar baidu.selector(selector[, context[, results]])
- * @param   {String}    selector    CSS选择器字符串
- * @param   {Document}  context     选择的范围
- * @param   {Array}     results     返回的结果对象（数组）
- * @return  {Array}                 筛选后的对象组
+ * @param   {String}    selector    CSS选择器字符串.
+ * @param   {Document}  context     选择的范围.
+ * @param   {Array}     results     返回的结果对象（数组）.
+ * @return  {Array}                 筛选后的对象组.
  */
-baidu.selector = baidu.selector || function(){
+baidu.selector = baidu.selector || function() {
     var rId = /^(\w*)#([\w\-\$]+)$/
-       ,rId0= /^#([\w\-\$]+)$/
-       ,rTag = /^\w+$/
-       ,rClass = /^(\w*)\.([\w\-\$]+)$/
-       ,rComboClass = /^(\.[\w\-\$]+)+$/
-       ,rDivider = /\s*,\s*/
-       ,rSpace = /\s+/g
-       ,slice = Array.prototype.slice;
+       , rId0 = /^#([\w\-\$]+)$/
+       , rTag = /^\w+$/
+       , rClass = /^(\w*)\.([\w\-\$]+)$/
+       , rComboClass = /^(\.[\w\-\$]+)+$/
+       , rDivider = /\s*,\s*/
+       , rSpace = /\s+/g
+       , slice = Array.prototype.slice;
 
     // selector: #id, .className, tagName, *
     function query(selector, context) {
@@ -41,7 +41,7 @@ baidu.selector = baidu.selector || function(){
         // tag#id
         if (rId.test(selector)) {
             id = RegExp.$2;
-            tagName = RegExp.$1 || "*";
+            tagName = RegExp.$1 || '*';
 
             // 本段代码效率很差，不过极少流程会走到这段
             baidu.forEach(context.getElementsByTagName(tagName), function(dom) {
@@ -49,7 +49,7 @@ baidu.selector = baidu.selector || function(){
             });
 
         // tagName or *
-        } else if (rTag.test(selector) || selector == "*") {
+        } else if (rTag.test(selector) || selector == '*') {
             baidu.merge(array, context.getElementsByTagName(selector));
 
         // .className
@@ -57,14 +57,14 @@ baidu.selector = baidu.selector || function(){
             arr = [];
             tagName = RegExp.$1;
             className = RegExp.$2;
-            t = " " + className + " ";
+            t = ' ' + className + ' ';
             // bug: className: .a.b
 
             if (context.getElementsByClassName) {
                 arr = context.getElementsByClassName(className);
             } else {
-                baidu.forEach(context.getElementsByTagName("*"), function(dom) {
-                    dom.className && ~(" " + dom.className + " ").indexOf(t) && (arr.push(dom));
+                baidu.forEach(context.getElementsByTagName('*'), function(dom) {
+                    dom.className && ~(' ' + dom.className + ' ').indexOf(t) && (arr.push(dom));
                 });
             }
 
@@ -75,18 +75,18 @@ baidu.selector = baidu.selector || function(){
             } else {
                 baidu.merge(array, arr);
             }
-        
+
         // IE 6 7 8 里组合样式名(.a.b)
         } else if (rComboClass.test(selector)) {
-            list = selector.substr(1).split(".");
+            list = selector.substr(1).split('.');
 
-            baidu.forEach(context.getElementsByTagName("*"), function(dom) {
+            baidu.forEach(context.getElementsByTagName('*'), function(dom) {
                 if (dom.className) {
-                    t = " " + dom.className + " ";
+                    t = ' ' + dom.className + ' ';
                     x = true;
 
-                    baidu.forEach(list, function(item){
-                        ~t.indexOf(" "+ item +" ") || (x = false);
+                    baidu.forEach(list, function(item) {
+                        ~t.indexOf(' '+ item + ' ') || (x = false);
                     });
 
                     x && array.push(dom);
@@ -100,10 +100,10 @@ baidu.selector = baidu.selector || function(){
     // selector 还可以是上述四种情况的组合，以空格分隔
     // @return ArrayLike
     function queryCombo(selector, context) {
-        var a, s = selector, id = "__tangram__", array = [];
+        var a, s = selector, id = '__tangram__', array = [];
 
         // 在 #id 且没有 context 时取 getSingle，其它时 getAll
-        if (!context && rId0.test(s) && (a=document.getElementById(s.substr(1)))) {
+        if (!context && rId0.test(s) && (a = document.getElementById(s.substr(1)))) {
             return [a];
         }
 
@@ -114,19 +114,19 @@ baidu.selector = baidu.selector || function(){
             // 在使用 querySelectorAll 时，若 context 无id将貌似 document 而出错
             if (context.nodeType == 1 && !context.id) {
                 context.id = id;
-                a = context.querySelectorAll("#" + id + " " + s);
-                context.id = "";
+                a = context.querySelectorAll('#' + id + ' ' + s);
+                context.id = '';
             } else {
                 a = context.querySelectorAll(s);
             }
             return a;
         } else {
-            if (!~s.indexOf(" ")) {
+            if (!~s.indexOf(' ')) {
                 return query(s, context);
             }
 
-            baidu.forEach(query(s.substr(0, s.indexOf(" ")), context), function(dom) { // 递归
-                baidu.merge(array, queryCombo(s.substr(s.indexOf(" ") + 1), dom));
+            baidu.forEach(query(s.substr(0, s.indexOf(' ')), context), function(dom) { // 递归
+                baidu.merge(array, queryCombo(s.substr(s.indexOf(' ') + 1), dom));
             });
         }
 
@@ -134,15 +134,15 @@ baidu.selector = baidu.selector || function(){
     }
 
     return function(selector, context, results) {
-        if (!selector || typeof selector != "string") {
+        if (!selector || typeof selector != 'string') {
             return results || [];
         }
 
         var arr = [];
-        selector = selector.replace(rSpace, " ");
+        selector = selector.replace(rSpace, ' ');
         results && baidu.merge(arr, results) && (results.length = 0);
 
-        baidu.forEach(selector.indexOf(",") > 0 ? selector.split(rDivider) : [selector], function(item) {
+        baidu.forEach(selector.indexOf(',') > 0 ? selector.split(rDivider) : [selector], function(item) {
             baidu.merge(arr, queryCombo(item, context));
         });
 

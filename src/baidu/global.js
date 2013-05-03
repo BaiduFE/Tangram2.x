@@ -14,20 +14,20 @@
  * @return  {Object}                该key对象的对象
  */
 baidu.global = baidu.global || (function() {
-    var me = baidu._global_ = window[ baidu.guid ],
+    var me = baidu._global_ = window[baidu.guid],
         // 20121116 mz 在多个tangram同时加载时有互相覆写的风险
         global = me._ = me._ || {};
 
-    return function( key, value, overwrite ) {
-        if ( typeof value != "undefined" ) {
-            overwrite || ( value = typeof global[ key ] == "undefined" ? value : global[ key ] );
-            global[ key ] =  value;
+    return function(key, value, overwrite ) {
+        if (typeof value != 'undefined') {
+            overwrite || (value = typeof global[key] == 'undefined' ? value : global[key]);
+            global[key] = value;
 
-        } else if (key && typeof global[ key ] == "undefined" ) {
-            global[ key ] = {};
+        } else if (key && typeof global[key] == 'undefined') {
+            global[key] = {};
         }
 
-        return global[ key ];
+        return global[key];
     }
 })();
 

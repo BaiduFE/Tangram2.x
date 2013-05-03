@@ -9,26 +9,26 @@
 
 /**
  * @description 将第二个 ArrayLike对象合并到第一个 ArrayLike 中去
- * 
+ *
  * @function
  * @name baidu.merge()
  * @grammar baidu.merge(first,second)
- * @param   {Object}    first   第一个 ArrayLike
- * @param   {Object}    second  第二个 ArrayLike
- * @return  {Object}    first   第一个对象
+ * @param   {Object}    first   第一个 ArrayLike.
+ * @param   {Object}    second  第二个 ArrayLike.
+ * @return  {Object}    first   第一个对象.
  */
 baidu.merge = function(first, second) {
     var i = first.length,
         j = 0;
 
-    if ( typeof second.length === "number" ) {
-        for ( var l = second.length; j < l; j++ ) {
-            first[ i++ ] = second[ j ];
+    if (typeof second.length === 'number') {
+        for (var l = second.length; j < l; j++) {
+            first[i++] = second[j];
         }
 
     } else {
-        while ( second[j] !== undefined ) {
-            first[ i++ ] = second[ j++ ];
+        while (second[j] !== undefined) {
+            first[i++] = second[j++];
         }
     }
 
