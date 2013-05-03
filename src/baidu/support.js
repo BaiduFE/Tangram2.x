@@ -2,7 +2,7 @@
  * @author linlingyu
  */
 ///import baidu;
-baidu.support = baidu.support || function(){
+baidu.support = baidu.support || function() {
     var div = document.createElement('div'),
         baseSupport, a, input, select, opt;
     div.setAttribute('className', 't');
@@ -13,7 +13,7 @@ baidu.support = baidu.support || function(){
     opt = select.appendChild(document.createElement('option'));
     input = div.getElementsByTagName('input')[0];
     input.checked = true;
-    
+
     baseSupport = {
         dom: {
             div: div,

@@ -13,9 +13,9 @@
  * @function
  * @name baidu.extend()
  * @grammar baidu.extend(obj0[,objN])
- * @param   {Object} obj0 需要拓展的第一个对象
- * @param   {Object} objN [可选]需要拓展的其他对象
- * @return  {Object}                合并后的JS对象
+ * @param   {Object} obj0 需要拓展的第一个对象.
+ * @param   {Object} objN [可选]需要拓展的其他对象.
+ * @return  {Object}                合并后的JS对象.
  */
 
 /**
@@ -23,10 +23,10 @@
  * @function
  * @name baidu.extend()
  * @grammar baidu.extend(depthClone, obj1[,objN])
- * @param   {Boolean}   depthClone  是否深度克隆的标识，默认为false，可以不传。
- * @param   {Object} obj0 需要拓展的第一个对象
- * @param   {Object} objN [可选]需要拓展的其他对象
- * @return  {Object}                合并后的JS对象
+ * @param   {Boolean}   depthClone  是否深度克隆的标识，默认为false，可以不传。.
+ * @param   {Object} obj0 需要拓展的第一个对象.
+ * @param   {Object} objN [可选]需要拓展的其他对象.
+ * @return  {Object}                合并后的JS对象.
  */
 
 baidu.extend = function(depthClone, object) {
@@ -35,31 +35,31 @@ baidu.extend = function(depthClone, object) {
         n = arguments.length,
         result = depthClone || {},
         copyIsArray, clone;
-    
-    baidu.isBoolean( depthClone ) && (i = 2) && (result = object || {});
-    !baidu.isObject( result ) && (result = {});
 
-    for (; i<n; i++) {
+    baidu.isBoolean(depthClone) && (i = 2) && (result = object || {});
+    !baidu.isObject(result) && (result = {});
+
+    for (; i < n; i++) {
         options = arguments[i];
-        if( baidu.isObject(options) ) {
-            for( key in options ) {
+        if (baidu.isObject(options)) {
+            for (key in options) {
                 src = result[key];
                 copy = options[key];
                 // Prevent never-ending loop
-                if ( src === copy ) {
+                if (src === copy) {
                     continue;
                 }
-                
-                if(baidu.isBoolean(depthClone) && depthClone && copy
-                    && (baidu.isPlainObject(copy) || (copyIsArray = baidu.isArray(copy)))){
-                        if(copyIsArray){
+
+                if (baidu.isBoolean(depthClone) && depthClone && copy
+                    && (baidu.isPlainObject(copy) || (copyIsArray = baidu.isArray(copy)))) {
+                        if (copyIsArray) {
                             copyIsArray = false;
                             clone = src && baidu.isArray(src) ? src : [];
-                        }else{
+                        }else {
                             clone = src && baidu.isPlainObject(src) ? src : {};
                         }
                         result[key] = baidu.extend(depthClone, clone, copy);
-                }else if(copy !== undefined){
+                }else if (copy !== undefined) {
                     result[key] = copy;
                 }
             }
